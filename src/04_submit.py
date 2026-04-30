@@ -9,11 +9,16 @@
   2. 행 수 일치
   3. 확률값 범위 [0, 1] 검증
   4. 누락값 없음 검증
+
+전략:
+  - 02_feature_engineering.py를 직접 호출하여 테스트 데이터의 features 생성
+  - features.parquet의 컬럼 매핑을 통해 예측
 """
 
 import csv
 import json
 import logging
+import re
 import sys
 from pathlib import Path
 
@@ -44,8 +49,6 @@ def load_models() -> dict[str, lgb.Booster]:
         if not model_path.exists():
             log.warning(f"Model not found: {model_path}")
             continue
-        # lightgbm booster를 JSON에서 복구
-        # booster.save_model()으로 저장한 경우:
         model = lgb.Booster(model_file=str(model_path))
         models[target] = model
         log.info(f"  Loaded {target}: {model_path}")
@@ -62,18 +65,12 @@ def load_submission_template(path: Path | None = None) -> pd.DataFrame:
 def verify_submission_format(submit_df: pd.DataFrame, sample_df: pd.DataFrame) -> list[str]:
     """제출 파일 형식 검증."""
     errors = []
-
-    # 1) 컬럼명/순서 비교
     expected_cols = sample_df.columns.tolist()
     actual_cols = submit_df.columns.tolist()
     if expected_cols != actual_cols:
         errors.append(f"Column mismatch:\n  Expected: {expected_cols}\n  Actual:   {actual_cols}")
-
-    # 2) 행 수 비교
     if len(submit_df) != len(sample_df):
         errors.append(f"Row count mismatch: submit={len(submit_df)}, sample={len(sample_df)}")
-
-    # 3) 확률값 범위
     for t in TARGETS:
         if t in submit_df.columns:
             vals = submit_df[t]
@@ -83,51 +80,74 @@ def verify_submission_format(submit_df: pd.DataFrame, sample_df: pd.DataFrame) -
                 errors.append(f"{t}: values > 1 found (max={vals.max()})")
             if vals.isnull().any():
                 errors.append(f"{t}: NaN values found ({vals.isnull().sum()})")
-
-    # 4) subject_id / date 순서
     if "subject_id" in submit_df.columns and "subject_id" in sample_df.columns:
         if not (submit_df["subject_id"] == sample_df["subject_id"]).all():
             errors.append("subject_id order differs from sample")
-
     return errors
 
 
-def create_submission(
-    test_df: pd.DataFrame,
-    models: dict[str, lgb.Booster],
-    features_meta: dict,
-) -> pd.DataFrame:
+def load_feature_columns() -> list[str]:
     """
-    테스트 데이터로부터 7개 타겟 예측값 생성.
-
-    Parameters
-    ----------
-    test_df : pd.DataFrame
-        테스트용 라이프로그 데이터 (features와 동일한 구조)
-    models : dict
-        {target: Booster}
-    features_meta : dict
-        feature_cols 등 메타정보
-
-    Returns
-    -------
-    pd.DataFrame
-        제출용 예측 결과
+    Training 때 사용된 feature 열 목록을 로드.
+    features.parquet에서 target 열 제외한 numeric 열을 추출.
     """
-    log.info("── 예측값 생성 ──")
+    from config import DATA_PROCESSED
+    feat_path = DATA_PROCESSED / "features.parquet"
+    if not feat_path.exists():
+        log.error(f"Features not found: {feat_path}")
+        log.error("Run 02_feature_engineering.py first.")
+        sys.exit(1)
+    
+    df = pd.read_parquet(feat_path)
     meta_cols = ["subject_id", "lifelog_date", "sleep_date", "date"]
-    # target 열이 있으면 제거
-    predict_cols = [c for c in test_df.columns if c not in meta_cols + TARGETS]
+    # 03_model_training.py와 동일한 로직: 각 target별로 다른 feature set
+    # 하지만 submit 때는 모든 target의 features를 포함해야 함
+    feat_cols = [c for c in df.columns if c not in meta_cols + TARGETS]
+    feat_cols = [c for c in feat_cols if df[c].dtype in [np.float64, np.int64, float, int, bool]]
+    return feat_cols
 
-    X_test = test_df[predict_cols].fillna(0).values
-    log.info(f"  Test shape: {X_test.shape}, features: {len(predict_cols)}")
 
-    predictions = test_df[["subject_id", "sleep_date", "lifelog_date"]].copy()
+def get_train_feature_cols_for_target(target: str) -> list[str]:
+    """
+    03_model_training.py와 동일한 로직으로 feature 열 추출.
+    training: target 열을 제외하고 나머지 target열을 feature로 포함
+    """
+    from config import DATA_PROCESSED
+    feat_path = DATA_PROCESSED / "features.parquet"
+    df = pd.read_parquet(feat_path)
+    meta_cols = ["subject_id", "lifelog_date", "sleep_date", "date"]
+    feature_cols = [c for c in df.columns if c not in meta_cols + [target]]
+    feature_cols = [c for c in feature_cols if df[c].dtype in [np.float64, np.int64, float, int, bool]]
+    return feature_cols
+
+
+def create_submission(
+    test_features: pd.DataFrame,
+    models: dict[str, lgb.Booster],
+) -> pd.DataFrame:
+    """테스트 데이터로부터 7개 타겟 예측값 생성."""
+    log.info("── 예측값 생성 ──")
+
+    predictions = test_features[["subject_id", "sleep_date", "lifelog_date"]].copy()
 
     for target, model in models.items():
+        predict_cols = get_train_feature_cols_for_target(target)
+        
+        # Ensure all columns exist in test_features
+        missing_cols = [c for c in predict_cols if c not in test_features.columns]
+        if missing_cols:
+            log.warning(f"  {target}: missing columns: {missing_cols[:5]}...")
+        
+        # Add missing columns with 0
+        for c in missing_cols:
+            test_features[c] = 0.0
+        
+        predict_cols_in_df = [c for c in predict_cols if c in test_features.columns]
+        X_test = test_features[predict_cols_in_df].fillna(0).values
+        log.info(f"  {target}: {len(predict_cols_in_df)} features")
         pred = model.predict(X_test)
         predictions[target] = pred
-        log.info(f"  {target}: pred_range=[{pred.min():.4f}, {pred.max():.4f}], mean={pred.mean():.4f}")
+        log.info(f"    pred_range=[{pred.min():.4f}, {pred.max():.4f}], mean={pred.mean():.4f}")
 
     return predictions
 
@@ -139,7 +159,6 @@ def save_submission(df: pd.DataFrame, path: Path | None = None) -> Path:
         path = SUBMIT_DIR / f"submission_{timestamp}.csv"
     else:
         path = Path(path)
-
     path.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(path, index=False)
     log.info(f"  Saved: {path} ({len(df)} rows)")
@@ -148,7 +167,6 @@ def save_submission(df: pd.DataFrame, path: Path | None = None) -> Path:
 
 def main(test_features: pd.DataFrame | None = None) -> pd.DataFrame:
     """전체 제출 생성 파이프라인 실행."""
-    # 1) 모델 로드
     log.info("=" * 60)
     log.info("04_submit.py — 제출 파일 생성")
     log.info("=" * 60)
@@ -158,25 +176,51 @@ def main(test_features: pd.DataFrame | None = None) -> pd.DataFrame:
         log.error("No models found. Run 03_model_training.py first.")
         sys.exit(1)
 
-    # 2) 테스트 데이터
     if test_features is None:
-        # 제출 샘플을 테스트 데이터로 사용 (라벨은 0으로 채움)
+        log.info("테스트 데이터 파이프라인 실행 중...")
+
+        # 02_feature_engineering 동적 임포트
+        sys.path.insert(0, str(Path(__file__).parent))
+        import importlib
+        from pathlib import Path as P
+        spec = importlib.util.spec_from_file_location(
+            "02_feature_engineering", 
+            P(__file__).parent / "02_feature_engineering.py"
+        )
+        feat_eng = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(feat_eng)
+        
+        # 01_load_data 동적 임포트
+        spec2 = importlib.util.spec_from_file_location(
+            "01_load_data", 
+            P(__file__).parent / "01_load_data.py"
+        )
+        load_data = importlib.util.module_from_spec(spec2)
+        spec2.loader.exec_module(load_data)
+        
+        # parquet 로드
+        parquet_dfs = {}
+        for name in load_data.PARQUET_FILES:
+            path = load_data.DATA_DIR / load_data.PARQUET_FILES[name]
+            log.info(f"  loading {name}: {path.name} ...")
+            df = pd.read_parquet(path)
+            parquet_dfs[name] = load_data.build_merge_key(df)
+
+        # 제출 템플릿 로드
         sample = load_submission_template()
-        for t in TARGETS:
-            sample[t] = 0.0
-        test_features = sample
+        sample["lifelog_date"] = pd.to_datetime(sample["lifelog_date"]).dt.date
 
-    # 3) 예측
-    predictions = create_submission(
-        test_features,
-        models,
-        {"feature_cols": list(test_features.columns)},
-    )
+        # feature engineering 실행
+        log.info("  Feature engineering for test data...")
+        test_features = feat_eng.create_day_features(parquet_dfs, sample)
+        log.info(f"  Test features shape: {test_features.shape}")
 
-    # 4) 검증
+    # 예측
+    predictions = create_submission(test_features, models)
+
+    # 검증
     sample = load_submission_template()
     errors = verify_submission_format(predictions, sample)
-
     log.info("\n── 형식 검증 ──")
     if errors:
         for e in errors:
@@ -184,10 +228,10 @@ def main(test_features: pd.DataFrame | None = None) -> pd.DataFrame:
     else:
         log.info("  ✅ All checks passed!")
 
-    # 5) 저장
+    # 저장
     path = save_submission(predictions)
 
-    # 6) 샘플 출력
+    # 샘플 출력
     log.info("\n── 제출 파일 샘플 ──")
     log.info(predictions.head(5).to_string(index=False))
 
