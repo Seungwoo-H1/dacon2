@@ -227,19 +227,18 @@ def _extract_ambience_features(row_values: pd.Series) -> pd.Series:
 
 # ── 핵심 aggregation 함수 ────────────────────────────────
 
-def aggregate_numeric(df: pd.DataFrame, col: str, date_col: str,
+def aggregate_numeric(df: pd.DataFrame, col: str,
                       agg_cols: list[str]) -> pd.DataFrame:
-    """Numeric 열을 date 기준 aggregation."""
-    grouped = df.groupby(date_col)[col].agg(["mean", "std", "min", "max", "count"])
+    """Numeric 열을 subject_id+date 기준 aggregation."""
+    grouped = df.groupby(["subject_id", "date"])[col].agg(["mean", "std", "min", "max", "count"])
     grouped.columns = [f"{col}_{c}" for c in grouped.columns]
-    # groupby가 빈 그룹을 빼므로 reindex로 보강
     return grouped.reset_index()
 
 
-def aggregate_wpedo(df: pd.DataFrame, date_col: str,
+def aggregate_wpedo(df: pd.DataFrame,
                     agg_cols: list[str]) -> pd.DataFrame:
-    """wPedo의 7개 열을 date 기준 aggregation."""
-    grouped = df.groupby(date_col)[WPEDO_COLS].agg(["mean", "sum"])
+    """wPedo의 7개 열을 subject_id+date 기준 aggregation."""
+    grouped = df.groupby(["subject_id", "date"])[WPEDO_COLS].agg(["mean", "sum"])
     grouped.columns = [f"pedo_{col}_{stat}" for col, stat in grouped.columns]
     return grouped.reset_index()
 
@@ -275,7 +274,14 @@ def create_day_features(
     log.info("02_feature_engineering.py — 특징 공학")
     log.info("=" * 60)
 
-    all_features = pd.DataFrame()
+    all_features = None
+
+    def _merge_feat(left, right):
+        """첫 merge는 copy, 이후는 merge(on=['subject_id','date'], how='outer') 후 dedup."""
+        if left is None:
+            return right.drop_duplicates(["subject_id", "date"])
+        merged = left.merge(right, on=["subject_id", "date"], how="outer")
+        return merged.drop_duplicates(["subject_id", "date"])
 
     # ── 1) Numeric 컬럼 aggregation ────────────────────────
     log.info("[1/4] Numeric column aggregation")
@@ -285,14 +291,14 @@ def create_day_features(
             # wPedo는 별도 처리
             pass
         else:
-            feat = aggregate_numeric(df, col, "date", [])
-            feat = feat.rename(columns={c: f"{source}_{c}" for c in feat.columns if c != "date"})
-            all_features = pd.concat([all_features, feat], axis=0).drop_duplicates("date")
+            feat = aggregate_numeric(df, col, [])
+            feat = feat.rename(columns={c: f"{source}_{c}" for c in feat.columns if c not in ("subject_id", "date")})
+            all_features = _merge_feat(all_features, feat)
 
     # wPedo
-    pedo_feat = aggregate_wpedo(parquet_dfs["wPedo"], "date", [])
-    pedo_feat = pedo_feat.rename(columns={c: f"wPedo_{c}" for c in pedo_feat.columns if c != "date"})
-    all_features = pd.concat([all_features, pedo_feat], axis=0).drop_duplicates("date")
+    pedo_feat = aggregate_wpedo(parquet_dfs["wPedo"], [])
+    pedo_feat = pedo_feat.rename(columns={c: f"wPedo_{c}" for c in pedo_feat.columns if c not in ("subject_id", "date")})
+    all_features = _merge_feat(all_features, pedo_feat)
 
     # ── 2) JSON 컬럼 파싱 → day aggregation ───────────────
     log.info("[2/4] JSON column parsing & aggregation")
@@ -303,44 +309,70 @@ def create_day_features(
         parser = PARSERS[source]
 
         if source == "mAmbience":
-            # mAmbience는 special 처리: 전체 day의 ambience를 하나로 합침
-            amb_feats = df.groupby("date").apply(
-                lambda g: _extract_ambience_features(g[json_col]),
+            # mAmbience는 special 처리: subject_id+date 기준 ambience 합산
+            def _amb_group(g):
+                scores = defaultdict(float)
+                total_rows = 0
+                for v in g[json_col].dropna():
+                    if isinstance(v, (np.ndarray, list)):
+                        parsed = parse_ambience(v)
+                        for k, s in parsed.items():
+                            scores[k] += s
+                        total_rows += 1
+                result = pd.Series(dtype=float)
+                for cat in ["Speech", "Music", "Vehicle", "Motor vehicle (road)",
+                             "Inside, large room or hall", "Inside, small room",
+                             "Outside, urban or manmade", "Outside, rural or natural",
+                             "Car", "Truck"]:
+                    key = f"ambience_{cat.lower().replace(' ', '_')}_sum"
+                    result[key] = scores.get(cat, 0.0) / max(total_rows, 1)
+                all_scores = sorted(scores.values(), reverse=True)[:5]
+                result["ambience_top5_sum"] = sum(all_scores) / max(total_rows, 1)
+                result["ambience_max_cat"] = max(scores, key=scores.get) if scores else ""
+                return result
+
+            amb_feats = df.groupby(["subject_id", "date"]).apply(
+                _amb_group,
                 include_groups=False,
             )
             amb_feats = amb_feats.reset_index()
             amb_feats = amb_feats.rename(
-                columns={c: f"mAmbience_{c}" for c in amb_feats.columns if c != "date"}
+                columns={c: f"mAmbience_{c}" for c in amb_feats.columns if c not in ("subject_id", "date")}
             )
-            all_features = pd.concat([all_features, amb_feats], axis=0).drop_duplicates("date")
+            all_features = _merge_feat(all_features, amb_feats)
 
         elif source == "wHr":
-            # wHr: heart_rate 배열 → day별 평균 HR
-            hr_flat = []
+            # wHr: heart_rate 배열 → subject_id+date별 평균 HR
+            hr_records = []
             for _, row in df.iterrows():
+                sid = row["subject_id"]
+                date_val = row["date"]
+                hr_vals = []
                 if isinstance(row[json_col], (np.ndarray, list)):
-                    hr_flat.extend(row[json_col])
-            avg_hr = np.mean(hr_flat) if hr_flat else np.nan
-            day_feat = pd.DataFrame({
-                "date": df["date"].unique(),
-                "wHr_hr_mean": avg_hr,
-                "wHr_hr_std": np.std(hr_flat) if len(hr_flat) > 1 else np.nan,
-                "wHr_hr_count": len(hr_flat),
-            })
-            all_features = pd.concat([all_features, day_feat], axis=0).drop_duplicates("date")
+                    hr_vals = [float(v) for v in row[json_col] if v is not None]
+                hr_records.append({
+                    "subject_id": sid,
+                    "date": date_val,
+                    "wHr_hr_mean": np.mean(hr_vals) if hr_vals else np.nan,
+                    "wHr_hr_std": np.std(hr_vals) if len(hr_vals) > 1 else np.nan,
+                    "wHr_hr_count": len(hr_vals),
+                })
+            day_feat = pd.DataFrame(hr_records)
+            all_features = _merge_feat(all_features, day_feat)
 
         else:
-            # mBle, mGps, mUsageStats, mWifi: row-level 파싱 → day aggregation
+            # mBle, mGps, mUsageStats, mWifi: row-level 파싱 → subject_id+date aggregation
             parsed = df[json_col].apply(parser)
             parsed_df = pd.DataFrame(parsed.tolist(), index=df.index)
+            parsed_df["subject_id"] = df["subject_id"]
             parsed_df["date"] = df["date"]
 
-            # 각 통계열을 day별 mean/std로 aggregte
-            stat_cols = [c for c in parsed_df.columns if c != "date"]
+            # 각 통계열을 subject_id+date별로 mean/std/max/min aggregation
+            stat_cols = [c for c in parsed_df.columns if c not in ("subject_id", "date")]
             for sc in stat_cols:
-                grouped = parsed_df.groupby("date")[sc].agg(["mean", "std", "max", "min"])
+                grouped = parsed_df.groupby(["subject_id", "date"])[sc].agg(["mean", "std", "max", "min"])
                 grouped.columns = [f"{source}_{sc}_{s}" for s in grouped.columns]
-                all_features = pd.concat([all_features, grouped.reset_index()], axis=0).drop_duplicates("date")
+                all_features = _merge_feat(all_features, grouped.reset_index())
 
     # ── 3) 시간대별 피처 ───────────────────────────────────
     log.info("[3/4] Time-of-day features")
@@ -350,21 +382,25 @@ def create_day_features(
         df["hour_bin"] = df["hour"].apply(
             lambda h: "night" if h < 6 else "morning" if h < 12 else "afternoon" if h < 18 else "evening"
         )
-        ratio = df.groupby("date")["hour_bin"].value_counts(normalize=True).unstack(fill_value=0)
+        ratio = df.groupby(["subject_id", "date"])["hour_bin"].value_counts(normalize=True).unstack(fill_value=0)
         ratio.columns = [f"{source}_hour_{c}" for c in ratio.columns]
-        all_features = pd.concat([all_features, ratio.reset_index()], axis=0).drop_duplicates("date")
+        all_features = _merge_feat(all_features, ratio.reset_index())
 
     # ── 4) 라벨과 병합 ─────────────────────────────────────
     log.info("[4/4] Merge with labels")
     labels_day = labels[["subject_id", "lifelog_date", "sleep_date"] + TARGETS].copy()
-    labels_day["date"] = labels_day["lifelog_date"].dt.date
+    labels_day["date"] = pd.to_datetime(labels_day["lifelog_date"]).dt.date
 
-    # all_features의 date도 object(str)로 통일
-    if all_features["date"].dtype.name.startswith("datetime"):
+    # datetime.date object merge bug workaround: 모두 str로 통일
+    labels_day["date"] = labels_day["date"].astype(str)
+    if all_features["date"].dtype != object:
         all_features = all_features.copy()
-        all_features["date"] = all_features["date"].dt.date
+        all_features["date"] = all_features["date"].dt.date.astype(str)
+    elif all_features["date"].dtype == object and not isinstance(all_features["date"].iloc[0], str):
+        all_features = all_features.copy()
+        all_features["date"] = all_features["date"].astype(str)
 
-    merged = labels_day.merge(all_features, on=["date"], how="left")
+    merged = labels_day.merge(all_features, on=["subject_id", "date"], how="left")
     log.info(f"  Merged shape: {merged.shape}")
     log.info(f"  Missing features: {merged.isnull().sum().sum()}")
 
