@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+node_modules/
+models/
+submissions/
+data_processed/
