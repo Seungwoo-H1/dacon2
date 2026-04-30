@@ -40,7 +40,7 @@ def load_models() -> dict[str, lgb.Booster]:
     """저장된 LightGBM 모델을 로드."""
     models = {}
     for target in TARGETS:
-        model_path = MODEL_DIR / f"lgbm_{target}.json"
+        model_path = MODEL_DIR / f"lgbm_{target}.txt"
         if not model_path.exists():
             log.warning(f"Model not found: {model_path}")
             continue

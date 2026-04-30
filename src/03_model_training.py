@@ -11,6 +11,7 @@
 
 import json
 import logging
+import re
 import sys
 from pathlib import Path
 
@@ -95,13 +96,23 @@ def train_single_target(
     y_train = train_df[target].values.astype(int)
     y_val = val_df[target].values.astype(int)
 
-    # 피처 선택 (target + meta 열 제외)
+    # 피처 선택
     meta_cols = ["subject_id", "lifelog_date", "sleep_date", "date", target]
     feature_cols = [c for c in features.columns if c not in meta_cols]
     feature_cols = [c for c in feature_cols if features[c].dtype in [np.float64, np.int64, float, int, bool]]
 
-    X_train = train_df[feature_cols].fillna(0).values
-    X_val = val_df[feature_cols].fillna(0).values
+    # sanitized 이름 생성 (원본→sanitized 매핑)
+    def sanitize_name(name):
+        return re.sub(r'[^a-zA-Z0-9_]', '_', name)
+    sanitized_cols = [sanitize_name(c) for c in feature_cols]
+
+    # features의 컬럼명을 sanitized 버전으로 rename 후 사용
+    rename_map = dict(zip(feature_cols, sanitized_cols))
+    train_df_san = train_df[feature_cols].fillna(0).rename(columns=rename_map)
+    val_df_san = val_df[feature_cols].fillna(0).rename(columns=rename_map)
+
+    X_train = train_df_san.values
+    X_val = val_df_san.values
 
     spw = compute_scale_pos_weight(train_df, target)
 
@@ -111,8 +122,8 @@ def train_single_target(
              f"train={len(X_train)}/{len(y_train)}, val={len(X_val)}/{len(y_val)}, "
              f"features={len(feature_cols)}")
 
-    train_set = lgb.Dataset(X_train, label=y_train, feature_name=feature_cols)
-    val_set = lgb.Dataset(X_val, label=y_val, feature_name=feature_cols, reference=train_set)
+    train_set = lgb.Dataset(X_train, label=y_train, feature_name=sanitized_cols)
+    val_set = lgb.Dataset(X_val, label=y_val, feature_name=sanitized_cols, reference=train_set)
 
     callbacks = [
         lgb.early_stopping(stopping_rounds=params["early_stopping_round"]),
@@ -137,6 +148,7 @@ def train_single_target(
 
     return {
         "target": target,
+        "model": model,
         "best_iteration": model.best_iteration,
         "val_logloss": val_loss,
         "scale_pos_weight": spw,
@@ -144,6 +156,7 @@ def train_single_target(
         "n_val": len(X_val),
         "feature_importances": feat_imp[:20],
         "feature_cols": feature_cols,
+        "sanitized_cols": sanitized_cols,
     }
 
 
@@ -201,22 +214,22 @@ def train_all_targets(
 
 
 def save_models(features: pd.DataFrame, results: dict[str, dict]):
-    """모든 모델을 disk에 저장."""
+    """모든 모델을 disk에 저장 (lightgbm 기본 형식)."""
     log.info("\n── 모델 저장 ──")
     for target, m in results.items():
+        model = m["model"]
         # 모델 파일
-        model_path = MODEL_DIR / f"lgbm_{target}.json"
-        model_dict = m["model"].to_dict()
-        with open(model_path, "w") as f:
-            json.dump(model_dict, f, default=str)
-        log.info(f"  {target}: {model_path}")
+        model_path = MODEL_DIR / f"lgbm_{target}.txt"
+        model.save_model(model_path)
+        log.info(f"  {target}: {model_path} (iter={m['best_iteration']})")
 
         # 메트릭 파일
         metric_path = MODEL_DIR / f"metrics_{target}.json"
-        metric_data = {k: v for k, v in m.items() if k != "feature_importances"}
+        metric_data = {k: v for k, v in m.items() if k not in ("model", "sanitized_cols")}
         metric_data["feature_importances"] = [
             {"feature": f, "importance": i} for f, i in m["feature_importances"]
         ]
+        metric_data["n_features"] = len(m["sanitized_cols"])
         with open(metric_path, "w") as f:
             json.dump(metric_data, f, default=str)
 

@@ -13,6 +13,7 @@ JSON 타입 컬럼(mAmbience, mBle, mGps, mUsageStats, mWifi, wHr)도 통계 추
 import logging
 import sys
 from collections import defaultdict
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -356,7 +357,12 @@ def create_day_features(
     # ── 4) 라벨과 병합 ─────────────────────────────────────
     log.info("[4/4] Merge with labels")
     labels_day = labels[["subject_id", "lifelog_date", "sleep_date"] + TARGETS].copy()
-    labels_day["date"] = labels_day["lifelog_date"]
+    labels_day["date"] = labels_day["lifelog_date"].dt.date
+
+    # all_features의 date도 object(str)로 통일
+    if all_features["date"].dtype.name.startswith("datetime"):
+        all_features = all_features.copy()
+        all_features["date"] = all_features["date"].dt.date
 
     merged = labels_day.merge(all_features, on=["date"], how="left")
     log.info(f"  Merged shape: {merged.shape}")
