@@ -10,3 +10,5 @@ run_*.sh
 src/catboost_info/
 src/pipeline.log
 src/run_v10.log
+data.zip
+data.zip
