@@ -96,8 +96,8 @@ def train_single_target(
     y_train = train_df[target].values.astype(int)
     y_val = val_df[target].values.astype(int)
 
-    # 피처 선택
-    meta_cols = ["subject_id", "lifelog_date", "sleep_date", "date", target]
+    # 피처 선택 — 모든 target 열을 meta에서 제외 (target leakage 방지)
+    meta_cols = ["subject_id", "lifelog_date", "sleep_date", "date"] + TARGETS
     feature_cols = [c for c in features.columns if c not in meta_cols]
     feature_cols = [c for c in feature_cols if features[c].dtype in [np.float64, np.int64, float, int, bool]]
 

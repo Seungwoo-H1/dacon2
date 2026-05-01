@@ -4,3 +4,9 @@ node_modules/
 models/
 submissions/
 data_processed/
+catboost_info/
+run_*.log
+run_*.sh
+src/catboost_info/
+src/pipeline.log
+src/run_v10.log

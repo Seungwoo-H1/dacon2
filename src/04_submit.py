@@ -110,13 +110,13 @@ def load_feature_columns() -> list[str]:
 def get_train_feature_cols_for_target(target: str) -> list[str]:
     """
     03_model_training.py와 동일한 로직으로 feature 열 추출.
-    training: target 열을 제외하고 나머지 target열을 feature로 포함
+    모든 target 열을 meta에서 제외 (target leakage 방지).
     """
     from config import DATA_PROCESSED
     feat_path = DATA_PROCESSED / "features.parquet"
     df = pd.read_parquet(feat_path)
-    meta_cols = ["subject_id", "lifelog_date", "sleep_date", "date"]
-    feature_cols = [c for c in df.columns if c not in meta_cols + [target]]
+    meta_cols = ["subject_id", "lifelog_date", "sleep_date", "date"] + TARGETS
+    feature_cols = [c for c in df.columns if c not in meta_cols]
     feature_cols = [c for c in feature_cols if df[c].dtype in [np.float64, np.int64, float, int, bool]]
     return feature_cols
 
