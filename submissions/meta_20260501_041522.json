@@ -1,0 +1,207 @@
+{
+  "version": "v9",
+  "submission_file": "/home/mwoo423/projects/dacon2/submissions/submission_v9_20260501_041522.csv",
+  "timestamp": "20260501_041522",
+  "n_samples": 250,
+  "ensemble": "5-seed LightGBM average per target",
+  "calibration": "isotonic(OOF\u2192test) + 50% mean-matching + clip",
+  "extra_features": "rolling(2,3) on 30 key features + target rolling(3) + lag(1,2) + dow_sin/cos",
+  "per_target": {
+    "Q1": {
+      "n_features": 20,
+      "config": {
+        "nl": 8,
+        "md": 3,
+        "lr": 0.05,
+        "ne": 200,
+        "ss": 0.8,
+        "cst": 0.6,
+        "ra": 1.0,
+        "rl": 2.0,
+        "mc": 10
+      },
+      "config_cv": {
+        "c0": 0.3979,
+        "c1": 0.3956,
+        "c2": 0.3962
+      },
+      "best_oof_loss": 1.0285,
+      "all_oof_loss": 0.3939,
+      "seed_cv_min": 0.3926,
+      "seed_cv_max": 0.3992,
+      "seed_cv_std": 0.0019,
+      "test_mean": 0.3141180300041316,
+      "train_rate": 0.4955555555555556,
+      "shift": -0.181437525551424,
+      "pred_std": 0.13761553910345156
+    },
+    "Q2": {
+      "n_features": 20,
+      "config": {
+        "nl": 15,
+        "md": 3,
+        "lr": 0.03,
+        "ne": 300,
+        "ss": 0.7,
+        "cst": 0.7,
+        "ra": 0.5,
+        "rl": 1.5,
+        "mc": 10
+      },
+      "config_cv": {
+        "c0": 0.3214,
+        "c1": 0.3232,
+        "c2": 0.3223
+      },
+      "best_oof_loss": 1.0975,
+      "all_oof_loss": 0.3205,
+      "seed_cv_min": 0.32,
+      "seed_cv_max": 0.3242,
+      "seed_cv_std": 0.0012,
+      "test_mean": 0.3105403888563332,
+      "train_rate": 0.5622222222222222,
+      "shift": -0.25168183336588895,
+      "pred_std": 0.13092617870806644
+    },
+    "Q3": {
+      "n_features": 20,
+      "config": {
+        "nl": 15,
+        "md": 3,
+        "lr": 0.04,
+        "ne": 250,
+        "ss": 0.7,
+        "cst": 0.7,
+        "ra": 0.5,
+        "rl": 1.0,
+        "mc": 10
+      },
+      "config_cv": {
+        "c0": 0.3744,
+        "c1": 0.3718,
+        "c2": 0.3887
+      },
+      "best_oof_loss": 1.1999,
+      "all_oof_loss": 0.3762,
+      "seed_cv_min": 0.3703,
+      "seed_cv_max": 0.3892,
+      "seed_cv_std": 0.0075,
+      "test_mean": 0.3163603086531884,
+      "train_rate": 0.6,
+      "shift": -0.28363969134681155,
+      "pred_std": 0.09151376703212906
+    },
+    "S1": {
+      "n_features": 20,
+      "config": {
+        "nl": 8,
+        "md": 3,
+        "lr": 0.03,
+        "ne": 250,
+        "ss": 0.6,
+        "cst": 0.6,
+        "ra": 5.0,
+        "rl": 10.0,
+        "mc": 20
+      },
+      "config_cv": {
+        "c0": 0.4933,
+        "c1": 0.4348,
+        "c2": 0.5387
+      },
+      "best_oof_loss": 1.4069,
+      "all_oof_loss": 0.484,
+      "seed_cv_min": 0.4342,
+      "seed_cv_max": 0.5398,
+      "seed_cv_std": 0.0425,
+      "test_mean": 0.8119535207024344,
+      "train_rate": 0.6822222222222222,
+      "shift": 0.12973129848021225,
+      "pred_std": 0.1168101344776859
+    },
+    "S2": {
+      "n_features": 20,
+      "config": {
+        "nl": 10,
+        "md": 3,
+        "lr": 0.02,
+        "ne": 300,
+        "ss": 0.7,
+        "cst": 0.7,
+        "ra": 2.0,
+        "rl": 5.0,
+        "mc": 15
+      },
+      "config_cv": {
+        "c0": 0.4627,
+        "c1": 0.4161,
+        "c2": 0.384
+      },
+      "best_oof_loss": 1.3178,
+      "all_oof_loss": 0.4167,
+      "seed_cv_min": 0.3827,
+      "seed_cv_max": 0.4633,
+      "seed_cv_std": 0.0323,
+      "test_mean": 0.6013290588355824,
+      "train_rate": 0.6511111111111111,
+      "shift": -0.049782052275528677,
+      "pred_std": 0.15660310661875884
+    },
+    "S3": {
+      "n_features": 20,
+      "config": {
+        "nl": 8,
+        "md": 3,
+        "lr": 0.03,
+        "ne": 250,
+        "ss": 0.6,
+        "cst": 0.6,
+        "ra": 5.0,
+        "rl": 10.0,
+        "mc": 20
+      },
+      "config_cv": {
+        "c0": 0.463,
+        "c1": 0.412,
+        "c2": 0.4462
+      },
+      "best_oof_loss": 1.3711,
+      "all_oof_loss": 0.4379,
+      "seed_cv_min": 0.4105,
+      "seed_cv_max": 0.4638,
+      "seed_cv_std": 0.0213,
+      "test_mean": 0.7969383645984872,
+      "train_rate": 0.6622222222222223,
+      "shift": 0.13471614237626495,
+      "pred_std": 0.06332949932818346
+    },
+    "S4": {
+      "n_features": 20,
+      "config": {
+        "nl": 8,
+        "md": 3,
+        "lr": 0.04,
+        "ne": 250,
+        "ss": 0.7,
+        "cst": 0.7,
+        "ra": 1.0,
+        "rl": 2.0,
+        "mc": 10
+      },
+      "config_cv": {
+        "c0": 0.4068,
+        "c1": 0.3893,
+        "c2": 0.4261
+      },
+      "best_oof_loss": 1.1526,
+      "all_oof_loss": 0.405,
+      "seed_cv_min": 0.3884,
+      "seed_cv_max": 0.4275,
+      "seed_cv_std": 0.015,
+      "test_mean": 0.34913387426015174,
+      "train_rate": 0.56,
+      "shift": -0.2108661257398483,
+      "pred_std": 0.11275762560852036
+    }
+  }
+}
