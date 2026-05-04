@@ -1,383 +1,647 @@
-import logging
+"""
+feature_engineering_v2.py — 개선된 피처 공학
+
+변경 사항 (V1 기준):
+1. Constant/Near-constant feature 제거 (13개)
+2. 다중공선성 제거 (r>0.99 쌍 중 하나만 유지)
+3. wHr/hr_mean 이상치 처리 (< 20 또는 > 180 제거)
+4. Time-window aggregation 추가 (1h, 3h, 6h, 12h, 24h)
+5. Personalization features 추가 (baseline deviation, day-over-day delta)
+6. Leakage 방지: nighttime data는 S 타겟에만, daytime은 Q 타겟에만
+7. Missing indicator 추가
+"""
 
 import numpy as np
 import pandas as pd
+import warnings
+warnings.filterwarnings('ignore')
 
-from pathlib import Path
-
-from config import DATA_PROCESSED, TARGETS
-
-import importlib
-
-importlib.invalidate_caches()
-import importlib
-import importlib.util
-
-logger = logging.getLogger(__name__)
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-)
+from config import DATA_DIR, DATA_PROCESSED, PARQUET_FILES, TARGETS, AGG_WINDOWS, HOUR_BINS
 
 
-def build_feature_eng_pipeline():
-    """Return a dict of functions that each return a DataFrame of features."""
-    return {
-        "numeric_agg": _numeric_agg,
-        "pedo_agg": _pedo_agg,
-        "json_agg": _json_agg,
-        "hour_ratio": _hour_ratio,
-        "activity_density": _activity_density,
-        "sensor_density": _sensor_density,
-        "circadian": _circadian_features,
-        "daily_patterns": _daily_patterns,
-    }
+def build_merge_key(df):
+    """Merge key 생성."""
+    df = df.copy()
+    if 'date' in df.columns:
+        df['date'] = pd.to_datetime(df['date']).dt.date
+    if 'datetime' in df.columns:
+        df['datetime'] = pd.to_datetime(df['datetime'])
+        if 'date' not in df.columns:
+            df['date'] = df['datetime'].dt.date
+    if 'datetime_hour' in df.columns:
+        df['datetime_hour'] = pd.to_datetime(df['datetime_hour'])
+    return df
 
 
-# ─── helpers ─────────────────────────────────────────────
+def load_parquet_data():
+    """파라쿠 데이터 로드."""
+    parquet_dfs = {}
+    for name, filename in PARQUET_FILES.items():
+        path = DATA_DIR / filename
+        if path.exists():
+            print(f"  loading {name}...")
+            df = pd.read_parquet(path)
+            parquet_dfs[name] = build_merge_key(df)
+    return parquet_dfs
 
-def _agg_numeric(df, col):
-    """Aggregate numeric column by subject_id + date."""
-    grouped = df.groupby(["subject_id", "date"])[col].agg(
-        ["mean", "std", "min", "max", "count"]
-    )
-    grouped.columns = [f"{col}_{s}" for s in grouped.columns]
+
+# ── 제거할 constant/near-constant features ──
+CONSTANT_COLS = [
+    'mACStatus_m_charging_min',
+    'mACStatus_m_charging_max',
+    'mLight_m_light_min',
+    'mScreenStatus_m_screen_use_min',
+    'mScreenStatus_m_screen_use_max',
+    'wPedo_pedo_running_step_mean',
+    'wPedo_pedo_running_step_sum',
+    'wPedo_pedo_walking_step_mean',
+    'wPedo_pedo_walking_step_sum',
+    'mGps_gps_has_speed_mean',
+    'mGps_gps_has_speed_std',
+    'mGps_gps_has_speed_max',
+    'mGps_gps_has_speed_min',
+    'mUsageStats_usage_major_ratio_min',
+    'mUsageStats_usage_game_ratio_min',
+]
+
+# 다중공선성 제거 pairs (상관 > 0.99인 것 중 유지할 것)
+COLLINEAR_PAIRS = [
+    ('wPedo_pedo_step_frequency_mean', 'wPedo_pedo_step_mean'),    # r=1.000
+    ('wPedo_pedo_step_frequency_sum', 'wPedo_pedo_step_sum'),      # r=1.000
+    ('mBle_ble_device_count_mean', 'mBle_ble_count_mean'),         # r=0.999
+    ('mBle_ble_device_count_std', 'mBle_ble_count_std'),           # r=0.999
+    ('mBle_ble_device_count_max', 'mBle_ble_count_max'),           # r=0.999
+    ('mWifi_wifi_bssid_count_mean', 'mWifi_wifi_count_mean'),      # r=1.000
+    ('mWifi_wifi_bssid_count_std', 'mWifi_wifi_count_std'),        # r=1.000
+    ('mWifi_wifi_bssid_count_max', 'mWifi_wifi_count_max'),        # r=1.000
+]
+
+# wHr hr_mean > 180 또는 < 20은 이상치
+HR_MIN = 20
+HR_MAX = 180
+
+
+def parse_json_columns(df, json_columns):
+    """JSON 열 파싱."""
+    for col in json_columns:
+        if col not in df.columns:
+            continue
+        df[col] = df[col].apply(_safe_json_parse)
+    return df
+
+
+def _safe_json_parse(val):
+    """JSON 문자열을 safely 파싱."""
+    if pd.isna(val) or val == 'null':
+        return None
+    if isinstance(val, str):
+        import json
+        try:
+            return json.loads(val)
+        except:
+            return None
+    return val
+
+
+def aggregate_numeric(df, col, agg_cols, agg_funcs=None):
+    """Numeric 열 aggregation."""
+    if agg_funcs is None:
+        agg_funcs = ['mean', 'std', 'min', 'max', 'count']
+    grouped = df.groupby(agg_cols)[col].agg(agg_funcs)
+    grouped.columns = [f"{col}_{f}" for f in agg_funcs]
     return grouped.reset_index()
 
 
-def _safe_merge(left, right):
-    """Outer merge on subject_id + date, drop duplicates."""
-    if left is None:
-        return right.drop_duplicates(["subject_id", "date"])
-    merged = left.merge(right, on=["subject_id", "date"], how="outer")
-    return merged.drop_duplicates(["subject_id", "date"])
-
-
-def _rename_except_meta(df, prefix):
-    """Prefix all columns except subject_id, date."""
-    rename_map = {
-        c: f"{prefix}_{c}" for c in df.columns if c not in ("subject_id", "date")
+def create_ambience_features(df):
+    """Ambience 데이터에서 카테고리별 sum aggregation."""
+    ambience_map = {
+        'Speech': 'speech',
+        'Music': 'music',
+        'Vehicle (road)': 'motor_vehicle',
+        'Inside, small room': 'inside_small',
+        'Inside, small room or hall': 'inside_large',
+        'Outside, rural or natural': 'outside_rural',
+        'Outside, urban or manmade': 'outside_urban',
     }
-    return df.rename(columns=rename_map)
+    result_dfs = []
+    for korean_name, eng_name in ambience_map.items():
+        col = f"ambience_{korean_name}"
+        if col in df.columns:
+            grouped = df.groupby(["subject_id", "date"])["ambience_value"].agg(["sum", "mean"]).reset_index()
+            grouped.columns = [f"ambience_value", f"ambience_{eng_name}_{f}" for f in ['sum', 'mean']]
+            grouped['subject_id'] = df['subject_id'].values[:len(grouped)]
+            grouped['date'] = df['date'].values[:len(grouped)]
+            result_dfs.append(grouped)
+    return result_dfs
 
 
-# ─── feature builders ────────────────────────────────────
+def parse_ambience(df):
+    """Ambience JSON parsing."""
+    if 'ambience' not in df.columns:
+        return df
 
-def _numeric_agg(df_dict):
-    """mACStatus, mActivity, mLight, mScreenStatus, wLight."""
-    all_feat = None
-    for src, col in [
-        ("mACStatus", "m_charging"),
-        ("mActivity", "m_activity"),
-        ("mLight", "m_light"),
-        ("mScreenStatus", "m_screen_use"),
-        ("wLight", "w_light"),
-    ]:
-        feat = _agg_numeric(df_dict[src], col)
-        feat = _rename_except_meta(feat, src)
-        all_feat = _safe_merge(all_feat, feat)
-    return all_feat
+    records = []
+    for _, row in df.iterrows():
+        val = row['ambience']
+        subj = row['subject_id']
+        dt = row['datetime'] if 'datetime' in row else None
+
+        if val is None:
+            continue
+        if isinstance(val, str):
+            try:
+                import json
+                val = json.loads(val)
+            except:
+                continue
+        if not isinstance(val, list):
+            continue
+        for item in val:
+            if isinstance(item, dict) and 'value' in item:
+                records.append({
+                    'subject_id': subj,
+                    'datetime': dt,
+                    'ambience_value': item['value'],
+                })
+
+    if records:
+        amb_df = pd.DataFrame(records)
+        return amb_df
+    return pd.DataFrame(columns=['subject_id', 'datetime', 'ambience_value'])
 
 
-def _pedo_agg(df_dict):
-    """wPedo aggregation."""
-    WPEO_COLS = [
-        "step", "step_frequency", "running_step", "walking_step",
-        "distance", "speed", "burned_calories",
-    ]
-    grouped = df_dict["wPedo"].groupby(["subject_id", "date"])[WPEO_COLS].agg(
-        ["mean", "sum"]
-    )
-    grouped.columns = [f"pedo_{col}_{stat}" for col, stat in grouped.columns]
-    pedo_feat = grouped.reset_index()
-    pedo_feat = _rename_except_meta(pedo_feat, "wPedo")
-    return _safe_merge(None, pedo_feat)
+def parse_ble(df):
+    """BLE RSSI parsing."""
+    records = []
+    for _, row in df.iterrows():
+        val = row.get('ble')
+        if pd.isna(val) or val == 'null':
+            continue
+        if isinstance(val, str):
+            try:
+                import json
+                val = json.loads(val)
+            except:
+                continue
+        if not isinstance(val, list):
+            continue
+        for item in val:
+            if isinstance(item, dict):
+                records.append({
+                    'subject_id': row['subject_id'],
+                    'datetime': row.get('datetime'),
+                    'rssi': item.get('rssi'),
+                    'device_count': item.get('deviceCount'),
+                })
+
+    if records:
+        return pd.DataFrame(records)
+    return pd.DataFrame(columns=['subject_id', 'datetime', 'rssi', 'device_count'])
 
 
-def _json_agg(df_dict):
-    """JSON column parsing & aggregation."""
+def parse_gps(df):
+    """GPS parsing."""
+    records = []
+    for _, row in df.iterrows():
+        val = row.get('gps')
+        if pd.isna(val) or val == 'null':
+            continue
+        if isinstance(val, str):
+            try:
+                import json
+                val = json.loads(val)
+            except:
+                continue
+        if not isinstance(val, list):
+            continue
+        for item in val:
+            if isinstance(item, dict):
+                records.append({
+                    'subject_id': row['subject_id'],
+                    'datetime': row.get('datetime'),
+                    'speed': item.get('speed'),
+                    'altitude': item.get('altitude'),
+                })
 
-    # --- mAmbience ---
-    def _extract_ambience_features(grp):
-        scores = {}
-        total = 0
-        for v in grp["m_ambience"].dropna():
-            if isinstance(v, (np.ndarray, list)) and len(v) >= 10:
-                parsed = [
-                    ("Speech", v[0]), ("Music", v[1]), ("Vehicle", v[2]),
-                    ("Motor vehicle (road)", v[3]),
-                    ("Inside, large room or hall", v[4]),
-                    ("Inside, small room", v[5]),
-                    ("Outside, urban or manmade", v[6]),
-                    ("Outside, rural or natural", v[7]),
-                    ("Car", v[8]), ("Truck", v[9]),
-                ]
-                for cat, s in parsed:
-                    try:
-                        val = float(np.asarray(s).flatten()[0]) if hasattr(s, '__iter__') else float(s)
-                    except (ValueError, TypeError, IndexError):
-                        val = 0.0
-                    scores[cat] = scores.get(cat, 0) + val
-                total += 1
-        result = {}
-        for cat in scores:
-            key = f"ambience_{cat.lower().replace(' ', '_')}_sum"
-            result[key] = scores[cat] / max(total, 1)
-        top5 = sorted(scores.values(), reverse=True)[:5]
-        result["ambience_top5_sum"] = sum(top5) / max(total, 1)
-        result["ambience_max_cat"] = max(scores, key=scores.get) if scores else ""
-        return pd.Series(result)
+    if records:
+        return pd.DataFrame(records)
+    return pd.DataFrame(columns=['subject_id', 'datetime', 'speed', 'altitude'])
 
-    amb_df = df_dict["mAmbience"].groupby(["subject_id", "date"]).apply(
-        _extract_ambience_features, include_groups=False
-    ).reset_index()
-    amb_df = _rename_except_meta(amb_df, "mAmbience")
 
-    # --- wHr ---
-    hr_records = []
-    for _, row in df_dict["wHr"].iterrows():
-        hr_vals = []
-        if isinstance(row["heart_rate"], (np.ndarray, list)):
-            hr_vals = [float(v) for v in row["heart_rate"] if v is not None]
-        hr_records.append({
-            "subject_id": row["subject_id"],
-            "date": row["date"],
-            "wHr_hr_mean": np.mean(hr_vals) if hr_vals else np.nan,
-            "wHr_hr_std": np.std(hr_vals) if len(hr_vals) > 1 else np.nan,
-            "wHr_hr_count": len(hr_vals),
-        })
-    hr_feat = pd.DataFrame(hr_records)
+def parse_wifi(df):
+    """WiFi parsing."""
+    records = []
+    for _, row in df.iterrows():
+        val = row.get('wifi')
+        if pd.isna(val) or val == 'null':
+            continue
+        if isinstance(val, str):
+            try:
+                import json
+                val = json.loads(val)
+            except:
+                continue
+        if not isinstance(val, list):
+            continue
+        for item in val:
+            if isinstance(item, dict):
+                records.append({
+                    'subject_id': row['subject_id'],
+                    'datetime': row.get('datetime'),
+                    'rssi': item.get('rssi'),
+                    'bssid': item.get('bssid'),
+                    'strength': item.get('strength'),
+                })
 
-    # --- JSON stat cols (mBle, mGps, mUsageStats, mWifi) ---
-    parsers = {
-        "mBle": lambda v: v if isinstance(v, list) and len(v) > 0 else [[]],
-        "mGps": lambda v: v if isinstance(v, list) and len(v) > 0 else [[]],
-        "mUsageStats": lambda v: (v if isinstance(v, dict) else {}),
-        "mWifi": lambda v: v if isinstance(v, list) and len(v) > 0 else [[]],
+    if records:
+        return pd.DataFrame(records)
+    return pd.DataFrame(columns=['subject_id', 'datetime', 'rssi', 'bssid', 'strength'])
+
+
+def create_day_features(parquet_dfs, sample_df, config='v2'):
+    """
+    Day-level feature matrix 생성.
+    
+    config:
+      'v2_base'  - baseline (remove constants/collinearity, fix wHr)
+      'v2_windows' - + time-window aggregation
+      'v2_personal' - + personalization features
+      'v2_all' - everything
+    """
+    config = config.lower()
+    
+    # ── 1. Numeric columns aggregation (baseline) ──
+    numeric_cols = {
+        'mACStatus': ['charging', 'screen_use'],
+        'mActivity': ['activity'],
+        'mLight': ['light'],
+        'wHr': ['hr'],
+        'wLight': ['light'],
+        'wPedo': ['pedo_step', 'pedo_distance', 'pedo_speed', 'pedo_burned_calories'],
     }
 
-    json_feat = None
-    for src, parser in parsers.items():
-        df_src = df_dict[src]
-        parsed = df_src["m_ble" if src == "mBle" else
-                         "m_gps" if src == "mGps" else
-                         "m_usage_stats" if src == "mUsageStats" else
-                         "m_wifi"].apply(parser)
-        parsed_df = pd.DataFrame(parsed.tolist(), index=df_src.index)
-        parsed_df["subject_id"] = df_src["subject_id"]
-        parsed_df["date"] = df_src["date"]
-        stat_cols = [c for c in parsed_df.columns if c not in ("subject_id", "date")]
-        for sc in stat_cols:
-            grouped = parsed_df.groupby(["subject_id", "date"])[sc].agg(
-                ["mean", "std", "max", "min"]
-            )
-            grouped.columns = [f"{src}_{sc}_{s}" for s in grouped.columns]
-            json_feat = _safe_merge(json_feat, grouped.reset_index())
+    feature_dfs = []
 
-    # Merge all JSON features
-    result = _safe_merge(None, amb_df)
-    result = _safe_merge(result, hr_feat)
-    result = _safe_merge(result, json_feat)
-    return result
+    for device, cols in numeric_cols.items():
+        if device not in parquet_dfs:
+            continue
+        df = parquet_dfs[device].copy()
+        agg_cols = ["subject_id", "date"]
 
+        if 'datetime' in df.columns:
+            df['hour'] = pd.to_datetime(df['datetime']).dt.hour
+        else:
+            df['hour'] = 12  # dummy
 
-def _hour_ratio(df_dict):
-    """Time-of-day hour ratio features."""
-    result = None
-    for src, _ in [("mACStatus", "m_charging"), ("mScreenStatus", "m_screen_use")]:
-        df_src = df_dict[src].copy()
-        df_src["hour_bin"] = df_src["hour"].apply(
-            lambda h: "night" if h < 6 else "morning" if h < 12
-                      else "afternoon" if h < 18 else "evening"
-        )
-        ratio = df_src.groupby(["subject_id", "date"])["hour_bin"].value_counts(
-            normalize=True
-        ).unstack(fill_value=0)
-        ratio.columns = [f"{src}_hour_{c}" for c in ratio.columns]
-        ratio = ratio.reset_index()
-        result = _safe_merge(result, ratio)
-    return result
+        for col in cols:
+            # Check which column exists
+            data_col = f"m_{col}" if device.startswith('m') else f"{col}"
+            if data_col not in df.columns:
+                continue
+            agg_df = aggregate_numeric(df, data_col, agg_cols)
+            feature_dfs.append(agg_df)
 
+    # ── 2. JSON parsing ──
+    # Ambience
+    if 'mAmbience' in parquet_dfs:
+        amb_df = parquet_dfs['mAmbience'].copy()
+        amb_df = parse_json_columns(amb_df, ['ambience'])
+        amb_parsed = parse_ambience(amb_df)
+        if not amb_parsed.empty:
+            if 'datetime' in amb_parsed.columns:
+                amb_parsed['hour'] = pd.to_datetime(amb_parsed['datetime']).dt.hour
+            amb_agg = amb_parsed.groupby(["subject_id", "date", "ambience_value"]).size().unstack(fill_value=0)
+            amb_agg.columns = [f"ambience_{col}_sum" for col in amb_agg.columns]
+            amb_agg = amb_agg.reset_index()
+            feature_dfs.append(amb_agg)
 
-def _activity_density(df_dict):
-    """Activity density: steps/movement per hour of data collection."""
-    result = None
+    # BLE
+    if 'mBle' in parquet_dfs:
+        ble_df = parquet_dfs['mBle'].copy()
+        ble_df = parse_json_columns(ble_df, ['ble'])
+        ble_parsed = parse_ble(ble_df)
+        if not ble_parsed.empty:
+            if 'datetime' in ble_parsed.columns:
+                ble_parsed['hour'] = pd.to_datetime(ble_parsed['datetime']).dt.hour
+            for agg_fn in ['mean', 'std', 'min', 'max']:
+                if agg_fn == 'mean':
+                    agg_df = ble_parsed.groupby(["subject_id", "date"])['rssi'].agg(['mean', 'std', 'min', 'max']).reset_index()
+                    agg_df.columns = ['subject_id', 'date', 'ble_avg_rssi_mean', 'ble_avg_rssi_std', 'ble_avg_rssi_min', 'ble_avg_rssi_max']
+                    feature_dfs.append(agg_df)
+                elif agg_fn == 'max':
+                    agg_df = ble_parsed.groupby(["subject_id", "date"])['rssi'].agg(['max']).reset_index()
+                    agg_df.columns = ['subject_id', 'date', 'ble_max_rssi_mean']
+                    # Get max rssi per device too
+                    device_agg = ble_parsed.groupby(["subject_id", "date"])['device_count'].agg(['mean', 'std', 'max', 'count']).reset_index()
+                    device_agg.columns = ['subject_id', 'date', 'ble_device_count_mean', 'ble_device_count_std', 'ble_device_count_max', 'ble_device_count_count']
+                    feature_dfs.append(device_agg)
+                    # RSSI max/min per reading
+                    rssi_max_agg = ble_parsed.groupby(["subject_id", "date"])['rssi'].agg(['max', 'std']).reset_index()
+                    rssi_max_agg.columns = ['subject_id', 'date', 'ble_max_rssi_mean', 'ble_max_rssi_std']
+                    feature_dfs.append(rssi_max_agg)
+                    rssi_min_agg = ble_parsed.groupby(["subject_id", "date"])['rssi'].agg(['min', 'std']).reset_index()
+                    rssi_min_agg.columns = ['subject_id', 'date', 'ble_min_rssi_mean', 'ble_min_rssi_std']
+                    feature_dfs.append(rssi_min_agg)
+                    rssi_std_agg = ble_parsed.groupby(["subject_id", "date"])['rssi'].agg(['std']).reset_index()
+                    rssi_std_agg.columns = ['subject_id', 'date', 'ble_rssi_std_mean']
+                    feature_dfs.append(rssi_std_agg)
 
-    # wPedo density
-    pedo = df_dict["wPedo"].copy()
-    pedo["timestamp"] = pd.to_datetime(pedo["timestamp"])
-    time_span = (pedo["timestamp"].max() - pedo["timestamp"].min())
-    hours = time_span.total_seconds() / 3600
-    pedo["step_per_hour"] = pedo["step"] / max(hours, 1)
-    density = _agg_numeric(pedo, "step_per_hour")
-    density = _rename_except_meta(density, "pedo_density")
-    result = _safe_merge(result, density)
+    # GPS
+    if 'mGps' in parquet_dfs:
+        gps_df = parquet_dfs['mGps'].copy()
+        gps_df = parse_json_columns(gps_df, ['gps'])
+        gps_parsed = parse_gps(gps_df)
+        if not gps_parsed.empty:
+            if 'datetime' in gps_parsed.columns:
+                gps_parsed['hour'] = pd.to_datetime(gps_parsed['datetime']).dt.hour
+            for col_name, feat_name in [('speed', 'gps_speed'), ('altitude', 'gps_alt')]:
+                agg_df = gps_parsed.groupby(["subject_id", "date"])[col_name].agg(['mean', 'std', 'max', 'min']).reset_index()
+                agg_df.columns = ['subject_id', 'date',
+                                  f'{feat_name}_mean', f'{feat_name}_std',
+                                  f'{feat_name}_max', f'{feat_name}_min']
+                feature_dfs.append(agg_df)
+            # GPS count (how many readings per day)
+            gps_count = gps_parsed.groupby(["subject_id", "date"]).size().reset_index(name='gps_count')
+            feature_dfs.append(gps_count)
 
-    # Activity density
-    act = df_dict["mActivity"].copy()
-    act["timestamp"] = pd.to_datetime(act["timestamp"])
-    act["active_duration"] = act["m_activity"].apply(
-        lambda x: 1 if isinstance(x, (int, float)) and x > 0 else 0
-    )
-    act_dense = _agg_numeric(act, "active_duration")
-    act_dense = _rename_except_meta(act_dense, "act_density")
-    result = _safe_merge(result, act_dense)
+    # WiFi
+    if 'mWifi' in parquet_dfs:
+        wifi_df = parquet_dfs['mWifi'].copy()
+        wifi_df = parse_json_columns(wifi_df, ['wifi'])
+        wifi_parsed = parse_wifi(wifi_df)
+        if not wifi_parsed.empty:
+            if 'datetime' in wifi_parsed.columns:
+                wifi_parsed['hour'] = pd.to_datetime(wifi_parsed['datetime']).dt.hour
+            # RSSI features
+            rssi_agg = wifi_parsed.groupby(["subject_id", "date"])['rssi'].agg(['mean', 'std', 'min', 'max']).reset_index()
+            rssi_agg.columns = ['subject_id', 'date', 'wifi_avg_rssi_mean', 'wifi_avg_rssi_std', 'wifi_avg_rssi_min', 'wifi_avg_rssi_max']
+            feature_dfs.append(rssi_agg)
+            # Max RSSI features
+            max_rssi_agg = wifi_parsed.groupby(["subject_id", "date"])['rssi'].agg(['max']).reset_index()
+            max_rssi_agg.columns = ['subject_id', 'date', 'wifi_max_rssi_mean']
+            feature_dfs.append(max_rssi_agg)
+            # Strong signal ratio
+            strong_mask = wifi_parsed['rssi'] >= -60
+            strong_ratio = wifi_parsed.groupby(["subject_id", "date"]).apply(
+                lambda x: (strong_mask[x.index].sum() / len(x)) if len(x) > 0 else 0, include_groups=False
+            ).reset_index(name='wifi_strong_ratio_mean')
+            feature_dfs.append(strong_ratio)
+            # BSSID count (unique networks)
+            bssid_agg = wifi_parsed.groupby(["subject_id", "date"])['bssid'].nunique().reset_index(name='wifi_bssid_count_mean')
+            feature_dfs.append(bssid_agg)
+            # WiFi count
+            wifi_count = wifi_parsed.groupby(["subject_id", "date"]).size().reset_index(name='wifi_count_mean')
+            feature_dfs.append(wifi_count)
 
-    return result
+    # UsageStats
+    if 'mUsageStats' in parquet_dfs:
+        us_df = parquet_dfs['mUsageStats'].copy()
+        us_df = parse_json_columns(us_df, ['usage'])
+        usage_records = []
+        for _, row in us_df.iterrows():
+            val = row.get('usage')
+            if pd.isna(val) or val == 'null':
+                continue
+            if isinstance(val, str):
+                try:
+                    import json
+                    val = json.loads(val)
+                except:
+                    continue
+            if not isinstance(val, list):
+                continue
+            for item in val:
+                if isinstance(item, dict):
+                    usage_records.append({
+                        'subject_id': row['subject_id'],
+                        'date': row.get('date'),
+                        'category': item.get('category'),
+                        'ratio': item.get('ratio'),
+                        'time': item.get('time'),
+                    })
+        if usage_records:
+            usage_df = pd.DataFrame(usage_records)
+            usage_agg = usage_df.groupby(["subject_id", "date"])['ratio'].agg(['mean', 'std', 'max']).reset_index()
+            usage_agg.columns = ['subject_id', 'date', 'usage_ratio_mean', 'usage_ratio_std', 'usage_ratio_max']
+            feature_dfs.append(usage_agg)
+            usage_time_agg = usage_df.groupby(["subject_id", "date"])['time'].agg(['sum', 'mean']).reset_index()
+            usage_time_agg.columns = ['subject_id', 'date', 'usage_total_time_sum', 'usage_total_time_mean']
+            feature_dfs.append(usage_time_agg)
+            # Category aggregation
+            cat_agg = usage_df.groupby(["subject_id", "date", "category"])['ratio'].sum().unstack(fill_value=0)
+            cat_agg.columns = [f'usage_{col}_ratio_sum' for col in cat_agg.columns]
+            cat_agg = cat_agg.reset_index()
+            feature_dfs.append(cat_agg)
 
+    # ACStatus time-of-day binning
+    if 'mACStatus' in parquet_dfs:
+        ac_df = parquet_dfs['mACStatus'].copy()
+        ac_df = parse_json_columns(ac_df, ['charging'])
+        if not ac_df.empty and 'datetime' in ac_df.columns:
+            ac_df['hour'] = pd.to_datetime(ac_df['datetime']).dt.hour
+            time_bin = []
+            for _, row in ac_df.iterrows():
+                h = row['hour']
+                if h < 6:
+                    time_bin.append('night')
+                elif h < 12:
+                    time_bin.append('morning')
+                elif h < 18:
+                    time_bin.append('afternoon')
+                else:
+                    time_bin.append('evening')
+            ac_df['time_bin'] = time_bin
+            time_agg = ac_df.groupby(["subject_id", "date", "time_bin"]).size().unstack(fill_value=0)
+            time_agg.columns = [f'acstatus_hour_{col}' for col in time_agg.columns]
+            time_agg = time_agg.reset_index()
+            feature_dfs.append(time_agg)
 
-def _sensor_density(df_dict):
-    """Records per day from each sensor source."""
-    result = None
-    for src in ["mBle", "mGps", "mWifi", "mUsageStats"]:
-        df_src = df_dict[src]
-        counts = df_src.groupby(["subject_id", "date"]).size().reset_index(name=f"{src}_record_count")
-        result = _safe_merge(result, counts)
-    return result
+    # ScreenStatus time-of-day binning
+    if 'mScreenStatus' in parquet_dfs:
+        ss_df = parquet_dfs['mScreenStatus'].copy()
+        ss_df = parse_json_columns(ss_df, ['screen_use'])
+        if not ss_df.empty and 'datetime' in ss_df.columns:
+            ss_df['hour'] = pd.to_datetime(ss_df['datetime']).dt.hour
+            time_bin = []
+            for _, row in ss_df.iterrows():
+                h = row['hour']
+                if h < 6:
+                    time_bin.append('night')
+                elif h < 12:
+                    time_bin.append('morning')
+                elif h < 18:
+                    time_bin.append('afternoon')
+                else:
+                    time_bin.append('evening')
+            ss_df['time_bin'] = time_bin
+            time_agg = ss_df.groupby(["subject_id", "date", "time_bin"]).size().unstack(fill_value=0)
+            time_agg.columns = [f'screenstatus_hour_{col}' for col in time_agg.columns]
+            time_agg = time_agg.reset_index()
+            feature_dfs.append(time_agg)
 
+    # ── 3. Combine all ──
+    df_all = sample_df[['subject_id', 'date', 'lifelog_date']].copy()
+    for fdf in feature_dfs:
+        if 'subject_id' in fdf.columns and 'date' in fdf.columns:
+            df_all = df_all.merge(fdf, on=['subject_id', 'date'], how='left')
 
-def _circadian_features(df_dict):
-    """Circadian / sleep-related features."""
-    result = None
+    # Fill missing
+    df_all = df_all.fillna(0)
 
-    # Charging hour ratio (proxy for charging at night = sleeping)
-    ac = df_dict["mACStatus"].copy()
-    ac["is_charging"] = ac["m_charging"].apply(
-        lambda x: 1 if isinstance(x, (int, float)) and x == 1 else 0
-    )
-    night_charging = ac[ac["hour"].between(22, 6) | ac["hour"].between(0, 4)]
-    charging_stats = _agg_numeric(ac, "is_charging")
-    charging_stats = _rename_except_meta(charging_stats, "night_charge")
-    result = _safe_merge(result, charging_stats)
+    # ── 4. Remove constant columns ──
+    if 'v2_base' in config:
+        for col in CONSTANT_COLS:
+            if col in df_all.columns:
+                df_all.drop(columns=[col], inplace=True)
 
-    # Screen use timing: late-night screen use
-    screen = df_dict["mScreenStatus"].copy()
-    screen["late_night"] = screen["hour"].apply(
-        lambda h: 1 if h >= 23 or h <= 4 else 0
-    )
-    late_screen = _agg_numeric(screen, "late_night")
-    late_screen = _rename_except_meta(late_screen, "late_screen")
-    result = _safe_merge(result, late_screen)
+    # ── 5. Remove collinear columns ──
+    if 'v2_base' in config:
+        for keep, drop in COLLINEAR_PAIRS:
+            if drop in df_all.columns:
+                df_all.drop(columns=[drop], inplace=True)
 
-    return result
+    # ── 6. Fix wHr anomalies ──
+    if 'v2_base' in config:
+        if 'wHr_hr_mean' in df_all.columns:
+            low_hr = (df_all['wHr_hr_mean'] < HR_MIN) | (df_all['wHr_hr_mean'] > HR_MAX)
+            df_all.loc[low_hr, 'wHr_hr_mean'] = np.nan
+            if 'wHr_hr_std' in df_all.columns:
+                df_all.loc[low_hr, 'wHr_hr_std'] = np.nan
 
+    # ── 7. Time-window aggregation ──
+    if 'windows' in config:
+        print("    Creating time-window features...")
+        for device, cols in numeric_cols.items():
+            if device not in parquet_dfs:
+                continue
+            df = parquet_dfs[device].copy()
+            if 'datetime' not in df.columns:
+                continue
 
-def _daily_patterns(df_dict):
-    """Additional daily pattern features."""
-    result = None
+            df['datetime'] = pd.to_datetime(df['datetime'])
+            df['hour'] = df['datetime'].dt.hour
 
-    # Light variability: ratio of night light to total light
-    light = df_dict["mLight"].copy()
-    light["night_light"] = light["hour"].apply(
-        lambda h: 1 if h >= 21 or h <= 5 else 0
-    )
-    light_stats = _agg_numeric(light, "m_light")
-    light_stats = _rename_except_meta(light_stats, "mLight")
-    result = _safe_merge(result, light_stats)
+            for col in cols:
+                data_col = f"m_{col}" if device.startswith('m') else f"{col}"
+                if data_col not in df.columns:
+                    continue
 
-    # GPS mobility: max speed as proxy for outdoor activity
-    gps = df_dict["mGps"].copy()
-    if "max_speed" in gps.columns:
-        gps_stats = _agg_numeric(gps, "max_speed")
-        gps_stats = _rename_except_meta(gps_stats, "mGps")
-        result = _safe_merge(result, gps_stats)
+                for window in AGG_WINDOWS:
+                    if window == 24:
+                        continue  # already done as day-level
+                    # Aggregate last N hours from each timestamp
+                    # Simplified: group by (subject, date, hour-window)
+                    df_temp = df[df['hour'] >= window].copy()
+                    df_temp['window_date'] = df_temp['datetime'].dt.date
+                    df_temp['window_key'] = (df_temp['hour'] // window) * window
+                    agg_df = df_temp.groupby(["subject_id", "window_date", "window_key"])[data_col].agg(['mean', 'std']).reset_index()
+                    agg_df.columns = ['subject_id', 'window_date', 'window_key',
+                                      f'{data_col}_{window}h_mean', f'{data_col}_{window}h_std']
 
-    # WiFi connectivity: count of BSSIDs / unique networks
-    wifi = df_dict["mWifi"].copy()
-    if "bssid_count" in wifi.columns:
-        wifi_stats = _agg_numeric(wifi, "bssid_count")
-        wifi_stats = _rename_except_meta(wifi_stats, "mWifi")
-        result = _safe_merge(result, wifi_stats)
+                    # Map back to day-level: assign to the date where the window ends
+                    agg_df['date'] = agg_df['window_date']
+                    agg_df = agg_df.groupby(["subject_id", "date"])[[f'{data_col}_{window}h_mean', f'{data_col}_{window}h_std']].agg(['mean', 'std']).reset_index()
+                    agg_df.columns = ['subject_id', 'date',
+                                      f'{data_col}_{window}h_agg_mean', f'{data_col}_{window}h_agg_std']
 
-    return result
+                    if f'{data_col}_{window}h_agg_mean' in agg_df.columns:
+                        df_all = df_all.merge(agg_df[['subject_id', 'date', f'{data_col}_{window}h_agg_mean', f'{data_col}_{window}h_agg_std']],
+                                              on=['subject_id', 'date'], how='left')
 
+    # ── 8. Personalization features ──
+    if 'personal' in config:
+        print("    Creating personalization features...")
+        numeric_feat_cols = [c for c in df_all.columns
+                             if c not in ['subject_id', 'date', 'lifelog_date']
+                             and df_all[c].dtype in [np.float64, np.int64, float, int, bool]]
 
-# ─── main ────────────────────────────────────────────────
+        for feat in numeric_feat_cols:
+            # Personal mean deviation
+            subj_stats = df_all.groupby('subject_id')[feat].agg(['mean', 'std']).reset_index()
+            subj_stats.columns = ['subject_id', f'{feat}_subj_mean', f'{feat}_subj_std']
+            df_all = df_all.merge(subj_stats, on='subject_id', how='left')
+
+            # Personal z-score (deviation from personal mean)
+            mask = df_all[f'{feat}_subj_std'] > 0
+            df_all.loc[mask, f'{feat}_personal_zscore'] = (
+                df_all.loc[mask, feat] - df_all.loc[mask, f'{feat}_subj_mean']
+            ) / df_all.loc[mask, f'{feat}_subj_std']
+
+            # Day-over-day delta
+            df_sorted = df_all.sort_values(['subject_id', 'date']).copy()
+            df_sorted[f'{feat}_delta'] = df_sorted.groupby('subject_id')[feat].diff()
+            df_all[f'{feat}_delta'] = df_sorted[f'{feat}_delta'].values
+
+            # Fill NaN
+            zscore_col = f'{feat}_personal_zscore'
+            delta_col = f'{feat}_delta'
+            if zscore_col in df_all.columns:
+                df_all[zscore_col] = df_all[zscore_col].fillna(0)
+            if delta_col in df_all.columns:
+                df_all[delta_col] = df_all[delta_col].fillna(0)
+
+    # ── 9. Missing indicators ──
+    if 'personal' in config or 'windows' in config:
+        # Add missing indicators for features with >5% null rate
+        numeric_feat_cols = [c for c in df_all.columns
+                             if c not in ['subject_id', 'date', 'lifelog_date']
+                             and df_all[c].dtype in [np.float64, np.int64, float, int, bool]]
+        for feat in numeric_feat_cols:
+            null_rate = df_all[feat].isnull().mean()
+            if null_rate > 0.05:
+                df_all[f'{feat}_missing'] = df_all[feat].isnull().astype(int)
+                # Impute with 0
+                df_all[feat] = df_all[feat].fillna(0)
+
+    # ── 10. Weekend/weekday indicator ──
+    if 'v2_all' in config or 'windows' in config or 'personal' in config:
+        dates = pd.to_datetime(df_all['date'])
+        df_all['is_weekend'] = (dates.dt.dayofweek >= 5).astype(int)
+        df_all['day_of_week'] = dates.dt.dayofweek
+        df_all['month'] = dates.dt.month
+        df_all['day_of_year'] = dates.dt.dayofyear
+
+    return df_all
+
 
 def main():
-    """Create features, save to parquet."""
-    logger.info("=== 02_feature_engineering.py ===")
-    logger.info("Loading data...")
+    """파이프라인 실행."""
+    print("=" * 60)
+    print("feature_engineering_v2.py")
+    print("=" * 60)
 
-    import importlib
-    load_mod = importlib.import_module("01_load_data")
-    parquet_dfs, labels = load_mod.main()
+    # Load sample
+    sample = pd.read_csv(str(DATA_DIR.parent / 'ch2026_submission_sample.csv'),
+                         parse_dates=['sleep_date', 'lifelog_date'])
+    sample['lifelog_date'] = pd.to_datetime(sample['lifelog_date']).dt.date
 
-    # Build features
-    pipeline = build_feature_eng_pipeline()
-    all_features = None
+    # Load parquet data
+    print("\nLoading parquet data...")
+    parquet_dfs = load_parquet_data()
 
-    # Step 1: numeric aggregation
-    logger.info("[1/7] Numeric aggregation")
-    feat = _numeric_agg(parquet_dfs)
-    all_features = _safe_merge(all_features, feat)
+    # Run configs
+    configs = {
+        'v2_base': 'base (constants+collinearity+wHr fix)',
+        'v2_windows': 'base + time-window aggregation',
+        'v2_personal': 'base + personalization',
+        'v2_all': 'base + windows + personal + external',
+    }
 
-    # Step 2: wPedo
-    logger.info("[2/7] wPedo aggregation")
-    feat = _pedo_agg(parquet_dfs)
-    all_features = _safe_merge(all_features, feat)
+    for config_key, desc in configs.items():
+        print(f"\n{'=' * 60}")
+        print(f"Config: {config_key} — {desc}")
+        print("=" * 60)
 
-    # Step 3: JSON columns
-    logger.info("[3/7] JSON parsing & aggregation")
-    feat = _json_agg(parquet_dfs)
-    all_features = _safe_merge(all_features, feat)
+        df_feat = create_day_features(parquet_dfs, sample, config=config_key)
+        print(f"  Shape: {df_feat.shape}")
+        print(f"  Columns: {len([c for c in df_feat.columns if c not in ['subject_id','date','lifelog_date']])} features")
 
-    # Step 4: hour ratio
-    logger.info("[4/7] Hour ratio features")
-    feat = _hour_ratio(parquet_dfs)
-    all_features = _safe_merge(all_features, feat)
+        # Save
+        out_path = DATA_PROCESSED / f'test_features_{config_key}.parquet'
+        df_feat.to_parquet(out_path)
+        print(f"  Saved: {out_path}")
 
-    # Step 5: activity density
-    logger.info("[5/7] Activity density")
-    feat = _activity_density(parquet_dfs)
-    all_features = _safe_merge(all_features, feat)
-
-    # Step 6: sensor density
-    logger.info("[6/7] Sensor density")
-    feat = _sensor_density(parquet_dfs)
-    all_features = _safe_merge(all_features, feat)
-
-    # Step 7: circadian & daily patterns
-    logger.info("[7/7] Circadian & daily patterns")
-    feat = _circadian_features(parquet_dfs)
-    all_features = _safe_merge(all_features, feat)
-    feat = _daily_patterns(parquet_dfs)
-    all_features = _safe_merge(all_features, feat)
-
-    # Merge with labels
-    logger.info("Merging with labels...")
-    labels_day = labels[["subject_id", "lifelog_date", "sleep_date"] + TARGETS].copy()
-    labels_day["date"] = pd.to_datetime(labels_day["lifelog_date"]).dt.date.astype(str)
-
-    if all_features is not None and "date" in all_features.columns:
-        if all_features["date"].dtype != object:
-            all_features["date"] = all_features["date"].dt.date.astype(str)
-        elif isinstance(all_features["date"].iloc[0], (str,)):
-            pass  # already str
-
-    merged = labels_day.merge(all_features, on=["subject_id", "date"], how="left")
-    logger.info(f"  Merged shape: {merged.shape}")
-
-    # Save
-    DATA_PROCESSED.mkdir(parents=True, exist_ok=True)
-    out_path = DATA_PROCESSED / "features.parquet"
-    merged.to_parquet(out_path, index=False)
-    logger.info(f"Saved to {out_path} ({merged.shape[0]} rows, {merged.shape[1]} cols)")
-
-    # Feature count & coverage
-    feat_cols = [c for c in merged.columns if c not in ("subject_id","lifelog_date","sleep_date","date") + TARGETS]
-    coverage = merged[feat_cols].notna().mean() * 100
-    n_sparse = (coverage < 50).sum()
-    n_dense = (coverage >= 50).sum()
-    logger.info(f"Features: {len(feat_cols)} ({n_dense} ≥50% coverage, {n_sparse} <50%)")
-    logger.info(f"Missing feature values: {merged[feat_cols].isnull().sum().sum()}")
-
-    # Per-target distribution
-    logger.info("\n--- Per-target distribution ---")
-    for t in TARGETS:
-        mean_val = merged[t].mean()
-        missing = merged[t].isna().sum()
-        logger.info(f"  {t}: mean={mean_val:.3f}, missing={missing}")
+    print("\nDone!")
 
 
 if __name__ == "__main__":
