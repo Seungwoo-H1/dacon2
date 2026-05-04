@@ -1,0 +1,71 @@
+2026-05-04 19:30:54,387 [INFO] ======================================================================
+2026-05-04 19:30:54,387 [INFO] V31 — V10 tuning + V25 rolling + XGBoost ensemble
+2026-05-04 19:30:54,387 [INFO] ======================================================================
+2026-05-04 19:30:54,416 [INFO] Loaded: (450, 153)
+2026-05-04 19:30:54,420 [INFO] Base clean cols: 118
+2026-05-04 19:30:54,903 [INFO] Rolling cols: 472
+2026-05-04 19:30:56,393 [INFO] Personalization cols: 354
+2026-05-04 19:30:56,513 [INFO] Target rates: {'Q1': np.float64(0.4955555555555556), 'Q2': np.float64(0.5622222222222222), 'Q3': np.float64(0.6), 'S1': np.float64(0.6822222222222222), 'S2': np.float64(0.6511111111111111), 'S3': np.float64(0.6622222222222223), 'S4': np.float64(0.56)}
+2026-05-04 19:30:56,513 [INFO] 
+=== Per-target CV + XGBoost ===
+2026-05-04 19:30:56,513 [INFO] 
+  --- Q1 ---
+2026-05-04 19:33:11,499 [INFO]     LGBM config: {'name': 'C1', 'nl': 8, 'md': 3, 'lr': 0.02, 'ne': 200, 'ss': 0.6, 'cst': 0.6, 'ra': 2.0, 'rl': 5.0, 'mc': 15, '_n_feats': 20}
+2026-05-04 19:33:11,499 [INFO]     LGBM cal OOF: 0.6203, shift: +0.0000
+2026-05-04 19:33:11,499 [INFO] 
+  --- Q2 ---
+2026-05-04 19:35:39,039 [INFO]     LGBM config: {'name': 'C1', 'nl': 8, 'md': 3, 'lr': 0.02, 'ne': 200, 'ss': 0.6, 'cst': 0.6, 'ra': 2.0, 'rl': 5.0, 'mc': 15, '_n_feats': 30}
+2026-05-04 19:35:39,039 [INFO]     LGBM cal OOF: 0.5906, shift: -0.0000
+2026-05-04 19:35:39,039 [INFO] 
+  --- Q3 ---
+2026-05-04 19:38:06,505 [INFO]     LGBM config: {'name': 'C1', 'nl': 8, 'md': 3, 'lr': 0.02, 'ne': 200, 'ss': 0.6, 'cst': 0.6, 'ra': 2.0, 'rl': 5.0, 'mc': 15, '_n_feats': 30}
+2026-05-04 19:38:06,505 [INFO]     LGBM cal OOF: 0.5587, shift: +0.0000
+2026-05-04 19:38:06,505 [INFO] 
+  --- S1 ---
+2026-05-04 19:40:58,703 [INFO]     LGBM config: {'name': 'C1', 'nl': 8, 'md': 3, 'lr': 0.02, 'ne': 200, 'ss': 0.6, 'cst': 0.6, 'ra': 2.0, 'rl': 5.0, 'mc': 15, '_n_feats': 30}
+2026-05-04 19:40:58,704 [INFO]     LGBM cal OOF: 0.4963, shift: -0.0001
+2026-05-04 19:40:58,704 [INFO] 
+  --- S2 ---
+2026-05-04 19:43:11,055 [INFO]     LGBM config: {'name': 'C1', 'nl': 8, 'md': 3, 'lr': 0.02, 'ne': 200, 'ss': 0.6, 'cst': 0.6, 'ra': 2.0, 'rl': 5.0, 'mc': 15, '_n_feats': 20}
+2026-05-04 19:43:11,056 [INFO]     LGBM cal OOF: 0.5263, shift: -0.0021
+2026-05-04 19:43:11,056 [INFO] 
+  --- S3 ---
+2026-05-04 19:44:41,918 [INFO]     LGBM config: {'name': 'C1', 'nl': 8, 'md': 3, 'lr': 0.02, 'ne': 200, 'ss': 0.6, 'cst': 0.6, 'ra': 2.0, 'rl': 5.0, 'mc': 15, '_n_feats': 30}
+2026-05-04 19:44:41,919 [INFO]     LGBM cal OOF: 0.5397, shift: -0.0001
+2026-05-04 19:44:41,919 [INFO] 
+  --- S4 ---
+2026-05-04 19:46:38,734 [INFO]     LGBM config: {'name': 'C1', 'nl': 8, 'md': 3, 'lr': 0.02, 'ne': 200, 'ss': 0.6, 'cst': 0.6, 'ra': 2.0, 'rl': 5.0, 'mc': 15, '_n_feats': 10}
+2026-05-04 19:46:38,734 [INFO]     LGBM cal OOF: 0.5979, shift: +0.0000
+2026-05-04 19:46:38,842 [INFO] 
+  XGBoost available
+2026-05-04 19:47:17,044 [INFO]     XGB Q1 cal OOF: 0.6913
+2026-05-04 19:47:52,041 [INFO]     XGB Q2 cal OOF: 0.6836
+2026-05-04 19:48:21,725 [INFO]     XGB Q3 cal OOF: 0.6705
+2026-05-04 19:48:48,209 [INFO]     XGB S1 cal OOF: 0.6226
+2026-05-04 19:49:16,935 [INFO]     XGB S2 cal OOF: 0.6441
+2026-05-04 19:49:45,763 [INFO]     XGB S3 cal OOF: 0.6374
+2026-05-04 19:50:31,665 [INFO]     XGB S4 cal OOF: 0.6843
+2026-05-04 19:50:31,665 [INFO] 
+=== Ensemble search ===
+2026-05-04 19:50:31,675 [INFO]     w_lgb=0.3: avg cal OOF = 0.6160
+2026-05-04 19:50:31,683 [INFO]     w_lgb=0.4: avg cal OOF = 0.6036
+2026-05-04 19:50:31,692 [INFO]     w_lgb=0.5: avg cal OOF = 0.5926
+2026-05-04 19:50:31,701 [INFO]     w_lgb=0.6: avg cal OOF = 0.5830
+2026-05-04 19:50:31,708 [INFO]     w_lgb=0.7: avg cal OOF = 0.5748
+2026-05-04 19:50:31,708 [INFO]   Best: LGBM=0.7, XGB=0.3, OOF=0.5748
+2026-05-04 19:50:31,709 [INFO] 
+=== Generating submission ===
+2026-05-04 19:50:31,724 [INFO] ============================================================
+2026-05-04 19:50:31,724 [INFO] 02_feature_engineering.py — 특징 공학
+2026-05-04 19:50:31,724 [INFO] ============================================================
+2026-05-04 19:50:31,724 [INFO] [1/4] Numeric column aggregation
+Traceback (most recent call last):
+  File "/home/mwoo423/projects/dacon2/src/31_v31_ensemble.py", line 550, in <module>
+    main()
+  File "/home/mwoo423/projects/dacon2/src/31_v31_ensemble.py", line 428, in main
+    test_features = feat_eng.create_day_features(parquet_dfs, sample)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mwoo423/projects/dacon2/src/02_feature_engineering.py", line 289, in create_day_features
+    df = parquet_dfs[source]
+         ~~~~~~~~~~~^^^^^^^^
+KeyError: 'mACStatus'
