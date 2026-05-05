@@ -31,8 +31,7 @@ TARGETS = ['Q1', 'Q2', 'Q3', 'S1', 'S2', 'S3', 'S4']
 TARGET_COLS = TARGETS
 META = {'subject_id', 'lifelog_date', 'sleep_date', 'date'}
 
-SEEDS = [42, 123, 456, 789, 1024, 1337, 2048, 3037, 4096, 5001,
-         6000, 7123, 8001, 9000, 10000, 11111, 12000, 13001, 14000, 15001]
+SEEDS = [42, 123, 456, 789, 1024, 1337, 2048, 3037, 4096, 5001]  # 10 seeds for test pred (mem limit)
 
 def sanitize(n):
     return re.sub(r'[^a-zA-Z0-9_]','_',n)
@@ -42,7 +41,7 @@ CB_PARAMS = {
     'loss_function': 'Logloss',
     'verbose': 0,
     'learning_rate': 0.03,
-    'depth': 4,
+    'depth': 3,  # lowered from 4 for memory
     'l2_leaf_reg': 3.0,
     'bagging_temperature': 0.5,
     'od_type': 'Iter',

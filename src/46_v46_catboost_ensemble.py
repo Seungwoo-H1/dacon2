@@ -550,6 +550,133 @@ def main():
         json.dump(meta, f, indent=2)
     log.info(f"  Meta saved: {DATA_PROCESSED / 'v46_meta.json'}")
     
+    # ── Test Prediction (5 seeds each to save memory) ──
+    log.info(f"\n{'='*70}")
+    log.info("V46 TEST PREDICTION")
+    log.info(f"{'='*70}")
+    
+    SEEDS_TEST = [42, 456, 2048, 8001, 14000]  # 5 seeds for test pred
+    
+    test = pd.read_parquet(DATA_PROCESSED / "test_features.parquet")
+    log.info(f"  Test: {test.shape}")
+    
+    test = add_date_features(test)
+    test, _ = add_personalization(test, feat_cols)
+    
+    current_feat_cols = [c for c in feat.columns if c not in META | set(TARGET_COLS) and pd.api.types.is_numeric_dtype(feat[c])]
+    all_feat_cols = current_feat_cols + date_cols + zscore_cols
+    
+    common_cols = [c for c in all_feat_cols if c in test.columns and c in feat.columns]
+    test = test[common_cols + ['subject_id', 'sleep_date', 'lifelog_date']].fillna(0)
+    
+    predictions = pd.DataFrame()
+    test_meta = {}
+    
+    for target in TARGET_COLS:
+        tgt_t = time.time()
+        r = all_results[target]
+        cfg_name = r['config']
+        n_feat = r['n_feat']
+        w_cat = ensemble_weights[target]['cat']
+        w_lgb = 1.0 - w_cat
+        
+        leak_free = remove_leak(all_feat_cols, target)
+        ranked = rank_features_lgb(feat, leak_free, target)
+        sel = ranked[:n_feat]
+        sn = [sanitize(c) for c in sel]
+        
+        log.info(f"\n  {target}: Config={cfg_name} n={n_feat} w_CB={w_cat:.2f}")
+        
+        y_train = feat[target].values
+        X_train = feat[sel].fillna(0).values.astype(np.float64)
+        X_test = test[sel].fillna(0).values.astype(np.float64)
+        
+        lgb_params = {
+            'objective': 'binary', 'metric': 'binary_logloss',
+            'verbose': -1, 'force_row_wise': True, 'n_jobs': 1,
+            'num_leaves': CONFIGS[cfg_name]['nl'],
+            'max_depth': CONFIGS[cfg_name]['md'],
+            'learning_rate': CONFIGS[cfg_name]['lr'],
+            'n_estimators': CONFIGS[cfg_name]['ne'],
+            'subsample': CONFIGS[cfg_name]['ss'],
+            'colsample_bytree': CONFIGS[cfg_name]['cb'],
+            'reg_alpha': CONFIGS[cfg_name]['ra'],
+            'reg_lambda': CONFIGS[cfg_name]['rl'],
+            'min_child_samples': CONFIGS[cfg_name]['mc'],
+        }
+        spw = max(((y_train == 0).sum()) / max((y_train == 1).sum(), 1), 0.1)
+        lgb_params['scale_pos_weight'] = spw
+        
+        lgb_preds = np.zeros(len(test))
+        for seed_i, seed in enumerate(SEEDS_TEST):
+            ds = lgb.Dataset(X_train, label=y_train, feature_name=sn, params={'verbose': '-1'})
+            params = {**lgb_params, 'random_state': seed}
+            m = lgb.train(params, ds, num_boost_round=CONFIGS[cfg_name]['ne'])
+            lgb_preds += m.predict(X_test)
+            if (seed_i + 1) % 2 == 0:
+                log.info(f"    LGBM seed {seed_i+1}/{len(SEEDS_TEST)}")
+            del m, ds
+            gc.collect()
+        lgb_preds /= len(SEEDS_TEST)
+        
+        cat_preds = np.zeros(len(test))
+        for seed_i, seed in enumerate(SEEDS_TEST):
+            X_train_cb = feat[sel].fillna(0).values.astype(np.float32)
+            X_test_cb = test[sel].fillna(0).values.astype(np.float32)
+            params = {**cat_params, 'random_seed': seed, 'num_boost_round': CONFIGS[cfg_name]['ne']}
+            m = cb.CatBoostClassifier(**params)
+            m.fit(X_train_cb, y_train, use_best_model=False)
+            cat_preds += m.predict_proba(X_test_cb)[:, 1]
+            if (seed_i + 1) % 2 == 0:
+                log.info(f"    CB seed {seed_i+1}/{len(SEEDS_TEST)}")
+            del m
+            gc.collect()
+        cat_preds /= len(SEEDS_TEST)
+        
+        ens_preds = w_lgb * lgb_preds + w_cat * cat_preds
+        cal_preds = simple_mm(ens_preds, train_rate[target])
+        
+        predictions[target] = cal_preds
+        test_meta[target] = {
+            'config': cfg_name, 'n_feat': n_feat,
+            'pred_mean': float(cal_preds.mean()),
+            'pred_min': float(cal_preds.min()),
+            'pred_max': float(cal_preds.max()),
+        }
+        log.info(f"    {target}: test_mean={cal_preds.mean():.4f} | Time: {time.time()-tgt_t:.0f}s")
+    
+    timestamp = pd.Timestamp.now().strftime("%Y%m%d_%H%M%S")
+    predictions['subject_id'] = test['subject_id'].values
+    predictions['sleep_date'] = test['sleep_date'].values
+    predictions['lifelog_date'] = test['lifelog_date'].values
+    predictions = predictions[['subject_id', 'sleep_date', 'lifelog_date'] + TARGET_COLS]
+    
+    sub_path = SUBMIT_DIR / f'submission_v46_{timestamp}.csv'
+    predictions.to_csv(sub_path, index=False)
+    log.info(f"\n✅ Submission saved: {sub_path}")
+    
+    test_meta['version'] = 'v46'
+    test_meta['submission_file'] = str(sub_path)
+    test_meta['avg_cal_training'] = float(avg_cal)
+    meta_path = SUBMIT_DIR / f'meta_v46_{timestamp}.json'
+    with open(meta_path, 'w') as f:
+        json.dump(test_meta, f, indent=2, default=str)
+    log.info(f"  Meta saved: {meta_path}")
+    
+    log.info(f"\n{'='*70}")
+    log.info("V46 FINAL SUMMARY")
+    log.info(f"{'='*70}")
+    log.info(f"Submission: {sub_path}")
+    log.info(f"{'Target':<6} {'Config':<6} {'nF':>4} {'Training Cal':>12} {'Test Mean':>10}")
+    for target in TARGET_COLS:
+        r = all_results[target]
+        t = test_meta[target]
+        log.info(f"  {target:<6} {r['config']:<6} {r['n_feat']:>4} {r['cal']:>12.4f} {t['pred_mean']:>10.4f}")
+    log.info(f"\n  V46 Avg Cal (training): {avg_cal:.4f}")
+    log.info(f"  V10 Avg Cal: 0.6038")
+    log.info(f"  Δ: {avg_cal - 0.6038:+.4f}")
+    log.info(f"  Total: {time.time()-t_start:.0f}s")
+    
     return all_results
 
 if __name__ == "__main__":
