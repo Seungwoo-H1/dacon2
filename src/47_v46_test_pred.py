@@ -210,10 +210,10 @@ def main():
     
     all_feat_cols = feat_cols + date_cols + zscore_cols
     
-    # Align columns (keep targets in feat)
+    # Align columns (keep targets, subject_id, dates in feat)
     common_cols = [c for c in all_feat_cols if c in feat.columns and c in test.columns]
-    feat = feat[common_cols + TARGET_COLS].fillna(0)
-    test = test[common_cols].fillna(0)
+    feat = feat[common_cols + TARGET_COLS + ['subject_id', 'sleep_date', 'lifelog_date']].fillna(0)
+    test = test[common_cols + ['subject_id', 'sleep_date', 'lifelog_date']].fillna(0)
     
     train_rate = {t: feat[t].mean() for t in TARGET_COLS}
     log.info(f"  Train rates: {train_rate}")
@@ -221,6 +221,10 @@ def main():
     # 5. Feature ranking per target (train data)
     predictions = pd.DataFrame()
     all_meta = {}
+    
+    # Rebuild all_feat_cols to match current feat structure
+    current_feat_cols = [c for c in feat.columns if c not in META | set(TARGET_COLS) and pd.api.types.is_numeric_dtype(feat[c])]
+    all_feat_cols_final = current_feat_cols
     
     for target in TARGET_COLS:
         log.info(f"\n--- {target} ---")
@@ -232,7 +236,7 @@ def main():
         w_cat = v46_info['w_cat']
         w_lgb = 1.0 - w_cat
         
-        leak_free = remove_leak(all_feat_cols, target)
+        leak_free = remove_leak(all_feat_cols_final, target)
         ranked = rank_features_lgb(feat, leak_free, target)
         sel = ranked[:n_feat]
         
