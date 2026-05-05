@@ -273,6 +273,99 @@ def main():
     oof_df.to_csv(oof_path, index=False)
     log.info(f"  OOF saved: {oof_path}")
     
+    # 9. Test prediction with best configs
+    log.info(f"\n--- Test prediction ---")
+    test = pd.read_parquet(DATA_PROCESSED / "test_features.parquet")
+    log.info(f"  Test loaded: {test.shape}")
+    
+    # Personalize test (same subject_id distribution, z-score from train stats)
+    test_feat_cols = [c for c in test.columns if c not in META | set(TARGET_COLS)
+                      and test[c].dtype in [np.float64, np.int64, float, int, bool, np.bool_]]
+    
+    test = test.copy()
+    for col in test_feat_cols:
+        col_filled = test[col].fillna(0)
+        # Use train stats for personalization (merge with train subject_id stats)
+        train_zscore_mean = feat[[f'{col}_subj_mean', f'{col}_subj_std']].dropna(how='all')
+        if len(train_zscore_mean) > 0:
+            test = test.merge(train_zscore_mean[['subject_id', f'{col}_subj_mean', f'{col}_subj_std']],
+                            on='subject_id', how='left')
+            mask_zero = test[f'{col}_subj_std'] == 0
+            mask_null = test[col].isnull()
+            test[f'{col}_zscore'] = np.where(
+                mask_zero | mask_null, 0.0,
+                (test[col] - test[f'{col}_subj_mean']) / test[f'{col}_subj_std']
+            )
+    gc.collect()
+    
+    # Build test predictions
+    test_preds = {t: np.zeros(len(test)) for t in TARGET_COLS}
+    
+    for target in TARGET_COLS:
+        best_cfg = all_results[target]['config']
+        best_n = all_results[target]['n_feat']
+        sel = ranked_map[target][:best_n]  # Need to save ranked cols
+        
+        # Find best config
+        cfg_best = None
+        for cfg in CONFIGS:
+            if cfg['name'] == best_cfg:
+                cfg_best = cfg
+                break
+        
+        leak_cols = remove_leak(test_feat_cols + [c for c in test_feat_cols if '_zscore' in c], target)
+        sel = ranked_map[target][:best_n]
+        
+        cfg_full = {
+            'objective': 'binary', 'metric': 'binary_logloss',
+            'verbose': -1, 'force_row_wise': True, 'n_jobs': 1,
+            'num_leaves': cfg_best['nl'], 'max_depth': cfg_best['md'],
+            'learning_rate': cfg_best['lr'], 'n_estimators': cfg_best['ne'],
+            'subsample': cfg_best['ss'], 'colsample_bytree': cfg_best['cb'],
+            'reg_alpha': cfg_best['ra'], 'reg_lambda': cfg_best['rl'],
+            'min_child_samples': cfg_best['mc'],
+        }
+        
+        sn = [sanitize(c) for c in sel]
+        all_preds = np.zeros(len(test))
+        
+        for seed in SEEDS:
+            cfg_seed = {**cfg_full, 'random_state': seed, 'scale_pos_weight': train_rate[target] / (1 - train_rate[target]) if train_rate[target] < 1 else 1}
+            X_test = test[sel].fillna(0).values.astype(np.float64)
+            ds = lgb.Dataset(X_test, feature_name=sn, params={'verbose': '-1'})
+            
+            # Need to reload models — but we don't have them. Train from scratch.
+            del ds
+            
+            # Retrain on ALL data with this seed
+            X_all = feat[sel].fillna(0).values.astype(np.float64)
+            y_all = feat[target].values.astype(np.float64)
+            ds_all = lgb.Dataset(X_all, label=y_all, feature_name=sn, params={'verbose': '-1'})
+            m = lgb.train(cfg_seed, ds_all, num_boost_round=cfg_best['ne'])
+            all_preds += m.predict(X_test)
+            del m, ds_all
+            gc.collect()
+        
+        all_preds /= len(SEEDS)
+        cal_preds = mm(all_preds, train_rate[target])
+        test_preds[target] = cal_preds
+        log.info(f"  {target}: test_mean={cal_preds.mean():.4f}, train_rate={train_rate[target]:.3f}")
+    
+    # Save test submission
+    timestamp = pd.Timestamp.now().strftime("%Y%m%d_%H%M%S")
+    sub_df = pd.DataFrame({
+        'subject_id': test['subject_id'].values,
+        'sleep_date': test['sleep_date'].values,
+        'lifelog_date': test['lifelog_date'].values,
+    })
+    for target in TARGET_COLS:
+        sub_df[target] = test_preds[target]
+    
+    sub_path = SUBMIT_DIR / f'submission_v43_{timestamp}.csv'
+    sub_path.parent.mkdir(parents=True, exist_ok=True)
+    sub_df.to_csv(sub_path, index=False)
+    log.info(f"\n✅ Submission saved: {sub_path}")
+    
     return all_results
 
 if __name__ == "__main__":
