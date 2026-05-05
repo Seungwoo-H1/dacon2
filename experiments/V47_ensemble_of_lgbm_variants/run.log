@@ -1,0 +1,121 @@
+2026-05-06 01:02:18,643 [INFO] ======================================================================
+2026-05-06 01:02:18,643 [INFO] V47 — Ensemble of LGBM Variants (Multi-Config Stacking)
+2026-05-06 01:02:18,643 [INFO] ======================================================================
+2026-05-06 01:02:18,643 [INFO] 
+--- 1. Load features ---
+2026-05-06 01:02:18,671 [INFO]   Loaded: (450, 153)
+2026-05-06 01:02:24,746 [INFO]   After personalization: (450, 576) (141 zscore features)
+2026-05-06 01:02:24,747 [INFO]   Target rates: {'Q1': np.float64(0.4955555555555556), 'Q2': np.float64(0.5622222222222222), 'Q3': np.float64(0.6), 'S1': np.float64(0.6822222222222222), 'S2': np.float64(0.6511111111111111), 'S3': np.float64(0.6622222222222223), 'S4': np.float64(0.56)}
+2026-05-06 01:02:24,747 [INFO] 
+--- 2. Feature ranking ---
+2026-05-06 01:02:24,917 [INFO]   Q1 top-10: ['mUsageStats_usage_major_ratio_mean', 'wHr_hr_std_zscore', 'mBle_ble_count_mean_zscore', 'mWifi_wifi_max_rssi_mean', 'mUsageStats_usage_app_count_min_zscore', 'mScreenStatus_hour_morning', 'mWifi_wifi_max_rssi_min', 'mBle_ble_device_count_mean', 'wLight_w_light_mean_zscore', 'wLight_w_light_count']
+2026-05-06 01:02:25,086 [INFO]   Q2 top-10: ['mUsageStats_usage_app_count_std', 'mACStatus_m_charging_mean', 'mACStatus_m_charging_std', 'mBle_ble_rssi_std_max_zscore', 'mUsageStats_usage_major_ratio_std', 'mWifi_wifi_count_std_zscore', 'mGps_gps_count_max_zscore', 'mBle_ble_min_rssi_mean', 'mUsageStats_usage_app_count_std_zscore', 'mScreenStatus_m_screen_use_mean_zscore']
+2026-05-06 01:02:25,274 [INFO]   Q3 top-10: ['mLight_m_light_mean', 'mWifi_wifi_max_rssi_std', 'mUsageStats_usage_total_time_std_zscore', 'mBle_ble_count_max', 'mGps_gps_avg_speed_std', 'mUsageStats_usage_major_ratio_mean_zscore', 'mActivity_m_activity_std_zscore', 'mWifi_wifi_count_mean_zscore', 'mWifi_wifi_max_rssi_mean', 'mWifi_wifi_count_max']
+2026-05-06 01:02:25,431 [INFO]   S1 top-10: ['mScreenStatus_m_screen_use_std', 'mUsageStats_usage_total_time_mean', 'mBle_ble_rssi_std_mean_zscore', 'wHr_hr_std_zscore', 'mUsageStats_usage_app_count_max_zscore', 'mScreenStatus_m_screen_use_mean', 'mACStatus_hour_evening_zscore', 'mWifi_wifi_max_rssi_max', 'mUsageStats_usage_major_ratio_std', 'mWifi_wifi_count_max_zscore']
+2026-05-06 01:02:25,591 [INFO]   S2 top-10: ['mWifi_wifi_max_rssi_max', 'mActivity_m_activity_count_zscore', 'mAmbience_ambience_outside,_rural_or_natural_sum_zscore', 'mWifi_wifi_count_mean', 'mBle_ble_device_count_std', 'mBle_ble_rssi_std_std_zscore', 'mGps_gps_avg_speed_max', 'mScreenStatus_hour_morning_zscore', 'mUsageStats_usage_total_time_max_zscore', 'mLight_m_light_mean']
+2026-05-06 01:02:25,752 [INFO]   S3 top-10: ['mWifi_wifi_max_rssi_max', 'mBle_ble_max_rssi_max', 'mGps_gps_avg_speed_min_zscore', 'mGps_gps_count_std', 'mUsageStats_usage_total_time_mean', 'mGps_gps_count_mean', 'mUsageStats_usage_total_time_mean_zscore', 'mGps_gps_avg_speed_max', 'mGps_gps_avg_speed_mean', 'mWifi_wifi_count_min_zscore']
+2026-05-06 01:02:25,923 [INFO]   S4 top-10: ['mGps_gps_avg_speed_max', 'mAmbience_ambience_top5_sum_zscore', 'mBle_ble_max_rssi_max_zscore', 'mBle_ble_min_rssi_max_zscore', 'mBle_ble_count_std_zscore', 'mUsageStats_usage_major_ratio_mean', 'wLight_w_light_max_zscore', 'mBle_ble_max_rssi_max', 'mGps_gps_avg_speed_max_zscore', 'mWifi_wifi_max_rssi_mean']
+2026-05-06 01:02:25,923 [INFO] 
+--- 3. Per-target multi-config training ---
+2026-05-06 01:02:25,923 [INFO] 
+  === Q1 (rate=0.496, n_feat=20) ===
+2026-05-06 01:02:28,778 [INFO]     C1_deep_mod: OOF=0.6445, pred_mean=0.5120
+2026-05-06 01:02:30,817 [INFO]     C2_shallow_str: OOF=0.6881, pred_mean=0.5023
+2026-05-06 01:02:33,139 [INFO]     C3_balanced: OOF=0.6492, pred_mean=0.5141
+2026-05-06 01:02:35,968 [INFO]     C4_wide_shallow: OOF=0.6384, pred_mean=0.5145
+2026-05-06 01:02:39,832 [INFO]     C5_deep_slow: OOF=0.6385, pred_mean=0.5142
+2026-05-06 01:02:41,790 [INFO]     C6_ultra_safe: OOF=0.7042, pred_mean=0.4960
+2026-05-06 01:02:41,849 [INFO]     [A] Simple avg: OOF=1.1618, Cal=0.6814
+2026-05-06 01:02:41,863 [INFO]     [B] Meta-learner: OOF=0.6334, Cal=0.6334
+2026-05-06 01:02:41,863 [INFO]     [WINNER] Strategy B, Cal=0.6334
+2026-05-06 01:02:41,863 [INFO]   Q1 total time: 16s
+2026-05-06 01:02:41,921 [INFO] 
+  === Q2 (rate=0.562, n_feat=20) ===
+2026-05-06 01:02:44,733 [INFO]     C1_deep_mod: OOF=0.6127, pred_mean=0.5683
+2026-05-06 01:02:46,761 [INFO]     C2_shallow_str: OOF=0.6823, pred_mean=0.5328
+2026-05-06 01:02:49,104 [INFO]     C3_balanced: OOF=0.6173, pred_mean=0.5525
+2026-05-06 01:02:51,613 [INFO]     C4_wide_shallow: OOF=0.6061, pred_mean=0.5563
+2026-05-06 01:02:55,317 [INFO]     C5_deep_slow: OOF=0.6012, pred_mean=0.5688
+2026-05-06 01:02:57,333 [INFO]     C6_ultra_safe: OOF=0.6911, pred_mean=0.5488
+2026-05-06 01:02:57,383 [INFO]     [A] Simple avg: OOF=1.2556, Cal=0.6697
+2026-05-06 01:02:57,394 [INFO]     [B] Meta-learner: OOF=0.5996, Cal=0.5996
+2026-05-06 01:02:57,394 [INFO]     [WINNER] Strategy B, Cal=0.5996
+2026-05-06 01:02:57,394 [INFO]   Q2 total time: 15s
+2026-05-06 01:02:57,455 [INFO] 
+  === Q3 (rate=0.600, n_feat=20) ===
+2026-05-06 01:03:00,378 [INFO]     C1_deep_mod: OOF=0.6167, pred_mean=0.5752
+2026-05-06 01:03:02,315 [INFO]     C2_shallow_str: OOF=0.6709, pred_mean=0.5596
+2026-05-06 01:03:04,754 [INFO]     C3_balanced: OOF=0.6161, pred_mean=0.5650
+2026-05-06 01:03:07,578 [INFO]     C4_wide_shallow: OOF=0.6119, pred_mean=0.5649
+2026-05-06 01:03:10,994 [INFO]     C5_deep_slow: OOF=0.6244, pred_mean=0.5851
+2026-05-06 01:03:13,027 [INFO]     C6_ultra_safe: OOF=0.6774, pred_mean=0.5749
+2026-05-06 01:03:13,087 [INFO]     [A] Simple avg: OOF=1.3261, Cal=0.6591
+2026-05-06 01:03:13,101 [INFO]     [B] Meta-learner: OOF=0.6126, Cal=0.6126
+2026-05-06 01:03:13,102 [INFO]     [WINNER] Strategy B, Cal=0.6126
+2026-05-06 01:03:13,102 [INFO]   Q3 total time: 16s
+2026-05-06 01:03:13,158 [INFO] 
+  === S1 (rate=0.682, n_feat=20) ===
+2026-05-06 01:03:15,533 [INFO]     C1_deep_mod: OOF=0.5903, pred_mean=0.6354
+2026-05-06 01:03:17,434 [INFO]     C2_shallow_str: OOF=0.6127, pred_mean=0.6462
+2026-05-06 01:03:19,510 [INFO]     C3_balanced: OOF=0.6005, pred_mean=0.6212
+2026-05-06 01:03:21,795 [INFO]     C4_wide_shallow: OOF=0.5945, pred_mean=0.6154
+2026-05-06 01:03:24,871 [INFO]     C5_deep_slow: OOF=0.5804, pred_mean=0.6227
+2026-05-06 01:03:26,843 [INFO]     C6_ultra_safe: OOF=0.6228, pred_mean=0.6632
+2026-05-06 01:03:26,890 [INFO]     [A] Simple avg: OOF=1.4353, Cal=0.6144
+2026-05-06 01:03:26,896 [INFO]     [B] Meta-learner: OOF=0.5745, Cal=0.5745
+2026-05-06 01:03:26,896 [INFO]     [WINNER] Strategy B, Cal=0.5745
+2026-05-06 01:03:26,896 [INFO]   S1 total time: 14s
+2026-05-06 01:03:26,941 [INFO] 
+  === S2 (rate=0.651, n_feat=20) ===
+2026-05-06 01:03:29,353 [INFO]     C1_deep_mod: OOF=0.6108, pred_mean=0.5988
+2026-05-06 01:03:31,154 [INFO]     C2_shallow_str: OOF=0.6418, pred_mean=0.5954
+2026-05-06 01:03:33,162 [INFO]     C3_balanced: OOF=0.6220, pred_mean=0.5856
+2026-05-06 01:03:35,305 [INFO]     C4_wide_shallow: OOF=0.6062, pred_mean=0.5862
+2026-05-06 01:03:38,061 [INFO]     C5_deep_slow: OOF=0.6108, pred_mean=0.6050
+2026-05-06 01:03:40,064 [INFO]     C6_ultra_safe: OOF=0.6448, pred_mean=0.6056
+2026-05-06 01:03:40,115 [INFO]     [A] Simple avg: OOF=1.4123, Cal=0.6372
+2026-05-06 01:03:40,123 [INFO]     [B] Meta-learner: OOF=0.6004, Cal=0.6004
+2026-05-06 01:03:40,123 [INFO]     [WINNER] Strategy B, Cal=0.6004
+2026-05-06 01:03:40,123 [INFO]   S2 total time: 13s
+2026-05-06 01:03:40,189 [INFO] 
+  === S3 (rate=0.662, n_feat=20) ===
+2026-05-06 01:03:42,480 [INFO]     C1_deep_mod: OOF=0.6291, pred_mean=0.6426
+2026-05-06 01:03:44,329 [INFO]     C2_shallow_str: OOF=0.6455, pred_mean=0.6220
+2026-05-06 01:03:46,414 [INFO]     C3_balanced: OOF=0.6289, pred_mean=0.6289
+2026-05-06 01:03:48,545 [INFO]     C4_wide_shallow: OOF=0.6249, pred_mean=0.6304
+2026-05-06 01:03:51,007 [INFO]     C5_deep_slow: OOF=0.6344, pred_mean=0.6449
+2026-05-06 01:03:53,087 [INFO]     C6_ultra_safe: OOF=0.6465, pred_mean=0.6240
+2026-05-06 01:03:53,130 [INFO]     [A] Simple avg: OOF=1.4092, Cal=0.6356
+2026-05-06 01:03:53,136 [INFO]     [B] Meta-learner: OOF=0.6234, Cal=0.6234
+2026-05-06 01:03:53,136 [INFO]     [WINNER] Strategy B, Cal=0.6234
+2026-05-06 01:03:53,136 [INFO]   S3 total time: 13s
+2026-05-06 01:03:53,187 [INFO] 
+  === S4 (rate=0.560, n_feat=20) ===
+2026-05-06 01:03:55,903 [INFO]     C1_deep_mod: OOF=0.6274, pred_mean=0.5326
+2026-05-06 01:03:57,918 [INFO]     C2_shallow_str: OOF=0.6739, pred_mean=0.5246
+2026-05-06 01:04:00,277 [INFO]     C3_balanced: OOF=0.6379, pred_mean=0.5166
+2026-05-06 01:04:02,565 [INFO]     C4_wide_shallow: OOF=0.6324, pred_mean=0.5226
+2026-05-06 01:04:05,921 [INFO]     C5_deep_slow: OOF=0.6213, pred_mean=0.5356
+2026-05-06 01:04:08,046 [INFO]     C6_ultra_safe: OOF=0.6909, pred_mean=0.5479
+2026-05-06 01:04:08,088 [INFO]     [A] Simple avg: OOF=1.2801, Cal=0.6733
+2026-05-06 01:04:08,094 [INFO]     [B] Meta-learner: OOF=0.6213, Cal=0.6213
+2026-05-06 01:04:08,094 [INFO]     [WINNER] Strategy B, Cal=0.6213
+2026-05-06 01:04:08,094 [INFO]   S4 total time: 15s
+2026-05-06 01:04:08,150 [INFO] 
+======================================================================
+2026-05-06 01:04:08,150 [INFO] V47 SUMMARY
+2026-05-06 01:04:08,150 [INFO] ======================================================================
+2026-05-06 01:04:08,150 [INFO]   Q1: B Cal=0.6334 n_feat=20
+2026-05-06 01:04:08,150 [INFO]   Q2: B Cal=0.5996 n_feat=20
+2026-05-06 01:04:08,150 [INFO]   Q3: B Cal=0.6126 n_feat=20
+2026-05-06 01:04:08,150 [INFO]   S1: B Cal=0.5745 n_feat=20
+2026-05-06 01:04:08,150 [INFO]   S2: B Cal=0.6004 n_feat=20
+2026-05-06 01:04:08,150 [INFO]   S3: B Cal=0.6234 n_feat=20
+2026-05-06 01:04:08,150 [INFO]   S4: B Cal=0.6213 n_feat=20
+2026-05-06 01:04:08,159 [INFO] 
+  V47 Avg Cal: 0.6093
+2026-05-06 01:04:08,160 [INFO]   V10 Avg Cal: 0.6038
+2026-05-06 01:04:08,160 [INFO]   Δ: +0.0055 (❌ Not improved)
+2026-05-06 01:04:08,160 [INFO]   Total: 110s (109.5min)
+2026-05-06 01:04:08,182 [INFO]   OOF saved: /home/mwoo423/projects/dacon2/data_processed/oof_v47.csv
+2026-05-06 01:04:08,183 [INFO]   Metadata saved: /home/mwoo423/projects/dacon2/data_processed/v47_meta.json
