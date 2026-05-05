@@ -1,0 +1,64 @@
+2026-05-06 02:26:32,116 [INFO] ======================================================================
+2026-05-06 02:26:32,116 [INFO] V53 — Deep Feature Engineering + Multi-Strategy Ensemble
+2026-05-06 02:26:32,116 [INFO] ======================================================================
+2026-05-06 02:26:32,116 [INFO] 
+--- 1. Load features ---
+2026-05-06 02:26:32,144 [INFO]   Loaded: (450, 153)
+2026-05-06 02:26:38,234 [INFO]   After personalization: (450, 576)
+2026-05-06 02:26:38,235 [INFO] 
+--- 2. Feature ranking ---
+2026-05-06 02:26:38,423 [INFO]   Q1 top-5 LGBM: ['mUsageStats_usage_major_ratio_mean', 'wHr_hr_std_zscore', 'mBle_ble_count_mean_zscore', 'mWifi_wifi_max_rssi_mean', 'mUsageStats_usage_app_count_min_zscore']
+2026-05-06 02:26:38,598 [INFO]   Q2 top-5 LGBM: ['mUsageStats_usage_app_count_std', 'mACStatus_m_charging_mean', 'mACStatus_m_charging_std', 'mBle_ble_rssi_std_max_zscore', 'mUsageStats_usage_major_ratio_std']
+2026-05-06 02:26:38,778 [INFO]   Q3 top-5 LGBM: ['mLight_m_light_mean', 'mWifi_wifi_max_rssi_std', 'mUsageStats_usage_total_time_std_zscore', 'mBle_ble_count_max', 'mGps_gps_avg_speed_std']
+2026-05-06 02:26:38,939 [INFO]   S1 top-5 LGBM: ['mScreenStatus_m_screen_use_std', 'mUsageStats_usage_total_time_mean', 'mBle_ble_rssi_std_mean_zscore', 'wHr_hr_std_zscore', 'mUsageStats_usage_app_count_max_zscore']
+2026-05-06 02:26:39,104 [INFO]   S2 top-5 LGBM: ['mWifi_wifi_max_rssi_max', 'mActivity_m_activity_count_zscore', 'mAmbience_ambience_outside,_rural_or_natural_sum_zscore', 'mWifi_wifi_count_mean', 'mBle_ble_device_count_std']
+2026-05-06 02:26:39,264 [INFO]   S3 top-5 LGBM: ['mWifi_wifi_max_rssi_max', 'mBle_ble_max_rssi_max', 'mGps_gps_avg_speed_min_zscore', 'mGps_gps_count_std', 'mUsageStats_usage_total_time_mean']
+2026-05-06 02:26:39,450 [INFO]   S4 top-5 LGBM: ['mGps_gps_avg_speed_max', 'mAmbience_ambience_top5_sum_zscore', 'mBle_ble_max_rssi_max_zscore', 'mBle_ble_min_rssi_max_zscore', 'mBle_ble_count_std_zscore']
+2026-05-06 02:26:39,450 [INFO] 
+--- 3. Feature engineering experiments ---
+2026-05-06 02:26:39,450 [INFO] 
+  === Q1 (rate=0.496) ===
+2026-05-06 02:44:05,905 [INFO]     ✅ Best: interact_deep_n20 Cal=0.5965
+2026-05-06 02:44:05,905 [INFO]   Q1 time: 1046s
+2026-05-06 02:44:05,951 [INFO] 
+  === Q2 (rate=0.562) ===
+2026-05-06 03:02:43,551 [INFO]     ✅ Best: base_deep_n15 Cal=0.5647
+2026-05-06 03:02:43,552 [INFO]   Q2 time: 1118s
+2026-05-06 03:02:43,605 [INFO] 
+  === Q3 (rate=0.600) ===
+2026-05-06 03:20:31,854 [INFO]     ✅ Best: interact_v48_n8 Cal=0.5786
+2026-05-06 03:20:31,854 [INFO]   Q3 time: 1068s
+2026-05-06 03:20:31,902 [INFO] 
+  === S1 (rate=0.682) ===
+2026-05-06 03:35:48,253 [INFO]     ✅ Best: interact_wide_n20 Cal=0.4956
+2026-05-06 03:35:48,253 [INFO]   S1 time: 916s
+2026-05-06 03:35:48,300 [INFO] 
+  === S2 (rate=0.651) ===
+2026-05-06 03:51:39,379 [INFO]     ✅ Best: interact_deep_n20 Cal=0.5252
+2026-05-06 03:51:39,379 [INFO]   S2 time: 951s
+2026-05-06 03:51:39,429 [INFO] 
+  === S3 (rate=0.662) ===
+2026-05-06 04:07:19,210 [INFO]     ✅ Best: interact_v48_n10 Cal=0.5086
+2026-05-06 04:07:19,210 [INFO]   S3 time: 940s
+2026-05-06 04:07:19,270 [INFO] 
+  === S4 (rate=0.560) ===
+2026-05-06 04:24:57,756 [INFO]     ✅ Best: interact_extra_deep_n20 Cal=0.5663
+2026-05-06 04:24:57,756 [INFO]   S4 time: 1058s
+2026-05-06 04:24:57,805 [INFO] 
+======================================================================
+2026-05-06 04:24:57,805 [INFO] V53 SUMMARY
+2026-05-06 04:24:57,805 [INFO] ======================================================================
+2026-05-06 04:24:57,805 [INFO]   Q1: interact_deep_n20 Cal=0.5965
+2026-05-06 04:24:57,805 [INFO]   Q2: base_deep_n15 Cal=0.5647
+2026-05-06 04:24:57,805 [INFO]   Q3: interact_v48_n8 Cal=0.5786
+2026-05-06 04:24:57,806 [INFO]   S1: interact_wide_n20 Cal=0.4956
+2026-05-06 04:24:57,806 [INFO]   S2: interact_deep_n20 Cal=0.5252
+2026-05-06 04:24:57,806 [INFO]   S3: interact_v48_n10 Cal=0.5086
+2026-05-06 04:24:57,806 [INFO]   S4: interact_extra_deep_n20 Cal=0.5663
+2026-05-06 04:24:57,815 [INFO] 
+  V53 Avg Cal: 0.5479
+2026-05-06 04:24:57,815 [INFO]   V52 Avg Cal: 0.5725
+2026-05-06 04:24:57,815 [INFO]   Δ vs V52: -0.0246 (✅ IMPROVED)
+2026-05-06 04:24:57,815 [INFO]   Total: 7106s (7105.7min)
+2026-05-06 04:24:57,835 [INFO]   OOF saved: /home/mwoo423/projects/dacon2/data_processed/oof_v53.csv
+2026-05-06 04:24:57,836 [INFO]   Metadata saved: /home/mwoo423/projects/dacon2/data_processed/v53_meta.json
