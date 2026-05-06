@@ -10,4 +10,7 @@ src/catboost_info/
 src/pipeline.log
 src/run_v10.log
 data.zip
-data.zip
+
+# Meta JSON only — keep CSV submissions
+submissions/meta_*.json
+submissions/v53_sweep_*.json
