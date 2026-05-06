@@ -63,3 +63,23 @@
 2026-05-06 12:40:20,754 [INFO]     [A] Base...
 2026-05-06 12:47:09,033 [INFO]     [B] Pairwise...
 2026-05-06 13:09:48,131 [INFO]     [C] Transforms...
+2026-05-06 13:15:56,979 [INFO]     ✅ Best: pair_wide_n15 Cal=0.5535
+2026-05-06 13:15:56,979 [INFO]   S4 time: 2136s
+2026-05-06 13:15:57,033 [INFO] 
+======================================================================
+2026-05-06 13:15:57,034 [INFO] V55_re2 SUMMARY
+2026-05-06 13:15:57,034 [INFO] ======================================================================
+2026-05-06 13:15:57,034 [INFO]   Q1: pair_wide_n8 Cal=0.5834
+2026-05-06 13:15:57,034 [INFO]   Q2: pair_deep_n20 Cal=0.5589
+2026-05-06 13:15:57,034 [INFO]   Q3: pair_extra_deep_n15 Cal=0.5780
+2026-05-06 13:15:57,034 [INFO]   S1: pair_v48_n15 Cal=0.5282
+2026-05-06 13:15:57,034 [INFO]   S2: pair_v48_n8 Cal=0.5256
+2026-05-06 13:15:57,034 [INFO]   S3: pair_extra_deep_n8 Cal=0.5185
+2026-05-06 13:15:57,034 [INFO]   S4: pair_wide_n15 Cal=0.5535
+2026-05-06 13:15:57,044 [INFO] 
+  V55_re2 Avg Cal: 0.5494
+2026-05-06 13:15:57,044 [INFO]   V53 Avg Cal: 0.5479
+2026-05-06 13:15:57,044 [INFO]   Δ vs V53: +0.0015 (❌ Not improved)
+2026-05-06 13:15:57,044 [INFO]   Total: 9293s (9292.6min)
+2026-05-06 13:15:57,053 [INFO]   OOF saved: /home/mwoo423/projects/dacon2/data_processed/oof_v55_re2.csv
+2026-05-06 13:15:57,054 [INFO]   Metadata saved: /home/mwoo423/projects/dacon2/data_processed/v55_re2_meta.json
