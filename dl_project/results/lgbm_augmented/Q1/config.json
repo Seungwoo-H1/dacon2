@@ -1,0 +1,6 @@
+{
+  "target": "Q1",
+  "n_splits": 5,
+  "seed": 42,
+  "use_external": true
+}

@@ -1,0 +1,28 @@
+# =============================
+# FT-Transformer Config
+# =============================
+
+# Target to train (will train all if not specified)
+target: null  # null = train all targets
+
+# FT-Transformer architecture
+n_layers: 4
+n_heads: 4
+mlp_hidden_mult: 2
+dropout: 0.1
+
+# Training
+batch_size: 256
+lr: 1.0e-3
+weight_decay: 1.0e-4
+early_stopping: 10
+n_splits: 5
+seed: 42
+
+# Model type
+model_type: binary-classification  # binary-classification | regression
+
+# Ensemble
+use_ensemble: true
+n_seeds: 5
+ensemble_type: average

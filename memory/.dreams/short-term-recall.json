@@ -1,0 +1,257 @@
+{
+  "version": 1,
+  "updatedAt": "2026-05-04T12:25:19.279Z",
+  "entries": {
+    "memory:memory/2026-05-01.md:1:32": {
+      "key": "memory:memory/2026-05-01.md:1:32",
+      "path": "memory/2026-05-01.md",
+      "startLine": 1,
+      "endLine": 32,
+      "source": "memory",
+      "snippet": "# 2026-05-01 ## Bootstrap 완료 - 이름: 집가헤응 🏠 - 사용자: 승우 (KST, Telegram) - IDENTITY.md, USER.md, SOUL.md, TOOLS.md 작성 - BOOTSTRAP.md 삭제 ## 멀티에이전트 코드 분석 파이프라인 설계 - 승우의 주요 사용 목적: 코드 분석 - 요구사항: 전문적인 근거 기반 답변 - 내부 아키텍처: PM(집가헤응) → 기획/개발/Audit 서브에이전트 → 통합 답변 - SOUL.md에 \"evidence-based answers only\" 원칙 명시 - TOOLS.md에 dispatch 패턴 및 응답 포맷 정의 ## ETRI Dacon2 경진대회 - 모델 개발 ### 프로젝트 구조 - `src/`: feature engineering, model training, submission scripts - `data_processed/features.parquet`: 450 rows × 153 cols (141 features + meta) - `models/`: trained LightGBM models, experiment results ### Feature Engineering Pipeline - 12 parquet files → day-level features (numeric aggregation + JSON parsing) - 141 clean",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6315048259904011,
+      "maxScore": 0.6315048259904011,
+      "firstRecalledAt": "2026-05-01T07:03:26.089Z",
+      "lastRecalledAt": "2026-05-01T07:03:26.089Z",
+      "queryHashes": [
+        "f931d659651f"
+      ],
+      "recallDays": [
+        "2026-05-01"
+      ],
+      "conceptTags": [
+        "identity.md",
+        "user.md",
+        "soul.md",
+        "tools.md",
+        "bootstrap.md",
+        "기획/개발/audit",
+        "soul.md에",
+        "evidence-based"
+      ]
+    },
+    "memory:memory/2026-05-01.md:136:166": {
+      "key": "memory:memory/2026-05-01.md:136:166",
+      "path": "memory/2026-05-01.md",
+      "startLine": 136,
+      "endLine": 166,
+      "source": "memory",
+      "snippet": "- S1: 10 features, train_rate=0.682, pred_mean=0.6788, shift=-0.0034 - S2: 10 features, train_rate=0.651, pred_mean=0.6488, shift=-0.0023 - S3: 5 features, train_rate=0.662, pred_mean=0.6585, shift=-0.0037 - S4: 10 features, train_rate=0.560, pred_mean=0.5523, shift=-0.0077 - Avg |shift|: 0.0048 (excellent) ### 제출 파일 - `submissions/submission_v8_20260501_032657.csv` (latest) - `models/v8_final_lgbm_{Q1,Q2,Q3,S1,S2,S3,S4}.txt` ### 핵심 통찰 1. **Feature fewer is better** - top 5-10 features가 전체 141 features보다 더 나은 CV 2. **Isotonic calibration은 위험** - OOF에 과적합되어 S1에서 shift -0.40 발생 3. **Logit-space mean matching**이 가장 안정적인 calibration 방법 4. per-target로 최적 feature count와 hyperparameter가 다름 5. Q1/",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6313902490729412,
+      "maxScore": 0.6313902490729412,
+      "firstRecalledAt": "2026-05-01T07:03:26.089Z",
+      "lastRecalledAt": "2026-05-01T07:03:26.089Z",
+      "queryHashes": [
+        "f931d659651f"
+      ],
+      "recallDays": [
+        "2026-05-01"
+      ],
+      "conceptTags": [
+        "train-rate",
+        "0.682",
+        "pred-mean",
+        "0.6788",
+        "0.0034",
+        "0.651",
+        "0.6488",
+        "0.0023"
+      ]
+    },
+    "memory:memory/2026-05-01.md:182:212": {
+      "key": "memory:memory/2026-05-01.md:182:212",
+      "path": "memory/2026-05-01.md",
+      "startLine": 182,
+      "endLine": 212,
+      "source": "memory",
+      "snippet": "- S1: 10 features, train_rate=0.682, pred_mean=0.6788, shift=-0.0034 - S2: 10 features, train_rate=0.651, pred_mean=0.6488, shift=-0.0023 - S3: 5 features, train_rate=0.662, pred_mean=0.6585, shift=-0.0037 - S4: 10 features, train_rate=0.560, pred_mean=0.5523, shift=-0.0077 - Avg |shift|: 0.0048 (excellent) ### 제출 파일 - `submissions/submission_v8_20260501_032657.csv` (latest) - `models/v8_final_lgbm_{Q1,Q2,Q3,S1,S2,S3,S4}.txt` ### 핵심 통찰 1. **Feature fewer is better** - top 5-10 features가 전체 141 features보다 더 나은 CV 2. **Isotonic calibration은 위험** - OOF에 과적합되어 S1에서 shift -0.40 발생 3. **Logit-space mean matching**이 가장 안정적인 calibration 방법 4. per-target로 최적 feature count와 hyperparameter가 다름 5. Q1/",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6313902490729412,
+      "maxScore": 0.6313902490729412,
+      "firstRecalledAt": "2026-05-01T07:03:26.089Z",
+      "lastRecalledAt": "2026-05-01T07:03:26.089Z",
+      "queryHashes": [
+        "f931d659651f"
+      ],
+      "recallDays": [
+        "2026-05-01"
+      ],
+      "conceptTags": [
+        "train-rate",
+        "0.682",
+        "pred-mean",
+        "0.6788",
+        "0.0034",
+        "0.651",
+        "0.6488",
+        "0.0023"
+      ]
+    },
+    "memory:memory/2026-05-01.md:228:258": {
+      "key": "memory:memory/2026-05-01.md:228:258",
+      "path": "memory/2026-05-01.md",
+      "startLine": 228,
+      "endLine": 258,
+      "source": "memory",
+      "snippet": "- S1: 10 features, train_rate=0.682, pred_mean=0.6788, shift=-0.0034 - S2: 10 features, train_rate=0.651, pred_mean=0.6488, shift=-0.0023 - S3: 5 features, train_rate=0.662, pred_mean=0.6585, shift=-0.0037 - S4: 10 features, train_rate=0.560, pred_mean=0.5523, shift=-0.0077 - Avg |shift|: 0.0048 (excellent) ### 제출 파일 - `submissions/submission_v8_20260501_032657.csv` (latest) - `models/v8_final_lgbm_{Q1,Q2,Q3,S1,S2,S3,S4}.txt` ### 핵심 통찰 1. **Feature fewer is better** - top 5-10 features가 전체 141 features보다 더 나은 CV 2. **Isotonic calibration은 위험** - OOF에 과적합되어 S1에서 shift -0.40 발생 3. **Logit-space mean matching**이 가장 안정적인 calibration 방법 4. per-target로 최적 feature count와 hyperparameter가 다름 5. Q1/",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6313902490729412,
+      "maxScore": 0.6313902490729412,
+      "firstRecalledAt": "2026-05-01T07:03:26.089Z",
+      "lastRecalledAt": "2026-05-01T07:03:26.089Z",
+      "queryHashes": [
+        "f931d659651f"
+      ],
+      "recallDays": [
+        "2026-05-01"
+      ],
+      "conceptTags": [
+        "train-rate",
+        "0.682",
+        "pred-mean",
+        "0.6788",
+        "0.0034",
+        "0.651",
+        "0.6488",
+        "0.0023"
+      ]
+    },
+    "memory:memory/2026-05-01.md:92:121": {
+      "key": "memory:memory/2026-05-01.md:92:121",
+      "path": "memory/2026-05-01.md",
+      "startLine": 92,
+      "endLine": 121,
+      "source": "memory",
+      "snippet": "- S3: 5 features, train_rate=0.662, pred_mean=0.6585, shift=-0.0037 - S4: 10 features, train_rate=0.560, pred_mean=0.5523, shift=-0.0077 - Avg |shift|: 0.0048 (excellent) ### 제출 파일 - `submissions/submission_v8_20260501_032657.csv` (latest) - `models/v8_final_lgbm_{Q1,Q2,Q3,S1,S2,S3,S4}.txt` ### 핵심 통찰 1. **Feature fewer is better** - top 5-10 features가 전체 141 features보다 더 나은 CV 2. **Isotonic calibration은 위험** - OOF에 과적합되어 S1에서 shift -0.40 발생 3. **Logit-space mean matching**이 가장 안정적인 calibration 방법 4. per-target로 최적 feature count와 hyperparameter가 다름 5. Q1/Q4는 비교적 예측하기 쉬움 (CV 0.64-0.68), S1/S3은 어려움 (CV 0.60-0.68) # 2026-05-01 ## ETRI Dacon2 경진대회 - 모델 개발 최종 정리 ### 프로젝트 구조 - `src/`: feature en",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.631380695101674,
+      "maxScore": 0.631380695101674,
+      "firstRecalledAt": "2026-05-01T07:03:26.089Z",
+      "lastRecalledAt": "2026-05-01T07:03:26.089Z",
+      "queryHashes": [
+        "f931d659651f"
+      ],
+      "recallDays": [
+        "2026-05-01"
+      ],
+      "conceptTags": [
+        "train-rate",
+        "0.662",
+        "pred-mean",
+        "0.6585",
+        "0.0037",
+        "0.560",
+        "0.5523",
+        "0.0077"
+      ]
+    },
+    "memory:memory/2026-05-01.md:47:77": {
+      "key": "memory:memory/2026-05-01.md:47:77",
+      "path": "memory/2026-05-01.md",
+      "startLine": 47,
+      "endLine": 77,
+      "source": "memory",
+      "snippet": "- S4: 10 features, train_rate=0.560, pred_mean=0.5523, shift=-0.0077 - Avg |shift|: 0.0048 (excellent) ### 제출 파일 - `submissions/submission_v8_20260501_032657.csv` (latest) - `models/v8_final_lgbm_{Q1,Q2,Q3,S1,S2,S3,S4}.txt` ### 핵심 통찰 1. **Feature fewer is better** - top 5-10 features가 전체 141 features보다 더 나은 CV 2. **Isotonic calibration은 위험** - OOF에 과적합되어 S1에서 shift -0.40 발생 3. **Logit-space mean matching**이 가장 안정적인 calibration 방법 4. per-target로 최적 feature count와 hyperparameter가 다름 5. Q1/Q4는 비교적 예측하기 쉬움 (CV 0.64-0.68), S1/S3은 어려움 (CV 0.60-0.68) # 2026-05-01 ## ETRI Dacon2 경진대회 - 모델 개발 최종 정리 ### 프로젝트 구조 - `src/`: feature engineering, model training, submission scripts - `data_processed/feat",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6313258809571743,
+      "maxScore": 0.6313258809571743,
+      "firstRecalledAt": "2026-05-01T07:03:26.089Z",
+      "lastRecalledAt": "2026-05-01T07:03:26.089Z",
+      "queryHashes": [
+        "f931d659651f"
+      ],
+      "recallDays": [
+        "2026-05-01"
+      ],
+      "conceptTags": [
+        "train-rate",
+        "0.560",
+        "pred-mean",
+        "0.5523",
+        "0.0077",
+        "0.0048",
+        "models/v8-final-lgbm",
+        "5-10"
+      ]
+    },
+    "memory:memory/2026-05-01.md:1:27": {
+      "key": "memory:memory/2026-05-01.md:1:27",
+      "path": "memory/2026-05-01.md",
+      "startLine": 1,
+      "endLine": 27,
+      "source": "memory",
+      "snippet": "# 2026-05-01 Daily Log ## FT-Transformer GPU 재훈련 완료 (RTX 4060 Laptop) ### V2 Results (Best DL Config) - Config: d_token=32, n_heads=2, dropout=0.4, feature_select=20, lr=8e-4 - AVG AUC: 0.5847 - LGBM V10: 0.6038 - Δ: -0.0191 (아직 못 넘음) - S1(+0.0655), Q3(+0.0143) 만 LGBM 상회 ### Ensemble - LGBM(50%) + FT-V2(50%) blend: AVG AUC 0.5943 - Δ vs V10: -0.0095 (거의 동급, 아쉽게도 미달) ### LGBM V13 확인 - Calibration 전략 개선했으나 overfit. 0.6385 (Worse than V10's 0.6038) - V10이 여전히 최고 ### 결정 - 현재까지 최고: **LGBM V10 (0.6038)** - FT-Transformer는 데이터 양이 너무 적음 (450 rows) - 다음 옵션: 피처 엔지니어링, 데이터 수집, 앙상블 다양화 ## miniconda LGBM 훈련 2개(03_v13, 04_v14) 메모리/CPU 오버로드 → kill 함 ## FT-Transformer 재실행 시 CPU와 충돌할 수 있음 주의",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2.263924788481003,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-01T11:32:41.554Z",
+      "lastRecalledAt": "2026-05-04T12:25:19.279Z",
+      "queryHashes": [
+        "dfce10cd2804",
+        "6dba41c440bc",
+        "a543962d9353"
+      ],
+      "recallDays": [
+        "2026-05-01",
+        "2026-05-04"
+      ],
+      "conceptTags": [
+        "ft-transformer",
+        "d-token",
+        "n-heads",
+        "0.4",
+        "feature-select",
+        "8e-4",
+        "0.5847",
+        "0.6038"
+      ]
+    },
+    "memory:memory/2026-05-04.md:1:29": {
+      "key": "memory:memory/2026-05-04.md:1:29",
+      "path": "memory/2026-05-04.md",
+      "startLine": 1,
+      "endLine": 29,
+      "source": "memory",
+      "snippet": "# 2026-05-04 ## V25 + V30 Submission (15:52) - `gen_v25_v30.py` 실행 완료 - V25 (LGBM, 3 seeds): Cal OOF 0.6462 (V10 대비 +0.0424) - V30 (XGB Histogram, 3 seeds): Cal OOF 0.6685 (V10 대비 +0.0647) - 둘 다 V10(0.6038)보다 낮음 → V10이 여전히 최우선 - Submission push 완료: e3f6975 ## Git seungwoo-h 문제 해결 - 초기 commit(`fd6bac`)이 `seungwoo-h@users.noreply.github.com` 계정으로 올라감 - GitHub Desktop 또는 다른 환경에서 clone/commit한 것이 원인 - `git filter-branch`로 전 18개 커밋의 author를 `Seungwoo Hong <seungwoo@example.com>`으로 원본 - force push 완료: 8dcf09a ## OpenClaw 간헐적 응답 지연 분석 - 오늘/어제 세션 11e56304 + fdb7a80d 분석 - 11e56304: 11개 프롬프트 중 5개가 5~44분 지연, 1개 타임아웃 - fdb7a80d: 20개 프롬프트 중 9개가 3~198분 지연 - **원인: 모델 API 서버(gpurent.kogrobo.com:51089) 과부",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-04T12:25:19.279Z",
+      "lastRecalledAt": "2026-05-04T12:25:19.279Z",
+      "queryHashes": [
+        "a543962d9353"
+      ],
+      "recallDays": [
+        "2026-05-04"
+      ],
+      "conceptTags": [
+        "gen-v25-v30.py",
+        "0.6462",
+        "0.0424",
+        "0.6685",
+        "0.0647",
+        "0.6038",
+        "seungwoo-h",
+        "users.noreply.github.com"
+      ]
+    }
+  }
+}
