@@ -49,24 +49,62 @@
 - **V53 Swept**: 50 seeds, linear cal, target-specific n_feat sweep
 - **LB 0.65358이 현재 최고**
 
+## 📈 핵심 발견 (2026-05-11) - 추가
+
+### 6. V103: S3/S4 Shift Amplification
+- **Purpose**: LB predictor formula 기반 S3/S4 negative shift 증폭 실험
+- **LB Predictor Formula** (RMSE 0.0017):
+  `LB = 0.0896*entropy - 0.4205*max_shift + 0.1877*skew + 0.4262*S3_shift + 0.2194*S4_shift + 0.7740`
+- **Key Insight**: S3/S4 shift에 양수 계수 → 더 negative shift = 더 낮은 LB
+- **V53 baseline**: S3 shift=-0.1360, S4 shift=-0.0756
+- **Method**: `shifted = oof_mean + factor * (sub_mean - oof_mean)`
+  - factor=1.0: original, factor=2.0: 2x amplified negative shift
+- **Results**:
+  | Factor | Predicted LB | Train LL Proxy | Improvement |
+  |--------|-------------|----------------|-------------|
+  | 1.0 (baseline) | 0.77193 | 0.54820 | - |
+  | 1.3 | 0.75336 | 0.56606 | -0.01857 |
+  | 2.0 | 0.71305 | 0.58805 | -0.05888 |
+  | 2.5 | 0.68724 | 0.61160 | -0.08469 |
+  | **3.0** | **0.66360** | **0.64854** | **-0.10833** |
+- **Best**: factor=3.0 → predicted LB 0.66360 (하지만 train LL도 worst로 ↑)
+- **Trade-off**: 더 aggressive shift → predicted LB ↓ 하지만 train LL ↑ (overfitting risk)
+- **Submissions generated**: `v103_amp_s3s4_f2.0`, `v103_amp_s3s4_f2.5`, `v103_amp_s3s4_f3.0`
+- **Caution**: train LL increase suggests aggressive shift overfits training distribution
+
+### 7. V104: Pseudo-Labeling Experiment
+- **Purpose**: High-confidence test predictions을 pseudo-label로 추가 retrain
+- **Method**: 5-fold LGBM → test predict → confidence > threshold pseudo-label → retrain
+- **Thresholds tested**: 0.7, 0.75, 0.8, 0.85, 0.9
+- **Pseudo weights**: 0.5, 1.0, 2.0
+- **Boost ratios**: 0.05, 0.1, 0.2
+- **Results** (TOP 5 configs by OOF improvement):
+  | Threshold | Weight | Boost | Avg OOF LL | ΔOOF | Avg Pseudo |
+  |-----------|--------|-------|-----------|------|-----------|
+  | 0.70 | 0.5 | 0.1 | 0.6963 | -0.1481 | 91 |
+  | 0.70 | 1.0 | 0.1 | 0.6982 | -0.1499 | 91 |
+  | 0.70 | 2.0 | 0.05 | 0.6982 | -0.1500 | 91 |
+  | 0.70 | 0.5 | 0.2 | 0.6983 | -0.1501 | 91 |
+  | 0.70 | 2.0 | 0.1 | 0.6990 | -0.1508 | 91 |
+- **Key finding**: Best config (T=0.7, pw=0.5, boost=0.1) predicted LB **0.802** (V53 0.700 대비 WORSE)
+- **Why worse**: pseudo-labeling improves OOF LL but shifts test predictions toward training mean
+  → S3/S4 shift becomes LESS negative → higher predicted LB
+- **Conclusion**: Pseudo-labeling helps train LL but harms test distribution → **Not recommended for this competition**
+- **Submissions generated**: None (predicted LB worse than baseline)
+
 ## 🎯 다음 단계
 
 ### 1. V53 Swept 유지
 - V53 Swept: `submissions/submission_v53_swept_20260510_215247.csv`
 - LB 0.65358, 가장 안정적
-- 0.5 점대 진입하려면 추가 연구 필요
 
 ### 2. 연구 방향 제안
-1. **V53 Swept의 n_feat sweep 재탐색** (더 넓은 범위 ±5)
-2. **Per-target feature importance 재분석** (변동성 있는 타깃 위주)
-3. **Model ensemble diversity** (LGBM + 다른 hyperparameter 조합)
-4. **Distribution shift mitigation** (test set과의 분포 차이 분석)
-5. **Seed diversity 증가** (V99이 100 seeds로 OOF 개선 확인)
-6. **Weight optimization 대신 simple average** (V99의 weight optimization이 과적합)
-
-### 3. V99의 OOF 개선 (0.6370 vs V53 0.6813) 검증 필요
-- 100 seeds의 OOF 개선이 **실제 성능 향상**인지 V97 방식으로 재검증 필요
-- test distribution 왜곡 없이 OOF 개선만 있으면 LB도 개선 가능성
+1. **Distribution shift 분석 개선**: test set과의 분포 차이 정량적 분석
+2. **V103 교훈**: aggressive shift는 train LL을 해침 → calibrate 한계 탐색
+3. **V104 교훈**: pseudo-labeling은 OOF에는 도움되지만 test distribution 악화 → 금지
+4. **Alternative approach**: ensemble diverse models without distribution-altering techniques
+5. **Per-target calibration refinement**: S3/S4에만 focus (가장 큰 shift 존재)
+6. **V99 100 seeds 재검증**: weight optimization 없이 simple average로 테스트
 
 ## 📁 프로젝트 구조
 ```
