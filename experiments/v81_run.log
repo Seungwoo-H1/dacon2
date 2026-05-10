@@ -1,0 +1,31 @@
+2026-05-08 23:35:55,902 [INFO] ======================================================================
+2026-05-08 23:35:55,902 [INFO] V81 — V52 Improved: Multi-Config Ensemble + Meta-Learner
+2026-05-08 23:35:55,902 [INFO] ======================================================================
+2026-05-08 23:35:55,902 [INFO] 
+--- 1. Load features ---
+2026-05-08 23:35:55,940 [INFO]   Loaded: (450, 153)
+2026-05-08 23:36:01,160 [INFO]   After personalization: (450, 576)
+2026-05-08 23:36:01,160 [INFO] 
+--- 2. Feature ranking (rank fusion LGBM+MI) ---
+2026-05-08 23:36:01,855 [INFO]   Q1: ranked 279 features
+2026-05-08 23:36:02,534 [INFO]   Q2: ranked 279 features
+2026-05-08 23:36:03,226 [INFO]   Q3: ranked 279 features
+2026-05-08 23:36:03,847 [INFO]   S1: ranked 260 features
+2026-05-08 23:36:04,461 [INFO]   S2: ranked 260 features
+2026-05-08 23:36:05,080 [INFO]   S3: ranked 260 features
+2026-05-08 23:36:05,711 [INFO]   S4: ranked 260 features
+2026-05-08 23:36:05,711 [INFO] 
+--- 3. Multi-config training ---
+2026-05-08 23:36:05,711 [INFO] 
+  === Q1 (rate=0.496) ===
+2026-05-08 23:36:30,442 [INFO]   v48: best n_feat=20, cal=0.6809
+2026-05-08 23:36:56,017 [INFO]   deep: best n_feat=15, cal=0.6793
+2026-05-08 23:37:19,889 [INFO]   wide: best n_feat=15, cal=0.6776
+2026-05-08 23:37:45,019 [INFO]   safety: best n_feat=8, cal=0.6777
+Traceback (most recent call last):
+  File "/home/mwoo423/projects/dacon2/src/81_v52_stacking_v2.py", line 488, in <module>
+    main()
+  File "/home/mwoo423/projects/dacon2/src/81_v52_stacking_v2.py", line 287, in main
+    log.info(f"    Top-2: {[f'{n}(loss={c[1][1]:.4f},n={c[1][2]})' for n,c in top_cfgs]}")
+                                        ~~~~^^^
+TypeError: 'float' object is not subscriptable

@@ -1,6 +1,9 @@
 """
-Generate final submission CSV from V53 with sweep-optimized n_feat.
-Uses best n_feat per target from sweep results.
+Generate final submission CSV from V53 with optimized n_feat from sweep.
+Uses the same pipeline as gen_submission_v53.py but with swept n_feat values.
+Sweep results (seed=10, GroupKFold n_splits=3):
+  Q1: 19, Q2: 14, Q3: 5, S1: 21, S2: 19, S3: 21, S4: 20
+  AVG CV improvement: +0.0081
 """
 
 import sys, gc, logging, json, re, time
@@ -85,7 +88,7 @@ def add_personalization(df, feature_cols):
     return df, zscore_cols
 
 def rank_features_importance(feat, feat_cols, target, cfgs, v53_cfgs, seed=42):
-    """Rank features by LGBM gain importance."""
+    """Rank features by LGBM gain importance using same cfg as training."""
     y = feat[target].values.astype(np.float64)
     X = feat[feat_cols].fillna(0).values.astype(np.float64)
     spw = max(((y == 0).sum()) / max((y == 1).sum(), 1), 0.1)
@@ -121,6 +124,7 @@ def train_and_predict(train_feat, test_feat, cols, y_train, target, cfgs, v53_cf
     v53_cfg = v53_cfgs.get(target, {'cfg': 'deep', 'n_feat': 20})
     cfg_name = v53_cfg['cfg']
     base_cfg = cfgs.get(cfg_name, cfgs['deep'])
+    
     n_trees = base_cfg['ne']
     
     seed_results = []
@@ -145,39 +149,18 @@ def train_and_predict(train_feat, test_feat, cols, y_train, target, cfgs, v53_cf
 def main():
     t_start = time.time()
     log.info("=" * 60)
-    log.info("Generating V53 Swept submission (optimized n_feat)")
+    log.info("Generating submission from V53 Swept (optimized n_feat)")
+    log.info("=" * 60)
     
-    # Load data
-    train = pd.read_parquet(DATA / "features.parquet")
-    test = pd.read_parquet(DATA / "test_features.parquet")
-    
-    train_cols_order = list(train.columns)
-    test = test[train_cols_order]
-    
-    log.info(f"  Train: {train.shape}, Test: {test.shape}")
-    
-    n_seeds = 50
-    
-    # V53 baseline configs
+    # V53 best configs + swept n_feat per target
     V53_CONFIGS = {
-        'Q1': {'cfg': 'deep', 'n_feat': 20},
-        'Q2': {'cfg': 'deep', 'n_feat': 15},
-        'Q3': {'cfg': 'v48', 'n_feat': 8},
-        'S1': {'cfg': 'wide', 'n_feat': 20},
-        'S2': {'cfg': 'deep', 'n_feat': 20},
-        'S3': {'cfg': 'safety', 'n_feat': 20},
-        'S4': {'cfg': 'wide', 'n_feat': 20},
-    }
-    
-    # Swept optimal n_feat per target
-    V53_SWEEP_CONFIGS = {
-        'Q1': {'cfg': 'deep', 'n_feat': 19},
-        'Q2': {'cfg': 'deep', 'n_feat': 14},
-        'Q3': {'cfg': 'v48', 'n_feat': 5},
-        'S1': {'cfg': 'wide', 'n_feat': 21},
-        'S2': {'cfg': 'deep', 'n_feat': 19},
-        'S3': {'cfg': 'safety', 'n_feat': 21},
-        'S4': {'cfg': 'wide', 'n_feat': 20},
+        'Q1': {'cfg': 'deep', 'n_feat': 19},   # swept: 20→19
+        'Q2': {'cfg': 'deep', 'n_feat': 14},   # swept: 15→14
+        'Q3': {'cfg': 'v48', 'n_feat': 5},     # swept: 8→5
+        'S1': {'cfg': 'wide', 'n_feat': 21},   # swept: 20→21
+        'S2': {'cfg': 'deep', 'n_feat': 19},   # swept: 20→19
+        'S3': {'cfg': 'safety', 'n_feat': 21}, # swept: 20→21
+        'S4': {'cfg': 'wide', 'n_feat': 20},   # swept: 20→20 (no change)
     }
     
     CFGS = {
@@ -187,36 +170,45 @@ def main():
         'safety': {'nl': 10, 'md': 3, 'lr': 0.02, 'ne': 1000, 'ss': 0.6, 'cb': 0.6, 'ra': 3.0, 'rl': 10.0, 'mc': 20},
     }
     
-    # Get base features and add personalization
+    # Load data
+    train = pd.read_parquet(DATA / "features.parquet")
+    test = pd.read_parquet(DATA / "test_features.parquet")
+    train_cols_order = list(train.columns)
+    test = test[train_cols_order]
+    
+    log.info(f"  Train: {train.shape}, Test: {test.shape}")
+    n_seeds = 50
+    
+    # Get base features + personalization
     feat_cols = get_feature_cols(train)
     train, zscore_cols = add_personalization(train, feat_cols)
     test, _ = add_personalization(test, feat_cols)
     
     all_cols = feat_cols + zscore_cols
-    log.info(f"  Features: {len(feat_cols)} base + {len(zscore_cols)} zscore = {len(all_cols)} total")
+    log.info(f"  Features: {len(all_cols)} total (base {len(feat_cols)} + zscore {len(zscore_cols)})")
     
-    # Use sweep configs
-    active_configs = V53_SWEEP_CONFIGS
-    
+    # Generate predictions
     predictions = {}
     sample = pd.read_csv(ROOT / "data_raw" / "ch2026_submission_sample.csv")
     
     for target in TARGETS:
-        log.info(f"\n  --- {target} (sweep-optimized) ---")
+        log.info(f"\n  --- {target} (cfg={V53_CONFIGS[target]['cfg']}, n_feat={V53_CONFIGS[target]['n_feat']}) ---")
         
-        config = active_configs[target]
+        config = V53_CONFIGS[target]
         cfg_name = config['cfg']
         n_feat = config['n_feat']
         
+        # Get non-leak features
         leak_cols = remove_leak(all_cols, target)
-        ranked = rank_features_importance(train, leak_cols, target, CFGS, active_configs)
+        
+        # Rank features
+        ranked = rank_features_importance(train, leak_cols, target, CFGS, V53_CONFIGS)
         sel_cols = ranked[:n_feat]
         
         y_train = train[target].values.astype(np.float64)
         
-        log.info(f"  Config: {cfg_name}, n_feat={n_feat}, features={len(sel_cols)}")
-        log.info(f"  Training {n_seeds} seeds...")
-        preds = train_and_predict(train, test, sel_cols, y_train, target, CFGS, active_configs, n_seeds)
+        log.info(f"  Training {n_seeds} seeds with {len(sel_cols)} features...")
+        preds = train_and_predict(train, test, sel_cols, y_train, target, CFGS, V53_CONFIGS, n_seeds)
         predictions[target] = preds
         log.info(f"  {target}: mean={preds.mean():.4f} min={preds.min():.4f} max={preds.max():.4f}")
         
@@ -242,23 +234,14 @@ def main():
     # Save meta
     meta = {
         'version': 'V53_swept',
-        'name': 'V53 submission with sweep-optimized n_feat',
-        'n_seeds': n_seeds,
-        'configs_used': 'V53_SWEEP_CONFIGS',
+        'name': 'V53 submission with swept n_feat',
+        'sweep_n_feat': {t: V53_CONFIGS[t]['n_feat'] for t in TARGETS},
+        'baseline_n_feat': {
+            'Q1': 20, 'Q2': 15, 'Q3': 8, 'S1': 20, 'S2': 20, 'S3': 20, 'S4': 20
+        },
+        'sweep_avg_cv_improvement': 0.0081,
         'submission_file': str(sub_path),
         'timestamp': datetime.now().isoformat(),
-        'n_feat_per_target': {t: active_configs[t]['n_feat'] for t in TARGETS},
-        'cv_results': {
-            'Q1': {'baseline': 0.7701, 'swept': 0.7591, 'delta': 0.0110},
-            'Q2': {'baseline': 0.7059, 'swept': 0.6929, 'delta': 0.0130},
-            'Q3': {'baseline': 0.7009, 'swept': 0.6893, 'delta': 0.0116},
-            'S1': {'baseline': 0.6111, 'swept': 0.6029, 'delta': 0.0083},
-            'S2': {'baseline': 0.6657, 'swept': 0.6621, 'delta': 0.0036},
-            'S3': {'baseline': 0.7236, 'swept': 0.7144, 'delta': 0.0092},
-            'S4': {'baseline': 0.6438, 'swept': 0.6438, 'delta': 0.0000},
-        },
-        'avg_cv_baseline': 0.6887,
-        'avg_cv_swept': 0.6806,
     }
     meta_path = SUBMIT / f'meta_v53_swept_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json'
     with open(meta_path, 'w') as f:
