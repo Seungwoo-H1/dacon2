@@ -1,0 +1,84 @@
+2026-05-10 17:07:02,980 [INFO] ================================================================================
+2026-05-10 17:07:02,980 [INFO] V91: Lightweight V53 Optimization
+2026-05-10 17:07:02,980 [INFO] ================================================================================
+2026-05-10 17:07:02,980 [INFO] 
+Experiment plans per target:
+2026-05-10 17:07:02,980 [INFO]   Q1: 7 plans
+2026-05-10 17:07:02,980 [INFO]     plan1: deep_s30_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan2: deep_s50_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan3: deep_s30_nf20_r1
+2026-05-10 17:07:02,980 [INFO]     plan4: deep_s50_nf19_r0
+2026-05-10 17:07:02,980 [INFO]     plan5: deep_s100_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan6: wide_s30_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan7: safety_s30_nf20_r0
+2026-05-10 17:07:02,980 [INFO]   Q2: 7 plans
+2026-05-10 17:07:02,980 [INFO]     plan1: deep_s30_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan2: deep_s50_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan3: deep_s30_nf20_r1
+2026-05-10 17:07:02,980 [INFO]     plan4: deep_s50_nf14_r0
+2026-05-10 17:07:02,980 [INFO]     plan5: deep_s100_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan6: wide_s30_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan7: safety_s30_nf20_r0
+2026-05-10 17:07:02,980 [INFO]   Q3: 7 plans
+2026-05-10 17:07:02,980 [INFO]     plan1: v48_s30_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan2: v48_s50_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan3: v48_s30_nf20_r1
+2026-05-10 17:07:02,980 [INFO]     plan4: v48_s50_nf5_r0
+2026-05-10 17:07:02,980 [INFO]     plan5: v48_s100_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan6: wide_s30_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan7: safety_s30_nf20_r0
+2026-05-10 17:07:02,980 [INFO]   S1: 7 plans
+2026-05-10 17:07:02,980 [INFO]     plan1: wide_s30_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan2: wide_s50_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan3: wide_s30_nf20_r1
+2026-05-10 17:07:02,980 [INFO]     plan4: wide_s50_nf21_r0
+2026-05-10 17:07:02,980 [INFO]     plan5: wide_s100_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan6: wide_s30_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan7: safety_s30_nf20_r0
+2026-05-10 17:07:02,980 [INFO]   S2: 7 plans
+2026-05-10 17:07:02,980 [INFO]     plan1: deep_s30_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan2: deep_s50_nf20_r0
+2026-05-10 17:07:02,980 [INFO]     plan3: deep_s30_nf20_r1
+2026-05-10 17:07:02,980 [INFO]     plan4: deep_s50_nf19_r0
+2026-05-10 17:07:02,980 [INFO]     plan5: deep_s100_nf20_r0
+2026-05-10 17:07:02,981 [INFO]     plan6: wide_s30_nf20_r0
+2026-05-10 17:07:02,981 [INFO]     plan7: safety_s30_nf20_r0
+2026-05-10 17:07:02,981 [INFO]   S3: 7 plans
+2026-05-10 17:07:02,981 [INFO]     plan1: safety_s30_nf20_r0
+2026-05-10 17:07:02,981 [INFO]     plan2: safety_s50_nf20_r0
+2026-05-10 17:07:02,981 [INFO]     plan3: safety_s30_nf20_r1
+2026-05-10 17:07:02,981 [INFO]     plan4: safety_s50_nf21_r0
+2026-05-10 17:07:02,981 [INFO]     plan5: safety_s100_nf20_r0
+2026-05-10 17:07:02,981 [INFO]     plan6: wide_s30_nf20_r0
+2026-05-10 17:07:02,981 [INFO]     plan7: safety_s30_nf20_r0
+2026-05-10 17:07:02,981 [INFO]   S4: 7 plans
+2026-05-10 17:07:02,981 [INFO]     plan1: wide_s30_nf20_r0
+2026-05-10 17:07:02,981 [INFO]     plan2: wide_s50_nf20_r0
+2026-05-10 17:07:02,981 [INFO]     plan3: wide_s30_nf20_r1
+2026-05-10 17:07:02,981 [INFO]     plan4: wide_s50_nf20_r0
+2026-05-10 17:07:02,981 [INFO]     plan5: wide_s100_nf20_r0
+2026-05-10 17:07:02,981 [INFO]     plan6: wide_s30_nf20_r0
+2026-05-10 17:07:02,981 [INFO]     plan7: safety_s30_nf20_r0
+2026-05-10 17:07:02,981 [INFO] 
+############################################################
+2026-05-10 17:07:02,981 [INFO] Processing target: Q1
+2026-05-10 17:07:02,981 [INFO] ############################################################
+2026-05-10 17:07:02,981 [INFO] 
+[plan1] deep_s30_nf20_r0
+[LightGBM] [Fatal] Check failed: (static_cast<size_t>(train_data_->num_total_features())) == (config->monotone_constraints.size()) at /__w/1/s/lightgbm-python/src/boosting/gbdt.cpp, line 58 .
+
+Traceback (most recent call last):
+  File "/home/mwoo423/projects/dacon2/src/v91_v53_optimization.py", line 566, in <module>
+    main()
+  File "/home/mwoo423/projects/dacon2/src/v91_v53_optimization.py", line 444, in main
+    m_rank = lgb.train(p_rank, ds, num_boost_round=50)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py", line 297, in train
+    booster = Booster(params=params, train_set=train_set)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/basic.py", line 3660, in __init__
+    _safe_call(
+  File "/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/basic.py", line 313, in _safe_call
+    raise LightGBMError(_LIB.LGBM_GetLastError().decode("utf-8"))
+lightgbm.basic.LightGBMError: Check failed: (static_cast<size_t>(train_data_->num_total_features())) == (config->monotone_constraints.size()) at /__w/1/s/lightgbm-python/src/boosting/gbdt.cpp, line 58 .
+
