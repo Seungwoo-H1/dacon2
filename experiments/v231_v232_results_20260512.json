@@ -1,0 +1,11 @@
+{
+  "v127": {
+    "oof": 0.53731,
+    "lb": 0.64763
+  },
+  "v231_enhanced": "diff+sum+prod+ratio with dedup, running...",
+  "v232_v121_orig": "prod+ratio only, running...",
+  "top_interactions": {
+    "S3": "wifi_max_rssi_max \u00d7 ble_max_rssi_max (ratio, r=0.36)"
+  }
+}
