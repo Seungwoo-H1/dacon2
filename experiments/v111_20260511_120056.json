@@ -1,0 +1,58 @@
+{
+  "version": "V111",
+  "timestamp": "20260511_120056",
+  "experiments": {
+    "A_baseline": {
+      "oof": 0.65937,
+      "features": "raw=True, personal=False, interact=False",
+      "n_features": 141,
+      "time_s": 464.0
+    },
+    "B_personal": {
+      "oof": 0.66232,
+      "features": "raw=False, personal=True, interact=False",
+      "n_features": 282,
+      "time_s": 876.0
+    },
+    "C_personal_inter": {
+      "oof": 0.66345,
+      "features": "raw=False, personal=True, interact=True",
+      "n_features": 387,
+      "time_s": 1253.0
+    }
+  },
+  "ensemble": {
+    "best_combo": [
+      "A_baseline"
+    ],
+    "best_oof": 0.65937,
+    "per_target_oof": {
+      "Q1": 0.69361,
+      "Q2": 0.66875,
+      "Q3": 0.66781,
+      "S1": 0.61288,
+      "S2": 0.64837,
+      "S3": 0.654,
+      "S4": 0.67903
+    }
+  },
+  "test_means": {
+    "Q1": 0.4956,
+    "Q2": 0.5622,
+    "Q3": 0.6,
+    "S1": 0.6814,
+    "S2": 0.651,
+    "S3": 0.6622,
+    "S4": 0.5599
+  },
+  "test_stds": {
+    "Q1": 0.2096,
+    "Q2": 0.2156,
+    "Q3": 0.2169,
+    "S1": 0.2219,
+    "S2": 0.2349,
+    "S3": 0.2594,
+    "S4": 0.2366
+  },
+  "total_time_s": 2594.0
+}

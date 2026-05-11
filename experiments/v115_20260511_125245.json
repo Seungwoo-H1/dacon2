@@ -1,0 +1,57 @@
+{
+  "version": "V115",
+  "timestamp": "20260511_125245",
+  "configs": [
+    "wide",
+    "deep",
+    "v48",
+    "safety",
+    "extra_deep",
+    "v53wide",
+    "v53deep",
+    "v53safe"
+  ],
+  "seeds": [
+    42,
+    123,
+    7,
+    999,
+    777,
+    2026,
+    111,
+    555
+  ],
+  "n_models_per_target": 768,
+  "results": {
+    "Q1": {
+      "best_method": "pair_v48_n20",
+      "cal_loss": 0.59593
+    },
+    "Q2": {
+      "best_method": "base_deep_n15",
+      "cal_loss": 0.56644
+    },
+    "Q3": {
+      "best_method": "pair_v48_n8",
+      "cal_loss": 0.57577
+    },
+    "S1": {
+      "best_method": "pair_v48_n20",
+      "cal_loss": 0.49688
+    },
+    "S2": {
+      "best_method": "pair_deep_n20",
+      "cal_loss": 0.52315
+    },
+    "S3": {
+      "best_method": "pair_deep_n8",
+      "cal_loss": 0.50879
+    },
+    "S4": {
+      "best_method": "pair_extra_deep_n20",
+      "cal_loss": 0.56615
+    }
+  },
+  "avg_cal_loss": 0.54759,
+  "total_time_s": 2118.0
+}
