@@ -1,0 +1,13 @@
+{
+  "v127": {
+    "oof": 0.53731,
+    "lb": 0.64763
+  },
+  "post_process_ceiling": {
+    "est_lb": 0.61475,
+    "conservative": 0.64475
+  },
+  "lb_050_requirement": "OOF < 0.47, requires retraining",
+  "gap_model": "LB = OOF + 0.1576*(1-vr) + 0.03",
+  "next_phase": "retrain with new architecture/features for LB < 0.50"
+}
