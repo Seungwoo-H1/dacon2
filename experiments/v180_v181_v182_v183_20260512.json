@@ -1,0 +1,48 @@
+{
+  "v127": {
+    "oof": 0.53731,
+    "lb": 0.64763
+  },
+  "v183": {
+    "config": "conservative_nf182_pct0.5",
+    "avg_oof": 0.6162,
+    "avg_vr": 0.295,
+    "est_lb": 0.75734,
+    "improvement": -0.07889,
+    "n_features": 182
+  },
+  "all": {
+    "conservative_nf91_pct0.25": {
+      "avg": 0.6191,
+      "nf": 91
+    },
+    "conservative_nf182_pct0.5": {
+      "avg": 0.6162,
+      "nf": 182
+    },
+    "conservative_nf273_pct0.75": {
+      "avg": 0.61648,
+      "nf": 273
+    },
+    "conservative_nf365_pct1.0": {
+      "avg": 0.61831,
+      "nf": 365
+    },
+    "high_nf91_pct0.25": {
+      "avg": 0.61996,
+      "nf": 91
+    },
+    "high_nf182_pct0.5": {
+      "avg": 0.6181,
+      "nf": 182
+    },
+    "high_nf273_pct0.75": {
+      "avg": 0.618,
+      "nf": 273
+    },
+    "high_nf365_pct1.0": {
+      "avg": 0.6188,
+      "nf": 365
+    }
+  }
+}
