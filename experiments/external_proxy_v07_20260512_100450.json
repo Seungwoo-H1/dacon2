@@ -1,0 +1,96 @@
+[
+  {
+    "strategy": "baseline",
+    "avg_oof": 0.5971,
+    "per_target": {
+      "Q1": 0.65903,
+      "Q2": 0.5971,
+      "Q3": 0.59736,
+      "S1": 0.57807,
+      "S2": 0.54812,
+      "S3": 0.58252,
+      "S4": 0.61748
+    },
+    "per_n_feat": {
+      "Q1": 15,
+      "Q2": 25,
+      "Q3": 15,
+      "S1": 15,
+      "S2": 15,
+      "S3": 10,
+      "S4": 15
+    },
+    "ext_features_in_best": {
+      "Q1": [
+        "ext_night_light_zscore"
+      ],
+      "Q2": [
+        "ext_total_ambience_zscore",
+        "ext_screen_ratio_zscore",
+        "ext_charging_z"
+      ],
+      "Q3": [
+        "ext_wifi_ble"
+      ],
+      "S1": [],
+      "S2": [
+        "ext_night_light_zscore",
+        "ext_total_ambience_zscore",
+        "ext_health_composite"
+      ],
+      "S3": [
+        "ext_night_light_zscore"
+      ],
+      "S4": [
+        "ext_night_light_zscore"
+      ]
+    }
+  },
+  {
+    "strategy": "external",
+    "avg_oof": 0.5971,
+    "per_target": {
+      "Q1": 0.65903,
+      "Q2": 0.5971,
+      "Q3": 0.59736,
+      "S1": 0.57807,
+      "S2": 0.54812,
+      "S3": 0.58252,
+      "S4": 0.61748
+    },
+    "per_n_feat": {
+      "Q1": 15,
+      "Q2": 25,
+      "Q3": 15,
+      "S1": 15,
+      "S2": 15,
+      "S3": 10,
+      "S4": 15
+    },
+    "ext_features_in_best": {
+      "Q1": [
+        "ext_night_light_zscore"
+      ],
+      "Q2": [
+        "ext_total_ambience_zscore",
+        "ext_screen_ratio_zscore",
+        "ext_charging_z"
+      ],
+      "Q3": [
+        "ext_wifi_ble"
+      ],
+      "S1": [],
+      "S2": [
+        "ext_night_light_zscore",
+        "ext_total_ambience_zscore",
+        "ext_health_composite"
+      ],
+      "S3": [
+        "ext_night_light_zscore"
+      ],
+      "S4": [
+        "ext_night_light_zscore"
+      ]
+    }
+  }
+]
