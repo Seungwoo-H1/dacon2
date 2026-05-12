@@ -1,12 +1,13 @@
-# V127 External Data Research — Consolidated Report (V06–V08)
+# V127 External Data Research — Consolidated Report (V06–V09)
 
 ## Executive Summary
 
 **V127 baseline (internal features only)**: AVG OOF = **0.61034**
 
-**V08 (external proxy features)**: AVG OOF = **0.58972** (Δ = **-0.02062**)
+**V08 (external proxy features, 4 seeds)**: AVG OOF = **0.58972** (Δ = **-0.02062**)
+**V09 (external proxy features, 1 seed, 36x faster)**: AVG OOF = **0.59139** (Δ = **-0.01895**)
 
-External proxy features improve **6/7 targets**. Biggest gains: S2 (-0.049), S3 (-0.034), S1 (-0.018), Q2 (-0.017).
+External proxy features improve **6/7 targets**. Biggest gains: S2 (-0.049), S3 (-0.043), S1 (-0.018), Q2 (-0.017).
 
 ## V127 Baseline (Reproduced)
 
@@ -49,7 +50,7 @@ All external data combinations (A, B, A+B, etc.) with weights 0.1–2.0:
 - **Result**: AVG OOF = **0.59710** (Δ = -0.01324)
 - **Key insight**: External features must vary per sample to be useful
 
-## V08: Target-Specific External Selection (BEST)
+## V08: Target-Specific External Selection (BEST — 4 seeds)
 
 For each target: n_ext (0–8) × n_total (10–25) search.
 
@@ -65,15 +66,65 @@ For each target: n_ext (0–8) × n_total (10–25) search.
 
 **AVG Δ: -0.02062**
 **AVG OOF: 0.58972**
+**Total time: ~3173s (53 minutes)**
 
-### Key Findings
+## V09: Fast Target-Specific External Selection (1 seed, 36x faster)
 
-1. **6/7 targets improved** with external features
-2. **S2 (Δ=-0.049) and S3 (Δ=-0.034)** show the biggest gains — sleep/stress targets
-3. **ext_night_light_zscore** (night light/night hours ratio) is the most universal external feature (helps Q1, S2, S3, S4)
-4. **ext_total_ambience_zscore** (ambient noise) helps Q2 and S2
-5. **S1 needs 5 external features** — social activity proxy (WiFi/BLE) is key
-6. **Q3 needs no external features** — already well modeled by internal features alone
+Same strategy as V08 but with n_ext (0–3) × n_total (12/15/20), single seed.
+
+| Target | Config | n_ext | n_total | Δ | Time |
+|--------|--------|-------|---------|------|------|
+| Q1 | deep | 1 | 15 | -0.00817 | 12s |
+| Q2 | deep | 1 | 20 | -0.00573 | 14s |
+| Q3 | v48 | 0 | 12 | 0.00000 | 13s |
+| S1 | wide | 2 | 20 | -0.01240 | 10s |
+| S2 | deep | 2 | 15 | **-0.04562** | 16s |
+| S3 | safety | 1 | 12 | **-0.04335** | 10s |
+| S4 | wide | 2 | 15 | -0.01741 | 11s |
+
+**AVG Δ: -0.01895**
+**AVG OOF: 0.59139**
+**Total time: ~87s (1.5 minutes)** — **36x faster than V08**
+
+### V08 vs V09 Comparison
+
+| Target | V08 Δ | V09 Δ | Δ(V08-V09) |
+|--------|-------|-------|------------|
+| Q1 | -0.01267 | -0.00817 | -0.00450 |
+| Q2 | -0.01722 | -0.00573 | -0.01149 |
+| Q3 | 0.00000 | 0.00000 | 0.00000 |
+| S1 | -0.01803 | -0.01240 | -0.00563 |
+| S2 | -0.04877 | -0.04562 | -0.00315 |
+| S3 | -0.03423 | -0.04335 | +0.00912 |
+| S4 | -0.01343 | -0.01741 | +0.00398 |
+
+**Note**: V09 is slightly less accurate (1 seed vs 4), but 36x faster. For production, use V08 config with V09 speed (single seed is acceptable for daily iteration).
+
+## V09 Ensemble Results
+
+| Target | Uses Ensemble? | Best W |
+|--------|----------------|--------|
+| Q1 | No (internal only) | - |
+| Q2 | Yes | 0.3 |
+| Q3 | Yes | 0.4 |
+| S1 | Yes | 0.7 |
+| S2 | No (external only) | - |
+| S3 | Yes | 0.3 |
+| S4 | No (external only) | - |
+
+**Ensemble helps 4/7 targets** (Q2, Q3, S1, S3), but doesn't always beat the best single model.
+
+## V09 Pseudo-labeling Analysis
+
+Key observations:
+- **S1**: All 250 test samples have pseudo_pos=1.000 — model is overconfident (all positive)
+- **S3**: All test samples have pseudo_pos=1.000 — same overconfidence issue
+- **Q3**: pseudo_pos=0.028–0.149, far from internal_pos=0.600 — strong domain gap
+- **S2**: pseudo_pos≈0.44–0.48, close to internal_pos=0.651 — good calibration
+- **Q2**: pseudo_pos≈0.44–0.51, close to internal_pos=0.562 — decent
+- **S4**: pseudo_pos≈0.25–0.33, below internal_pos=0.560 — moderate gap
+
+**Conclusion**: Pseudo-labeling is NOT effective directly — model predictions are too biased. Need to first fix domain gap (adversarial validation, domain adaptation).
 
 ## Domain Analysis
 
@@ -117,14 +168,16 @@ For each target: n_ext (0–8) × n_total (10–25) search.
 3. **ext_total_ambience** (ambient noise) critical for Q2 and S2
 4. **ext_wifi_ble** (social activity) helps S1
 5. **Q3 needs no external features** — focus internal effort there
-6. **Next: pseudo-labeling** using external distribution for soft labels
-7. **Next: staged training** (external features first, then internal)
-8. **Next: ensemble** of internal-only vs external-enhanced models
+6. **Ensemble is useful but marginal** — 4/7 targets benefit, 3/7 don't
+7. **Pseudo-labeling is NOT directly useful** — domain gap too large
+8. **Next: staged training** (external features first, then internal)
+9. **Next: adversarial validation** to find domain-mismatched samples
+10. **Next: domain adaptation** via feature-level matching
 
 ## Next Experiments
 
-- V09: Pseudo-labeling with confidence filtering (currently running)
-- V10: Staged training (external pretrain → internal finetune)
-- V11: Domain adaptation via adversarial validation
-- V12: Confidence-weighted training
-- V13: Ensemble optimization (internal-only vs external-enhanced)
+- V10: Staged training (external features pretrain → internal finetune)
+- V11: Adversarial validation (find internal samples mismatched with external distribution)
+- V12: Domain adaptation via feature normalization matching
+- V13: Confidence-weighted training with calibrated thresholds
+- V14: Multi-model ensemble (internal-only + external-enhanced + pseudo-labeled)
