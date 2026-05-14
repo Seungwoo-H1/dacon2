@@ -90,3 +90,36 @@ CatBoost on features_clean_v60
 2. 신규 실험은 V53 swept 기준 비교 후 제출
 3. Leak 제거 필수: LEAK_S, LEAK_Q, NIGHTTIME_LEAK, SLEEP_DIRECT_LEAK
 4. CV = 리더보드 점수 아님. 오버피팅 주의
+
+## V259~V263 (2026-05-14)
+### V259 Isotonic Calibration
+- Isotonic regression → Δ=-0.019 (OOF 기준)
+-最有效的 calibration method
+
+### V260 Quantile+PSI
+- 분석 OOF: 0.614019 (Δ=-0.098555)
+- **실제 제출 LB: 0.714592** → 예상과 큰 차이, 버림
+- Quantile normalization이 테스트 set에서 역효과
+
+### V262 2x2x2 Factorial (Q × ISO × CLUST)
+- Baseline: OOF=0.66141
+- **Isotonic**: OOF=0.58819 (Δ=-0.073) ← Biggest gain
+- Clustering: Δ=-0.007 (harmful), Quantile: Δ=-0.001
+- Best: QFalse_ISOTrue_CLUSTFalse, 252 features
+- PSI filter bug: psi.mean() → psi.sum()으로 수정 필요
+
+### V263 Submission LB Analysis
+- 246개 submission, 37개 OOF 파일 분석
+- **V127이 여전히 BEST**: LB=0.64763, OOF=0.53731
+- v53: LB=0.65358 (두 번째)
+- v83: OOF=0.54575, estimated LB≈0.646 (가장 근접)
+- v45a 100% accuracy → **leakage 발견!**
+- v260 LB=0.714592로 확인 → 버림
+- 문서: `docs/submission_lb_analysis.md`
+
+## 주요 인사이트
+- Distribution correction (Quantile+PSI)은 효과 없음
+- Isotonic calibration이 가장 강력: Δ=-0.073
+- V127이 260+ 실험 중 **undisputed BEST**
+- V45a leakage 발견 → pipeline에 leakage 존재 가능성
+- LB 0.50은 매우 어려움 (OOF <0.47 필요)
