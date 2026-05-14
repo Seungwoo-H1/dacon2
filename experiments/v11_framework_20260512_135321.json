@@ -1,0 +1,53 @@
+{
+  "version": "v11_external_data_research_framework",
+  "timestamp": "20260512_135321",
+  "v127_repro": {
+    "Q1": {
+      "oof_raw": 0.66658,
+      "oof_cal": 0.66655,
+      "n_feat": 15
+    },
+    "Q2": {
+      "oof_raw": 0.6115,
+      "oof_cal": 0.61152,
+      "n_feat": 15
+    },
+    "Q3": {
+      "oof_raw": 0.61432,
+      "oof_cal": 0.60972,
+      "n_feat": 15
+    },
+    "S1": {
+      "oof_raw": 0.59305,
+      "oof_cal": 0.58118,
+      "n_feat": 15
+    },
+    "S2": {
+      "oof_raw": 0.5845,
+      "oof_cal": 0.57687,
+      "n_feat": 15
+    },
+    "S3": {
+      "oof_raw": 0.63289,
+      "oof_cal": 0.62625,
+      "n_feat": 15
+    },
+    "S4": {
+      "oof_raw": 0.63395,
+      "oof_cal": 0.63117,
+      "n_feat": 15
+    }
+  },
+  "v127_avg_oof": 0.61954,
+  "external_datasets": {
+    "sleep_health_kaggle": {
+      "error": "HTTP Error 404: Not Found"
+    },
+    "sleep_healthcare_kaggle": {
+      "error": "HTTP Error 404: Not Found"
+    }
+  },
+  "domain_scores": {},
+  "ext_feature_scores": {},
+  "combinations_tested": 0
+}

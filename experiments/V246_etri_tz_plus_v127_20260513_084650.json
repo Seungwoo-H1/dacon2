@@ -1,0 +1,220 @@
+{
+  "name": "V246_etri_tz_plus_v127",
+  "n_features": 331,
+  "per_target": {
+    "Q1": {
+      "cfg": "deep",
+      "n_feat": 19,
+      "oof_logloss": 0.694967678810561,
+      "fold_losses": [
+        0.6845954350763097,
+        0.6966195140631382,
+        0.6926337124146877,
+        0.7083377195254663,
+        0.6926520129732028
+      ],
+      "n_estimators": 3,
+      "top_features": [
+        "mGps_gps_alt_range_std",
+        "mWifi_wifi_max_rssi_max_zscore",
+        "wLight_w_light_std_zscore",
+        "mACStatus_m_charging_std",
+        "mGps_gps_max_speed_max",
+        "etri_ml_std_tz3",
+        "mUsageStats_usage_total_time_max",
+        "mBle_ble_rssi_std_std_zscore",
+        "mWifi_wifi_max_rssi_min_zscore",
+        "wHr_hr_std_zscore"
+      ]
+    },
+    "Q2": {
+      "cfg": "deep",
+      "n_feat": 14,
+      "oof_logloss": 0.6773723637114413,
+      "fold_losses": [
+        0.6445254106940312,
+        0.6265756991489322,
+        0.6908842692205148,
+        0.7489971477239462,
+        0.6758792917697822
+      ],
+      "n_estimators": 2,
+      "top_features": [
+        "mUsageStats_usage_game_ratio_std",
+        "etri_ml_mean_tz0",
+        "mUsageStats_usage_major_ratio_mean",
+        "mAmbience_ambience_top5_sum_zscore",
+        "mGps_gps_alt_range_mean",
+        "etri_whr_mean_tz4",
+        "mWifi_wifi_strong_ratio_mean_zscore",
+        "etri_ml_mean_tz5",
+        "mUsageStats_usage_major_ratio_max",
+        "etri_ml_mean_tz6"
+      ]
+    },
+    "Q3": {
+      "cfg": "v48",
+      "n_feat": 11,
+      "oof_logloss": 0.6790999801411333,
+      "fold_losses": [
+        0.6169914093683188,
+        0.7176765837921979,
+        0.7407172421110885,
+        0.6682089814518667,
+        0.6519056839821943
+      ],
+      "n_estimators": 6,
+      "top_features": [
+        "mActivity_m_activity_std",
+        "mUsageStats_usage_total_time_mean_zscore",
+        "mLight_m_light_std_zscore",
+        "etri_whr_high_tz2",
+        "mActivity_m_activity_std_zscore",
+        "mACStatus_hour_afternoon_zscore",
+        "mAmbience_ambience_inside__small_room_sum_zscore",
+        "mWifi_wifi_avg_rssi_mean_zscore",
+        "mLight_m_light_mean",
+        "mWifi_wifi_avg_rssi_max"
+      ]
+    },
+    "S1": {
+      "cfg": "wide",
+      "n_feat": 21,
+      "oof_logloss": 0.6174262206693547,
+      "fold_losses": [
+        0.5258138857764737,
+        0.8085317712035854,
+        0.5847778738572789,
+        0.602453443833647,
+        0.5655541286757888
+      ],
+      "n_estimators": 6,
+      "top_features": [
+        "mScreenStatus_m_screen_use_std",
+        "mAmbience_ambience_top5_sum",
+        "etri_wl_mean_tz6",
+        "mActivity_m_activity_std_zscore",
+        "mScreenStatus_m_screen_use_count",
+        "mWifi_wifi_avg_rssi_max_zscore",
+        "mBle_ble_rssi_std_mean",
+        "mBle_ble_min_rssi_max",
+        "etri_wl_std_tz6",
+        "wLight_w_light_std_zscore"
+      ]
+    },
+    "S2": {
+      "cfg": "deep",
+      "n_feat": 19,
+      "oof_logloss": 0.6367864571508335,
+      "fold_losses": [
+        0.6511371334912255,
+        0.7331606057573398,
+        0.5919502145845468,
+        0.6438426663761352,
+        0.5638416655449208
+      ],
+      "n_estimators": 45,
+      "top_features": [
+        "etri_wl_mean_tz1",
+        "etri_wl_mean_tz5",
+        "mWifi_wifi_count_max",
+        "mWifi_wifi_strong_ratio_mean",
+        "mUsageStats_usage_app_count_mean_zscore",
+        "mBle_ble_rssi_std_std_zscore",
+        "mUsageStats_usage_app_count_std_zscore",
+        "mGps_gps_count_std",
+        "mUsageStats_usage_total_time_std_zscore",
+        "mWifi_wifi_max_rssi_max"
+      ]
+    },
+    "S3": {
+      "cfg": "safety",
+      "n_feat": 23,
+      "oof_logloss": 0.6598087106444481,
+      "fold_losses": [
+        0.7596065917261201,
+        0.6919873210713173,
+        0.587567446121802,
+        0.7202966403679933,
+        0.5395855539350078
+      ],
+      "n_estimators": 21,
+      "top_features": [
+        "mUsageStats_usage_total_time_mean_zscore",
+        "mGps_gps_max_speed_max_zscore",
+        "mWifi_wifi_strong_ratio_std",
+        "mBle_ble_min_rssi_min",
+        "mWifi_wifi_strong_ratio_max",
+        "mBle_ble_min_rssi_std",
+        "mGps_gps_avg_speed_mean",
+        "mGps_gps_alt_range_std",
+        "wHr_hr_mean_zscore",
+        "mUsageStats_usage_total_time_max_zscore"
+      ]
+    },
+    "S4": {
+      "cfg": "wide",
+      "n_feat": 20,
+      "oof_logloss": 0.6803016969019773,
+      "fold_losses": [
+        0.764223507641169,
+        0.6516711140583417,
+        0.6769333604549463,
+        0.6338456426254158,
+        0.6748348597300129
+      ],
+      "n_estimators": 3,
+      "top_features": [
+        "mUsageStats_usage_game_ratio_max",
+        "mWifi_wifi_bssid_count_min",
+        "mWifi_wifi_bssid_count_max",
+        "mWifi_wifi_bssid_count_std",
+        "mWifi_wifi_bssid_count_mean",
+        "mWifi_wifi_count_std",
+        "mWifi_wifi_count_max",
+        "mScreenStatus_m_screen_use_mean",
+        "mUsageStats_usage_app_count_mean",
+        "mWifi_wifi_count_mean"
+      ]
+    }
+  },
+  "seeds": 1,
+  "avg_oof": 0.6637317102512669,
+  "shift_analysis": {
+    "Q1": {
+      "train_mean": 0.4955555555555556,
+      "oof_mean": 0.5106035756088605,
+      "shift": 0.015048020053304911
+    },
+    "Q2": {
+      "train_mean": 0.5622222222222222,
+      "oof_mean": 0.5622304264419787,
+      "shift": 8.20421975655794e-06
+    },
+    "Q3": {
+      "train_mean": 0.6,
+      "oof_mean": 0.613176978173756,
+      "shift": 0.013176978173756071
+    },
+    "S1": {
+      "train_mean": 0.6822222222222222,
+      "oof_mean": 0.691209011973405,
+      "shift": 0.008986789751182833
+    },
+    "S2": {
+      "train_mean": 0.6511111111111111,
+      "oof_mean": 0.6494566325377004,
+      "shift": -0.0016544785734107226
+    },
+    "S3": {
+      "train_mean": 0.6622222222222223,
+      "oof_mean": 0.665731947863898,
+      "shift": 0.0035097256416757316
+    },
+    "S4": {
+      "train_mean": 0.56,
+      "oof_mean": 0.5620622758659182,
+      "shift": 0.0020622758659181173
+    }
+  }
+}

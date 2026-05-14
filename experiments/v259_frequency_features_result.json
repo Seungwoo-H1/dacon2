@@ -1,0 +1,88 @@
+{
+  "version": "v259_frequency",
+  "features_created": 1574,
+  "fft_features": 592,
+  "cyclic_features": 333,
+  "temporal_pattern_features": 629,
+  "spectral_entropy_features": 42,
+  "baseline_oof": 0.61906,
+  "frequency_augmented_oof": 0.60567,
+  "delta": -0.01339,
+  "per_target": {
+    "baseline": {
+      "Q1": 0.6258,
+      "Q2": 0.6173,
+      "Q3": 0.62329,
+      "S1": 0.57155,
+      "S2": 0.61739,
+      "S3": 0.64672,
+      "S4": 0.6314
+    },
+    "frequency": {
+      "Q1": 0.65517,
+      "Q2": 0.60531,
+      "Q3": 0.62908,
+      "S1": 0.56377,
+      "S2": 0.5919,
+      "S3": 0.59101,
+      "S4": 0.60345
+    },
+    "baseline_plus_freq": {
+      "Q1": 0.65957,
+      "Q2": 0.59955,
+      "Q3": 0.62625,
+      "S1": 0.56377,
+      "S2": 0.5919,
+      "S3": 0.59101,
+      "S4": 0.60627
+    },
+    "temporal": {
+      "Q1": 0.68458,
+      "Q2": 0.61274,
+      "Q3": 0.62044,
+      "S1": 0.57587,
+      "S2": 0.58849,
+      "S3": 0.60498,
+      "S4": 0.60282
+    }
+  },
+  "deltas_per_target": {
+    "frequency": {
+      "Q1": 0.02938,
+      "Q2": -0.01199,
+      "Q3": 0.00579,
+      "S1": -0.00778,
+      "S2": -0.02549,
+      "S3": -0.05571,
+      "S4": -0.02795
+    },
+    "baseline_plus_freq": {
+      "Q1": 0.03377,
+      "Q2": -0.01775,
+      "Q3": 0.00295,
+      "S1": -0.00778,
+      "S2": -0.02549,
+      "S3": -0.05571,
+      "S4": -0.02513
+    },
+    "temporal": {
+      "Q1": 0.05878,
+      "Q2": -0.00455,
+      "Q3": -0.00285,
+      "S1": 0.00432,
+      "S2": -0.0289,
+      "S3": -0.04174,
+      "S4": -0.02858
+    }
+  },
+  "feature_breakdown": {
+    "fft": 592,
+    "cyclic": 333,
+    "temporal": 629,
+    "spectral_entropy": 42,
+    "modality": 20
+  },
+  "subject_coverage": 10,
+  "total_subjects": 10,
+  "notes": "Per-subject daily time series FFT/cyclic/temporal analysis. FFT: 592 features (dominant freq, spectral energy, entropy, centroid, flatness, roll-off, crest). Cyclic: 333 (trend/seasonal/residual decomposition). Temporal: 629 (DOW effects, AC/PAC lags, run length, volatility). Modality cross-spectrum: 20 (activity\u2194screen, HR\u2194steps coherence/phase). Spectral entropy: 42. \u0394 freq=-0.01339, \u0394 baseline+freq=-0.01359, \u0394 temporal=-0.00622. Best: baseline_plus_freq. Elapsed: 122.7s"
+}

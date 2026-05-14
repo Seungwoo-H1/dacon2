@@ -1,0 +1,39 @@
+{
+  "version": "v262",
+  "name": "Final Optimized Model",
+  "timestamp": "20260514_134306",
+  "factorial_results": {
+    "QFalse_ISOFalse_CLUSTFalse": 0.6614148031681555,
+    "QFalse_ISOFalse_CLUSTTrue": 0.6619468430816452,
+    "QFalse_ISOTrue_CLUSTFalse": 0.5881863874419301,
+    "QFalse_ISOTrue_CLUSTTrue": 0.5948971593913911,
+    "QTrue_ISOFalse_CLUSTFalse": 0.6623531458741366,
+    "QTrue_ISOFalse_CLUSTTrue": 0.661881039873854,
+    "QTrue_ISOTrue_CLUSTFalse": 0.5892784088451016,
+    "QTrue_ISOTrue_CLUSTTrue": 0.5940193159293677
+  },
+  "best_combo": "QFalse_ISOTrue_CLUSTFalse",
+  "psi_threshold_search": {
+    "0.05": 0.5881863874419301,
+    "0.1": 0.5881863874419301,
+    "0.15": 0.5881863874419301,
+    "0.2": 0.5881863874419301,
+    "0.25": 0.5881863874419301,
+    "0.5": 0.5881863874419301,
+    "None": 0.5881863874419301
+  },
+  "best_psi_threshold": "0.05",
+  "use_quantile": false,
+  "use_isotonic": true,
+  "use_clustering": false,
+  "n_features": 252,
+  "clustering_features": [
+    "cluster_dist_0",
+    "cluster_dist_1",
+    "cluster_dist_2",
+    "cluster_dist_3",
+    "cluster_dist_4"
+  ],
+  "submit_path": "/home/mwoo423/projects/dacon2/submissions/submission_v262_20260514_134306.csv",
+  "elapsed_seconds": 284
+}

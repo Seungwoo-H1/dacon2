@@ -1,0 +1,77 @@
+{
+  "version": "v260",
+  "name": "External Proxy Features",
+  "features_created": 30,
+  "feature_list": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "circadian_concentration",
+    "circadian_evenness",
+    "hourly_pattern_entropy",
+    "hourly_pattern_entropy_norm",
+    "cross_feature_entropy",
+    "day_variability_cv",
+    "mobility_total",
+    "mobility_spread",
+    "wifi_signal_stability",
+    "evening_screen_intensity",
+    "night_screen_ratio",
+    "is_weekend",
+    "dow_sin",
+    "dow_cos",
+    "month_sin",
+    "month_cos",
+    "doy_sin",
+    "doy_cos",
+    "activity_screen_interaction",
+    "activity_screen_ratio",
+    "gps_wifi_interaction",
+    "ble_ambience_interaction",
+    "subject_deviation_norm"
+  ],
+  "per_target": {
+    "Q1": {
+      "baseline": 0.73838096534021,
+      "enhanced": 0.06945204940693794,
+      "delta": -0.6689289159332721
+    },
+    "Q2": {
+      "baseline": 0.6966259785483376,
+      "enhanced": 0.06991594010745907,
+      "delta": -0.6267100384408786
+    },
+    "Q3": {
+      "baseline": 0.7309119379582533,
+      "enhanced": 0.04106568215668298,
+      "delta": -0.6898462558015703
+    },
+    "S1": {
+      "baseline": 0.6962769828471598,
+      "enhanced": 0.02900162764053505,
+      "delta": -0.6672753552066247
+    },
+    "S2": {
+      "baseline": 0.7271025922555729,
+      "enhanced": 0.057365314880067735,
+      "delta": -0.6697372773755053
+    },
+    "S3": {
+      "baseline": 0.8049667314804381,
+      "enhanced": 0.050925175657653414,
+      "delta": -0.7540415558227846
+    },
+    "S4": {
+      "baseline": 0.8196794333910963,
+      "enhanced": 0.02585871298673456,
+      "delta": -0.7938207204043617
+    }
+  },
+  "avg_baseline_oof": 0.744849231688724,
+  "avg_enhanced_oof": 0.04908350040515297,
+  "avg_delta": -0.695765731283571
+}

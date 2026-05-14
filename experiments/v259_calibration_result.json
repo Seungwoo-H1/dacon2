@@ -1,0 +1,183 @@
+{
+  "version": "v259_calibration",
+  "baseline_avg_oof": 0.6604976,
+  "per_target_baseline": {
+    "Q1": 0.6933469,
+    "Q2": 0.6657397,
+    "Q3": 0.6726837,
+    "S1": 0.6130295,
+    "S2": 0.6347811,
+    "S3": 0.6589072,
+    "S4": 0.6849951
+  },
+  "temperature_scaling": {
+    "per_target_T": {
+      "Q1": 2.3,
+      "Q2": 0.9,
+      "Q3": 1.35,
+      "S1": 1.05,
+      "S2": 1.05,
+      "S3": 1.3,
+      "S4": 1.45
+    },
+    "avg_oof": 0.6587082,
+    "delta": -0.0017894
+  },
+  "quantile_norm": {
+    "avg_oof": 0.8202724,
+    "delta": 0.1597748
+  },
+  "rank_stabilization": {
+    "avg_oof": 0.659234,
+    "delta": -0.0012636
+  },
+  "isotonic_regression": {
+    "avg_oof": 0.6413768,
+    "delta": -0.0191208
+  },
+  "combined": {
+    "avg_oof": 0.6593102,
+    "delta": -0.0011874,
+    "per_target_T": {
+      "Q1": 5.0,
+      "Q2": 5.0,
+      "Q3": 5.0,
+      "S1": 5.0,
+      "S2": 5.0,
+      "S3": 5.0,
+      "S4": 5.0
+    }
+  },
+  "temperature_per_seed": {
+    "avg_oof": 0.6613428,
+    "delta": 0.0008452,
+    "per_target_info": {
+      "Q1": {
+        "ll": 0.6914768,
+        "T_per_seed": [
+          2.0,
+          2.0,
+          3.0,
+          3.0
+        ]
+      },
+      "Q2": {
+        "ll": 0.6789532,
+        "T_per_seed": [
+          0.9,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "Q3": {
+        "ll": 0.6710514,
+        "T_per_seed": [
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ]
+      },
+      "S1": {
+        "ll": 0.6191881,
+        "T_per_seed": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "S2": {
+        "ll": 0.6414273,
+        "T_per_seed": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "S3": {
+        "ll": 0.6435403,
+        "T_per_seed": [
+          1.2,
+          1.2,
+          1.2,
+          1.2
+        ]
+      },
+      "S4": {
+        "ll": 0.6837624,
+        "T_per_seed": [
+          1.5,
+          1.5,
+          1.5,
+          1.5
+        ]
+      }
+    }
+  },
+  "per_target_details": {
+    "Q1": {
+      "baseline": 0.6933469,
+      "temperature": 0.6906592,
+      "quantile_norm": 0.8106889,
+      "rank_stabilization": 0.6886666,
+      "isotonic": 0.674741,
+      "combined": 0.6887315
+    },
+    "Q2": {
+      "baseline": 0.6657397,
+      "temperature": 0.6669823,
+      "quantile_norm": 0.7928917,
+      "rank_stabilization": 0.669483,
+      "isotonic": 0.6483953,
+      "combined": 0.6717879
+    },
+    "Q3": {
+      "baseline": 0.6726837,
+      "temperature": 0.6703957,
+      "quantile_norm": 0.9180835,
+      "rank_stabilization": 0.6703407,
+      "isotonic": 0.6544095,
+      "combined": 0.6716793
+    },
+    "S1": {
+      "baseline": 0.6130295,
+      "temperature": 0.6127828,
+      "quantile_norm": 0.8435229,
+      "rank_stabilization": 0.6191158,
+      "isotonic": 0.5895179,
+      "combined": 0.6160574
+    },
+    "S2": {
+      "baseline": 0.6347811,
+      "temperature": 0.6348068,
+      "quantile_norm": 0.8368735,
+      "rank_stabilization": 0.6378783,
+      "isotonic": 0.6192028,
+      "combined": 0.6409445
+    },
+    "S3": {
+      "baseline": 0.6589072,
+      "temperature": 0.6528893,
+      "quantile_norm": 0.780327,
+      "rank_stabilization": 0.6569015,
+      "isotonic": 0.6395505,
+      "combined": 0.6505522
+    },
+    "S4": {
+      "baseline": 0.6849951,
+      "temperature": 0.6824412,
+      "quantile_norm": 0.7595194,
+      "rank_stabilization": 0.6722518,
+      "isotonic": 0.6638206,
+      "combined": 0.6754186
+    }
+  },
+  "best_method": "isotonic",
+  "best_avg_oof": 0.6413768,
+  "best_delta": -0.0191208,
+  "timestamp": "20260514_090322",
+  "notes": "Trained with GroupKFold(5), seed=42, features_clean_v60.parquet. V127 baseline uses wide/deep/v48/safety per-target configs. Temperature scaling searched T in [0.1..5.0] with fine-grained refinement. Rank stabilization uses within-fold rank mapping averaged across folds and seeds. Isotonic regression with out_of_bounds=clip, y_min/max=[0.0001, 0.9999]. Combined applies rank stabilization first, then temperature scaling on rank-probabilities."
+}
