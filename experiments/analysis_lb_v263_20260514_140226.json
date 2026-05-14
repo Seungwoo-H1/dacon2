@@ -1,0 +1,441 @@
+{
+  "master": {
+    "v53": {
+      "lb": 0.65358,
+      "oof": 0.54793,
+      "pred_lb": null,
+      "note": "Best LB (manual submit)",
+      "detail": "Z-score + feature sweep",
+      "est_oof": 0.54793,
+      "est_lb": null
+    },
+    "v127": {
+      "lb": 0.64763,
+      "oof": 0.53731,
+      "pred_lb": null,
+      "note": "Best OOF (3-way ensemble)",
+      "detail": "V121+V123+V115, 0.35/0.25/0.40",
+      "est_oof": null,
+      "est_lb": null
+    },
+    "v128": {
+      "lb": null,
+      "oof": 0.5361,
+      "pred_lb": null,
+      "note": "Per-target ensemble",
+      "detail": "Overfit risk",
+      "est_oof": 0.5361,
+      "est_lb": 0.7161
+    },
+    "v260": {
+      "lb": null,
+      "oof": 0.6565,
+      "pred_lb": null,
+      "note": "Quantile+PSI submitted",
+      "detail": "\u0394=-0.056 from baseline",
+      "est_oof": 0.6565,
+      "est_lb": 0.8365
+    },
+    "v262": {
+      "lb": null,
+      "oof": 0.58819,
+      "pred_lb": null,
+      "note": "Isotonic best",
+      "detail": "\u0394=-0.073 from factorial baseline",
+      "est_oof": 0.58819,
+      "est_lb": 0.76819
+    },
+    "v102": {
+      "lb": null,
+      "oof": null,
+      "pred_lb": 0.61998,
+      "note": "Shift amplification",
+      "detail": "S3/S4 \u00d71.3, S1/S2 \u00d71.15",
+      "est_oof": null,
+      "est_lb": null
+    },
+    "v99": {
+      "lb": null,
+      "oof": null,
+      "pred_lb": 0.73,
+      "note": "100 seeds blending",
+      "detail": "Predicted",
+      "est_oof": null,
+      "est_lb": null
+    },
+    "v109": {
+      "lb": null,
+      "oof": 0.703327,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.703327,
+      "est_lb": 0.883327
+    },
+    "v110": {
+      "lb": null,
+      "oof": 0.664132,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.664132,
+      "est_lb": 0.764132
+    },
+    "v111": {
+      "lb": null,
+      "oof": 0.660635,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.660635,
+      "est_lb": 0.760635
+    },
+    "v112": {
+      "lb": null,
+      "oof": 0.654197,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.654197,
+      "est_lb": 0.754197
+    },
+    "v114": {
+      "lb": null,
+      "oof": 0.652414,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.652414,
+      "est_lb": 0.752414
+    },
+    "v115": {
+      "lb": null,
+      "oof": 0.547588,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.547588,
+      "est_lb": 0.647594
+    },
+    "v116": {
+      "lb": null,
+      "oof": 0.547608,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.547608,
+      "est_lb": 0.647616
+    },
+    "v119": {
+      "lb": null,
+      "oof": 0.570567,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.570567,
+      "est_lb": 0.670571
+    },
+    "v121": {
+      "lb": null,
+      "oof": 0.548169,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.548169,
+      "est_lb": 0.648171
+    },
+    "v122": {
+      "lb": null,
+      "oof": 0.566629,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.566629,
+      "est_lb": 0.666639
+    },
+    "v123": {
+      "lb": null,
+      "oof": 0.549844,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.549844,
+      "est_lb": 0.649848
+    },
+    "v43": {
+      "lb": null,
+      "oof": 0.605935,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.605935,
+      "est_lb": 0.705935
+    },
+    "v45": {
+      "lb": null,
+      "oof": 0.14303,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.14303,
+      "est_lb": 0.244236
+    },
+    "v46": {
+      "lb": null,
+      "oof": 0.26119,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.26119,
+      "est_lb": 0.361194
+    },
+    "v47": {
+      "lb": null,
+      "oof": 0.609313,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.609313,
+      "est_lb": 0.709313
+    },
+    "v48": {
+      "lb": null,
+      "oof": 0.58847,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.58847,
+      "est_lb": 0.688476
+    },
+    "v49": {
+      "lb": null,
+      "oof": 0.620099,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.620099,
+      "est_lb": 0.720099
+    },
+    "v50": {
+      "lb": null,
+      "oof": 0.592636,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.592636,
+      "est_lb": 0.692638
+    },
+    "v51": {
+      "lb": null,
+      "oof": 0.593947,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.593947,
+      "est_lb": 0.693949
+    },
+    "v52": {
+      "lb": null,
+      "oof": 0.572466,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.572466,
+      "est_lb": 0.67247
+    },
+    "v54": {
+      "lb": null,
+      "oof": 0.539715,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.539715,
+      "est_lb": 0.639722
+    },
+    "v55": {
+      "lb": null,
+      "oof": 0.547608,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.547608,
+      "est_lb": 0.647613
+    },
+    "v81": {
+      "lb": null,
+      "oof": 0.628489,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.628489,
+      "est_lb": 0.728489
+    },
+    "v82": {
+      "lb": null,
+      "oof": 0.565405,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.565405,
+      "est_lb": 0.665405
+    },
+    "v83": {
+      "lb": null,
+      "oof": 0.545752,
+      "pred_lb": null,
+      "note": "OOF only",
+      "detail": "37 OOF files total, no known LB",
+      "est_oof": 0.545752,
+      "est_lb": 0.64577
+    }
+  },
+  "best_known": {
+    "version": "v127",
+    "lb": 0.64763,
+    "oof": 0.53731,
+    "detail": "V121+V123+V115, 0.35/0.25/0.40"
+  },
+  "best_estimated": {
+    "version": "v45",
+    "est_lb": 0.244236,
+    "oof": 0.14303,
+    "detail": "37 OOF files total, no known LB"
+  },
+  "groups": {
+    "v43-v55": {
+      "versions": [
+        "v43",
+        "v45",
+        "v46",
+        "v47",
+        "v48",
+        "v49",
+        "v50",
+        "v51",
+        "v52",
+        "v53",
+        "v54",
+        "v55"
+      ],
+      "n_versions": 12,
+      "best_lb": 0.65358,
+      "best_oof": 0.14303,
+      "has_known_lb": true,
+      "notes": [
+        "Best LB (manual submit)",
+        "OOF only"
+      ]
+    },
+    "v70-v83": {
+      "versions": [
+        "v70",
+        "v71",
+        "v72",
+        "v80",
+        "v81",
+        "v82",
+        "v83"
+      ],
+      "n_versions": 3,
+      "best_lb": 0.64577,
+      "best_oof": 0.545752,
+      "has_known_lb": false,
+      "notes": [
+        "OOF only"
+      ]
+    },
+    "v93-v106": {
+      "versions": [
+        "v93",
+        "v94",
+        "v96",
+        "v97",
+        "v99",
+        "v100",
+        "v102",
+        "v103",
+        "v106"
+      ],
+      "n_versions": 2,
+      "best_lb": null,
+      "best_oof": null,
+      "has_known_lb": false,
+      "notes": [
+        "Shift amplification",
+        "100 seeds blending"
+      ]
+    },
+    "v109-v128": {
+      "versions": [
+        "v109",
+        "v110",
+        "v111",
+        "v112",
+        "v114",
+        "v115",
+        "v116",
+        "v118",
+        "v119",
+        "v121",
+        "v122",
+        "v123",
+        "v124",
+        "v125",
+        "v127",
+        "v128"
+      ],
+      "n_versions": 13,
+      "best_lb": 0.64763,
+      "best_oof": 0.5361,
+      "has_known_lb": true,
+      "notes": [
+        "Best OOF (3-way ensemble)",
+        "Per-target ensemble",
+        "OOF only"
+      ]
+    },
+    "v208-v262": {
+      "versions": [
+        "v208",
+        "v209",
+        "v210",
+        "v211",
+        "v214",
+        "v215",
+        "v216",
+        "v217",
+        "v218",
+        "v219",
+        "v220",
+        "v221",
+        "v222",
+        "v223",
+        "v232",
+        "v233",
+        "v235",
+        "v236",
+        "v237",
+        "v240",
+        "v241",
+        "v242",
+        "v245",
+        "v246",
+        "v250",
+        "v251",
+        "v252",
+        "v259",
+        "v260",
+        "v262"
+      ],
+      "n_versions": 2,
+      "best_lb": 0.76819,
+      "best_oof": 0.58819,
+      "has_known_lb": false,
+      "notes": [
+        "Quantile+PSI submitted",
+        "Isotonic best"
+      ]
+    }
+  },
+  "timestamp": "20260514_140226"
+}
