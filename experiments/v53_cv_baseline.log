@@ -1,0 +1,138 @@
+2026-05-06 23:12:46,580 [INFO] ============================================================
+2026-05-06 23:12:46,581 [INFO] V53 CV Baseline - GroupKFold 5-fold
+2026-05-06 23:12:46,886 [INFO]   Train: (450, 153) -> (450, 294)
+2026-05-06 23:12:46,887 [INFO]   Features: 282 total
+2026-05-06 23:12:46,887 [INFO] 
+  --- Q1 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:47,152 [INFO]   Config: deep, n_feat=20, features=['mUsageStats_usage_major_ratio_mean', 'wHr_hr_std_zscore', 'mBle_ble_count_mean_zscore', 'mScreenStatus_hour_morning', 'mWifi_wifi_max_rssi_min']...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:48,559 [INFO]   Fold losses: ['0.6591', '0.8289', '0.7400', '0.7071', '0.7130']
+2026-05-06 23:12:48,559 [INFO]   OOF avg logloss: 0.7296
+2026-05-06 23:12:48,593 [INFO] 
+  --- Q2 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:48,858 [INFO]   Config: deep, n_feat=15, features=['mUsageStats_usage_app_count_std', 'mACStatus_m_charging_mean', 'mBle_ble_rssi_std_max_zscore', 'mACStatus_m_charging_std', 'mUsageStats_usage_major_ratio_std']...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:50,057 [INFO]   Fold losses: ['0.5346', '0.5310', '0.7925', '0.7337', '0.6399']
+2026-05-06 23:12:50,058 [INFO]   OOF avg logloss: 0.6463
+2026-05-06 23:12:50,092 [INFO] 
+  --- Q3 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:50,367 [INFO]   Config: v48, n_feat=8, features=['mLight_m_light_mean', 'mUsageStats_usage_total_time_std_zscore', 'mWifi_wifi_max_rssi_std', 'mBle_ble_count_max', 'mUsageStats_usage_major_ratio_mean_zscore']...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:50,946 [INFO]   Fold losses: ['0.6616', '0.7542', '0.7232', '0.7035', '0.5967']
+2026-05-06 23:12:50,946 [INFO]   OOF avg logloss: 0.6879
+2026-05-06 23:12:50,976 [INFO] 
+  --- S1 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:51,177 [INFO]   Config: wide, n_feat=20, features=['mScreenStatus_m_screen_use_std', 'mBle_ble_rssi_std_mean_zscore', 'wHr_hr_std_zscore', 'mUsageStats_usage_total_time_mean', 'mUsageStats_usage_app_count_max_zscore']...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:51,629 [INFO]   Fold losses: ['0.5233', '0.7599', '0.5956', '0.5964', '0.5618']
+2026-05-06 23:12:51,629 [INFO]   OOF avg logloss: 0.6074
+2026-05-06 23:12:51,657 [INFO] 
+  --- S2 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:51,898 [INFO]   Config: deep, n_feat=20, features=['mWifi_wifi_max_rssi_max', 'mActivity_m_activity_count_zscore', 'mAmbience_ambience_outside,_rural_or_natural_sum_zscore', 'mUsageStats_usage_total_time_std_zscore', 'mScreenStatus_m_screen_use_mean']...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:53,306 [INFO]   Fold losses: ['0.7087', '0.8762', '0.5364', '0.5613', '0.6046']
+2026-05-06 23:12:53,306 [INFO]   OOF avg logloss: 0.6574
+2026-05-06 23:12:53,341 [INFO] 
+  --- S3 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:53,481 [INFO]   Config: safety, n_feat=20, features=['mBle_ble_max_rssi_max', 'mWifi_wifi_max_rssi_max', 'mGps_gps_count_mean', 'mWifi_wifi_strong_ratio_min_zscore', 'mUsageStats_usage_total_time_mean']...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:54,126 [INFO]   Fold losses: ['0.6723', '0.7397', '0.7267', '0.6831', '0.5391']
+2026-05-06 23:12:54,126 [INFO]   OOF avg logloss: 0.6722
+2026-05-06 23:12:54,159 [INFO] 
+  --- S4 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:54,367 [INFO]   Config: wide, n_feat=20, features=['mGps_gps_avg_speed_max', 'mAmbience_ambience_top5_sum_zscore', 'mUsageStats_usage_major_ratio_mean', 'mBle_ble_max_rssi_max_zscore', 'mBle_ble_count_std_zscore']...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:12:54,860 [INFO]   Fold losses: ['0.7465', '0.6622', '0.7206', '0.5435', '0.6830']
+2026-05-06 23:12:54,861 [INFO]   OOF avg logloss: 0.6712
+2026-05-06 23:12:54,894 [INFO] 
+============================================================
+2026-05-06 23:12:54,894 [INFO] CV BASELINE RESULTS
+2026-05-06 23:12:54,894 [INFO] ============================================================
+2026-05-06 23:12:54,894 [INFO]   Q1: 0.7296
+2026-05-06 23:12:54,894 [INFO]   Q2: 0.6463
+2026-05-06 23:12:54,894 [INFO]   Q3: 0.6879
+2026-05-06 23:12:54,894 [INFO]   S1: 0.6074
+2026-05-06 23:12:54,894 [INFO]   S2: 0.6574
+2026-05-06 23:12:54,894 [INFO]   S3: 0.6722
+2026-05-06 23:12:54,894 [INFO]   S4: 0.6712
+2026-05-06 23:12:54,894 [INFO]   AVG: 0.6674
+2026-05-06 23:12:54,894 [INFO]   Original V53 reported avg_cal_loss_v53: 0.5479
+2026-05-06 23:12:54,894 [INFO]   Time: 8s
+2026-05-06 23:12:54,895 [INFO]   Saved: /home/mwoo423/projects/dacon2/experiments/v53_cv_baseline.json

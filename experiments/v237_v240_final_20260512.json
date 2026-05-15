@@ -1,0 +1,10 @@
+{
+  "v127": {
+    "oof": 0.53731,
+    "lb": 0.64763
+  },
+  "v237_feature_selection": "k=5 to k=50 tested",
+  "v239_label_smoothing": "alpha=0.0 to 0.5",
+  "v240_mlp": "hidden=(32),(64),(32,16), lr=0.001,0.01",
+  "summary": "All experiments failed to beat V127 (OOF=0.537, LB=0.648)"
+}

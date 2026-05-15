@@ -1,0 +1,151 @@
+{
+  "version": "v31",
+  "submission_file": "/home/mwoo423/projects/dacon2/submissions/submission_v31_20260504_200009.csv",
+  "timestamp": "20260504_200009",
+  "n_samples": 250,
+  "models": [
+    "LightGBM (V31 tuned) + XGBoost"
+  ],
+  "ensemble_weights": {
+    "lgbm": 0.7,
+    "xgb": 0.3
+  },
+  "n_seeds": 20,
+  "calibration": "simple mean-matching + clip",
+  "cal_oof_score": 0.5748,
+  "per_target": {
+    "Q1": {
+      "config": {
+        "name": "C1",
+        "nl": 8,
+        "md": 3,
+        "lr": 0.02,
+        "ne": 200,
+        "ss": 0.6,
+        "cst": 0.6,
+        "ra": 2.0,
+        "rl": 5.0,
+        "mc": 15,
+        "_n_feats": 20
+      },
+      "n_features": 20,
+      "cal_oof_loss": 0.0,
+      "cal_mean": 0.4955555555555555,
+      "train_rate": 0.4955555555555556
+    },
+    "Q2": {
+      "config": {
+        "name": "C1",
+        "nl": 8,
+        "md": 3,
+        "lr": 0.02,
+        "ne": 200,
+        "ss": 0.6,
+        "cst": 0.6,
+        "ra": 2.0,
+        "rl": 5.0,
+        "mc": 15,
+        "_n_feats": 30
+      },
+      "n_features": 30,
+      "cal_oof_loss": 0.0,
+      "cal_mean": 0.5622222222222222,
+      "train_rate": 0.5622222222222222
+    },
+    "Q3": {
+      "config": {
+        "name": "C1",
+        "nl": 8,
+        "md": 3,
+        "lr": 0.02,
+        "ne": 200,
+        "ss": 0.6,
+        "cst": 0.6,
+        "ra": 2.0,
+        "rl": 5.0,
+        "mc": 15,
+        "_n_feats": 30
+      },
+      "n_features": 30,
+      "cal_oof_loss": 0.0,
+      "cal_mean": 0.6,
+      "train_rate": 0.6
+    },
+    "S1": {
+      "config": {
+        "name": "C1",
+        "nl": 8,
+        "md": 3,
+        "lr": 0.02,
+        "ne": 200,
+        "ss": 0.6,
+        "cst": 0.6,
+        "ra": 2.0,
+        "rl": 5.0,
+        "mc": 15,
+        "_n_feats": 30
+      },
+      "n_features": 30,
+      "cal_oof_loss": 0.0,
+      "cal_mean": 0.6822222222222223,
+      "train_rate": 0.6822222222222222
+    },
+    "S2": {
+      "config": {
+        "name": "C1",
+        "nl": 8,
+        "md": 3,
+        "lr": 0.02,
+        "ne": 200,
+        "ss": 0.6,
+        "cst": 0.6,
+        "ra": 2.0,
+        "rl": 5.0,
+        "mc": 15,
+        "_n_feats": 20
+      },
+      "n_features": 20,
+      "cal_oof_loss": 0.0,
+      "cal_mean": 0.6511111111111111,
+      "train_rate": 0.6511111111111111
+    },
+    "S3": {
+      "config": {
+        "name": "C1",
+        "nl": 8,
+        "md": 3,
+        "lr": 0.02,
+        "ne": 200,
+        "ss": 0.6,
+        "cst": 0.6,
+        "ra": 2.0,
+        "rl": 5.0,
+        "mc": 15,
+        "_n_feats": 30
+      },
+      "n_features": 30,
+      "cal_oof_loss": 0.0,
+      "cal_mean": 0.6621895650717879,
+      "train_rate": 0.6622222222222223
+    },
+    "S4": {
+      "config": {
+        "name": "C1",
+        "nl": 8,
+        "md": 3,
+        "lr": 0.02,
+        "ne": 200,
+        "ss": 0.6,
+        "cst": 0.6,
+        "ra": 2.0,
+        "rl": 5.0,
+        "mc": 15,
+        "_n_feats": 10
+      },
+      "n_features": 10,
+      "cal_oof_loss": 0.0,
+      "cal_mean": 0.5600000000000002,
+      "train_rate": 0.56
+    }
+  }
+}

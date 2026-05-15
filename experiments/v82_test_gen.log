@@ -1,0 +1,140 @@
+2026-05-09 01:34:37,247 [INFO] ======================================================================
+2026-05-09 01:34:37,247 [INFO] V82 — V52 Improved: Multi-Config Ensemble + Per-Target Config
+2026-05-09 01:34:37,247 [INFO] ======================================================================
+2026-05-09 01:34:37,247 [INFO] 
+--- 1. Load features ---
+2026-05-09 01:34:37,277 [INFO]   Loaded: (450, 153)
+2026-05-09 01:34:42,005 [INFO]   After personalization: (450, 576)
+2026-05-09 01:34:42,005 [INFO] 
+--- 2. Feature ranking (LGBM importance) ---
+2026-05-09 01:34:42,157 [INFO]   Q1: ranked 279 features
+2026-05-09 01:34:42,318 [INFO]   Q2: ranked 279 features
+2026-05-09 01:34:42,475 [INFO]   Q3: ranked 279 features
+2026-05-09 01:34:42,609 [INFO]   S1: ranked 260 features
+2026-05-09 01:34:42,751 [INFO]   S2: ranked 260 features
+2026-05-09 01:34:42,889 [INFO]   S3: ranked 260 features
+2026-05-09 01:34:43,039 [INFO]   S4: ranked 260 features
+2026-05-09 01:34:43,039 [INFO] 
+--- 3. Multi-config training + ensemble ──
+2026-05-09 01:34:43,039 [INFO] 
+  === Q1 (rate=0.496) ===
+2026-05-09 01:38:28,929 [INFO]   Top 5 configs:
+2026-05-09 01:38:28,929 [INFO]     deep_n20: cal=0.6125
+2026-05-09 01:38:28,929 [INFO]     wide_n20: cal=0.6156
+2026-05-09 01:38:28,929 [INFO]     v53_wide_n20: cal=0.6167
+2026-05-09 01:38:28,929 [INFO]     v48_n20: cal=0.6179
+2026-05-09 01:38:28,929 [INFO]     wide_n10: cal=0.6192
+2026-05-09 01:38:28,949 [INFO] 
+  Strategies: best_cfg=0.6125, top3_ens=0.6102, top5_ens=0.6064, stack=0.6123
+2026-05-09 01:38:28,950 [INFO]   ✅ Best: top5_ens (deep_n20+wide_n20+v53_wide_n20+v48_n20+wide_n10) cal=0.6064
+2026-05-09 01:38:28,950 [INFO]   Q1 time: 226s
+2026-05-09 01:38:28,982 [INFO] 
+  === Q2 (rate=0.562) ===
+2026-05-09 01:42:35,045 [INFO]   Top 5 configs:
+2026-05-09 01:42:35,045 [INFO]     deep_n15: cal=0.5641
+2026-05-09 01:42:35,045 [INFO]     v48_n15: cal=0.5655
+2026-05-09 01:42:35,045 [INFO]     v48_n10: cal=0.5700
+2026-05-09 01:42:35,045 [INFO]     v53_deep_n15: cal=0.5713
+2026-05-09 01:42:35,045 [INFO]     wide_n10: cal=0.5762
+2026-05-09 01:42:35,078 [INFO] 
+  Strategies: best_cfg=0.5641, top3_ens=0.5590, top5_ens=0.5608, stack=0.5624
+2026-05-09 01:42:35,078 [INFO]   ✅ Best: top3_ens (deep_n15+v48_n15+v48_n10) cal=0.5590
+2026-05-09 01:42:35,078 [INFO]   Q2 time: 246s
+2026-05-09 01:42:35,109 [INFO] 
+  === Q3 (rate=0.600) ===
+2026-05-09 01:46:29,541 [INFO]   Top 5 configs:
+2026-05-09 01:46:29,541 [INFO]     wide_n20: cal=0.5828
+2026-05-09 01:46:29,541 [INFO]     v53_wide_n20: cal=0.5848
+2026-05-09 01:46:29,541 [INFO]     v48_n15: cal=0.5864
+2026-05-09 01:46:29,541 [INFO]     deep_n15: cal=0.5886
+2026-05-09 01:46:29,542 [INFO]     deep_n10: cal=0.5892
+2026-05-09 01:46:29,570 [INFO] 
+  Strategies: best_cfg=0.5828, top3_ens=0.5795, top5_ens=0.5776, stack=0.5822
+2026-05-09 01:46:29,570 [INFO]   ✅ Best: top5_ens (wide_n20+v53_wide_n20+v48_n15+deep_n15+deep_n10) cal=0.5776
+2026-05-09 01:46:29,570 [INFO]   Q3 time: 234s
+2026-05-09 01:46:29,604 [INFO] 
+  === S1 (rate=0.682) ===
+2026-05-09 01:49:31,413 [INFO]   Top 5 configs:
+2026-05-09 01:49:31,413 [INFO]     deep_n10: cal=0.5398
+2026-05-09 01:49:31,413 [INFO]     wide_n8: cal=0.5401
+2026-05-09 01:49:31,413 [INFO]     deep_n8: cal=0.5410
+2026-05-09 01:49:31,413 [INFO]     v53_deep_n8: cal=0.5423
+2026-05-09 01:49:31,413 [INFO]     v48_n8: cal=0.5439
+2026-05-09 01:49:31,453 [INFO] 
+  Strategies: best_cfg=0.5398, top3_ens=0.5316, top5_ens=0.5334, stack=0.5305
+2026-05-09 01:49:31,453 [INFO]   ✅ Best: stack (stack-C=50.00) cal=0.5305
+2026-05-09 01:49:31,453 [INFO]   S1 time: 182s
+2026-05-09 01:49:31,484 [INFO] 
+  === S2 (rate=0.651) ===
+2026-05-09 01:52:40,398 [INFO]   Top 5 configs:
+2026-05-09 01:52:40,398 [INFO]     v53_deep_n10: cal=0.5735
+2026-05-09 01:52:40,398 [INFO]     v53_deep_n20: cal=0.5751
+2026-05-09 01:52:40,398 [INFO]     v53_wide_n10: cal=0.5753
+2026-05-09 01:52:40,398 [INFO]     v48_n20: cal=0.5757
+2026-05-09 01:52:40,398 [INFO]     v48_n10: cal=0.5758
+2026-05-09 01:52:40,427 [INFO] 
+  Strategies: best_cfg=0.5735, top3_ens=0.5651, top5_ens=0.5643, stack=0.5620
+2026-05-09 01:52:40,427 [INFO]   ✅ Best: stack (stack-C=50.00) cal=0.5620
+2026-05-09 01:52:40,428 [INFO]   S2 time: 189s
+2026-05-09 01:52:40,457 [INFO] 
+  === S3 (rate=0.662) ===
+2026-05-09 01:55:42,689 [INFO]   Top 5 configs:
+2026-05-09 01:55:42,689 [INFO]     v53_wide_n8: cal=0.5365
+2026-05-09 01:55:42,689 [INFO]     wide_n8: cal=0.5392
+2026-05-09 01:55:42,689 [INFO]     safety_n8: cal=0.5445
+2026-05-09 01:55:42,689 [INFO]     wide_n10: cal=0.5446
+2026-05-09 01:55:42,689 [INFO]     v53_wide_n10: cal=0.5447
+2026-05-09 01:55:42,729 [INFO] 
+  Strategies: best_cfg=0.5365, top3_ens=0.5377, top5_ens=0.5373, stack=0.5401
+2026-05-09 01:55:42,729 [INFO]   ✅ Best: best_cfg (v53_wide_n8) cal=0.5365
+2026-05-09 01:55:42,729 [INFO]   S3 time: 182s
+2026-05-09 01:55:42,759 [INFO] 
+  === S4 (rate=0.560) ===
+2026-05-09 01:59:21,273 [INFO]   Top 5 configs:
+2026-05-09 01:59:21,273 [INFO]     v53_deep_n15: cal=0.5902
+2026-05-09 01:59:21,273 [INFO]     wide_n15: cal=0.5931
+2026-05-09 01:59:21,273 [INFO]     deep_n15: cal=0.5961
+2026-05-09 01:59:21,273 [INFO]     safety_n8: cal=0.5966
+2026-05-09 01:59:21,273 [INFO]     v48_n15: cal=0.5972
+2026-05-09 01:59:21,299 [INFO] 
+  Strategies: best_cfg=0.5902, top3_ens=0.5881, top5_ens=0.5857, stack=0.5909
+2026-05-09 01:59:21,299 [INFO]   ✅ Best: top5_ens (v53_deep_n15+wide_n15+deep_n15+safety_n8+v48_n15) cal=0.5857
+2026-05-09 01:59:21,299 [INFO]   S4 time: 219s
+2026-05-09 01:59:21,332 [INFO] 
+======================================================================
+2026-05-09 01:59:21,332 [INFO] V82 SUMMARY
+2026-05-09 01:59:21,332 [INFO] ======================================================================
+2026-05-09 01:59:21,332 [INFO]   Q1: top5_ens (deep_n20+wide_n20+v53_wide_n20+v48_n20+wide_n10) Cal=0.6064
+2026-05-09 01:59:21,332 [INFO]   Q2: top3_ens (deep_n15+v48_n15+v48_n10) Cal=0.5590
+2026-05-09 01:59:21,332 [INFO]   Q3: top5_ens (wide_n20+v53_wide_n20+v48_n15+deep_n15+deep_n10) Cal=0.5776
+2026-05-09 01:59:21,332 [INFO]   S1: stack (stack-C=50.00) Cal=0.5305
+2026-05-09 01:59:21,332 [INFO]   S2: stack (stack-C=50.00) Cal=0.5620
+2026-05-09 01:59:21,332 [INFO]   S3: best_cfg (v53_wide_n8) Cal=0.5365
+2026-05-09 01:59:21,332 [INFO]   S4: top5_ens (v53_deep_n15+wide_n15+deep_n15+safety_n8+v48_n15) Cal=0.5857
+2026-05-09 01:59:21,340 [INFO] 
+  V82 Avg Cal: 0.5654
+2026-05-09 01:59:21,340 [INFO]   V52 Avg Cal: 0.5725
+2026-05-09 01:59:21,340 [INFO]   V10 Avg Cal: 0.6038
+2026-05-09 01:59:21,340 [INFO]   V80 Avg Cal: 0.6124
+2026-05-09 01:59:21,340 [INFO]   V81 Avg Cal: 0.6285
+2026-05-09 01:59:21,340 [INFO]   Δ vs V52: -0.0071 (✅ IMPROVED)
+2026-05-09 01:59:21,340 [INFO]   Δ vs V10: -0.0384
+2026-05-09 01:59:21,340 [INFO]   Total: 1484s (1484.1min)
+2026-05-09 01:59:21,348 [INFO]   OOF saved: /home/mwoo423/projects/dacon2/data_processed/oof_v82.csv
+2026-05-09 01:59:21,348 [INFO]   Metadata saved: /home/mwoo423/projects/dacon2/submissions/meta_v82_20260509_015921.json
+2026-05-09 01:59:21,348 [INFO] 
+✅ DONE!
+Loading features...
+Train: (450, 576), Test: (250, 153)
+
+Generating test predictions...
+  Q1: 16s, mean=0.4956
+  Q2: 11s, mean=0.5622
+  Q3: 19s, mean=0.6000
+  S1: 10s, mean=0.6822
+  S2: 5s, mean=0.6511
+  S3: 2s, mean=0.6622
+  S4: 22s, mean=0.5600
+
+Submission saved: /home/mwoo423/projects/dacon2/submissions/submission_v82_test_20260509.csv
+Shape: (250, 10)

@@ -1,0 +1,16 @@
+{
+  "v127": {
+    "oof": 0.53731,
+    "lb": 0.64763
+  },
+  "v162_best": {
+    "name": "V127_uniform",
+    "T": 0.73,
+    "oof": 0.53812,
+    "vr": 0.514,
+    "est_lb": 0.61471
+  },
+  "lb_model": "LB = OOF + 0.1576 * (1 - avg_vr)",
+  "realistic_target": "LB \u2248 0.58-0.60 (post-processing only)",
+  "lb_0.50_requirement": "OOF < 0.50 (requires retraining)"
+}

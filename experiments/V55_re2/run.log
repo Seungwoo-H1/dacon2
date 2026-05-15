@@ -1,0 +1,85 @@
+2026-05-06 10:41:04,449 [INFO] ======================================================================
+2026-05-06 10:41:04,449 [INFO] V55_re2 — Memory-safe Pairwise + Transformed + Expanded Configs
+2026-05-06 10:41:04,450 [INFO] ======================================================================
+2026-05-06 10:41:04,450 [INFO] 
+--- 1. Load features ---
+2026-05-06 10:41:04,492 [INFO]   Loaded: (450, 153)
+2026-05-06 10:41:05,374 [INFO]   After personalization: (450, 576)
+2026-05-06 10:41:05,375 [INFO] 
+--- 2. Feature ranking ---
+2026-05-06 10:41:05,596 [INFO]   Q1 top-5: ['mUsageStats_usage_major_ratio_mean', 'wHr_hr_std_zscore', 'mBle_ble_count_mean_zscore', 'mWifi_wifi_max_rssi_mean', 'mUsageStats_usage_app_count_min_zscore']
+2026-05-06 10:41:05,846 [INFO]   Q2 top-5: ['mUsageStats_usage_app_count_std', 'mACStatus_m_charging_mean', 'mACStatus_m_charging_std', 'mBle_ble_rssi_std_max_zscore', 'mUsageStats_usage_major_ratio_std']
+2026-05-06 10:41:06,113 [INFO]   Q3 top-5: ['mLight_m_light_mean', 'mWifi_wifi_max_rssi_std', 'mUsageStats_usage_total_time_std_zscore', 'mBle_ble_count_max', 'mGps_gps_avg_speed_std']
+2026-05-06 10:41:06,319 [INFO]   S1 top-5: ['mScreenStatus_m_screen_use_std', 'mUsageStats_usage_total_time_mean', 'mBle_ble_rssi_std_mean_zscore', 'wHr_hr_std_zscore', 'mUsageStats_usage_app_count_max_zscore']
+2026-05-06 10:41:06,524 [INFO]   S2 top-5: ['mWifi_wifi_max_rssi_max', 'mActivity_m_activity_count_zscore', 'mAmbience_ambience_outside,_rural_or_natural_sum_zscore', 'mWifi_wifi_count_mean', 'mBle_ble_device_count_std']
+2026-05-06 10:41:06,726 [INFO]   S3 top-5: ['mWifi_wifi_max_rssi_max', 'mBle_ble_max_rssi_max', 'mGps_gps_avg_speed_min_zscore', 'mGps_gps_count_std', 'mUsageStats_usage_total_time_mean']
+2026-05-06 10:41:06,956 [INFO]   S4 top-5: ['mGps_gps_avg_speed_max', 'mAmbience_ambience_top5_sum_zscore', 'mBle_ble_max_rssi_max_zscore', 'mBle_ble_min_rssi_max_zscore', 'mBle_ble_count_std_zscore']
+2026-05-06 10:41:07,063 [INFO] 
+--- 3. Multi-strategy experiments ---
+2026-05-06 10:41:07,064 [INFO] 
+  === Q1 (rate=0.496) ===
+2026-05-06 10:41:07,064 [INFO]     [A] Base...
+2026-05-06 10:52:09,242 [INFO]     [B] Pairwise...
+2026-05-06 11:02:53,516 [INFO]     [C] Transforms...
+2026-05-06 11:13:22,028 [INFO]     ✅ Best: pair_wide_n8 Cal=0.5834
+2026-05-06 11:13:22,028 [INFO]   Q1 time: 1935s
+2026-05-06 11:13:22,105 [INFO] 
+  === Q2 (rate=0.562) ===
+2026-05-06 11:13:22,105 [INFO]     [A] Base...
+2026-05-06 11:24:38,892 [INFO]     [B] Pairwise...
+2026-05-06 11:35:05,898 [INFO]     [C] Transforms...
+2026-05-06 11:42:53,564 [INFO]     ✅ Best: pair_deep_n20 Cal=0.5589
+2026-05-06 11:42:53,564 [INFO]   Q2 time: 1771s
+2026-05-06 11:42:53,621 [INFO] 
+  === Q3 (rate=0.600) ===
+2026-05-06 11:42:53,621 [INFO]     [A] Base...
+2026-05-06 11:50:21,396 [INFO]     [B] Pairwise...
+2026-05-06 11:57:01,948 [INFO]     [C] Transforms...
+2026-05-06 12:04:47,857 [INFO]     ✅ Best: pair_extra_deep_n15 Cal=0.5780
+2026-05-06 12:04:47,858 [INFO]   Q3 time: 1314s
+2026-05-06 12:04:47,895 [INFO] 
+  === S1 (rate=0.682) ===
+2026-05-06 12:04:47,895 [INFO]     [A] Base...
+2026-05-06 12:08:06,602 [INFO]     [B] Pairwise...
+2026-05-06 12:11:18,678 [INFO]     [C] Transforms...
+2026-05-06 12:14:41,234 [INFO]     ✅ Best: pair_v48_n15 Cal=0.5282
+2026-05-06 12:14:41,235 [INFO]   S1 time: 593s
+2026-05-06 12:14:41,279 [INFO] 
+  === S2 (rate=0.651) ===
+2026-05-06 12:14:41,279 [INFO]     [A] Base...
+2026-05-06 12:18:29,934 [INFO]     [B] Pairwise...
+2026-05-06 12:24:44,531 [INFO]     [C] Transforms...
+2026-05-06 12:28:25,512 [INFO]     ✅ Best: pair_v48_n8 Cal=0.5256
+2026-05-06 12:28:25,512 [INFO]   S2 time: 824s
+2026-05-06 12:28:25,548 [INFO] 
+  === S3 (rate=0.662) ===
+2026-05-06 12:28:25,548 [INFO]     [A] Base...
+2026-05-06 12:32:02,799 [INFO]     [B] Pairwise...
+2026-05-06 12:37:27,551 [INFO]     [C] Transforms...
+2026-05-06 12:40:20,714 [INFO]     ✅ Best: pair_extra_deep_n8 Cal=0.5185
+2026-05-06 12:40:20,714 [INFO]   S3 time: 715s
+2026-05-06 12:40:20,754 [INFO] 
+  === S4 (rate=0.560) ===
+2026-05-06 12:40:20,754 [INFO]     [A] Base...
+2026-05-06 12:47:09,033 [INFO]     [B] Pairwise...
+2026-05-06 13:09:48,131 [INFO]     [C] Transforms...
+2026-05-06 13:15:56,979 [INFO]     ✅ Best: pair_wide_n15 Cal=0.5535
+2026-05-06 13:15:56,979 [INFO]   S4 time: 2136s
+2026-05-06 13:15:57,033 [INFO] 
+======================================================================
+2026-05-06 13:15:57,034 [INFO] V55_re2 SUMMARY
+2026-05-06 13:15:57,034 [INFO] ======================================================================
+2026-05-06 13:15:57,034 [INFO]   Q1: pair_wide_n8 Cal=0.5834
+2026-05-06 13:15:57,034 [INFO]   Q2: pair_deep_n20 Cal=0.5589
+2026-05-06 13:15:57,034 [INFO]   Q3: pair_extra_deep_n15 Cal=0.5780
+2026-05-06 13:15:57,034 [INFO]   S1: pair_v48_n15 Cal=0.5282
+2026-05-06 13:15:57,034 [INFO]   S2: pair_v48_n8 Cal=0.5256
+2026-05-06 13:15:57,034 [INFO]   S3: pair_extra_deep_n8 Cal=0.5185
+2026-05-06 13:15:57,034 [INFO]   S4: pair_wide_n15 Cal=0.5535
+2026-05-06 13:15:57,044 [INFO] 
+  V55_re2 Avg Cal: 0.5494
+2026-05-06 13:15:57,044 [INFO]   V53 Avg Cal: 0.5479
+2026-05-06 13:15:57,044 [INFO]   Δ vs V53: +0.0015 (❌ Not improved)
+2026-05-06 13:15:57,044 [INFO]   Total: 9293s (9292.6min)
+2026-05-06 13:15:57,053 [INFO]   OOF saved: /home/mwoo423/projects/dacon2/data_processed/oof_v55_re2.csv
+2026-05-06 13:15:57,054 [INFO]   Metadata saved: /home/mwoo423/projects/dacon2/data_processed/v55_re2_meta.json

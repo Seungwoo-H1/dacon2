@@ -1,0 +1,82 @@
+{
+  "version": "V110",
+  "timestamp": "20260511_111529",
+  "experiments": {
+    "A_V54family": {
+      "oof": 0.66981,
+      "configs": [
+        "wide",
+        "deep",
+        "v53wide",
+        "v53deep"
+      ],
+      "n_seeds": 8,
+      "interactions": true,
+      "time_s": 254.0
+    },
+    "B_V48family": {
+      "oof": 0.67077,
+      "configs": [
+        "v48",
+        "safety"
+      ],
+      "n_seeds": 8,
+      "interactions": true,
+      "time_s": 112.0
+    },
+    "C_V110new": {
+      "oof": 0.67045,
+      "configs": [
+        "v110a",
+        "v110b",
+        "wide",
+        "deep",
+        "v48",
+        "safety"
+      ],
+      "n_seeds": 8,
+      "interactions": true,
+      "time_s": 370.0
+    }
+  },
+  "ensemble": {
+    "best_combo": [
+      "A_V54family"
+    ],
+    "best_weights": {
+      "A_V54family": 1.0
+    },
+    "best_oof": 0.66413,
+    "per_target_oof": {
+      "Q1": 0.69311,
+      "Q2": 0.68538,
+      "Q3": 0.67301,
+      "S1": 0.62518,
+      "S2": 0.64676,
+      "S3": 0.63955,
+      "S4": 0.68593
+    }
+  },
+  "test_submission": "submission_v110_20260511_111529.csv",
+  "test_means": {
+    "Q1": 0.4956,
+    "Q2": 0.5622,
+    "Q3": 0.6,
+    "S1": 0.6822,
+    "S2": 0.6511,
+    "S3": 0.6622,
+    "S4": 0.56
+  },
+  "test_stds": {
+    "Q1": 0.0,
+    "Q2": 0.0,
+    "Q3": 0.0,
+    "S1": 0.0,
+    "S2": 0.0,
+    "S3": 0.0,
+    "S4": 0.0
+  },
+  "n_interaction_features": 8,
+  "total_features": 149,
+  "total_time_s": 736.0
+}

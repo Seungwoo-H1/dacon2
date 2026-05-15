@@ -1,0 +1,18 @@
+{
+  "v127": {
+    "oof": 0.53731,
+    "type": "uniform 3-way"
+  },
+  "v132a": {
+    "oof": 0.53606,
+    "type": "per-target weights"
+  },
+  "v132b": {
+    "oof_preserved": 0.53606,
+    "type": "v132a + variance"
+  },
+  "v132c": {
+    "oof_preserved": 0.53606,
+    "type": "v132b + shift 1.5x"
+  }
+}

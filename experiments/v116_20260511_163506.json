@@ -1,0 +1,106 @@
+{
+  "version": "V116",
+  "timestamp": "20260511_163506",
+  "configs": [
+    "wide",
+    "deep",
+    "v48",
+    "safety",
+    "extra_deep",
+    "v53wide",
+    "v53deep",
+    "v53safe"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50
+  ],
+  "n_seeds": 50,
+  "results": {
+    "Q1": {
+      "best_method": "pair_deep_n20",
+      "best_method_type": "pair",
+      "cal_loss": 0.59648
+    },
+    "Q2": {
+      "best_method": "base_deep_n15",
+      "best_method_type": "base",
+      "cal_loss": 0.5647
+    },
+    "Q3": {
+      "best_method": "trans_safety_n15",
+      "best_method_type": "trans",
+      "cal_loss": 0.5763
+    },
+    "S1": {
+      "best_method": "pair_wide_n20",
+      "best_method_type": "pair",
+      "cal_loss": 0.49561
+    },
+    "S2": {
+      "best_method": "pair_deep_n20",
+      "best_method_type": "pair",
+      "cal_loss": 0.52521
+    },
+    "S3": {
+      "best_method": "pair_v48_n10",
+      "best_method_type": "pair",
+      "cal_loss": 0.50863
+    },
+    "S4": {
+      "best_method": "pair_extra_deep_n20",
+      "best_method_type": "pair",
+      "cal_loss": 0.56632
+    }
+  },
+  "avg_cal_loss": 0.54761,
+  "total_time_s": 13240.0
+}

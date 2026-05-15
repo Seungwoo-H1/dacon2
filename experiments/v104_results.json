@@ -1,0 +1,1927 @@
+{
+  "version": "V104_pseudo_label",
+  "timestamp": "2026-05-11T03:17:47.018139",
+  "baseline": {
+    "lb": 0.7007499613491246,
+    "train_ll": 0.5482024702751889
+  },
+  "all_results": [
+    {
+      "threshold": 0.7,
+      "pseudo_weight": 0.5,
+      "pseudo_boost_ratio": 0.1,
+      "avg_oof_ll": 0.6962896173201502,
+      "avg_train_ll": 0.6962896173201502,
+      "avg_pseudo_n": 91.42857142857143,
+      "predicted_lb": 0.8023256737438004,
+      "n_pseudo_per_target": {
+        "Q1": 52,
+        "Q2": 129,
+        "Q3": 113,
+        "S1": 121,
+        "S2": 98,
+        "S3": 75,
+        "S4": 52
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8188015429329294,
+          "train_ll": 0.8188015429329294,
+          "test_mean": 0.4955555555555555,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.7404869043221881
+        },
+        "Q2": {
+          "oof_ll": 0.6672472807891128,
+          "train_ll": 0.6672472807891128,
+          "test_mean": 0.5622637685887285,
+          "pseudo_n": 129,
+          "test_ll_improvement": 0.5889326421783715
+        },
+        "Q3": {
+          "oof_ll": 0.6577481656744791,
+          "train_ll": 0.6577481656744791,
+          "test_mean": 0.6,
+          "pseudo_n": 113,
+          "test_ll_improvement": 0.5794335270637379
+        },
+        "S1": {
+          "oof_ll": 0.5635270970627431,
+          "train_ll": 0.5635270970627431,
+          "test_mean": 0.6822222222222223,
+          "pseudo_n": 121,
+          "test_ll_improvement": 0.4852124584520018
+        },
+        "S2": {
+          "oof_ll": 0.7746811138215233,
+          "train_ll": 0.7746811138215233,
+          "test_mean": 0.6507160417525095,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.696366475210782
+        },
+        "S3": {
+          "oof_ll": 0.7165620697169955,
+          "train_ll": 0.7165620697169955,
+          "test_mean": 0.6622222222222222,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.6382474311062543
+        },
+        "S4": {
+          "oof_ll": 0.6754600512432684,
+          "train_ll": 0.6754600512432684,
+          "test_mean": 0.5600000000000002,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.5971454126325271
+        }
+      },
+      "oof_improvement": -0.1480871470449613,
+      "train_improvement": -0.1480871470449613
+    },
+    {
+      "threshold": 0.7,
+      "pseudo_weight": 1.0,
+      "pseudo_boost_ratio": 0.1,
+      "avg_oof_ll": 0.6981508203946417,
+      "avg_train_ll": 0.6981508203946417,
+      "avg_pseudo_n": 91.42857142857143,
+      "predicted_lb": 0.7887315488380822,
+      "n_pseudo_per_target": {
+        "Q1": 52,
+        "Q2": 129,
+        "Q3": 113,
+        "S1": 121,
+        "S2": 98,
+        "S3": 75,
+        "S4": 52
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.823789808222936,
+          "train_ll": 0.823789808222936,
+          "test_mean": 0.49555555555555564,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.7454751696121947
+        },
+        "Q2": {
+          "oof_ll": 0.6724831622170977,
+          "train_ll": 0.6724831622170977,
+          "test_mean": 0.5623618104401126,
+          "pseudo_n": 129,
+          "test_ll_improvement": 0.5941685236063564
+        },
+        "Q3": {
+          "oof_ll": 0.6548363807332432,
+          "train_ll": 0.6548363807332432,
+          "test_mean": 0.6,
+          "pseudo_n": 113,
+          "test_ll_improvement": 0.576521742122502
+        },
+        "S1": {
+          "oof_ll": 0.5651749666735963,
+          "train_ll": 0.5651749666735963,
+          "test_mean": 0.6822222222222223,
+          "pseudo_n": 121,
+          "test_ll_improvement": 0.48686032806285506
+        },
+        "S2": {
+          "oof_ll": 0.7750702785410125,
+          "train_ll": 0.7750702785410125,
+          "test_mean": 0.6511111111111111,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.6967556399302712
+        },
+        "S3": {
+          "oof_ll": 0.7223640791496077,
+          "train_ll": 0.7223640791496077,
+          "test_mean": 0.6622222222222222,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.6440494405388664
+        },
+        "S4": {
+          "oof_ll": 0.6733370672249976,
+          "train_ll": 0.6733370672249976,
+          "test_mean": 0.56,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.5950224286142564
+        }
+      },
+      "oof_improvement": -0.14994835011945284,
+      "train_improvement": -0.14994835011945284
+    },
+    {
+      "threshold": 0.7,
+      "pseudo_weight": 2.0,
+      "pseudo_boost_ratio": 0.05,
+      "avg_oof_ll": 0.6981565446288729,
+      "avg_train_ll": 0.6981565446288729,
+      "avg_pseudo_n": 91.42857142857143,
+      "predicted_lb": 0.7976529633851321,
+      "n_pseudo_per_target": {
+        "Q1": 52,
+        "Q2": 129,
+        "Q3": 113,
+        "S1": 121,
+        "S2": 98,
+        "S3": 75,
+        "S4": 52
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8102086235054395,
+          "train_ll": 0.8102086235054395,
+          "test_mean": 0.4954469068286943,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.7318939848946983
+        },
+        "Q2": {
+          "oof_ll": 0.6359406592022359,
+          "train_ll": 0.6359406592022359,
+          "test_mean": 0.5622222222222223,
+          "pseudo_n": 129,
+          "test_ll_improvement": 0.5576260205914946
+        },
+        "Q3": {
+          "oof_ll": 0.6420966324581519,
+          "train_ll": 0.6420966324581519,
+          "test_mean": 0.5999999999999999,
+          "pseudo_n": 113,
+          "test_ll_improvement": 0.5637819938474106
+        },
+        "S1": {
+          "oof_ll": 0.5693082770733324,
+          "train_ll": 0.5693082770733324,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 121,
+          "test_ll_improvement": 0.49099363846259114
+        },
+        "S2": {
+          "oof_ll": 0.8099536141854409,
+          "train_ll": 0.8099536141854409,
+          "test_mean": 0.6511111111111113,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.7316389755746996
+        },
+        "S3": {
+          "oof_ll": 0.7738074073553417,
+          "train_ll": 0.7738074073553417,
+          "test_mean": 0.6622222222222222,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.6954927687446004
+        },
+        "S4": {
+          "oof_ll": 0.6457805986221677,
+          "train_ll": 0.6457805986221677,
+          "test_mean": 0.56,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.5674659600114265
+        }
+      },
+      "oof_improvement": -0.14995407435368402,
+      "train_improvement": -0.14995407435368402
+    },
+    {
+      "threshold": 0.7,
+      "pseudo_weight": 0.5,
+      "pseudo_boost_ratio": 0.2,
+      "avg_oof_ll": 0.6983093560230247,
+      "avg_train_ll": 0.6983093560230247,
+      "avg_pseudo_n": 91.42857142857143,
+      "predicted_lb": 0.8026065261278862,
+      "n_pseudo_per_target": {
+        "Q1": 52,
+        "Q2": 129,
+        "Q3": 113,
+        "S1": 121,
+        "S2": 98,
+        "S3": 75,
+        "S4": 52
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8135300009678731,
+          "train_ll": 0.8135300009678731,
+          "test_mean": 0.4955555555555555,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.7352153623571318
+        },
+        "Q2": {
+          "oof_ll": 0.7073930758150421,
+          "train_ll": 0.7073930758150421,
+          "test_mean": 0.5621726319554228,
+          "pseudo_n": 129,
+          "test_ll_improvement": 0.6290784372043008
+        },
+        "Q3": {
+          "oof_ll": 0.641378308483882,
+          "train_ll": 0.641378308483882,
+          "test_mean": 0.6000000000000001,
+          "pseudo_n": 113,
+          "test_ll_improvement": 0.5630636698731407
+        },
+        "S1": {
+          "oof_ll": 0.5692997115061467,
+          "train_ll": 0.5692997115061467,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 121,
+          "test_ll_improvement": 0.4909850728954054
+        },
+        "S2": {
+          "oof_ll": 0.8014005974110088,
+          "train_ll": 0.8014005974110088,
+          "test_mean": 0.648588708229209,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.7230859588002675
+        },
+        "S3": {
+          "oof_ll": 0.7061683920470953,
+          "train_ll": 0.7061683920470953,
+          "test_mean": 0.6622222222222224,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.627853753436354
+        },
+        "S4": {
+          "oof_ll": 0.6489954059301256,
+          "train_ll": 0.6489954059301256,
+          "test_mean": 0.56,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.5706807673193843
+        }
+      },
+      "oof_improvement": -0.15010688574783582,
+      "train_improvement": -0.15010688574783582
+    },
+    {
+      "threshold": 0.7,
+      "pseudo_weight": 2.0,
+      "pseudo_boost_ratio": 0.1,
+      "avg_oof_ll": 0.6990089107235501,
+      "avg_train_ll": 0.6990089107235501,
+      "avg_pseudo_n": 91.42857142857143,
+      "predicted_lb": 0.7782960740331019,
+      "n_pseudo_per_target": {
+        "Q1": 52,
+        "Q2": 129,
+        "Q3": 113,
+        "S1": 121,
+        "S2": 98,
+        "S3": 75,
+        "S4": 52
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8233090448411204,
+          "train_ll": 0.8233090448411204,
+          "test_mean": 0.4955555555555555,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.7449944062303792
+        },
+        "Q2": {
+          "oof_ll": 0.6741129636612598,
+          "train_ll": 0.6741129636612598,
+          "test_mean": 0.5625668887218483,
+          "pseudo_n": 129,
+          "test_ll_improvement": 0.5957983250505186
+        },
+        "Q3": {
+          "oof_ll": 0.6564809437683592,
+          "train_ll": 0.6564809437683592,
+          "test_mean": 0.6,
+          "pseudo_n": 113,
+          "test_ll_improvement": 0.5781663051576179
+        },
+        "S1": {
+          "oof_ll": 0.5713399938021342,
+          "train_ll": 0.5713399938021342,
+          "test_mean": 0.6822222222222221,
+          "pseudo_n": 121,
+          "test_ll_improvement": 0.4930253551913929
+        },
+        "S2": {
+          "oof_ll": 0.7679648321187311,
+          "train_ll": 0.7679648321187311,
+          "test_mean": 0.651111111111111,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.6896501935079898
+        },
+        "S3": {
+          "oof_ll": 0.7244209462597574,
+          "train_ll": 0.7244209462597574,
+          "test_mean": 0.6622222222222224,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.6461063076490161
+        },
+        "S4": {
+          "oof_ll": 0.6754336506134879,
+          "train_ll": 0.6754336506134879,
+          "test_mean": 0.5600000000000003,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.5971190120027466
+        }
+      },
+      "oof_improvement": -0.15080644044836122,
+      "train_improvement": -0.15080644044836122
+    },
+    {
+      "threshold": 0.7,
+      "pseudo_weight": 0.5,
+      "pseudo_boost_ratio": 0.05,
+      "avg_oof_ll": 0.6995869843644844,
+      "avg_train_ll": 0.6995869843644844,
+      "avg_pseudo_n": 91.42857142857143,
+      "predicted_lb": 0.8132081000234155,
+      "n_pseudo_per_target": {
+        "Q1": 52,
+        "Q2": 129,
+        "Q3": 113,
+        "S1": 121,
+        "S2": 98,
+        "S3": 75,
+        "S4": 52
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8211855741781295,
+          "train_ll": 0.8211855741781295,
+          "test_mean": 0.4954711622465187,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.7428709355673883
+        },
+        "Q2": {
+          "oof_ll": 0.6349880481230573,
+          "train_ll": 0.6349880481230573,
+          "test_mean": 0.5622222222222222,
+          "pseudo_n": 129,
+          "test_ll_improvement": 0.556673409512316
+        },
+        "Q3": {
+          "oof_ll": 0.6525212012629519,
+          "train_ll": 0.6525212012629519,
+          "test_mean": 0.6,
+          "pseudo_n": 113,
+          "test_ll_improvement": 0.5742065626522106
+        },
+        "S1": {
+          "oof_ll": 0.5673494101353824,
+          "train_ll": 0.5673494101353824,
+          "test_mean": 0.6822222222222223,
+          "pseudo_n": 121,
+          "test_ll_improvement": 0.48903477152464114
+        },
+        "S2": {
+          "oof_ll": 0.8096127007678059,
+          "train_ll": 0.8096127007678059,
+          "test_mean": 0.6459672733536447,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.7312980621570646
+        },
+        "S3": {
+          "oof_ll": 0.7679726600511882,
+          "train_ll": 0.7679726600511882,
+          "test_mean": 0.6622058424064623,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.689658021440447
+        },
+        "S4": {
+          "oof_ll": 0.643479296032876,
+          "train_ll": 0.643479296032876,
+          "test_mean": 0.5600000000000002,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.5651646574221347
+        }
+      },
+      "oof_improvement": -0.15138451408929554,
+      "train_improvement": -0.15138451408929554
+    },
+    {
+      "threshold": 0.7,
+      "pseudo_weight": 1.0,
+      "pseudo_boost_ratio": 0.2,
+      "avg_oof_ll": 0.699589688866468,
+      "avg_train_ll": 0.699589688866468,
+      "avg_pseudo_n": 91.42857142857143,
+      "predicted_lb": 0.800602759545727,
+      "n_pseudo_per_target": {
+        "Q1": 52,
+        "Q2": 129,
+        "Q3": 113,
+        "S1": 121,
+        "S2": 98,
+        "S3": 75,
+        "S4": 52
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8100886799853318,
+          "train_ll": 0.8100886799853318,
+          "test_mean": 0.4955555555555555,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.7317740413745906
+        },
+        "Q2": {
+          "oof_ll": 0.7074328327999989,
+          "train_ll": 0.7074328327999989,
+          "test_mean": 0.5616207049616211,
+          "pseudo_n": 129,
+          "test_ll_improvement": 0.6291181941892576
+        },
+        "Q3": {
+          "oof_ll": 0.6348339241084098,
+          "train_ll": 0.6348339241084098,
+          "test_mean": 0.6,
+          "pseudo_n": 113,
+          "test_ll_improvement": 0.5565192854976685
+        },
+        "S1": {
+          "oof_ll": 0.5700264825307916,
+          "train_ll": 0.5700264825307916,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 121,
+          "test_ll_improvement": 0.4917118439200503
+        },
+        "S2": {
+          "oof_ll": 0.8141326312658331,
+          "train_ll": 0.8141326312658331,
+          "test_mean": 0.6494814626609677,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.7358179926550918
+        },
+        "S3": {
+          "oof_ll": 0.7093898692988955,
+          "train_ll": 0.7093898692988955,
+          "test_mean": 0.6622222222222224,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.6310752306881542
+        },
+        "S4": {
+          "oof_ll": 0.6512234020760144,
+          "train_ll": 0.6512234020760144,
+          "test_mean": 0.5600000000000002,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.5729087634652731
+        }
+      },
+      "oof_improvement": -0.15138721859127913,
+      "train_improvement": -0.15138721859127913
+    },
+    {
+      "threshold": 0.7,
+      "pseudo_weight": 1.0,
+      "pseudo_boost_ratio": 0.05,
+      "avg_oof_ll": 0.701276672824285,
+      "avg_train_ll": 0.701276672824285,
+      "avg_pseudo_n": 91.42857142857143,
+      "predicted_lb": 0.8026557174971372,
+      "n_pseudo_per_target": {
+        "Q1": 52,
+        "Q2": 129,
+        "Q3": 113,
+        "S1": 121,
+        "S2": 98,
+        "S3": 75,
+        "S4": 52
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8147266001811442,
+          "train_ll": 0.8147266001811442,
+          "test_mean": 0.4954519671794489,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.7364119615704029
+        },
+        "Q2": {
+          "oof_ll": 0.6373729724381456,
+          "train_ll": 0.6373729724381456,
+          "test_mean": 0.5623151522983882,
+          "pseudo_n": 129,
+          "test_ll_improvement": 0.5590583338274043
+        },
+        "Q3": {
+          "oof_ll": 0.647592708147277,
+          "train_ll": 0.647592708147277,
+          "test_mean": 0.6,
+          "pseudo_n": 113,
+          "test_ll_improvement": 0.5692780695365357
+        },
+        "S1": {
+          "oof_ll": 0.5743462393415565,
+          "train_ll": 0.5743462393415565,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 121,
+          "test_ll_improvement": 0.4960316007308152
+        },
+        "S2": {
+          "oof_ll": 0.8177419369817084,
+          "train_ll": 0.8177419369817084,
+          "test_mean": 0.6498002344365873,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.7394272983709671
+        },
+        "S3": {
+          "oof_ll": 0.7688821629432441,
+          "train_ll": 0.7688821629432441,
+          "test_mean": 0.6622222222222222,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.6905675243325028
+        },
+        "S4": {
+          "oof_ll": 0.6482740897369194,
+          "train_ll": 0.6482740897369194,
+          "test_mean": 0.56,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.5699594511261781
+        }
+      },
+      "oof_improvement": -0.1530742025490961,
+      "train_improvement": -0.1530742025490961
+    },
+    {
+      "threshold": 0.7,
+      "pseudo_weight": 2.0,
+      "pseudo_boost_ratio": 0.2,
+      "avg_oof_ll": 0.7016843427614312,
+      "avg_train_ll": 0.7016843427614312,
+      "avg_pseudo_n": 91.42857142857143,
+      "predicted_lb": 0.7971697753334364,
+      "n_pseudo_per_target": {
+        "Q1": 52,
+        "Q2": 129,
+        "Q3": 113,
+        "S1": 121,
+        "S2": 98,
+        "S3": 75,
+        "S4": 52
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8088473363622016,
+          "train_ll": 0.8088473363622016,
+          "test_mean": 0.4955555555555555,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.7305326977514603
+        },
+        "Q2": {
+          "oof_ll": 0.7051751622162213,
+          "train_ll": 0.7051751622162213,
+          "test_mean": 0.5612556465610896,
+          "pseudo_n": 129,
+          "test_ll_improvement": 0.6268605236054801
+        },
+        "Q3": {
+          "oof_ll": 0.6456410982229217,
+          "train_ll": 0.6456410982229217,
+          "test_mean": 0.6,
+          "pseudo_n": 113,
+          "test_ll_improvement": 0.5673264596121804
+        },
+        "S1": {
+          "oof_ll": 0.5798922312303008,
+          "train_ll": 0.5798922312303008,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 121,
+          "test_ll_improvement": 0.5015775926195595
+        },
+        "S2": {
+          "oof_ll": 0.8174470119580206,
+          "train_ll": 0.8174470119580206,
+          "test_mean": 0.6493846941056126,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.7391323733472793
+        },
+        "S3": {
+          "oof_ll": 0.70848792662025,
+          "train_ll": 0.70848792662025,
+          "test_mean": 0.6622222222222222,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.6301732880095087
+        },
+        "S4": {
+          "oof_ll": 0.6462996327201033,
+          "train_ll": 0.6462996327201033,
+          "test_mean": 0.56,
+          "pseudo_n": 52,
+          "test_ll_improvement": 0.567984994109362
+        }
+      },
+      "oof_improvement": -0.15348187248624234,
+      "train_improvement": -0.15348187248624234
+    },
+    {
+      "threshold": 0.75,
+      "pseudo_weight": 0.5,
+      "pseudo_boost_ratio": 0.05,
+      "avg_oof_ll": 0.702258604489573,
+      "avg_train_ll": 0.702258604489573,
+      "avg_pseudo_n": 60.714285714285715,
+      "predicted_lb": 0.8190550663158621,
+      "n_pseudo_per_target": {
+        "Q1": 19,
+        "Q2": 100,
+        "Q3": 83,
+        "S1": 98,
+        "S2": 78,
+        "S3": 26,
+        "S4": 21
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8261960394067995,
+          "train_ll": 0.8261960394067995,
+          "test_mean": 0.49533181308558083,
+          "pseudo_n": 19,
+          "test_ll_improvement": 0.7478814007960582
+        },
+        "Q2": {
+          "oof_ll": 0.6292718866606312,
+          "train_ll": 0.6292718866606312,
+          "test_mean": 0.5622243725321779,
+          "pseudo_n": 100,
+          "test_ll_improvement": 0.5509572480498899
+        },
+        "Q3": {
+          "oof_ll": 0.6602713401654228,
+          "train_ll": 0.6602713401654228,
+          "test_mean": 0.6000108198156348,
+          "pseudo_n": 83,
+          "test_ll_improvement": 0.5819567015546815
+        },
+        "S1": {
+          "oof_ll": 0.5698921149771623,
+          "train_ll": 0.5698921149771623,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.491577476366421
+        },
+        "S2": {
+          "oof_ll": 0.8205111866547271,
+          "train_ll": 0.8205111866547271,
+          "test_mean": 0.6477390732037296,
+          "pseudo_n": 78,
+          "test_ll_improvement": 0.7421965480439858
+        },
+        "S3": {
+          "oof_ll": 0.7635321609662201,
+          "train_ll": 0.7635321609662201,
+          "test_mean": 0.6616119715491513,
+          "pseudo_n": 26,
+          "test_ll_improvement": 0.6852175223554788
+        },
+        "S4": {
+          "oof_ll": 0.6461355025960481,
+          "train_ll": 0.6461355025960481,
+          "test_mean": 0.5600000000000003,
+          "pseudo_n": 21,
+          "test_ll_improvement": 0.5678208639853068
+        }
+      },
+      "oof_improvement": -0.15405613421438413,
+      "train_improvement": -0.15405613421438413
+    },
+    {
+      "threshold": 0.8,
+      "pseudo_weight": 0.5,
+      "pseudo_boost_ratio": 0.2,
+      "avg_oof_ll": 0.7032494906665236,
+      "avg_train_ll": 0.7032494906665236,
+      "avg_pseudo_n": 40.142857142857146,
+      "predicted_lb": 0.8209291842953171,
+      "n_pseudo_per_target": {
+        "Q1": 8,
+        "Q2": 75,
+        "Q3": 54,
+        "S1": 64,
+        "S2": 65,
+        "S3": 9,
+        "S4": 6
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8297754613557587,
+          "train_ll": 0.8297754613557587,
+          "test_mean": 0.49522073312804005,
+          "pseudo_n": 8,
+          "test_ll_improvement": 0.7514608227450175
+        },
+        "Q2": {
+          "oof_ll": 0.6712958525523298,
+          "train_ll": 0.6712958525523298,
+          "test_mean": 0.5614297449045869,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.5929812139415885
+        },
+        "Q3": {
+          "oof_ll": 0.6682078042166323,
+          "train_ll": 0.6682078042166323,
+          "test_mean": 0.6000000000000001,
+          "pseudo_n": 54,
+          "test_ll_improvement": 0.589893165605891
+        },
+        "S1": {
+          "oof_ll": 0.5644192405562779,
+          "train_ll": 0.5644192405562779,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 64,
+          "test_ll_improvement": 0.4861046019455366
+        },
+        "S2": {
+          "oof_ll": 0.7706687516649021,
+          "train_ll": 0.7706687516649021,
+          "test_mean": 0.6508223495015797,
+          "pseudo_n": 65,
+          "test_ll_improvement": 0.6923541130541608
+        },
+        "S3": {
+          "oof_ll": 0.7685290388672835,
+          "train_ll": 0.7685290388672835,
+          "test_mean": 0.6616376449653074,
+          "pseudo_n": 9,
+          "test_ll_improvement": 0.6902144002565422
+        },
+        "S4": {
+          "oof_ll": 0.6498502854524809,
+          "train_ll": 0.6498502854524809,
+          "test_mean": 0.56,
+          "pseudo_n": 6,
+          "test_ll_improvement": 0.5715356468417396
+        }
+      },
+      "oof_improvement": -0.15504702039133478,
+      "train_improvement": -0.15504702039133478
+    },
+    {
+      "threshold": 0.75,
+      "pseudo_weight": 2.0,
+      "pseudo_boost_ratio": 0.05,
+      "avg_oof_ll": 0.7033029946596859,
+      "avg_train_ll": 0.7033029946596859,
+      "avg_pseudo_n": 60.714285714285715,
+      "predicted_lb": 0.816482266711268,
+      "n_pseudo_per_target": {
+        "Q1": 19,
+        "Q2": 100,
+        "Q3": 83,
+        "S1": 98,
+        "S2": 78,
+        "S3": 26,
+        "S4": 21
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8261960394067995,
+          "train_ll": 0.8261960394067995,
+          "test_mean": 0.49533181308558083,
+          "pseudo_n": 19,
+          "test_ll_improvement": 0.7478814007960582
+        },
+        "Q2": {
+          "oof_ll": 0.6339443338946853,
+          "train_ll": 0.6339443338946853,
+          "test_mean": 0.5622222222222222,
+          "pseudo_n": 100,
+          "test_ll_improvement": 0.555629695283944
+        },
+        "Q3": {
+          "oof_ll": 0.6559901497155028,
+          "train_ll": 0.6559901497155028,
+          "test_mean": 0.6,
+          "pseudo_n": 83,
+          "test_ll_improvement": 0.5776755111047616
+        },
+        "S1": {
+          "oof_ll": 0.5714071070538912,
+          "train_ll": 0.5714071070538912,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.4930924684431499
+        },
+        "S2": {
+          "oof_ll": 0.8194245993894955,
+          "train_ll": 0.8194245993894955,
+          "test_mean": 0.6502525702123392,
+          "pseudo_n": 78,
+          "test_ll_improvement": 0.7411099607787542
+        },
+        "S3": {
+          "oof_ll": 0.7687498187139415,
+          "train_ll": 0.7687498187139415,
+          "test_mean": 0.6619392990222955,
+          "pseudo_n": 26,
+          "test_ll_improvement": 0.6904351801032003
+        },
+        "S4": {
+          "oof_ll": 0.647408914443486,
+          "train_ll": 0.647408914443486,
+          "test_mean": 0.56,
+          "pseudo_n": 21,
+          "test_ll_improvement": 0.5690942758327447
+        }
+      },
+      "oof_improvement": -0.15510052438449706,
+      "train_improvement": -0.15510052438449706
+    },
+    {
+      "threshold": 0.75,
+      "pseudo_weight": 0.5,
+      "pseudo_boost_ratio": 0.2,
+      "avg_oof_ll": 0.7034951889209539,
+      "avg_train_ll": 0.7034951889209539,
+      "avg_pseudo_n": 60.714285714285715,
+      "predicted_lb": 0.8205337059043389,
+      "n_pseudo_per_target": {
+        "Q1": 19,
+        "Q2": 100,
+        "Q3": 83,
+        "S1": 98,
+        "S2": 78,
+        "S3": 26,
+        "S4": 21
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8048831995212978,
+          "train_ll": 0.8048831995212978,
+          "test_mean": 0.4955555555555555,
+          "pseudo_n": 19,
+          "test_ll_improvement": 0.7265685609105565
+        },
+        "Q2": {
+          "oof_ll": 0.7257842891288946,
+          "train_ll": 0.7257842891288946,
+          "test_mean": 0.5601530510897426,
+          "pseudo_n": 100,
+          "test_ll_improvement": 0.6474696505181533
+        },
+        "Q3": {
+          "oof_ll": 0.6390608145681916,
+          "train_ll": 0.6390608145681916,
+          "test_mean": 0.6,
+          "pseudo_n": 83,
+          "test_ll_improvement": 0.5607461759574504
+        },
+        "S1": {
+          "oof_ll": 0.5697968707847109,
+          "train_ll": 0.5697968707847109,
+          "test_mean": 0.6822222222222224,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.4914822321739696
+        },
+        "S2": {
+          "oof_ll": 0.7971165844967171,
+          "train_ll": 0.7971165844967171,
+          "test_mean": 0.6511111111111111,
+          "pseudo_n": 78,
+          "test_ll_improvement": 0.7188019458859758
+        },
+        "S3": {
+          "oof_ll": 0.7179801158341156,
+          "train_ll": 0.7179801158341156,
+          "test_mean": 0.6621982767131521,
+          "pseudo_n": 26,
+          "test_ll_improvement": 0.6396654772233743
+        },
+        "S4": {
+          "oof_ll": 0.6698444481127489,
+          "train_ll": 0.6698444481127489,
+          "test_mean": 0.56,
+          "pseudo_n": 21,
+          "test_ll_improvement": 0.5915298095020076
+        }
+      },
+      "oof_improvement": -0.155292718645765,
+      "train_improvement": -0.155292718645765
+    },
+    {
+      "threshold": 0.75,
+      "pseudo_weight": 1.0,
+      "pseudo_boost_ratio": 0.05,
+      "avg_oof_ll": 0.7035023457038118,
+      "avg_train_ll": 0.7035023457038118,
+      "avg_pseudo_n": 60.714285714285715,
+      "predicted_lb": 0.8194415236259334,
+      "n_pseudo_per_target": {
+        "Q1": 19,
+        "Q2": 100,
+        "Q3": 83,
+        "S1": 98,
+        "S2": 78,
+        "S3": 26,
+        "S4": 21
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8261960394067995,
+          "train_ll": 0.8261960394067995,
+          "test_mean": 0.49533181308558083,
+          "pseudo_n": 19,
+          "test_ll_improvement": 0.7478814007960582
+        },
+        "Q2": {
+          "oof_ll": 0.6245102052424462,
+          "train_ll": 0.6245102052424462,
+          "test_mean": 0.5622222222222222,
+          "pseudo_n": 100,
+          "test_ll_improvement": 0.5461955666317049
+        },
+        "Q3": {
+          "oof_ll": 0.6636351519307355,
+          "train_ll": 0.6636351519307355,
+          "test_mean": 0.6,
+          "pseudo_n": 83,
+          "test_ll_improvement": 0.5853205133199942
+        },
+        "S1": {
+          "oof_ll": 0.5720484678523693,
+          "train_ll": 0.5720484678523693,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.493733829241628
+        },
+        "S2": {
+          "oof_ll": 0.8221042792862517,
+          "train_ll": 0.8221042792862517,
+          "test_mean": 0.6489791542923902,
+          "pseudo_n": 78,
+          "test_ll_improvement": 0.7437896406755105
+        },
+        "S3": {
+          "oof_ll": 0.7698787240047489,
+          "train_ll": 0.7698787240047489,
+          "test_mean": 0.6615613741595833,
+          "pseudo_n": 26,
+          "test_ll_improvement": 0.6915640853940076
+        },
+        "S4": {
+          "oof_ll": 0.6461435522033311,
+          "train_ll": 0.6461435522033311,
+          "test_mean": 0.56,
+          "pseudo_n": 21,
+          "test_ll_improvement": 0.5678289135925898
+        }
+      },
+      "oof_improvement": -0.1552998754286229,
+      "train_improvement": -0.1552998754286229
+    },
+    {
+      "threshold": 0.8,
+      "pseudo_weight": 2.0,
+      "pseudo_boost_ratio": 0.2,
+      "avg_oof_ll": 0.7038486313131381,
+      "avg_train_ll": 0.7038486313131381,
+      "avg_pseudo_n": 40.142857142857146,
+      "predicted_lb": 0.8193993298781925,
+      "n_pseudo_per_target": {
+        "Q1": 8,
+        "Q2": 75,
+        "Q3": 54,
+        "S1": 64,
+        "S2": 65,
+        "S3": 9,
+        "S4": 6
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8221033409206141,
+          "train_ll": 0.8221033409206141,
+          "test_mean": 0.4951743159853991,
+          "pseudo_n": 8,
+          "test_ll_improvement": 0.7437887023098728
+        },
+        "Q2": {
+          "oof_ll": 0.680204595871673,
+          "train_ll": 0.680204595871673,
+          "test_mean": 0.5593311644308644,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.6018899572609318
+        },
+        "Q3": {
+          "oof_ll": 0.6720127875862055,
+          "train_ll": 0.6720127875862055,
+          "test_mean": 0.599838896145548,
+          "pseudo_n": 54,
+          "test_ll_improvement": 0.5936981489754642
+        },
+        "S1": {
+          "oof_ll": 0.5679633787574132,
+          "train_ll": 0.5679633787574132,
+          "test_mean": 0.6822222222222223,
+          "pseudo_n": 64,
+          "test_ll_improvement": 0.4896487401466719
+        },
+        "S2": {
+          "oof_ll": 0.7677455896405683,
+          "train_ll": 0.7677455896405683,
+          "test_mean": 0.6511111111111111,
+          "pseudo_n": 65,
+          "test_ll_improvement": 0.689430951029827
+        },
+        "S3": {
+          "oof_ll": 0.7700723521371264,
+          "train_ll": 0.7700723521371264,
+          "test_mean": 0.6619106345263108,
+          "pseudo_n": 9,
+          "test_ll_improvement": 0.6917577135263852
+        },
+        "S4": {
+          "oof_ll": 0.6468383742783665,
+          "train_ll": 0.6468383742783665,
+          "test_mean": 0.56,
+          "pseudo_n": 6,
+          "test_ll_improvement": 0.5685237356676253
+        }
+      },
+      "oof_improvement": -0.15564616103794926,
+      "train_improvement": -0.15564616103794926
+    },
+    {
+      "threshold": 0.8,
+      "pseudo_weight": 1.0,
+      "pseudo_boost_ratio": 0.2,
+      "avg_oof_ll": 0.70417644667855,
+      "avg_train_ll": 0.70417644667855,
+      "avg_pseudo_n": 40.142857142857146,
+      "predicted_lb": 0.8242197690009619,
+      "n_pseudo_per_target": {
+        "Q1": 8,
+        "Q2": 75,
+        "Q3": 54,
+        "S1": 64,
+        "S2": 65,
+        "S3": 9,
+        "S4": 6
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8280983262795959,
+          "train_ll": 0.8280983262795959,
+          "test_mean": 0.49509884340996546,
+          "pseudo_n": 8,
+          "test_ll_improvement": 0.7497836876688546
+        },
+        "Q2": {
+          "oof_ll": 0.6701369281941619,
+          "train_ll": 0.6701369281941619,
+          "test_mean": 0.5604809654223479,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.5918222895834206
+        },
+        "Q3": {
+          "oof_ll": 0.6681395618545334,
+          "train_ll": 0.6681395618545334,
+          "test_mean": 0.6,
+          "pseudo_n": 54,
+          "test_ll_improvement": 0.5898249232437921
+        },
+        "S1": {
+          "oof_ll": 0.5672859791526488,
+          "train_ll": 0.5672859791526488,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 64,
+          "test_ll_improvement": 0.4889713405419075
+        },
+        "S2": {
+          "oof_ll": 0.7818367162731256,
+          "train_ll": 0.7818367162731256,
+          "test_mean": 0.6511111111111111,
+          "pseudo_n": 65,
+          "test_ll_improvement": 0.7035220776623843
+        },
+        "S3": {
+          "oof_ll": 0.7699098412453487,
+          "train_ll": 0.7699098412453487,
+          "test_mean": 0.6616404196649807,
+          "pseudo_n": 9,
+          "test_ll_improvement": 0.6915952026346074
+        },
+        "S4": {
+          "oof_ll": 0.6438277737504357,
+          "train_ll": 0.6438277737504357,
+          "test_mean": 0.56,
+          "pseudo_n": 6,
+          "test_ll_improvement": 0.5655131351396944
+        }
+      },
+      "oof_improvement": -0.15597397640336108,
+      "train_improvement": -0.15597397640336108
+    },
+    {
+      "threshold": 0.8,
+      "pseudo_weight": 0.5,
+      "pseudo_boost_ratio": 0.1,
+      "avg_oof_ll": 0.7057748314036228,
+      "avg_train_ll": 0.7057748314036228,
+      "avg_pseudo_n": 40.142857142857146,
+      "predicted_lb": 0.8257252135582439,
+      "n_pseudo_per_target": {
+        "Q1": 8,
+        "Q2": 75,
+        "Q3": 54,
+        "S1": 64,
+        "S2": 65,
+        "S3": 9,
+        "S4": 6
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8261960394067995,
+          "train_ll": 0.8261960394067995,
+          "test_mean": 0.49533181308558083,
+          "pseudo_n": 8,
+          "test_ll_improvement": 0.7478814007960582
+        },
+        "Q2": {
+          "oof_ll": 0.6715633406490159,
+          "train_ll": 0.6715633406490159,
+          "test_mean": 0.5622222222222222,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.5932487020382746
+        },
+        "Q3": {
+          "oof_ll": 0.6553148821243184,
+          "train_ll": 0.6553148821243184,
+          "test_mean": 0.6000233999294811,
+          "pseudo_n": 54,
+          "test_ll_improvement": 0.5770002435135771
+        },
+        "S1": {
+          "oof_ll": 0.5753994280317939,
+          "train_ll": 0.5753994280317939,
+          "test_mean": 0.6822222222222223,
+          "pseudo_n": 64,
+          "test_ll_improvement": 0.4970847894210526
+        },
+        "S2": {
+          "oof_ll": 0.8048275992371405,
+          "train_ll": 0.8048275992371405,
+          "test_mean": 0.6494807483678835,
+          "pseudo_n": 65,
+          "test_ll_improvement": 0.7265129606263993
+        },
+        "S3": {
+          "oof_ll": 0.7639006645547803,
+          "train_ll": 0.7639006645547803,
+          "test_mean": 0.6615872373730992,
+          "pseudo_n": 9,
+          "test_ll_improvement": 0.6855860259440391
+        },
+        "S4": {
+          "oof_ll": 0.6432218658215112,
+          "train_ll": 0.6432218658215112,
+          "test_mean": 0.5600000000000002,
+          "pseudo_n": 6,
+          "test_ll_improvement": 0.5649072272107699
+        }
+      },
+      "oof_improvement": -0.15757236112843398,
+      "train_improvement": -0.15757236112843398
+    },
+    {
+      "threshold": 0.8,
+      "pseudo_weight": 1.0,
+      "pseudo_boost_ratio": 0.05,
+      "avg_oof_ll": 0.7066142811357213,
+      "avg_train_ll": 0.7066142811357213,
+      "avg_pseudo_n": 40.142857142857146,
+      "predicted_lb": 0.8189915732384085,
+      "n_pseudo_per_target": {
+        "Q1": 8,
+        "Q2": 75,
+        "Q3": 54,
+        "S1": 64,
+        "S2": 65,
+        "S3": 9,
+        "S4": 6
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8261960394067995,
+          "train_ll": 0.8261960394067995,
+          "test_mean": 0.49533181308558083,
+          "pseudo_n": 8,
+          "test_ll_improvement": 0.7478814007960582
+        },
+        "Q2": {
+          "oof_ll": 0.6562338974931055,
+          "train_ll": 0.6562338974931055,
+          "test_mean": 0.5622222222222223,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.5779192588823642
+        },
+        "Q3": {
+          "oof_ll": 0.6645081643614353,
+          "train_ll": 0.6645081643614353,
+          "test_mean": 0.6000518465079079,
+          "pseudo_n": 54,
+          "test_ll_improvement": 0.5861935257506941
+        },
+        "S1": {
+          "oof_ll": 0.5741950855077301,
+          "train_ll": 0.5741950855077301,
+          "test_mean": 0.682222222222222,
+          "pseudo_n": 64,
+          "test_ll_improvement": 0.49588044689698885
+        },
+        "S2": {
+          "oof_ll": 0.8180442508046882,
+          "train_ll": 0.8180442508046882,
+          "test_mean": 0.6490153059781308,
+          "pseudo_n": 65,
+          "test_ll_improvement": 0.739729612193947
+        },
+        "S3": {
+          "oof_ll": 0.7639006645547803,
+          "train_ll": 0.7639006645547803,
+          "test_mean": 0.6615872373730992,
+          "pseudo_n": 9,
+          "test_ll_improvement": 0.6855860259440391
+        },
+        "S4": {
+          "oof_ll": 0.6432218658215112,
+          "train_ll": 0.6432218658215112,
+          "test_mean": 0.5600000000000002,
+          "pseudo_n": 6,
+          "test_ll_improvement": 0.5649072272107699
+        }
+      },
+      "oof_improvement": -0.15841181086053246,
+      "train_improvement": -0.15841181086053246
+    },
+    {
+      "threshold": 0.8,
+      "pseudo_weight": 1.0,
+      "pseudo_boost_ratio": 0.1,
+      "avg_oof_ll": 0.7070787994820434,
+      "avg_train_ll": 0.7070787994820434,
+      "avg_pseudo_n": 40.142857142857146,
+      "predicted_lb": 0.8267068028196218,
+      "n_pseudo_per_target": {
+        "Q1": 8,
+        "Q2": 75,
+        "Q3": 54,
+        "S1": 64,
+        "S2": 65,
+        "S3": 9,
+        "S4": 6
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8261960394067995,
+          "train_ll": 0.8261960394067995,
+          "test_mean": 0.49533181308558083,
+          "pseudo_n": 8,
+          "test_ll_improvement": 0.7478814007960582
+        },
+        "Q2": {
+          "oof_ll": 0.6758891904949572,
+          "train_ll": 0.6758891904949572,
+          "test_mean": 0.561985389260685,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.5975745518842159
+        },
+        "Q3": {
+          "oof_ll": 0.6554305203291126,
+          "train_ll": 0.6554305203291126,
+          "test_mean": 0.6000589106986547,
+          "pseudo_n": 54,
+          "test_ll_improvement": 0.5771158817183714
+        },
+        "S1": {
+          "oof_ll": 0.5787049331367982,
+          "train_ll": 0.5787049331367982,
+          "test_mean": 0.6822222222222223,
+          "pseudo_n": 64,
+          "test_ll_improvement": 0.5003902945260569
+        },
+        "S2": {
+          "oof_ll": 0.8062083826303451,
+          "train_ll": 0.8062083826303451,
+          "test_mean": 0.6509228561960758,
+          "pseudo_n": 65,
+          "test_ll_improvement": 0.7278937440196038
+        },
+        "S3": {
+          "oof_ll": 0.7639006645547803,
+          "train_ll": 0.7639006645547803,
+          "test_mean": 0.6615872373730992,
+          "pseudo_n": 9,
+          "test_ll_improvement": 0.6855860259440391
+        },
+        "S4": {
+          "oof_ll": 0.6432218658215112,
+          "train_ll": 0.6432218658215112,
+          "test_mean": 0.5600000000000002,
+          "pseudo_n": 6,
+          "test_ll_improvement": 0.5649072272107699
+        }
+      },
+      "oof_improvement": -0.15887632920685457,
+      "train_improvement": -0.15887632920685457
+    },
+    {
+      "threshold": 0.75,
+      "pseudo_weight": 1.0,
+      "pseudo_boost_ratio": 0.2,
+      "avg_oof_ll": 0.7076460776128004,
+      "avg_train_ll": 0.7076460776128004,
+      "avg_pseudo_n": 60.714285714285715,
+      "predicted_lb": 0.8257164278947968,
+      "n_pseudo_per_target": {
+        "Q1": 19,
+        "Q2": 100,
+        "Q3": 83,
+        "S1": 98,
+        "S2": 78,
+        "S3": 26,
+        "S4": 21
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.817133484925979,
+          "train_ll": 0.817133484925979,
+          "test_mean": 0.4955555555555556,
+          "pseudo_n": 19,
+          "test_ll_improvement": 0.7388188463152378
+        },
+        "Q2": {
+          "oof_ll": 0.7398011530397902,
+          "train_ll": 0.7398011530397902,
+          "test_mean": 0.5577198580146059,
+          "pseudo_n": 100,
+          "test_ll_improvement": 0.6614865144290489
+        },
+        "Q3": {
+          "oof_ll": 0.6394883739013012,
+          "train_ll": 0.6394883739013012,
+          "test_mean": 0.5999999999999999,
+          "pseudo_n": 83,
+          "test_ll_improvement": 0.5611737352905599
+        },
+        "S1": {
+          "oof_ll": 0.5687454097492888,
+          "train_ll": 0.5687454097492888,
+          "test_mean": 0.6822222222222221,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.4904307711385475
+        },
+        "S2": {
+          "oof_ll": 0.8006662491096844,
+          "train_ll": 0.8006662491096844,
+          "test_mean": 0.6511111111111111,
+          "pseudo_n": 78,
+          "test_ll_improvement": 0.7223516104989431
+        },
+        "S3": {
+          "oof_ll": 0.7177706675202732,
+          "train_ll": 0.7177706675202732,
+          "test_mean": 0.6622222222222224,
+          "pseudo_n": 26,
+          "test_ll_improvement": 0.6394560289095319
+        },
+        "S4": {
+          "oof_ll": 0.6699172050432867,
+          "train_ll": 0.6699172050432867,
+          "test_mean": 0.5600000000000002,
+          "pseudo_n": 21,
+          "test_ll_improvement": 0.5916025664325454
+        }
+      },
+      "oof_improvement": -0.15944360733761154,
+      "train_improvement": -0.15944360733761154
+    },
+    {
+      "threshold": 0.8,
+      "pseudo_weight": 0.5,
+      "pseudo_boost_ratio": 0.05,
+      "avg_oof_ll": 0.7078117781556494,
+      "avg_train_ll": 0.7078117781556494,
+      "avg_pseudo_n": 40.142857142857146,
+      "predicted_lb": 0.8206658111447788,
+      "n_pseudo_per_target": {
+        "Q1": 8,
+        "Q2": 75,
+        "Q3": 54,
+        "S1": 64,
+        "S2": 65,
+        "S3": 9,
+        "S4": 6
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8261960394067995,
+          "train_ll": 0.8261960394067995,
+          "test_mean": 0.49533181308558083,
+          "pseudo_n": 8,
+          "test_ll_improvement": 0.7478814007960582
+        },
+        "Q2": {
+          "oof_ll": 0.660007327370416,
+          "train_ll": 0.660007327370416,
+          "test_mean": 0.5622305003990796,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.5816926887596747
+        },
+        "Q3": {
+          "oof_ll": 0.6669981845970984,
+          "train_ll": 0.6669981845970984,
+          "test_mean": 0.6000190914109559,
+          "pseudo_n": 54,
+          "test_ll_improvement": 0.5886835459863571
+        },
+        "S1": {
+          "oof_ll": 0.5756069538898244,
+          "train_ll": 0.5756069538898244,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 64,
+          "test_ll_improvement": 0.49729231527908313
+        },
+        "S2": {
+          "oof_ll": 0.8187514114491158,
+          "train_ll": 0.8187514114491158,
+          "test_mean": 0.6454492978579215,
+          "pseudo_n": 65,
+          "test_ll_improvement": 0.7404367728383745
+        },
+        "S3": {
+          "oof_ll": 0.7639006645547803,
+          "train_ll": 0.7639006645547803,
+          "test_mean": 0.6615872373730992,
+          "pseudo_n": 9,
+          "test_ll_improvement": 0.6855860259440391
+        },
+        "S4": {
+          "oof_ll": 0.6432218658215112,
+          "train_ll": 0.6432218658215112,
+          "test_mean": 0.5600000000000002,
+          "pseudo_n": 6,
+          "test_ll_improvement": 0.5649072272107699
+        }
+      },
+      "oof_improvement": -0.15960930788046057,
+      "train_improvement": -0.15960930788046057
+    },
+    {
+      "threshold": 0.8,
+      "pseudo_weight": 2.0,
+      "pseudo_boost_ratio": 0.05,
+      "avg_oof_ll": 0.7079948980114429,
+      "avg_train_ll": 0.7079948980114429,
+      "avg_pseudo_n": 40.142857142857146,
+      "predicted_lb": 0.8186804081152714,
+      "n_pseudo_per_target": {
+        "Q1": 8,
+        "Q2": 75,
+        "Q3": 54,
+        "S1": 64,
+        "S2": 65,
+        "S3": 9,
+        "S4": 6
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8261960394067995,
+          "train_ll": 0.8261960394067995,
+          "test_mean": 0.49533181308558083,
+          "pseudo_n": 8,
+          "test_ll_improvement": 0.7478814007960582
+        },
+        "Q2": {
+          "oof_ll": 0.6541059032129624,
+          "train_ll": 0.6541059032129624,
+          "test_mean": 0.5623267877978672,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.5757912646022211
+        },
+        "Q3": {
+          "oof_ll": 0.6657045185375751,
+          "train_ll": 0.6657045185375751,
+          "test_mean": 0.6,
+          "pseudo_n": 54,
+          "test_ll_improvement": 0.5873898799268338
+        },
+        "S1": {
+          "oof_ll": 0.576658064489739,
+          "train_ll": 0.576658064489739,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 64,
+          "test_ll_improvement": 0.4983434258789977
+        },
+        "S2": {
+          "oof_ll": 0.8261772300567326,
+          "train_ll": 0.8261772300567326,
+          "test_mean": 0.6504527565532146,
+          "pseudo_n": 65,
+          "test_ll_improvement": 0.7478625914459913
+        },
+        "S3": {
+          "oof_ll": 0.7639006645547803,
+          "train_ll": 0.7639006645547803,
+          "test_mean": 0.6615872373730992,
+          "pseudo_n": 9,
+          "test_ll_improvement": 0.6855860259440391
+        },
+        "S4": {
+          "oof_ll": 0.6432218658215112,
+          "train_ll": 0.6432218658215112,
+          "test_mean": 0.5600000000000002,
+          "pseudo_n": 6,
+          "test_ll_improvement": 0.5649072272107699
+        }
+      },
+      "oof_improvement": -0.15979242773625402,
+      "train_improvement": -0.15979242773625402
+    },
+    {
+      "threshold": 0.8,
+      "pseudo_weight": 2.0,
+      "pseudo_boost_ratio": 0.1,
+      "avg_oof_ll": 0.7082832119498036,
+      "avg_train_ll": 0.7082832119498036,
+      "avg_pseudo_n": 40.142857142857146,
+      "predicted_lb": 0.8290210626258471,
+      "n_pseudo_per_target": {
+        "Q1": 8,
+        "Q2": 75,
+        "Q3": 54,
+        "S1": 64,
+        "S2": 65,
+        "S3": 9,
+        "S4": 6
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8261960394067995,
+          "train_ll": 0.8261960394067995,
+          "test_mean": 0.49533181308558083,
+          "pseudo_n": 8,
+          "test_ll_improvement": 0.7478814007960582
+        },
+        "Q2": {
+          "oof_ll": 0.679703880437368,
+          "train_ll": 0.679703880437368,
+          "test_mean": 0.5602133967884191,
+          "pseudo_n": 75,
+          "test_ll_improvement": 0.6013892418266267
+        },
+        "Q3": {
+          "oof_ll": 0.649318521644293,
+          "train_ll": 0.649318521644293,
+          "test_mean": 0.6000067350988875,
+          "pseudo_n": 54,
+          "test_ll_improvement": 0.5710038830335518
+        },
+        "S1": {
+          "oof_ll": 0.585622829966443,
+          "train_ll": 0.585622829966443,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 64,
+          "test_ll_improvement": 0.5073081913557017
+        },
+        "S2": {
+          "oof_ll": 0.8100186818174304,
+          "train_ll": 0.8100186818174304,
+          "test_mean": 0.6511111111111111,
+          "pseudo_n": 65,
+          "test_ll_improvement": 0.7317040432066891
+        },
+        "S3": {
+          "oof_ll": 0.7639006645547803,
+          "train_ll": 0.7639006645547803,
+          "test_mean": 0.6615872373730992,
+          "pseudo_n": 9,
+          "test_ll_improvement": 0.6855860259440391
+        },
+        "S4": {
+          "oof_ll": 0.6432218658215112,
+          "train_ll": 0.6432218658215112,
+          "test_mean": 0.5600000000000002,
+          "pseudo_n": 6,
+          "test_ll_improvement": 0.5649072272107699
+        }
+      },
+      "oof_improvement": -0.16008074167461472,
+      "train_improvement": -0.16008074167461472
+    },
+    {
+      "threshold": 0.75,
+      "pseudo_weight": 1.0,
+      "pseudo_boost_ratio": 0.1,
+      "avg_oof_ll": 0.7086052200159847,
+      "avg_train_ll": 0.7086052200159847,
+      "avg_pseudo_n": 60.714285714285715,
+      "predicted_lb": 0.8173754586215878,
+      "n_pseudo_per_target": {
+        "Q1": 19,
+        "Q2": 100,
+        "Q3": 83,
+        "S1": 98,
+        "S2": 78,
+        "S3": 26,
+        "S4": 21
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.861286304019998,
+          "train_ll": 0.861286304019998,
+          "test_mean": 0.49537215210511487,
+          "pseudo_n": 19,
+          "test_ll_improvement": 0.7829716654092567
+        },
+        "Q2": {
+          "oof_ll": 0.6585321033825056,
+          "train_ll": 0.6585321033825056,
+          "test_mean": 0.5621554869668332,
+          "pseudo_n": 100,
+          "test_ll_improvement": 0.5802174647717643
+        },
+        "Q3": {
+          "oof_ll": 0.6553694361765602,
+          "train_ll": 0.6553694361765602,
+          "test_mean": 0.5999999999999999,
+          "pseudo_n": 83,
+          "test_ll_improvement": 0.5770547975658189
+        },
+        "S1": {
+          "oof_ll": 0.5640246472394479,
+          "train_ll": 0.5640246472394479,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.4857100086287066
+        },
+        "S2": {
+          "oof_ll": 0.8093698630137649,
+          "train_ll": 0.8093698630137649,
+          "test_mean": 0.6508372087670928,
+          "pseudo_n": 78,
+          "test_ll_improvement": 0.7310552244030236
+        },
+        "S3": {
+          "oof_ll": 0.761611408617416,
+          "train_ll": 0.761611408617416,
+          "test_mean": 0.6620566556275623,
+          "pseudo_n": 26,
+          "test_ll_improvement": 0.6832967700066748
+        },
+        "S4": {
+          "oof_ll": 0.6500427776622012,
+          "train_ll": 0.6500427776622012,
+          "test_mean": 0.56,
+          "pseudo_n": 21,
+          "test_ll_improvement": 0.5717281390514599
+        }
+      },
+      "oof_improvement": -0.16040274974079582,
+      "train_improvement": -0.16040274974079582
+    },
+    {
+      "threshold": 0.75,
+      "pseudo_weight": 2.0,
+      "pseudo_boost_ratio": 0.1,
+      "avg_oof_ll": 0.7107110226607248,
+      "avg_train_ll": 0.7107110226607248,
+      "avg_pseudo_n": 60.714285714285715,
+      "predicted_lb": 0.8112567728817444,
+      "n_pseudo_per_target": {
+        "Q1": 19,
+        "Q2": 100,
+        "Q3": 83,
+        "S1": 98,
+        "S2": 78,
+        "S3": 26,
+        "S4": 21
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8611363538881037,
+          "train_ll": 0.8611363538881037,
+          "test_mean": 0.4954196824054478,
+          "pseudo_n": 19,
+          "test_ll_improvement": 0.7828217152773624
+        },
+        "Q2": {
+          "oof_ll": 0.6568942354296328,
+          "train_ll": 0.6568942354296328,
+          "test_mean": 0.5606483155998129,
+          "pseudo_n": 100,
+          "test_ll_improvement": 0.5785795968188915
+        },
+        "Q3": {
+          "oof_ll": 0.6555930255983037,
+          "train_ll": 0.6555930255983037,
+          "test_mean": 0.6,
+          "pseudo_n": 83,
+          "test_ll_improvement": 0.5772783869875624
+        },
+        "S1": {
+          "oof_ll": 0.5707419454014108,
+          "train_ll": 0.5707419454014108,
+          "test_mean": 0.6822222222222223,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.4924273067906695
+        },
+        "S2": {
+          "oof_ll": 0.8157159763423275,
+          "train_ll": 0.8157159763423275,
+          "test_mean": 0.6511111111111111,
+          "pseudo_n": 78,
+          "test_ll_improvement": 0.7374013377315862
+        },
+        "S3": {
+          "oof_ll": 0.7682429785403705,
+          "train_ll": 0.7682429785403705,
+          "test_mean": 0.6622222222222222,
+          "pseudo_n": 26,
+          "test_ll_improvement": 0.6899283399296292
+        },
+        "S4": {
+          "oof_ll": 0.6466526434249251,
+          "train_ll": 0.6466526434249251,
+          "test_mean": 0.56,
+          "pseudo_n": 21,
+          "test_ll_improvement": 0.5683380048141838
+        }
+      },
+      "oof_improvement": -0.16250855238553596,
+      "train_improvement": -0.16250855238553596
+    },
+    {
+      "threshold": 0.75,
+      "pseudo_weight": 0.5,
+      "pseudo_boost_ratio": 0.1,
+      "avg_oof_ll": 0.7109597209967096,
+      "avg_train_ll": 0.7109597209967096,
+      "avg_pseudo_n": 60.714285714285715,
+      "predicted_lb": 0.8226381633015108,
+      "n_pseudo_per_target": {
+        "Q1": 19,
+        "Q2": 100,
+        "Q3": 83,
+        "S1": 98,
+        "S2": 78,
+        "S3": 26,
+        "S4": 21
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8491947684850154,
+          "train_ll": 0.8491947684850154,
+          "test_mean": 0.495299804742058,
+          "pseudo_n": 19,
+          "test_ll_improvement": 0.7708801298742741
+        },
+        "Q2": {
+          "oof_ll": 0.665754727495697,
+          "train_ll": 0.665754727495697,
+          "test_mean": 0.5622222222222222,
+          "pseudo_n": 100,
+          "test_ll_improvement": 0.5874400888849557
+        },
+        "Q3": {
+          "oof_ll": 0.6584159983964512,
+          "train_ll": 0.6584159983964512,
+          "test_mean": 0.6000118836861266,
+          "pseudo_n": 83,
+          "test_ll_improvement": 0.5801013597857099
+        },
+        "S1": {
+          "oof_ll": 0.5666955331253479,
+          "train_ll": 0.5666955331253479,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.48838089451460664
+        },
+        "S2": {
+          "oof_ll": 0.8246384481637983,
+          "train_ll": 0.8246384481637983,
+          "test_mean": 0.6501874257670958,
+          "pseudo_n": 78,
+          "test_ll_improvement": 0.746323809553057
+        },
+        "S3": {
+          "oof_ll": 0.7610377866321872,
+          "train_ll": 0.7610377866321872,
+          "test_mean": 0.6618770181893104,
+          "pseudo_n": 26,
+          "test_ll_improvement": 0.682723148021446
+        },
+        "S4": {
+          "oof_ll": 0.6509807846784704,
+          "train_ll": 0.6509807846784704,
+          "test_mean": 0.56,
+          "pseudo_n": 21,
+          "test_ll_improvement": 0.5726661460677291
+        }
+      },
+      "oof_improvement": -0.1627572507215207,
+      "train_improvement": -0.1627572507215207
+    },
+    {
+      "threshold": 0.75,
+      "pseudo_weight": 2.0,
+      "pseudo_boost_ratio": 0.2,
+      "avg_oof_ll": 0.7117007541275371,
+      "avg_train_ll": 0.7117007541275371,
+      "avg_pseudo_n": 60.714285714285715,
+      "predicted_lb": 0.8178720788161301,
+      "n_pseudo_per_target": {
+        "Q1": 19,
+        "Q2": 100,
+        "Q3": 83,
+        "S1": 98,
+        "S2": 78,
+        "S3": 26,
+        "S4": 21
+      },
+      "targets": {
+        "Q1": {
+          "oof_ll": 0.8220299625573111,
+          "train_ll": 0.8220299625573111,
+          "test_mean": 0.4955555555555556,
+          "pseudo_n": 19,
+          "test_ll_improvement": 0.7437153239465698
+        },
+        "Q2": {
+          "oof_ll": 0.7416473440921666,
+          "train_ll": 0.7416473440921666,
+          "test_mean": 0.5563763119415914,
+          "pseudo_n": 100,
+          "test_ll_improvement": 0.6633327054814253
+        },
+        "Q3": {
+          "oof_ll": 0.6427448245610449,
+          "train_ll": 0.6427448245610449,
+          "test_mean": 0.5996247645393361,
+          "pseudo_n": 83,
+          "test_ll_improvement": 0.5644301859503036
+        },
+        "S1": {
+          "oof_ll": 0.5724940074586915,
+          "train_ll": 0.5724940074586915,
+          "test_mean": 0.6822222222222222,
+          "pseudo_n": 98,
+          "test_ll_improvement": 0.4941793688479502
+        },
+        "S2": {
+          "oof_ll": 0.8050306589595041,
+          "train_ll": 0.8050306589595041,
+          "test_mean": 0.6511657948159362,
+          "pseudo_n": 78,
+          "test_ll_improvement": 0.7267160203487628
+        },
+        "S3": {
+          "oof_ll": 0.7314834775106067,
+          "train_ll": 0.7314834775106067,
+          "test_mean": 0.6622222222222222,
+          "pseudo_n": 26,
+          "test_ll_improvement": 0.6531688388998654
+        },
+        "S4": {
+          "oof_ll": 0.6664750037534349,
+          "train_ll": 0.6664750037534349,
+          "test_mean": 0.56,
+          "pseudo_n": 21,
+          "test_ll_improvement": 0.5881603651426937
+        }
+      },
+      "oof_improvement": -0.16349828385234821,
+      "train_improvement": -0.16349828385234821
+    }
+  ]
+}

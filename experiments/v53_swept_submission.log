@@ -1,0 +1,82 @@
+2026-05-06 23:18:40,868 [INFO] ============================================================
+2026-05-06 23:18:40,868 [INFO] V53 Swept Submission - Optimized n_feat from sweep
+2026-05-06 23:18:40,868 [INFO] ============================================================
+2026-05-06 23:18:40,907 [INFO]   Train: (450, 153), Test: (250, 153)
+2026-05-06 23:18:41,437 [INFO]   Features: 282 total
+2026-05-06 23:18:41,438 [INFO] 
+  --- Q1 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:18:41,699 [INFO]   Config: deep, n_feat=17
+2026-05-06 23:18:41,699 [INFO]   Training 50 seeds...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:18:54,087 [INFO]   Q1: mean=0.5338 min=0.0254 max=0.9848
+2026-05-06 23:18:54,124 [INFO] 
+  --- Q2 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:18:54,391 [INFO]   Config: deep, n_feat=17
+2026-05-06 23:18:54,391 [INFO]   Training 50 seeds...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:19:07,641 [INFO]   Q2: mean=0.5642 min=0.0142 max=0.9934
+2026-05-06 23:19:07,677 [INFO] 
+  --- Q3 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:19:07,942 [INFO]   Config: v48, n_feat=11
+2026-05-06 23:19:07,942 [INFO]   Training 50 seeds...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:19:13,221 [INFO]   Q3: mean=0.5682 min=0.0401 max=0.9800
+2026-05-06 23:19:13,259 [INFO] 
+  --- S1 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:19:13,456 [INFO]   Config: wide, n_feat=17
+2026-05-06 23:19:13,456 [INFO]   Training 50 seeds...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:19:16,260 [INFO]   S1: mean=0.6109 min=0.0852 max=0.9496
+2026-05-06 23:19:16,293 [INFO] 
+  --- S2 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:19:16,535 [INFO]   Config: deep, n_feat=20
+2026-05-06 23:19:16,535 [INFO]   Training 50 seeds...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:19:31,865 [INFO]   S2: mean=0.6053 min=0.0120 max=0.9952
+2026-05-06 23:19:31,905 [INFO] 
+  --- S3 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:19:32,047 [INFO]   Config: safety, n_feat=23
+2026-05-06 23:19:32,047 [INFO]   Training 50 seeds...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:19:38,153 [INFO]   S3: mean=0.5276 min=0.0492 max=0.9362
+2026-05-06 23:19:38,190 [INFO] 
+  --- S4 ---
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:19:38,396 [INFO]   Config: wide, n_feat=23
+2026-05-06 23:19:38,396 [INFO]   Training 50 seeds...
+/home/mwoo423/.local/lib/python3.12/site-packages/lightgbm/engine.py:172: UserWarning: Found `n_estimators` in params. Will use it instead of argument
+  _log_warning(f"Found `{alias}` in params. Will use it instead of argument")
+2026-05-06 23:19:42,307 [INFO]   S4: mean=0.4912 min=0.0788 max=0.9633
+2026-05-06 23:19:42,347 [INFO] 
+============================================================
+2026-05-06 23:19:42,348 [INFO] ✅ Submission saved: /home/mwoo423/projects/dacon2/submissions/submission_v53_swept_20260506_231942.csv
+2026-05-06 23:19:42,348 [INFO] Rows: 250
+2026-05-06 23:19:42,348 [INFO]   Q1: min=0.0254 max=0.9848 mean=0.5338
+2026-05-06 23:19:42,348 [INFO]   Q2: min=0.0142 max=0.9934 mean=0.5642
+2026-05-06 23:19:42,348 [INFO]   Q3: min=0.0401 max=0.9800 mean=0.5682
+2026-05-06 23:19:42,348 [INFO]   S1: min=0.0852 max=0.9496 mean=0.6109
+2026-05-06 23:19:42,348 [INFO]   S2: min=0.0120 max=0.9952 mean=0.6053
+2026-05-06 23:19:42,349 [INFO]   S3: min=0.0492 max=0.9362 mean=0.5276
+2026-05-06 23:19:42,349 [INFO]   S4: min=0.0788 max=0.9633 mean=0.4912
+2026-05-06 23:19:42,349 [INFO] Total time: 61s
+2026-05-06 23:19:42,349 [INFO] ============================================================
+2026-05-06 23:19:42,349 [INFO]   Meta saved: /home/mwoo423/projects/dacon2/submissions/meta_v53_swept_20260506_231942.json

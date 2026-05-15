@@ -1,151 +1,125 @@
+# MEMORY.md — DaCon2 장기 기억
 
-# DaCon2 Complete Experiment Log (v10-v245+)
+## 승우 (Seungwoo Hong)
+- Telegram 사용, 한국어
+- 시간대: KST (Asia/Seoul)
+- 2026-05-08 ~ DaCon2 경진대회 지속 진행 중
 
-## V10-V40 (Early Phase)
-- V10: LGBM baseline, OOF=0.6038
-- V13: LGBM z-score, OOF=0.6385 (worse)
-- V35-V40: SIGKILL (3000+ features memory explosion)
+## 대회 개요
+- ETRI DaCon2 — 사물인터넷/라이프로그 기반 건강 예측 경진대회
+- 7개 타겟: Q1, Q2, Q3, S1, S2, S3, S4
+- 학습 450 rows, 테스트 250 rows
+- Feature: 141 base + 141 zscore per-person = 282 columns
 
-## V53 (Deep Feature Engineering)
-- V53 final: LB=0.65358 (best LB at the time)
-- V53 Swept: AVG CV 0.6500
-- Feature sweep: n_feat ±3 improved all targets
+## 핵심 결과 타임라인
 
-## V99-V106 (LB Formula Analysis)
-- V99: predicted LB=0.73 (overconfident)
-- V101-V102: LB formula reverse-engineered
-  - abs(shift) vs LB: r=-0.90
-  - Shift amplification improves LB
-- V106: LB=1.057 (catastrophic OOF-LB mismatch)
+### 베이스라인 (2026-05-01)
+- **LGBM V10**: CV 0.6038 — 장기간 최고 성능 기록
 
-## V114-V120 (Isotonic Calibration)
-- V114: OOF=0.6544 (no isotonic)
-- V115: OOF=0.5476 (isotonic + personalization)
-- V118: SIGKILL (5376 models)
-- V119: OOF=0.5706 (base only)
+### Deep Feature Engineering (2026-05-06)
+- **V53 final**: 리더보드 0.6535822621 (LGBM seed ensemble 50)
+- **V53 swept**: n_feat 미세조정, avg CV +0.0081 개선
+- 기준 제출물: `submissions/submission_v53_swept_20260507_151447.csv`
 
-## V121-V123 (Pairwise/Transformed Features)
-- V121: OOF=0.5482 (pairwise+transformed per-target ×4 seeds)
-- V122: OOF=0.5666 (feature pollution bug)
-- V123: OOF=0.5498 (50 seeds, per-target)
+### Ensemble 실험 (2026-05-07)
+- **V58** (LGBM+CatBoost+XGB stacking): avg CV 0.6253
+- **V59** (multi-seed): V58과 동등
+- **V60** (interactions): 역개선 (-0.0046)
+- V58이 single architecture 중 최고
 
-## V124-V125 (Failed Corrections)
-- V124: Distribution matching → OOF=9-11
-- V125: Shift/scale → converged to identity
+### Leakage Clean (2026-05-07)
+- **V61** (CatBoost + leakage-clean): avg CV 0.5830
+- sleep/wrist 직접 누수 feature 제거
+- S4 전용 feature set (single LGBM, n_feat=25)
 
-## V126-V128 (3-Way Ensemble)
-- V126: V121+V123+V115, OOF=0.5476
-- V127: Uniform weights 0.35/0.25/0.40, OOF=0.5373 **⬅ BEST**
-- V128: Per-target weights, OOF=0.5361 (overfit risk)
+### 오늘 (2026-05-08) — V63~V72
+- **V63**: Stacking + Temporal + Calibration (LGBM+XGB+Cat → LR meta)
+- **V64**: CatBoost+LGBM+XGB Ensemble + Calibration
+- **V65**: CatBoost + z-score + temporal + param sweep
+- **V66**: CatBoost + leakage-clean + 50 seeds
+- **V67**: CatBoost + leakage-clean + 30 seeds + conservative regularization
+- **V70**: V61 + V69 ensemble (50/50)
+- **V71**: V61 exact replication
+- **V72**: V61 + interaction features
 
-## V129-V134 (Variance + Shift)
-- Gaussian variance restoration
-- Shift amplification (1x-5x)
-- Per-target + uniform variants
+## 핵심 아키텍처 패턴
 
-## V135-V145 (Post-Processing Exhaustive)
-- V135-V138: Ensemble weight optimization
-- V139: Stacking (LR meta) → OOF=0.5507
-- V140-V145: Variance restoration, pseudo-labeling
+### V53 (Baseline)
+```
+LGBM seed ensemble (50 seeds)
+→ 개인별 z-score feature
+→ 타겟별 top-K feature selection
+→ Leakage column 제거
+```
 
-## V146-V178 (Temperature Scaling)
-- V162: T=0.73 → est_LB=0.615 **⬅ Post-processing ceiling**
-- V173: Sharpening → est_LB=0.617
-- V175-V178: Combined T+sharpen
-- V187-V188: Per-target T+sharpen → est_LB=0.648
-- V189: LB estimation refined
+### V58 (Stacking)
+```
+Level 0: LGBM + CatBoost + XGBoost → OOF average
+Level 1: LogisticRegression(C=1.0) → stacked predictions
+Target별: V53 swept config 적용
+```
 
-## V179-V183 (Deep Features)
-- V180: Deep feature engineering → OOF=0.616 (FAILED, overfit)
-- V181a: OOF=0.5398
-- V182: T=0.73 on deep features
+### V61 (Leakage Clean)
+```
+CatBoost on features_clean_v60
+→ LEAK_S/LEAK_Q/NIGHTTIME_LEAK/SLEEP_DIRECT_LEAK 제거
+→ S4: single LGBM (n_feat=25)
+→ Q*: standard leakage-clean features
+```
 
-## V185-V204 (Ensemble Analysis)
-- V185-V198: Weight optimization
-- V199-V204: Model correlation (0.7-0.99, highly correlated)
-- V205-V207: 4-way ensemble with V53 → est_LB=0.645
+## 주요 파라미터
+- GroupKFold n_splits=5
+- n_jobs=1 (WSL2 제한)
+- Data: train 450×282, test 250×?
+- RAM 16GB + Swap 4GB
 
-## V208-V214 (Per-Target T/VR/Sharp)
-- V208-V210: Per-target T + sharpen → est_LB=0.647
-- V211-V214: Per-target VR → est_LB=0.646
+## 현재 기준점
+- **Best CV**: V53 swept (GroupKFold 3-fold, avg 0.6806)
+- **Best Leaderboard**: V53 final (0.6535822621)
+- **Best Architecture**: V61 leakage-clean + stacking
 
-## V215-V218 (Diverse Models)
-- HGBT: OOF=0.66-0.89
-- LogReg/Ridge: Similar or worse
+## 파일 구조
+- `/home/mwoo423/projects/dacon2/src/` — 모든 실험 스크립트
+- `/home/mwoo423/projects/dacon2/submissions/` — 제출물 + 메타
+- `/home/mwoo423/projects/dacon2/experiments/` — OOF, 로깅
+- `/home/mwoo423/projects/dacon2/docs/` — 분석 문서
+- `/home/mwoo423/projects/dacon2/data_processed/` — 전처리 데이터
 
-## V219-V222 (Subject Deviation)
-- OOF=0.624 (worse)
+## 작업 원칙
+1. 모든 실험은 메타 JSON 남기기
+2. 신규 실험은 V53 swept 기준 비교 후 제출
+3. Leak 제거 필수: LEAK_S, LEAK_Q, NIGHTTIME_LEAK, SLEEP_DIRECT_LEAK
+4. CV = 리더보드 점수 아님. 오버피팅 주의
 
-## V223-V232 (Pairwise Interaction)
-- Enhanced pairwise (diff+sum+prod+ratio) → OOF=0.602
-- V121 orig → OOF=0.606
-- Both without personalization → poor
+## V259~V263 (2026-05-14)
+### V259 Isotonic Calibration
+- Isotonic regression → Δ=-0.019 (OOF 기준)
+-最有效的 calibration method
 
-## V233-V236 (Stacking)
-- Single-target CV → OOF=0.58-0.67
-- Stacked → OOF=0.622
-- Best w=0.0 (reject stacking)
+### V260 Quantile+PSI
+- 분석 OOF: 0.614019 (Δ=-0.098555)
+- **실제 제출 LB: 0.714592** → 예상과 큰 차이, 버림
+- Quantile normalization이 테스트 set에서 역효과
 
-## V237-V240 (Feature Selection, Smoothing, MLP)
-- Feature selection k=5-50: OOF=0.63 (overfit)
-- Label smoothing: OOF=0.604
-- MLP (no personalization): OOF=0.486 (leakage)
+### V262 2x2x2 Factorial (Q × ISO × CLUST)
+- Baseline: OOF=0.66141
+- **Isotonic**: OOF=0.58819 (Δ=-0.073) ← Biggest gain
+- Clustering: Δ=-0.007 (harmful), Quantile: Δ=-0.001
+- Best: QFalse_ISOTrue_CLUSTFalse, 252 features
+- PSI filter bug: psi.mean() → psi.sum()으로 수정 필요
 
-## V241-V245 (MLP with Personalization + CV)
-- V242 training-only: OOF=0.418 (LEAKAGE!)
-- V245 proper 5-fold CV: OOF=0.68-0.77 (WORSE than everything)
-- MLP fundamentally unsuited for this data
+### V263 Submission LB Analysis
+- 246개 submission, 37개 OOF 파일 분석
+- **V127이 여전히 BEST**: LB=0.64763, OOF=0.53731
+- v53: LB=0.65358 (두 번째)
+- v83: OOF=0.54575, estimated LB≈0.646 (가장 근접)
+- v45a 100% accuracy → **leakage 발견!**
+- v260 LB=0.714592로 확인 → 버림
+- 문서: `docs/submission_lb_analysis.md`
 
-## V246: V127 Individual Model OOFs
-- Q1: V121=0.593, V123=0.583, V115=0.596
-- Q2: V121=0.567, V123=0.565, V115=0.567
-- Q3: V121=0.573, V123=0.576, V115=0.576
-- S1: V121=0.501, V123=0.513, V115=0.497
-- S2: V121=0.532, V123=0.533, V115=0.523
-- S3: V121=0.508, V123=0.517, V115=0.509
-- S4: V121=0.562, V123=0.564, V115=0.566
-
-## VERDICT
-**V127 is the undisputed best model.**
-- OOF=0.53731, LB=0.64763
-- Est. LB (conservative): 0.64-0.65
-- LB 0.50 requires OOF<0.47 (0.067 improvement needed)
-
-## Why can't we reach 0.50?
-1. **Feature signal too weak** (max r=0.29)
-2. **Only 450 samples** (p≈n)
-3. **Personalization is the key transformation** (z-score)
-4. **All model variants highly correlated** (r=0.7-0.99)
-5. **Post-processing ceiling at T≈0.73** (est_LB≈0.615)
-6. **Neural networks overfit** on 450 samples
-7. **Deep features overfit** (OOF 0.616)
-8. **Stacking/ensemble gains minimal** (high correlation)
-9. **Feature selection makes it worse** (less signal)
-
-## V262 (2026-05-14 13:43) — 2x2x2 Factorial
-- **Baseline**: OOF=0.66141 (no tricks)
-- **Isotonic**: OOF=0.58819 (Δ=-0.073) ← BIGGEST gain
-- **Clustering**: OOF=0.59490 (Δ=-0.007, harmful)
-- **Quantile**: OOF=0.58928 (Δ=-0.001, no gain)
-- **PSI filter**: BUG — `psi.mean()` was per-bin avg, not total. Fixed to `psi.sum()`.
-- **Best**: QFalse_ISOTrue_CLUSTFalse, 252 features
-- **Submission**: `submissions/submission_v262_20260514_134306.csv`
-- **V262 LB**: 미제출 (승우さん 수동 제출 예정)
-
-## V263 (2026-05-14 14:00) — Submission LB Analysis
-- **분석 대상**: 246개 submission, 37개 OOF 파일
-- **V260 LB 확인**: **0.714592** (예상 0.6565 대비 -0.058 degradation) → **버림**
-- **현재 BEST**: V127 (LB=0.64763, OOF=0.53731) — **여전히 undisputed**
-- **v53**: LB=0.65358 (두 번째)
-- **v83**: OOF=0.54575, estimated LB≈0.646 (가장 근접)
-- **v45a, v46 leakage**: v45a 100% accuracy, v46 97-99% accuracy
-- **문서**: `docs/submission_lb_analysis.md`
-- **커밋**: `739e1b7` + push
-
-## What's left to try?
-- Group-wise target encoding (leave-one-out)
-- Cross-validation leakage-free feature engineering
-- Ensemble of completely different feature pipelines
-- Multi-target joint training (if it helps signal)
-- Fix V262 PSI filter + feature selection impact
-- Reconcile V127 OOF=0.53731 vs V262 baseline=0.66141 (different measurement?)
+## 주요 인사이트
+- Distribution correction (Quantile+PSI)은 효과 없음
+- Isotonic calibration이 가장 강력: Δ=-0.073
+- V127이 260+ 실험 중 **undisputed BEST**
+- V45a leakage 발견 → pipeline에 leakage 존재 가능성
+- LB 0.50은 매우 어려움 (OOF <0.47 필요)

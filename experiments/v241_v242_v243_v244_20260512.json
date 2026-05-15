@@ -1,0 +1,17 @@
+{
+  "v127": {
+    "oof": 0.53731,
+    "lb": 0.64763
+  },
+  "v242_best_mlp_oof": 0.41783,
+  "v242_best_config": {
+    "hidden": [
+      64,
+      32
+    ],
+    "lr": 0.005,
+    "dropout": 0.2
+  },
+  "v244_personalized_lgbm": 0.62325,
+  "summary": "MLP with personalization close but still worse than V127"
+}

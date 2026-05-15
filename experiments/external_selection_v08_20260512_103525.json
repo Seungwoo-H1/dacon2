@@ -1,0 +1,10 @@
+[
+  {
+    "strategy": "proxy",
+    "avg_oof": 0.5971
+  },
+  {
+    "strategy": "baseline",
+    "avg_oof": 0.60992
+  }
+]

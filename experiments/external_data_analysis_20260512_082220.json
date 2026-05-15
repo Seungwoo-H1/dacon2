@@ -1,0 +1,403 @@
+{
+  "timestamp": "20260512_082220",
+  "domain_similarity": {
+    "sleep_health_lifestyle": {
+      "overlapping_features": 0,
+      "avg_ks_stat": null,
+      "avg_ks_pval": null
+    },
+    "external_date_features": {
+      "overlapping_features": 0,
+      "avg_ks_stat": null,
+      "avg_ks_pval": null
+    },
+    "synthetic_lifestyle_extended": {
+      "overlapping_features": 0,
+      "avg_ks_stat": null,
+      "avg_ks_pval": null
+    },
+    "synthetic_stress_hrv": {
+      "overlapping_features": 0,
+      "avg_ks_stat": null,
+      "avg_ks_pval": null
+    }
+  },
+  "data_quality": {
+    "sleep_health_lifestyle": {
+      "dataset": "sleep_health_lifestyle",
+      "total_rows": 400,
+      "total_cols": 14,
+      "total_missing": 0,
+      "missing_pct": 0.0,
+      "cols_with_missing": 0,
+      "duplicate_ratio": 0.0,
+      "numeric_cols": 10,
+      "Age_skew": 2.404575812172827e-25,
+      "Age_kurtosis": -10.402916914825033,
+      "Age_outlier_pct": 0.0,
+      "Sleep Duration_skew": 0.4083298036558072,
+      "Sleep Duration_kurtosis": 0.8268363857488013,
+      "Sleep Duration_outlier_pct": 0.0,
+      "Quality of Sleep_skew": 2.249393861844083e-53,
+      "Quality of Sleep_kurtosis": -15.379424124447278,
+      "Quality of Sleep_outlier_pct": 0.0,
+      "Physical Activity Level_skew": 0.4856765635073834,
+      "Physical Activity Level_kurtosis": 0.6972017187071724,
+      "Physical Activity Level_outlier_pct": 0.0,
+      "Stress Level_skew": 4.28177720229997e-72,
+      "Stress Level_kurtosis": -17.956332953024646,
+      "Stress Level_outlier_pct": 0.0,
+      "Blood Pressure Systolic_skew": 3.880491786031333e-51,
+      "Blood Pressure Systolic_kurtosis": -15.042263856152008,
+      "Blood Pressure Systolic_outlier_pct": 0.0,
+      "Heart Rate_skew": 4.156336709448165e-39,
+      "Heart Rate_kurtosis": -13.082306567356772,
+      "Heart Rate_outlier_pct": 0.0,
+      "Daily Steps_skew": 2.0487120386043994e-66,
+      "Daily Steps_kurtosis": -17.215021626659336,
+      "Daily Steps_outlier_pct": 0.0,
+      "Sleep Disorder_skew": 3.5949817929745392e-09,
+      "Sleep Disorder_kurtosis": 5.9018269320858385,
+      "BMI_Category_Code_skew": 2.6778322089735875e-08,
+      "BMI_Category_Code_kurtosis": -5.5612929687826504,
+      "BMI_Category_Code_outlier_pct": 0.0,
+      "categorical_cols": 4,
+      "Person ID_unique": 400,
+      "Gender_unique": 2,
+      "Gender_top_categories": {
+        "Female": 201,
+        "Male": 199
+      },
+      "Occupation_unique": 5,
+      "Occupation_top_categories": {
+        "Administrative": 84,
+        "Professional": 82,
+        "Service": 80
+      },
+      "BMI Category_unique": 4,
+      "BMI Category_top_categories": {
+        "Overweight": 153,
+        "Normal weight": 129,
+        "Obese": 93
+      }
+    },
+    "external_date_features": {
+      "dataset": "external_date_features",
+      "total_rows": 183,
+      "total_cols": 9,
+      "total_missing": 0,
+      "missing_pct": 0.0,
+      "cols_with_missing": 0,
+      "duplicate_ratio": 0.0,
+      "numeric_cols": 7,
+      "is_holiday_skew": 1.1138824162464005e-14,
+      "is_holiday_kurtosis": 7.7255307564377915,
+      "month_skew": 1.1253521633905413e-27,
+      "month_kurtosis": -10.902174504212994,
+      "month_outlier_pct": 0.0,
+      "is_exam_period_skew": 0.0,
+      "is_exam_period_kurtosis": 148.04281008321928,
+      "is_exam_period_outlier_pct": 0.0,
+      "is_lunar_holiday_skew": 2.2275229413609748e-26,
+      "is_lunar_holiday_kurtosis": 10.627177396102446,
+      "daylight_hours_skew": 2.939290479426783e-66,
+      "daylight_hours_kurtosis": -17.194111504338682,
+      "daylight_hours_outlier_pct": 0.0,
+      "daylight_ratio_skew": 2.939290479423765e-66,
+      "daylight_ratio_kurtosis": -17.194111504338743,
+      "daylight_ratio_outlier_pct": 0.0,
+      "season_index_skew": 5.099239229401862e-96,
+      "season_index_kurtosis": -20.792133684473896,
+      "season_index_outlier_pct": 0.0,
+      "categorical_cols": 2,
+      "lifelog_date_unique": 183,
+      "is_school_term_unique": 2,
+      "is_school_term_top_categories": {
+        "true": 152,
+        "false": 31
+      }
+    },
+    "synthetic_lifestyle_extended": {
+      "dataset": "synthetic_lifestyle_extended",
+      "total_rows": 2000,
+      "total_cols": 13,
+      "total_missing": 0,
+      "missing_pct": 0.0,
+      "cols_with_missing": 0,
+      "duplicate_ratio": 0.0,
+      "numeric_cols": 13,
+      "Age_skew": 4.2769581577739995e-250,
+      "Age_kurtosis": -33.7771100569622,
+      "Age_outlier_pct": 0.0,
+      "Sleep Duration_skew": 0.7660291595173646,
+      "Sleep Duration_kurtosis": -0.2975729015576164,
+      "Sleep Duration_outlier_pct": 0.0,
+      "Sleep Quality_skew": 2.1576809547194861e-78,
+      "Sleep Quality_kurtosis": -18.744231093099327,
+      "Sleep Quality_outlier_pct": 0.0,
+      "Physical Activity_skew": 0.5734804835277552,
+      "Physical Activity_kurtosis": -0.562933035965977,
+      "Physical Activity_outlier_pct": 0.0,
+      "Stress Level_skew": 3.527708590841075e-30,
+      "Stress Level_kurtosis": -11.414786075433867,
+      "Stress Level_outlier_pct": 0.0,
+      "BMI_skew": 0.0006929285535031818,
+      "BMI_kurtosis": -3.3923618872603445,
+      "BMI_outlier_pct": 0.0,
+      "Heart Rate_skew": 0.0011038959291180329,
+      "Heart Rate_kurtosis": -3.262614439273352,
+      "Heart Rate_outlier_pct": 0.0,
+      "Daily Steps_skew": 0.25138770854532144,
+      "Daily Steps_kurtosis": -1.1469852706051924,
+      "Daily Steps_outlier_pct": 0.0,
+      "Sleep Disorder_skew": 5.132052932787655e-19,
+      "Sleep Disorder_kurtosis": 8.909376121829059,
+      "Caffeine Intake_skew": 4.5032337929367294e-161,
+      "Caffeine Intake_kurtosis": -27.043919391377276,
+      "Caffeine Intake_outlier_pct": 0.0,
+      "Alcohol Units_skew": 0.6284530977330429,
+      "Alcohol Units_kurtosis": -0.48390527335175654,
+      "Alcohol Units_outlier_pct": 0.0,
+      "Exercise Min/week_skew": 0.704554986169506,
+      "Exercise Min/week_kurtosis": -0.3791789443250867,
+      "Exercise Min/week_outlier_pct": 0.0,
+      "Screen Time Hours_skew": 0.9745344897104381,
+      "Screen Time Hours_kurtosis": 0.031921704575391945,
+      "Screen Time Hours_outlier_pct": 0.0,
+      "categorical_cols": 0
+    },
+    "synthetic_stress_hrv": {
+      "dataset": "synthetic_stress_hrv",
+      "total_rows": 1500,
+      "total_cols": 10,
+      "total_missing": 0,
+      "missing_pct": 0.0,
+      "cols_with_missing": 0,
+      "duplicate_ratio": 0.0,
+      "numeric_cols": 10,
+      "Age_skew": 0.0,
+      "Age_kurtosis": -40.583437609989254,
+      "Age_outlier_pct": 0.0,
+      "Resting HR_skew": 0.6487761804035095,
+      "Resting HR_kurtosis": 0.4554630000519236,
+      "Resting HR_outlier_pct": 0.0,
+      "HRV_mean_skew": 0.1276715393527571,
+      "HRV_mean_kurtosis": -1.5233484993745132,
+      "HRV_mean_outlier_pct": 0.0,
+      "EDA_mean_skew": 0.09944738217210396,
+      "EDA_mean_kurtosis": -1.647538633275377,
+      "EDA_mean_outlier_pct": 0.0,
+      "Accelerometry_mean_skew": 3.175708508969711e-05,
+      "Accelerometry_mean_kurtosis": -4.160486168066644,
+      "Accelerometry_mean_outlier_pct": 0.0,
+      "Body Temp_skew": 0.2405291000491815,
+      "Body Temp_kurtosis": -1.1736653356933209,
+      "Body Temp_outlier_pct": 0.0,
+      "Stress_Score_skew": 6.196991585485693e-34,
+      "Stress_Score_kurtosis": -12.143686316752747,
+      "Stress_Score_outlier_pct": 0.0,
+      "Mood_Score_skew": 2.757339389347887e-08,
+      "Mood_Score_kurtosis": -5.556185437308689,
+      "Mood_Score_outlier_pct": 0.0,
+      "Sleep_Efficiency_skew": 0.0007497288679508755,
+      "Sleep_Efficiency_kurtosis": -3.3707168020403406,
+      "Sleep_Efficiency_outlier_pct": 0.0,
+      "Wake_After_Sleep_skew": 1.0615812794657332e-11,
+      "Wake_After_Sleep_kurtosis": 6.797895881568611,
+      "Wake_After_Sleep_outlier_pct": 0.0,
+      "categorical_cols": 0
+    }
+  },
+  "transferability": {
+    "sleep_health_lifestyle": {
+      "dataset": "sleep_health_lifestyle",
+      "ext_Age_mean": 41.9575,
+      "ext_Age_std": 13.156688027373152,
+      "ext_Sleep Duration_mean": 6.76625,
+      "ext_Sleep Duration_std": 1.187206631747888,
+      "ext_Quality of Sleep_mean": 0.54975,
+      "ext_Quality of Sleep_std": 0.28654005043144165,
+      "ext_Quality of Sleep_vs_int_Q1_corr": -0.07251875727784327,
+      "ext_Physical Activity Level_mean": 149.2675,
+      "ext_Physical Activity Level_std": 47.9593702704889,
+      "ext_Physical Activity Level_vs_int_mActivity_m_activity_mean_corr": 0.11000852341607349,
+      "ext_Physical Activity Level_vs_int_wPedo_pedo_step_mean_corr": -0.09269462731718084,
+      "ext_Stress Level_mean": 0.5289999999999999,
+      "ext_Stress Level_std": 0.28480129818633476,
+      "ext_Stress Level_vs_int_Q3_corr": 0.004305734161954648,
+      "ext_Heart Rate_mean": 74.9,
+      "ext_Heart Rate_std": 11.417569892741586,
+      "ext_Heart Rate_vs_int_wHr_hr_mean_corr": 0.05981117000053837,
+      "ext_Daily Steps_mean": 8417.19,
+      "ext_Daily Steps_std": 3758.2864414970886,
+      "ext_Daily Steps_vs_int_wPedo_pedo_step_mean_corr": -0.09942342615262872,
+      "ext_Sleep Disorder_mean": 0.125,
+      "ext_Sleep Disorder_std": 0.33113308926626095,
+      "ext_Sleep Disorder_vs_int_Q1_corr": -0.011339501179510887
+    },
+    "external_date_features": {
+      "dataset": "external_date_features"
+    },
+    "synthetic_lifestyle_extended": {
+      "dataset": "synthetic_lifestyle_extended",
+      "ext_Age_mean": 43.8055,
+      "ext_Age_std": 14.929203270943583,
+      "ext_Sleep Duration_mean": 7.054393143699691,
+      "ext_Sleep Duration_std": 1.2387332390603232,
+      "ext_Stress Level_mean": 4.048384429389461,
+      "ext_Stress Level_std": 1.9563981135849446,
+      "ext_Stress Level_vs_int_Q3_corr": -0.024781995669715347,
+      "ext_Heart Rate_mean": 72.33550155202451,
+      "ext_Heart Rate_std": 9.920586149225182,
+      "ext_Heart Rate_vs_int_wHr_hr_mean_corr": -0.04273852204594816,
+      "ext_Daily Steps_mean": 6029.74043042721,
+      "ext_Daily Steps_std": 2952.833480652336,
+      "ext_Daily Steps_vs_int_wPedo_pedo_step_mean_corr": 0.03662077548859976,
+      "ext_Sleep Disorder_mean": 0.1535,
+      "ext_Sleep Disorder_std": 0.3605589429977959,
+      "ext_Sleep Disorder_vs_int_Q1_corr": 0.021626146508377447
+    },
+    "synthetic_stress_hrv": {
+      "dataset": "synthetic_stress_hrv",
+      "ext_Age_mean": 40.675333333333334,
+      "ext_Age_std": 13.745200808005333
+    }
+  },
+  "feature_signal": {
+    "sleep_health_lifestyle_Q1": {
+      "proxy_column": "Quality of Sleep",
+      "feature_importance_error": "Unknown label type: continuous. Maybe you are trying to fit a classifier, which expects discrete classes on a regression target with continuous values."
+    },
+    "sleep_health_lifestyle_Q2": {
+      "proxy_column": "Stress Level",
+      "feature_importance_error": "Unknown label type: continuous. Maybe you are trying to fit a classifier, which expects discrete classes on a regression target with continuous values."
+    },
+    "sleep_health_lifestyle_Q3": {
+      "proxy_column": "Stress Level",
+      "feature_importance_error": "Unknown label type: continuous. Maybe you are trying to fit a classifier, which expects discrete classes on a regression target with continuous values."
+    },
+    "external_date_features_Q1": {
+      "no_proxy_column": true
+    },
+    "external_date_features_Q2": {
+      "no_proxy_column": true
+    },
+    "external_date_features_Q3": {
+      "no_proxy_column": true
+    },
+    "synthetic_lifestyle_extended_Q1": {
+      "proxy_column": "Sleep Disorder",
+      "top_external_features": [
+        [
+          "Sleep Duration",
+          0.16470717363806808
+        ],
+        [
+          "Stress Level",
+          0.10394955195981118
+        ],
+        [
+          "Exercise Min/week",
+          0.10332905444890249
+        ],
+        [
+          "BMI",
+          0.1002295215655283
+        ],
+        [
+          "Screen Time Hours",
+          0.09657153479876142
+        ]
+      ],
+      "feature_importances": {
+        "Age": 0.05899525047374751,
+        "Sleep Duration": 0.16470717363806808,
+        "Sleep Quality": 0.08156664933035972,
+        "Physical Activity": 0.07832217377728921,
+        "Stress Level": 0.10394955195981118,
+        "BMI": 0.1002295215655283,
+        "Heart Rate": 0.09144913643856181,
+        "Daily Steps": 0.08257775586731927,
+        "Caffeine Intake": 0.02021974157073672,
+        "Alcohol Units": 0.018082456130914273,
+        "Exercise Min/week": 0.10332905444890249,
+        "Screen Time Hours": 0.09657153479876142
+      },
+      "normalized_importances": {
+        "Age": 0.05899525047374751,
+        "Sleep Duration": 0.16470717363806808,
+        "Sleep Quality": 0.08156664933035972,
+        "Physical Activity": 0.07832217377728921,
+        "Stress Level": 0.10394955195981118,
+        "BMI": 0.1002295215655283,
+        "Heart Rate": 0.09144913643856181,
+        "Daily Steps": 0.08257775586731927,
+        "Caffeine Intake": 0.02021974157073672,
+        "Alcohol Units": 0.018082456130914273,
+        "Exercise Min/week": 0.10332905444890249,
+        "Screen Time Hours": 0.09657153479876142
+      }
+    },
+    "synthetic_lifestyle_extended_Q2": {
+      "proxy_column": "Stress Level",
+      "feature_importance_error": "Unknown label type: continuous. Maybe you are trying to fit a classifier, which expects discrete classes on a regression target with continuous values."
+    },
+    "synthetic_lifestyle_extended_Q3": {
+      "proxy_column": "Stress Level",
+      "feature_importance_error": "Unknown label type: continuous. Maybe you are trying to fit a classifier, which expects discrete classes on a regression target with continuous values."
+    },
+    "synthetic_stress_hrv_Q1": {
+      "no_proxy_column": true
+    },
+    "synthetic_stress_hrv_Q2": {
+      "no_proxy_column": true
+    },
+    "synthetic_stress_hrv_Q3": {
+      "no_proxy_column": true
+    }
+  },
+  "pseudo_labels": {
+    "synthetic_lifestyle_extended_Q1": {
+      "no_common_features": true
+    },
+    "synthetic_stress_hrv_Q1": {
+      "no_common_features": true
+    },
+    "synthetic_lifestyle_extended_Q2": {
+      "no_common_features": true
+    },
+    "synthetic_stress_hrv_Q2": {
+      "no_common_features": true
+    },
+    "synthetic_lifestyle_extended_Q3": {
+      "no_common_features": true
+    },
+    "synthetic_stress_hrv_Q3": {
+      "no_common_features": true
+    },
+    "synthetic_lifestyle_extended_S1": {
+      "no_common_features": true
+    },
+    "synthetic_stress_hrv_S1": {
+      "no_common_features": true
+    },
+    "synthetic_lifestyle_extended_S2": {
+      "no_common_features": true
+    },
+    "synthetic_stress_hrv_S2": {
+      "no_common_features": true
+    },
+    "synthetic_lifestyle_extended_S3": {
+      "no_common_features": true
+    },
+    "synthetic_stress_hrv_S3": {
+      "no_common_features": true
+    },
+    "synthetic_lifestyle_extended_S4": {
+      "no_common_features": true
+    },
+    "synthetic_stress_hrv_S4": {
+      "no_common_features": true
+    }
+  }
+}

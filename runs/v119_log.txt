@@ -1,0 +1,48 @@
+2026-05-11 21:47:48,022 [INFO] Loading data...
+2026-05-11 21:47:48,075 [INFO] Base features: 141
+2026-05-11 21:47:57,715 [INFO] After personalization: train=(450, 576), test=(250, 576)
+2026-05-11 21:47:57,716 [INFO] 
+--- Feature ranking ---
+2026-05-11 21:47:57,878 [INFO]   Q1 top-5: ['mUsageStats_usage_major_ratio_mean', 'wHr_hr_std_zscore', 'mBle_ble_count_mean_zscore', 'mWifi_wifi_max_rssi_mean', 'mUsageStats_usage_app_count_min_zscore']
+2026-05-11 21:47:58,039 [INFO]   Q2 top-5: ['mUsageStats_usage_app_count_std', 'mACStatus_m_charging_mean', 'mACStatus_m_charging_std', 'mBle_ble_rssi_std_max_zscore', 'mUsageStats_usage_major_ratio_std']
+2026-05-11 21:47:58,202 [INFO]   Q3 top-5: ['mLight_m_light_mean', 'mWifi_wifi_max_rssi_std', 'mUsageStats_usage_total_time_std_zscore', 'mBle_ble_count_max', 'mGps_gps_avg_speed_std']
+2026-05-11 21:47:58,339 [INFO]   S1 top-5: ['mScreenStatus_m_screen_use_std', 'mUsageStats_usage_total_time_mean', 'mBle_ble_rssi_std_mean_zscore', 'wHr_hr_std_zscore', 'mUsageStats_usage_app_count_max_zscore']
+2026-05-11 21:47:58,476 [INFO]   S2 top-5: ['mWifi_wifi_max_rssi_max', 'mActivity_m_activity_count_zscore', 'mAmbience_ambience_outside,_rural_or_natural_sum_zscore', 'mWifi_wifi_count_mean', 'mBle_ble_device_count_std']
+2026-05-11 21:47:58,621 [INFO]   S3 top-5: ['mWifi_wifi_max_rssi_max', 'mBle_ble_max_rssi_max', 'mGps_gps_avg_speed_min_zscore', 'mGps_gps_count_std', 'mUsageStats_usage_total_time_mean']
+2026-05-11 21:47:58,782 [INFO]   S4 top-5: ['mGps_gps_avg_speed_max', 'mAmbience_ambience_top5_sum_zscore', 'mBle_ble_max_rssi_max_zscore', 'mBle_ble_min_rssi_max_zscore', 'mBle_ble_count_std_zscore']
+2026-05-11 21:47:58,782 [INFO] 
+--- Base experiments only ---
+2026-05-11 21:47:58,782 [INFO]   8 configs × 4 n_feat × 8 seeds × 7 targets
+2026-05-11 21:49:44,763 [INFO]   Q1: base_wide_n20                  Cal=0.61395 (time: 106s)
+2026-05-11 21:51:40,691 [INFO]   Q2: base_deep_n15                  Cal=0.56644 (time: 116s)
+2026-05-11 21:53:30,623 [INFO]   Q3: base_wide_n20                  Cal=0.58047 (time: 110s)
+2026-05-11 21:54:54,020 [INFO]   S1: base_wide_n8                   Cal=0.54098 (time: 83s)
+2026-05-11 21:56:20,571 [INFO]   S2: base_extra_deep_n20            Cal=0.56598 (time: 87s)
+2026-05-11 21:57:45,589 [INFO]   S3: base_wide_n8                   Cal=0.53594 (time: 85s)
+2026-05-11 21:59:29,586 [INFO]   S4: base_extra_deep_n15            Cal=0.59022 (time: 104s)
+2026-05-11 21:59:29,586 [INFO] 
+======================================================================
+2026-05-11 21:59:29,586 [INFO] V119 SUMMARY
+2026-05-11 21:59:29,586 [INFO] ======================================================================
+2026-05-11 21:59:29,594 [INFO]   Q1: base_wide_n20                  Cal=0.61395 test_mean=0.4956 test_std=0.1528
+2026-05-11 21:59:29,595 [INFO]   Q2: base_deep_n15                  Cal=0.56644 test_mean=0.5622 test_std=0.1914
+2026-05-11 21:59:29,596 [INFO]   Q3: base_wide_n20                  Cal=0.58047 test_mean=0.5986 test_std=0.1472
+2026-05-11 21:59:29,597 [INFO]   S1: base_wide_n8                   Cal=0.54098 test_mean=0.6822 test_std=0.0813
+2026-05-11 21:59:29,599 [INFO]   S2: base_extra_deep_n20            Cal=0.56598 test_mean=0.6511 test_std=0.0388
+2026-05-11 21:59:29,600 [INFO]   S3: base_wide_n8                   Cal=0.53594 test_mean=0.6622 test_std=0.0288
+2026-05-11 21:59:29,601 [INFO]   S4: base_extra_deep_n15            Cal=0.59022 test_mean=0.5600 test_std=0.1008
+2026-05-11 21:59:29,601 [INFO]   AVG: 0.57057
+2026-05-11 21:59:29,601 [INFO] 
+======================================================================
+2026-05-11 21:59:29,601 [INFO] GENERATING SUBMISSION
+2026-05-11 21:59:29,601 [INFO] ======================================================================
+2026-05-11 21:59:29,610 [INFO] 
+Saved:
+2026-05-11 21:59:29,610 [INFO]   OOF: /home/mwoo423/projects/dacon2/data_processed/oof_v119_20260511_215929.csv
+2026-05-11 21:59:29,610 [INFO]   Submission: /home/mwoo423/projects/dacon2/submissions/submission_v119_20260511_215929.csv
+2026-05-11 21:59:29,611 [INFO]   Log: /home/mwoo423/projects/dacon2/experiments/v119_20260511_215929.json
+2026-05-11 21:59:29,611 [INFO] Done in 702s
+Traceback (most recent call last):
+  File "/home/mwoo423/projects/dacon2/src/v119_base_iso.py", line 322, in <module>
+    PYEOF
+NameError: name 'PYEOF' is not defined

@@ -1,0 +1,89 @@
+{
+  "version": "V86",
+  "method": "V53_Sweep_n_feat + GroupKFold_5fold + Raw_Prediction",
+  "mean_match": "OOF_only (NOT on test)",
+  "per_target": {
+    "Q1": {
+      "config": {
+        "cfg": "deep",
+        "n_feat": 17
+      },
+      "n_feat": 17,
+      "oof_raw": 0.7046169698301323,
+      "oof_cal": 0.7032104323413144,
+      "train_rate": 0.4955555555555556,
+      "test_mean_pred": 0.5329783311662135
+    },
+    "Q2": {
+      "config": {
+        "cfg": "deep",
+        "n_feat": 17
+      },
+      "n_feat": 17,
+      "oof_raw": 0.6381314595114865,
+      "oof_cal": 0.6349331176734119,
+      "train_rate": 0.5622222222222222,
+      "test_mean_pred": 0.568097294833015
+    },
+    "Q3": {
+      "config": {
+        "cfg": "v48",
+        "n_feat": 11
+      },
+      "n_feat": 11,
+      "oof_raw": 0.6574022201117081,
+      "oof_cal": 0.6584519842359319,
+      "train_rate": 0.6,
+      "test_mean_pred": 0.5674668218440794
+    },
+    "S1": {
+      "config": {
+        "cfg": "wide",
+        "n_feat": 17
+      },
+      "n_feat": 17,
+      "oof_raw": 0.5870640309264054,
+      "oof_cal": 0.5953799035218271,
+      "train_rate": 0.6822222222222222,
+      "test_mean_pred": 0.6113248080186479
+    },
+    "S2": {
+      "config": {
+        "cfg": "deep",
+        "n_feat": 20
+      },
+      "n_feat": 20,
+      "oof_raw": 0.656653635810505,
+      "oof_cal": 0.6564898883606467,
+      "train_rate": 0.6511111111111111,
+      "test_mean_pred": 0.6054617556131657
+    },
+    "S3": {
+      "config": {
+        "cfg": "safety",
+        "n_feat": 23
+      },
+      "n_feat": 23,
+      "oof_raw": 0.6728428129820544,
+      "oof_cal": 0.6539326711570965,
+      "train_rate": 0.6622222222222223,
+      "test_mean_pred": 0.5261344755083486
+    },
+    "S4": {
+      "config": {
+        "cfg": "wide",
+        "n_feat": 23
+      },
+      "n_feat": 23,
+      "oof_raw": 0.6480477837138277,
+      "oof_cal": 0.6472730829559388,
+      "train_rate": 0.56,
+      "test_mean_pred": 0.4921514513367969
+    }
+  },
+  "avg_oof_raw": 0.6521084161265885,
+  "avg_oof_cal": 0.6499530114637382,
+  "submission_raw": "/home/mwoo423/projects/dacon2/submissions/submission_v86_raw_20260509_142855.csv",
+  "submission_cal": "/home/mwoo423/projects/dacon2/submissions/submission_v86_cal_20260509_142855.csv",
+  "timestamp": "2026-05-09T14:28:55.239601"
+}

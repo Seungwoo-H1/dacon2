@@ -1,0 +1,64 @@
+{
+  "version": "v258",
+  "name": "Advanced Features: Temporal, Frequency, Routine, Cross-modal",
+  "baseline_avg": 0.61906,
+  "experiments": {
+    "A_baseline": {
+      "avg": 0.61906,
+      "targets": {
+        "Q1": 0.6258,
+        "Q2": 0.6173,
+        "Q3": 0.62329,
+        "S1": 0.57155,
+        "S2": 0.61739,
+        "S3": 0.64672,
+        "S4": 0.6314
+      }
+    },
+    "B_temporal": {
+      "avg": 0.6143,
+      "delta": -0.00476,
+      "targets": {
+        "Q1": 0.00822,
+        "Q2": -0.00432,
+        "Q3": 0.00506,
+        "S1": 0.0081,
+        "S2": -0.01399,
+        "S3": -0.02307,
+        "S4": -0.01331
+      }
+    },
+    "C_frequency": {
+      "avg": 0.61906,
+      "delta": 0.0,
+      "note": "spectral features not selected by model"
+    },
+    "D_routine_crossmodal": {
+      "avg": 0.61149,
+      "delta": -0.00757,
+      "targets": {
+        "Q1": 0.00433,
+        "Q2": 0.00258,
+        "Q3": -0.02239,
+        "S1": 0.00336,
+        "S2": -0.00776,
+        "S3": -0.03699,
+        "S4": 0.00386
+      }
+    },
+    "E_selective": {
+      "avg": 0.61295,
+      "delta": -0.00612,
+      "targets": {
+        "Q1": 0.00316,
+        "Q2": -0.00324,
+        "Q3": -0.00108,
+        "S1": -0.0008,
+        "S2": -0.01877,
+        "S3": -0.01697,
+        "S4": -0.00513
+      }
+    }
+  },
+  "verdict": "FAILED \u2014 All advanced feature sets worsened average OOF. However, D showed significant per-target gains for Q3/S3. Worth trying target-specific ensemble blending."
+}

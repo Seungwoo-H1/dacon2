@@ -1,0 +1,104 @@
+{
+  "version": "V85",
+  "method": "GroupKFold_5fold_raw_prediction_test",
+  "mean_match": "OOF_only (NOT on test)",
+  "per_target": {
+    "Q1": {
+      "config": {
+        "cfg": "deep",
+        "n_feat": 20
+      },
+      "n_feat": 20,
+      "oof_raw": 0.7293188461256401,
+      "oof_cal": 0.7274274854069659,
+      "test_raw": 1.0330636467332759,
+      "train_rate": 0.4955555555555556,
+      "test_rate": 0.0,
+      "test_mean_pred": 0.5259519129132156
+    },
+    "Q2": {
+      "config": {
+        "cfg": "deep",
+        "n_feat": 15
+      },
+      "n_feat": 15,
+      "oof_raw": 0.6470005333847569,
+      "oof_cal": 0.6460918083711146,
+      "test_raw": 1.1309522673573686,
+      "train_rate": 0.5622222222222222,
+      "test_rate": 0.0,
+      "test_mean_pred": 0.5550522950237059
+    },
+    "Q3": {
+      "config": {
+        "cfg": "v48",
+        "n_feat": 8
+      },
+      "n_feat": 8,
+      "oof_raw": 0.6879763135700835,
+      "oof_cal": 0.6953755076346915,
+      "test_raw": 1.0008771195738404,
+      "train_rate": 0.6,
+      "test_rate": 0.0,
+      "test_mean_pred": 0.5493014693358214
+    },
+    "S1": {
+      "config": {
+        "cfg": "wide",
+        "n_feat": 20
+      },
+      "n_feat": 20,
+      "oof_raw": 0.6071025994595387,
+      "oof_cal": 0.6058164770403762,
+      "test_raw": 1.1267605252043755,
+      "train_rate": 0.6822222222222222,
+      "test_rate": 0.0,
+      "test_mean_pred": 0.6095986946709672
+    },
+    "S2": {
+      "config": {
+        "cfg": "deep",
+        "n_feat": 20
+      },
+      "n_feat": 20,
+      "oof_raw": 0.656653635810505,
+      "oof_cal": 0.6564898883606467,
+      "test_raw": 1.4180351977248034,
+      "train_rate": 0.6511111111111111,
+      "test_rate": 0.0,
+      "test_mean_pred": 0.6054617556131657
+    },
+    "S3": {
+      "config": {
+        "cfg": "safety",
+        "n_feat": 20
+      },
+      "n_feat": 20,
+      "oof_raw": 0.672371014311451,
+      "oof_cal": 0.6572638921441917,
+      "test_raw": 0.8795297498794805,
+      "train_rate": 0.6622222222222223,
+      "test_rate": 0.0,
+      "test_mean_pred": 0.5244947752422531
+    },
+    "S4": {
+      "config": {
+        "cfg": "wide",
+        "n_feat": 20
+      },
+      "n_feat": 20,
+      "oof_raw": 0.6705920565442183,
+      "oof_cal": 0.6759960237417535,
+      "test_raw": 0.8164956769135013,
+      "train_rate": 0.56,
+      "test_rate": 0.0,
+      "test_mean_pred": 0.48675566904556605
+    }
+  },
+  "avg_oof_raw": 0.6672878570294563,
+  "avg_oof_cal": 0.66635158324282,
+  "avg_test_raw": 1.0579591690552352,
+  "submission_raw": "/home/mwoo423/projects/dacon2/submissions/submission_v85_raw_20260509_130633.csv",
+  "submission_cal": "/home/mwoo423/projects/dacon2/submissions/submission_v85_cal_20260509_130633.csv",
+  "timestamp": "2026-05-09T13:06:33.265695"
+}

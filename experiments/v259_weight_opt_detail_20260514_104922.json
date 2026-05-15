@@ -1,0 +1,198 @@
+{
+  "Q1": {
+    "opt_ll": 0.719753120976012,
+    "uniform_ll": 0.7349354005787803,
+    "delta": -0.0151822796027683,
+    "n_models": 60,
+    "top_weights": [
+      {
+        "model": "m041_Q1_m11_narrow_narrow30_s456",
+        "weight": 0.273445
+      },
+      {
+        "model": "m024_Q1_m9_narrow_wide80_s123",
+        "weight": 0.19031
+      },
+      {
+        "model": "m042_Q1_m12_wide2_wide80_s456",
+        "weight": 0.187766
+      },
+      {
+        "model": "m055_Q1_m10_narrow_deep50_s789",
+        "weight": 0.1105
+      },
+      {
+        "model": "m014_Q1_m14_wide2_narrow30",
+        "weight": 0.098358
+      }
+    ]
+  },
+  "Q2": {
+    "opt_ll": 0.6846324923332043,
+    "uniform_ll": 0.7005272434587871,
+    "delta": -0.015894751125582807,
+    "n_models": 60,
+    "top_weights": [
+      {
+        "model": "m040_Q2_m70_narrow_deep50_s456",
+        "weight": 0.486946
+      },
+      {
+        "model": "m049_Q2_m64_deep_deep50_s789",
+        "weight": 0.117561
+      },
+      {
+        "model": "m019_Q2_m64_deep_deep50_s123",
+        "weight": 0.106197
+      },
+      {
+        "model": "m058_Q2_m73_wide2_deep50_s789",
+        "weight": 0.073939
+      },
+      {
+        "model": "m034_Q2_m64_deep_deep50_s456",
+        "weight": 0.060957
+      }
+    ]
+  },
+  "Q3": {
+    "opt_ll": 0.6737003962609039,
+    "uniform_ll": 0.7012776555767977,
+    "delta": -0.02757725931589372,
+    "n_models": 60,
+    "top_weights": [
+      {
+        "model": "m026_Q3_m131_narrow_narrow30_s123",
+        "weight": 0.28732
+      },
+      {
+        "model": "m039_Q3_m129_narrow_wide80_s456",
+        "weight": 0.240777
+      },
+      {
+        "model": "m012_Q3_m132_wide2_wide80",
+        "weight": 0.216186
+      },
+      {
+        "model": "m044_Q3_m134_wide2_narrow30_s456",
+        "weight": 0.112276
+      },
+      {
+        "model": "m059_Q3_m134_wide2_narrow30_s789",
+        "weight": 0.073641
+      }
+    ]
+  },
+  "S1": {
+    "opt_ll": 0.6071777486959993,
+    "uniform_ll": 0.6290779521909086,
+    "delta": -0.021900203494909287,
+    "n_models": 60,
+    "top_weights": [
+      {
+        "model": "m017_S1_m182_wide_narrow30_s123",
+        "weight": 0.304454
+      },
+      {
+        "model": "m057_S1_m192_wide2_wide80_s789",
+        "weight": 0.214667
+      },
+      {
+        "model": "m043_S1_m193_wide2_deep50_s456",
+        "weight": 0.180697
+      },
+      {
+        "model": "m027_S1_m192_wide2_wide80_s123",
+        "weight": 0.15759
+      },
+      {
+        "model": "m038_S1_m188_v48_narrow30_s456",
+        "weight": 0.07386
+      }
+    ]
+  },
+  "S2": {
+    "opt_ll": 0.6481389148449319,
+    "uniform_ll": 0.6747631580804554,
+    "delta": -0.02662424323552348,
+    "n_models": 60,
+    "top_weights": [
+      {
+        "model": "m040_S2_m250_narrow_deep50_s456",
+        "weight": 0.370832
+      },
+      {
+        "model": "m000_S2_m240_wide_wide80",
+        "weight": 0.304829
+      },
+      {
+        "model": "m044_S2_m254_wide2_narrow30_s456",
+        "weight": 0.172298
+      },
+      {
+        "model": "m056_S2_m251_narrow_narrow30_s789",
+        "weight": 0.152041
+      },
+      {
+        "model": "m055_S2_m250_narrow_deep50_s789",
+        "weight": 0.0
+      }
+    ]
+  },
+  "S3": {
+    "opt_ll": 0.6999882629533887,
+    "uniform_ll": 0.7280831336495809,
+    "delta": -0.02809487069619221,
+    "n_models": 60,
+    "top_weights": [
+      {
+        "model": "m041_S3_m311_narrow_narrow30_s456",
+        "weight": 0.472957
+      },
+      {
+        "model": "m036_S3_m306_v48_wide80_s456",
+        "weight": 0.306121
+      },
+      {
+        "model": "m059_S3_m314_wide2_narrow30_s789",
+        "weight": 0.107164
+      },
+      {
+        "model": "m050_S3_m305_deep_narrow30_s789",
+        "weight": 0.055782
+      },
+      {
+        "model": "m020_S3_m305_deep_narrow30_s123",
+        "weight": 0.045269
+      }
+    ]
+  },
+  "S4": {
+    "opt_ll": 0.7077478425164064,
+    "uniform_ll": 0.7418254545873274,
+    "delta": -0.03407761207092097,
+    "n_models": 60,
+    "top_weights": [
+      {
+        "model": "m041_S4_m371_narrow_narrow30_s456",
+        "weight": 0.420603
+      },
+      {
+        "model": "m014_S4_m374_wide2_narrow30",
+        "weight": 0.306564
+      },
+      {
+        "model": "m054_S4_m369_narrow_wide80_s789",
+        "weight": 0.252451
+      },
+      {
+        "model": "m035_S4_m365_deep_narrow30_s456",
+        "weight": 0.020383
+      },
+      {
+        "model": "m024_S4_m369_narrow_wide80_s123",
+        "weight": 0.0
+      }
+    ]
+  }
+}

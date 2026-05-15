@@ -1,0 +1,129 @@
+
+# DaCon2 Complete Experiment Log (v10-v245+)
+
+## V10-V40 (Early Phase)
+- V10: LGBM baseline, OOF=0.6038
+- V13: LGBM z-score, OOF=0.6385 (worse)
+- V35-V40: SIGKILL (3000+ features memory explosion)
+
+## V53 (Deep Feature Engineering)
+- V53 final: LB=0.65358 (best LB at the time)
+- V53 Swept: AVG CV 0.6500
+- Feature sweep: n_feat ±3 improved all targets
+
+## V99-V106 (LB Formula Analysis)
+- V99: predicted LB=0.73 (overconfident)
+- V101-V102: LB formula reverse-engineered
+  - abs(shift) vs LB: r=-0.90
+  - Shift amplification improves LB
+- V106: LB=1.057 (catastrophic OOF-LB mismatch)
+
+## V114-V120 (Isotonic Calibration)
+- V114: OOF=0.6544 (no isotonic)
+- V115: OOF=0.5476 (isotonic + personalization)
+- V118: SIGKILL (5376 models)
+- V119: OOF=0.5706 (base only)
+
+## V121-V123 (Pairwise/Transformed Features)
+- V121: OOF=0.5482 (pairwise+transformed per-target ×4 seeds)
+- V122: OOF=0.5666 (feature pollution bug)
+- V123: OOF=0.5498 (50 seeds, per-target)
+
+## V124-V125 (Failed Corrections)
+- V124: Distribution matching → OOF=9-11
+- V125: Shift/scale → converged to identity
+
+## V126-V128 (3-Way Ensemble)
+- V126: V121+V123+V115, OOF=0.5476
+- V127: Uniform weights 0.35/0.25/0.40, OOF=0.5373 **⬅ BEST**
+- V128: Per-target weights, OOF=0.5361 (overfit risk)
+
+## V129-V134 (Variance + Shift)
+- Gaussian variance restoration
+- Shift amplification (1x-5x)
+- Per-target + uniform variants
+
+## V135-V145 (Post-Processing Exhaustive)
+- V135-V138: Ensemble weight optimization
+- V139: Stacking (LR meta) → OOF=0.5507
+- V140-V145: Variance restoration, pseudo-labeling
+
+## V146-V178 (Temperature Scaling)
+- V162: T=0.73 → est_LB=0.615 **⬅ Post-processing ceiling**
+- V173: Sharpening → est_LB=0.617
+- V175-V178: Combined T+sharpen
+- V187-V188: Per-target T+sharpen → est_LB=0.648
+- V189: LB estimation refined
+
+## V179-V183 (Deep Features)
+- V180: Deep feature engineering → OOF=0.616 (FAILED, overfit)
+- V181a: OOF=0.5398
+- V182: T=0.73 on deep features
+
+## V185-V204 (Ensemble Analysis)
+- V185-V198: Weight optimization
+- V199-V204: Model correlation (0.7-0.99, highly correlated)
+- V205-V207: 4-way ensemble with V53 → est_LB=0.645
+
+## V208-V214 (Per-Target T/VR/Sharp)
+- V208-V210: Per-target T + sharpen → est_LB=0.647
+- V211-V214: Per-target VR → est_LB=0.646
+
+## V215-V218 (Diverse Models)
+- HGBT: OOF=0.66-0.89
+- LogReg/Ridge: Similar or worse
+
+## V219-V222 (Subject Deviation)
+- OOF=0.624 (worse)
+
+## V223-V232 (Pairwise Interaction)
+- Enhanced pairwise (diff+sum+prod+ratio) → OOF=0.602
+- V121 orig → OOF=0.606
+- Both without personalization → poor
+
+## V233-V236 (Stacking)
+- Single-target CV → OOF=0.58-0.67
+- Stacked → OOF=0.622
+- Best w=0.0 (reject stacking)
+
+## V237-V240 (Feature Selection, Smoothing, MLP)
+- Feature selection k=5-50: OOF=0.63 (overfit)
+- Label smoothing: OOF=0.604
+- MLP (no personalization): OOF=0.486 (leakage)
+
+## V241-V245 (MLP with Personalization + CV)
+- V242 training-only: OOF=0.418 (LEAKAGE!)
+- V245 proper 5-fold CV: OOF=0.68-0.77 (WORSE than everything)
+- MLP fundamentally unsuited for this data
+
+## V246: V127 Individual Model OOFs
+- Q1: V121=0.593, V123=0.583, V115=0.596
+- Q2: V121=0.567, V123=0.565, V115=0.567
+- Q3: V121=0.573, V123=0.576, V115=0.576
+- S1: V121=0.501, V123=0.513, V115=0.497
+- S2: V121=0.532, V123=0.533, V115=0.523
+- S3: V121=0.508, V123=0.517, V115=0.509
+- S4: V121=0.562, V123=0.564, V115=0.566
+
+## VERDICT
+**V127 is the undisputed best model.**
+- OOF=0.53731, LB=0.64763
+- Est. LB (conservative): 0.64-0.65
+- LB 0.50 requires OOF<0.47 (0.067 improvement needed)
+
+## Why can't we reach 0.50?
+1. **Feature signal too weak** (max r=0.29)
+2. **Only 450 samples** (p≈n)
+3. **Personalization is the key transformation** (z-score)
+4. **All model variants highly correlated** (r=0.7-0.99)
+5. **Post-processing ceiling at T≈0.73** (est_LB≈0.615)
+6. **Neural networks overfit** on 450 samples
+7. **Deep features overfit** (OOF 0.616)
+8. **Stacking/ensemble gains minimal** (high correlation)
+9. **Feature selection makes it worse** (less signal)
+
+## What's left to try?
+- Group-wise target encoding (leave-one-out)
+- Cross-validation leakage-free feature engineering
+- Ensemble of completely different feature pipelines
+- Multi-target joint training (if it helps signal)

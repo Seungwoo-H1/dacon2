@@ -1,0 +1,134 @@
+2026-05-06 01:04:21,781 [INFO] ======================================================================
+2026-05-06 01:04:21,781 [INFO] V48 — Target Transformation Experiments
+2026-05-06 01:04:21,781 [INFO] ======================================================================
+2026-05-06 01:04:21,781 [INFO] 
+--- 1. Load features ---
+2026-05-06 01:04:21,814 [INFO]   Loaded: (450, 153)
+2026-05-06 01:04:28,264 [INFO]   After personalization: (450, 576)
+2026-05-06 01:04:28,266 [INFO] 
+--- 2. Feature ranking ---
+2026-05-06 01:04:28,454 [INFO]   Q1 top-10: ['mUsageStats_usage_major_ratio_mean', 'wHr_hr_std_zscore', 'mBle_ble_count_mean_zscore', 'mWifi_wifi_max_rssi_mean', 'mUsageStats_usage_app_count_min_zscore', 'mScreenStatus_hour_morning', 'mWifi_wifi_max_rssi_min', 'mBle_ble_device_count_mean', 'wLight_w_light_mean_zscore', 'wLight_w_light_count']
+2026-05-06 01:04:28,641 [INFO]   Q2 top-10: ['mUsageStats_usage_app_count_std', 'mACStatus_m_charging_mean', 'mACStatus_m_charging_std', 'mBle_ble_rssi_std_max_zscore', 'mUsageStats_usage_major_ratio_std', 'mWifi_wifi_count_std_zscore', 'mGps_gps_count_max_zscore', 'mBle_ble_min_rssi_mean', 'mUsageStats_usage_app_count_std_zscore', 'mScreenStatus_m_screen_use_mean_zscore']
+2026-05-06 01:04:28,832 [INFO]   Q3 top-10: ['mLight_m_light_mean', 'mWifi_wifi_max_rssi_std', 'mUsageStats_usage_total_time_std_zscore', 'mBle_ble_count_max', 'mGps_gps_avg_speed_std', 'mUsageStats_usage_major_ratio_mean_zscore', 'mActivity_m_activity_std_zscore', 'mWifi_wifi_count_mean_zscore', 'mWifi_wifi_max_rssi_mean', 'mWifi_wifi_count_max']
+2026-05-06 01:04:29,010 [INFO]   S1 top-10: ['mScreenStatus_m_screen_use_std', 'mUsageStats_usage_total_time_mean', 'mBle_ble_rssi_std_mean_zscore', 'wHr_hr_std_zscore', 'mUsageStats_usage_app_count_max_zscore', 'mScreenStatus_m_screen_use_mean', 'mACStatus_hour_evening_zscore', 'mWifi_wifi_max_rssi_max', 'mUsageStats_usage_major_ratio_std', 'mWifi_wifi_count_max_zscore']
+2026-05-06 01:04:29,179 [INFO]   S2 top-10: ['mWifi_wifi_max_rssi_max', 'mActivity_m_activity_count_zscore', 'mAmbience_ambience_outside,_rural_or_natural_sum_zscore', 'mWifi_wifi_count_mean', 'mBle_ble_device_count_std', 'mBle_ble_rssi_std_std_zscore', 'mGps_gps_avg_speed_max', 'mScreenStatus_hour_morning_zscore', 'mUsageStats_usage_total_time_max_zscore', 'mLight_m_light_mean']
+2026-05-06 01:04:29,352 [INFO]   S3 top-10: ['mWifi_wifi_max_rssi_max', 'mBle_ble_max_rssi_max', 'mGps_gps_avg_speed_min_zscore', 'mGps_gps_count_std', 'mUsageStats_usage_total_time_mean', 'mGps_gps_count_mean', 'mUsageStats_usage_total_time_mean_zscore', 'mGps_gps_avg_speed_max', 'mGps_gps_avg_speed_mean', 'mWifi_wifi_count_min_zscore']
+2026-05-06 01:04:29,540 [INFO]   S4 top-10: ['mGps_gps_avg_speed_max', 'mAmbience_ambience_top5_sum_zscore', 'mBle_ble_max_rssi_max_zscore', 'mBle_ble_min_rssi_max_zscore', 'mBle_ble_count_std_zscore', 'mUsageStats_usage_major_ratio_mean', 'wLight_w_light_max_zscore', 'mBle_ble_max_rssi_max', 'mGps_gps_avg_speed_max_zscore', 'mWifi_wifi_max_rssi_mean']
+2026-05-06 01:04:29,541 [INFO] 
+--- 3. Per-target experiments ---
+2026-05-06 01:04:29,541 [INFO] 
+  === Q1 (rate=0.496) ===
+2026-05-06 01:04:41,536 [INFO]     [A] Binary classification: OOF=0.6430, Cal=0.6423
+2026-05-06 01:04:53,752 [INFO]     [B] Regression + Platt cal: OOF=0.6384, Cal=0.6433
+2026-05-06 01:05:06,050 [INFO]     [C] Yeo-Johnson + regression + inverse: Cal=0.6485
+2026-05-06 01:05:06,052 [INFO]     [D] Binary + Isotonic cal: Cal=0.6207
+2026-05-06 01:05:06,053 [INFO]     [E] Ensemble (B+D): Cal=0.6296
+2026-05-06 01:05:06,054 [INFO]     ✅ Best for Q1: D (Cal=0.6207)
+2026-05-06 01:05:06,054 [INFO]        A: 0.6423
+2026-05-06 01:05:06,054 [INFO]        B: 0.6433
+2026-05-06 01:05:06,054 [INFO]        C: 0.6485
+2026-05-06 01:05:06,054 [INFO]        D: 0.6207 ← BEST
+2026-05-06 01:05:06,054 [INFO]        E: 0.6296
+2026-05-06 01:05:06,054 [INFO]   Q1 time: 37s
+2026-05-06 01:05:06,116 [INFO] 
+  === Q2 (rate=0.562) ===
+2026-05-06 01:05:18,723 [INFO]     [A] Binary classification: OOF=0.6136, Cal=0.6110
+2026-05-06 01:05:32,261 [INFO]     [B] Regression + Platt cal: OOF=0.6187, Cal=0.6051
+2026-05-06 01:05:45,398 [INFO]     [C] Yeo-Johnson + regression + inverse: Cal=0.6002
+2026-05-06 01:05:45,400 [INFO]     [D] Binary + Isotonic cal: Cal=0.5913
+2026-05-06 01:05:45,402 [INFO]     [E] Ensemble (B+D): Cal=0.5956
+2026-05-06 01:05:45,402 [INFO]     ✅ Best for Q2: D (Cal=0.5913)
+2026-05-06 01:05:45,402 [INFO]        A: 0.6110
+2026-05-06 01:05:45,402 [INFO]        B: 0.6051
+2026-05-06 01:05:45,402 [INFO]        C: 0.6002
+2026-05-06 01:05:45,402 [INFO]        D: 0.5913 ← BEST
+2026-05-06 01:05:45,402 [INFO]        E: 0.5956
+2026-05-06 01:05:45,402 [INFO]   Q2 time: 39s
+2026-05-06 01:05:45,469 [INFO] 
+  === Q3 (rate=0.600) ===
+2026-05-06 01:05:57,450 [INFO]     [A] Binary classification: OOF=0.6203, Cal=0.6192
+2026-05-06 01:06:08,881 [INFO]     [B] Regression + Platt cal: OOF=0.6188, Cal=0.6251
+2026-05-06 01:06:20,480 [INFO]     [C] Yeo-Johnson + regression + inverse: Cal=0.6211
+2026-05-06 01:06:20,482 [INFO]     [D] Binary + Isotonic cal: Cal=0.5944
+2026-05-06 01:06:20,483 [INFO]     [E] Ensemble (B+D): Cal=0.6070
+2026-05-06 01:06:20,483 [INFO]     ✅ Best for Q3: D (Cal=0.5944)
+2026-05-06 01:06:20,483 [INFO]        A: 0.6192
+2026-05-06 01:06:20,483 [INFO]        B: 0.6251
+2026-05-06 01:06:20,483 [INFO]        C: 0.6211
+2026-05-06 01:06:20,483 [INFO]        D: 0.5944 ← BEST
+2026-05-06 01:06:20,483 [INFO]        E: 0.6070
+2026-05-06 01:06:20,483 [INFO]   Q3 time: 35s
+2026-05-06 01:06:20,546 [INFO] 
+  === S1 (rate=0.682) ===
+2026-05-06 01:06:32,781 [INFO]     [A] Binary classification: OOF=0.5681, Cal=0.5679
+2026-05-06 01:06:44,161 [INFO]     [B] Regression + Platt cal: OOF=0.5671, Cal=0.5725
+2026-05-06 01:06:55,263 [INFO]     [C] Yeo-Johnson + regression + inverse: Cal=0.5714
+2026-05-06 01:06:55,266 [INFO]     [D] Binary + Isotonic cal: Cal=0.5456
+2026-05-06 01:06:55,267 [INFO]     [E] Ensemble (B+D): Cal=0.5558
+2026-05-06 01:06:55,268 [INFO]     ✅ Best for S1: D (Cal=0.5456)
+2026-05-06 01:06:55,268 [INFO]        A: 0.5679
+2026-05-06 01:06:55,268 [INFO]        B: 0.5725
+2026-05-06 01:06:55,268 [INFO]        C: 0.5714
+2026-05-06 01:06:55,268 [INFO]        D: 0.5456 ← BEST
+2026-05-06 01:06:55,268 [INFO]        E: 0.5558
+2026-05-06 01:06:55,268 [INFO]   S1 time: 35s
+2026-05-06 01:06:55,320 [INFO] 
+  === S2 (rate=0.651) ===
+2026-05-06 01:07:07,707 [INFO]     [A] Binary classification: OOF=0.5919, Cal=0.5910
+2026-05-06 01:07:18,140 [INFO]     [B] Regression + Platt cal: OOF=0.5927, Cal=0.5998
+2026-05-06 01:07:28,606 [INFO]     [C] Yeo-Johnson + regression + inverse: Cal=0.5978
+2026-05-06 01:07:28,608 [INFO]     [D] Binary + Isotonic cal: Cal=0.5635
+2026-05-06 01:07:28,609 [INFO]     [E] Ensemble (B+D): Cal=0.5765
+2026-05-06 01:07:28,609 [INFO]     ✅ Best for S2: D (Cal=0.5635)
+2026-05-06 01:07:28,609 [INFO]        A: 0.5910
+2026-05-06 01:07:28,609 [INFO]        B: 0.5998
+2026-05-06 01:07:28,609 [INFO]        C: 0.5978
+2026-05-06 01:07:28,609 [INFO]        D: 0.5635 ← BEST
+2026-05-06 01:07:28,609 [INFO]        E: 0.5765
+2026-05-06 01:07:28,609 [INFO]   S2 time: 33s
+2026-05-06 01:07:28,661 [INFO] 
+  === S3 (rate=0.662) ===
+2026-05-06 01:07:38,359 [INFO]     [A] Binary classification: OOF=0.6474, Cal=0.6463
+2026-05-06 01:07:47,392 [INFO]     [B] Regression + Platt cal: OOF=0.6528, Cal=0.6381
+2026-05-06 01:07:56,535 [INFO]     [C] Yeo-Johnson + regression + inverse: Cal=0.6461
+2026-05-06 01:07:56,537 [INFO]     [D] Binary + Isotonic cal: Cal=0.6112
+2026-05-06 01:07:56,538 [INFO]     [E] Ensemble (B+D): Cal=0.6197
+2026-05-06 01:07:56,538 [INFO]     ✅ Best for S3: D (Cal=0.6112)
+2026-05-06 01:07:56,538 [INFO]        A: 0.6463
+2026-05-06 01:07:56,538 [INFO]        B: 0.6381
+2026-05-06 01:07:56,538 [INFO]        C: 0.6461
+2026-05-06 01:07:56,538 [INFO]        D: 0.6112 ← BEST
+2026-05-06 01:07:56,538 [INFO]        E: 0.6197
+2026-05-06 01:07:56,538 [INFO]   S3 time: 28s
+2026-05-06 01:07:56,593 [INFO] 
+  === S4 (rate=0.560) ===
+2026-05-06 01:08:08,307 [INFO]     [A] Binary classification: OOF=0.6240, Cal=0.6240
+2026-05-06 01:08:19,742 [INFO]     [B] Regression + Platt cal: OOF=0.6223, Cal=0.6284
+2026-05-06 01:08:30,736 [INFO]     [C] Yeo-Johnson + regression + inverse: Cal=0.6233
+2026-05-06 01:08:30,738 [INFO]     [D] Binary + Isotonic cal: Cal=0.5925
+2026-05-06 01:08:30,739 [INFO]     [E] Ensemble (B+D): Cal=0.6062
+2026-05-06 01:08:30,739 [INFO]     ✅ Best for S4: D (Cal=0.5925)
+2026-05-06 01:08:30,739 [INFO]        A: 0.6240
+2026-05-06 01:08:30,739 [INFO]        B: 0.6284
+2026-05-06 01:08:30,739 [INFO]        C: 0.6233
+2026-05-06 01:08:30,739 [INFO]        D: 0.5925 ← BEST
+2026-05-06 01:08:30,739 [INFO]        E: 0.6062
+2026-05-06 01:08:30,739 [INFO]   S4 time: 34s
+2026-05-06 01:08:30,788 [INFO] 
+======================================================================
+2026-05-06 01:08:30,788 [INFO] V48 SUMMARY
+2026-05-06 01:08:30,788 [INFO] ======================================================================
+2026-05-06 01:08:30,789 [INFO]   Q1: best=D Cal=0.6207
+2026-05-06 01:08:30,789 [INFO]   Q2: best=D Cal=0.5913
+2026-05-06 01:08:30,789 [INFO]   Q3: best=D Cal=0.5944
+2026-05-06 01:08:30,789 [INFO]   S1: best=D Cal=0.5456
+2026-05-06 01:08:30,789 [INFO]   S2: best=D Cal=0.5635
+2026-05-06 01:08:30,789 [INFO]   S3: best=D Cal=0.6112
+2026-05-06 01:08:30,789 [INFO]   S4: best=D Cal=0.5925
+2026-05-06 01:08:30,797 [INFO] 
+  V48 Avg Cal: 0.5885
+2026-05-06 01:08:30,797 [INFO]   V10 Avg Cal: 0.6038
+2026-05-06 01:08:30,797 [INFO]   Δ: -0.0153 (✅ IMPROVED)
+2026-05-06 01:08:30,797 [INFO]   Total: 249s (249.0min)
+2026-05-06 01:08:30,811 [INFO]   OOF saved: /home/mwoo423/projects/dacon2/data_processed/oof_v48.csv
+2026-05-06 01:08:30,811 [INFO]   Metadata saved: /home/mwoo423/projects/dacon2/data_processed/v48_meta.json

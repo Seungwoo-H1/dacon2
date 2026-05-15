@@ -1,0 +1,45 @@
+{
+  "version": "V123",
+  "timestamp": "20260511_223008",
+  "seeds": 50,
+  "strategy": "V121 best methods per-target \u00d7 50 seeds, fixed pairwise",
+  "results": {
+    "Q1": {
+      "best_method": "v123_pairwise_deep_n20_50seeds",
+      "cal_loss": 0.58281,
+      "test_std": 0.1646
+    },
+    "Q2": {
+      "best_method": "v123_base_deep_n15_50seeds",
+      "cal_loss": 0.5647,
+      "test_std": 0.1863
+    },
+    "Q3": {
+      "best_method": "v123_pairwise_wide_n20_50seeds",
+      "cal_loss": 0.57565,
+      "test_std": 0.2016
+    },
+    "S1": {
+      "best_method": "v123_pairwise_wide_n10_50seeds",
+      "cal_loss": 0.51257,
+      "test_std": 0.0937
+    },
+    "S2": {
+      "best_method": "v123_pairwise_wide_n10_50seeds",
+      "cal_loss": 0.53249,
+      "test_std": 0.0616
+    },
+    "S3": {
+      "best_method": "v123_transformed_deep_n10_50seeds",
+      "cal_loss": 0.51672,
+      "test_std": 0.1668
+    },
+    "S4": {
+      "best_method": "v123_pairwise_deep_n20_50seeds",
+      "cal_loss": 0.56396,
+      "test_std": 0.197
+    }
+  },
+  "avg_cal_loss": 0.54984,
+  "total_time_s": 163.0
+}
