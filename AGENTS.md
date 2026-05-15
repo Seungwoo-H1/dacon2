@@ -28,6 +28,14 @@ You wake up fresh each session. These files are your continuity:
 
 - **Daily notes:** `memory/YYYY-MM-DD.md` (create `memory/` if needed) — raw logs of what happened
 - **Long-term:** `MEMORY.md` — your curated memories, like a human's long-term memory
+- **DACon2 context:** `memory/DACON2_CONTEXT.md` — 매번 세션 시작 시 읽어서 대회 컨텍스트 복원
+
+### 🏆 DACon2 세션 시작 프로토콜 (매우 중요)
+
+세션 시작 시 **무조건** 아래 파일을 읽는다:
+- `memory/DACON2_CONTEXT.md` → 대회 개요, 현재 최고 모델, 다음 작업 우선순위 복원
+- 必要시 읽을 것: `projects/dacon2/OPENCLAW_HANDOFF_20260506.md` (상세 기록)
+- DaCon 관련 모든 코드/실험은 `/home/mwoo423/projects/dacon2/` 에서 찾음
 
 Capture what matters. Decisions, context, things to remember. Skip the secrets unless asked to keep them.
 

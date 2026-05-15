@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-04T12:25:19.279Z",
+  "updatedAt": "2026-05-14T16:24:43.888Z",
   "entries": {
     "memory:memory/2026-05-01.md:1:32": {
       "key": "memory:memory/2026-05-01.md:1:32",
@@ -195,21 +195,25 @@
       "endLine": 27,
       "source": "memory",
       "snippet": "# 2026-05-01 Daily Log ## FT-Transformer GPU 재훈련 완료 (RTX 4060 Laptop) ### V2 Results (Best DL Config) - Config: d_token=32, n_heads=2, dropout=0.4, feature_select=20, lr=8e-4 - AVG AUC: 0.5847 - LGBM V10: 0.6038 - Δ: -0.0191 (아직 못 넘음) - S1(+0.0655), Q3(+0.0143) 만 LGBM 상회 ### Ensemble - LGBM(50%) + FT-V2(50%) blend: AVG AUC 0.5943 - Δ vs V10: -0.0095 (거의 동급, 아쉽게도 미달) ### LGBM V13 확인 - Calibration 전략 개선했으나 overfit. 0.6385 (Worse than V10's 0.6038) - V10이 여전히 최고 ### 결정 - 현재까지 최고: **LGBM V10 (0.6038)** - FT-Transformer는 데이터 양이 너무 적음 (450 rows) - 다음 옵션: 피처 엔지니어링, 데이터 수집, 앙상블 다양화 ## miniconda LGBM 훈련 2개(03_v13, 04_v14) 메모리/CPU 오버로드 → kill 함 ## FT-Transformer 재실행 시 CPU와 충돌할 수 있음 주의",
-      "recallCount": 3,
+      "recallCount": 5,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 2.263924788481003,
+      "totalScore": 3.8958874577167895,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-01T11:32:41.554Z",
-      "lastRecalledAt": "2026-05-04T12:25:19.279Z",
+      "lastRecalledAt": "2026-05-08T06:04:14.824Z",
       "queryHashes": [
         "dfce10cd2804",
         "6dba41c440bc",
-        "a543962d9353"
+        "a543962d9353",
+        "574e3a9e7dd2",
+        "f19e60ae999c"
       ],
       "recallDays": [
         "2026-05-01",
-        "2026-05-04"
+        "2026-05-04",
+        "2026-05-07",
+        "2026-05-08"
       ],
       "conceptTags": [
         "ft-transformer",
@@ -229,18 +233,24 @@
       "endLine": 29,
       "source": "memory",
       "snippet": "# 2026-05-04 ## V25 + V30 Submission (15:52) - `gen_v25_v30.py` 실행 완료 - V25 (LGBM, 3 seeds): Cal OOF 0.6462 (V10 대비 +0.0424) - V30 (XGB Histogram, 3 seeds): Cal OOF 0.6685 (V10 대비 +0.0647) - 둘 다 V10(0.6038)보다 낮음 → V10이 여전히 최우선 - Submission push 완료: e3f6975 ## Git seungwoo-h 문제 해결 - 초기 commit(`fd6bac`)이 `seungwoo-h@users.noreply.github.com` 계정으로 올라감 - GitHub Desktop 또는 다른 환경에서 clone/commit한 것이 원인 - `git filter-branch`로 전 18개 커밋의 author를 `Seungwoo Hong <seungwoo@example.com>`으로 원본 - force push 완료: 8dcf09a ## OpenClaw 간헐적 응답 지연 분석 - 오늘/어제 세션 11e56304 + fdb7a80d 분석 - 11e56304: 11개 프롬프트 중 5개가 5~44분 지연, 1개 타임아웃 - fdb7a80d: 20개 프롬프트 중 9개가 3~198분 지연 - **원인: 모델 API 서버(gpurent.kogrobo.com:51089) 과부",
-      "recallCount": 1,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 3.563531011857258,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-04T12:25:19.279Z",
-      "lastRecalledAt": "2026-05-04T12:25:19.279Z",
+      "lastRecalledAt": "2026-05-11T13:01:17.125Z",
       "queryHashes": [
-        "a543962d9353"
+        "a543962d9353",
+        "574e3a9e7dd2",
+        "674513fd5c62",
+        "51ea32405f4e"
       ],
       "recallDays": [
-        "2026-05-04"
+        "2026-05-04",
+        "2026-05-07",
+        "2026-05-10",
+        "2026-05-11"
       ],
       "conceptTags": [
         "gen-v25-v30.py",
@@ -251,6 +261,327 @@
         "0.6038",
         "seungwoo-h",
         "users.noreply.github.com"
+      ]
+    },
+    "memory:memory/2026-05-07.md:1:45": {
+      "key": "memory:memory/2026-05-07.md:1:45",
+      "path": "memory/2026-05-07.md",
+      "startLine": 1,
+      "endLine": 45,
+      "source": "memory",
+      "snippet": "# 2026-05-07 (update) ## V53 Handoff 작업 완료 - `OPENCLAW_HANDOFF_20260506.md` 기반 작업 진행 ### 작업 내용 1. ✅ **V53 재현 검증** — V53 final 재생성 확인 2. ✅ **n_feat sweep** — V53_feat_sweep.py 작성, CV 7타깃 중 6개 개선 3. ✅ **V53 Swept 제출물** — `submission_v53_swept_20260507_010256.csv` ### 멀티에이전트 실험 (3 에이전트 동시 가동) #### V58 CatBoost 직접 구현 - CatBoost vs LGBM OOF 비교 - **ALL 7 targets improvement!** - Q1: +0.1367, S3: +0.1787가 가장 큼 - AVG CV: 0.5904 (V53=0.6806, delta=+0.0927) #### V58 개발 에이전트 (Stack) - avg delta +0.053 (6/7 improvement) #### V60 Leakage-clean CatBoost - Nighttime features (hour_night, hour_morning, light_sum, charging_sum/max) 제거 - Sleep-direct features (gps speed/count, activity sum/max/min) 제거 -",
+      "recallCount": 6,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 6,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-08T06:04:14.824Z",
+      "lastRecalledAt": "2026-05-14T04:15:34.421Z",
+      "queryHashes": [
+        "f19e60ae999c",
+        "be7beca81d35",
+        "674513fd5c62",
+        "b0daf50d259c",
+        "51ea32405f4e",
+        "62efb5952dcc"
+      ],
+      "recallDays": [
+        "2026-05-08",
+        "2026-05-09",
+        "2026-05-10",
+        "2026-05-11",
+        "2026-05-14"
+      ],
+      "conceptTags": [
+        "openclaw-handoff-20260506.md",
+        "n-feat",
+        "v53-feat-sweep.py",
+        "0.1367",
+        "0.1787가",
+        "0.5904",
+        "0.6806",
+        "0.0927"
+      ]
+    },
+    "memory:memory/2026-05-09.md:1:28": {
+      "key": "memory:memory/2026-05-09.md:1:28",
+      "path": "memory/2026-05-09.md",
+      "startLine": 1,
+      "endLine": 28,
+      "source": "memory",
+      "snippet": "# 2026-05-09 Daily Log ## V82 — Multi-Config Ensemble + Per-Target Config (완주✅) ### 결과 요약 - **OOF Avg Cal: 0.5654** (V52 0.5725 대비 **-0.0071 개선** ✅) - **V52 0.5725, V10 0.6038, V80 0.6124, V81 0.6285** - **7개 타깃 모두 V52 대비 개선** ### 타깃별 결과 | 타깃 | V52 | V82 | Δ | 승 | Best Strategy | |------|-----|-----|------|------|---------------| | Q1 | 0.6125 | 0.6064 | -0.0061 | ✅ V82 | top5_ens (deep/wide/v53_wide/v48/wide_n10) | | Q2 | 0.5641 | 0.5590 | -0.0051 | ✅ V82 | top3_ens (deep_n15/v48_n15/v48_n10) | | Q3 | 0.5828 | 0.5776 | -0.0052 | ✅ V82 | top5_ens (wide/v53_wide/v48/deep_n15/deep_n10) | | S1 | 0.5398 | 0.5305 | -0.0093 | ✅ V82 | stack (meta-C=50, deep_n25/wide_n25) | | S2 | 0.5757 | 0.5620",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-09T14:08:22.242Z",
+      "lastRecalledAt": "2026-05-09T14:08:22.242Z",
+      "queryHashes": [
+        "be7beca81d35"
+      ],
+      "recallDays": [
+        "2026-05-09"
+      ],
+      "conceptTags": [
+        "multi-config",
+        "per-target",
+        "0.5654",
+        "0.5725",
+        "0.0071",
+        "0.6038",
+        "0.6124",
+        "0.6285"
+      ]
+    },
+    "memory:memory/2026-05-09.md:25:53": {
+      "key": "memory:memory/2026-05-09.md:25:53",
+      "path": "memory/2026-05-09.md",
+      "startLine": 25,
+      "endLine": 53,
+      "source": "memory",
+      "snippet": "2. **S1, S2는 stacking(meta-learner)이 가장 효과적** (0.009~0.014 개선) 3. **Q1, Q3, S4는 top-5 ensemble**이 단일 config/stacking보다 좋음 (diversity 중요) 4. **S3는 single-best**가 최고 (v53_wide_n8) — ensemble/stacking 역개선 5. **V53 config 추가(v53_deep, v53_wide)**가 diversity에 기여 6. **6 configs × 5 n_feats × 20 seeds = 600 모델** 평가 ### V81과의 비교 - V81은 rank fusion(LGBM+MI)과 15 seeds → OOF 0.6285 (V52보다 나쁨) - V82는 pure LGBM ranking, 20 seeds, multi-config → OOF 0.5654 - **LGBM importance ranking이 MI fusion보다 낫다는 재확인** ### 리더보드 제출 - `submissions/submission_v82_test_20260509.csv` (250 samples) - Git commit: `cf0e942` - **V53 리더보드 0.65358 → V82 리더보드 점수 확인 필요** ### V80 (참고) - LGBM+XGB 2-model stacking (3-fold, 15 seed",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-09T14:08:22.242Z",
+      "lastRecalledAt": "2026-05-09T14:08:22.242Z",
+      "queryHashes": [
+        "be7beca81d35"
+      ],
+      "recallDays": [
+        "2026-05-09"
+      ],
+      "conceptTags": [
+        "meta-learner",
+        "0.009",
+        "0.014",
+        "top-5",
+        "config/stacking보다",
+        "single-best",
+        "v53-wide-n8",
+        "ensemble/stacking"
+      ]
+    },
+    "memory:memory/2026-05-07.md:36:62": {
+      "key": "memory:memory/2026-05-07.md:36:62",
+      "path": "memory/2026-05-07.md",
+      "startLine": 36,
+      "endLine": 62,
+      "source": "memory",
+      "snippet": "|------|--------|--------|---| | Q1 | 0.6309 | 0.7591 | +0.1282 | | Q2 | 0.5912 | 0.6929 | +0.1017 | | Q3 | 0.5926 | 0.6893 | +0.0967 | | S1 | 0.5538 | 0.6029 | +0.0491 | | S2 | 0.5630 | 0.6621 | +0.0991 | | S3 | 0.5284 | 0.7144 | +0.1860 | | S4 | 0.6214 | 0.6438 | +0.0224 | | **AVG** | **0.5830** | **0.6806** | **+0.0976** | ### 생성 파일 - `src/v58_catboost.py` — CatBoost vs LGBM 비교 - `src/v59_catboost_submission.py` — CatBoost 제출물 - `src/v60_leakage_clean.py` — Leakage-clean + CatBoost OOF - `src/v61_final_leakage_clean.py` — **최종 제출물** - `data_processed/features_clean_v60.parquet` — Leakage-clean feature parquet - `data_processed/test_features_clean_v60.parquet` - `docs/strategy_proposal_20",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-11T13:01:17.125Z",
+      "lastRecalledAt": "2026-05-11T13:01:17.125Z",
+      "queryHashes": [
+        "51ea32405f4e"
+      ],
+      "recallDays": [
+        "2026-05-11"
+      ],
+      "conceptTags": [
+        "0.6309",
+        "0.7591",
+        "0.1282",
+        "0.5912",
+        "0.6929",
+        "0.1017",
+        "0.5926",
+        "0.6893"
+      ]
+    },
+    "memory:memory/2026-05-11.md:33:72": {
+      "key": "memory:memory/2026-05-11.md:33:72",
+      "path": "memory/2026-05-11.md",
+      "startLine": 33,
+      "endLine": 72,
+      "source": "memory",
+      "snippet": "### V123 (fixed per-target pairwise) - OOF 0.5498 — V121에 근접 but pairwise_interactions bug fix 필요 ### V124 (distribution matching failure) - OOF 9~11로 폭발 — binary classification에 rank-based matching 부적합 ### V125 (optimal shift+scale) - shift=0, scale=1.0 — V121이 이미 local optimum ### V126 (2-way ensemble) - V121+V123 50/50 → OOF **0.5426** (ensemble gain!) ### V127 (3-way ensemble — BEST SO FAR) - V121+V123+V115 (0.35/0.25/0.40) → OOF **0.5373** - **3-way ensemble diversity가 OOF 개선에 결정적** - V121(pairwise), V123(transformed), V115(base) = 서로 다른 error 패턴 ### V128 (per-target optimal weights) - OOF **0.5361** — V127보다 0.001 낮으나 overfit 위험 ### V129-V134 (variance restoration + shift) - V129",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-13T00:02:34.939Z",
+      "lastRecalledAt": "2026-05-13T00:02:34.939Z",
+      "queryHashes": [
+        "43cddd582fea"
+      ],
+      "recallDays": [
+        "2026-05-13"
+      ],
+      "conceptTags": [
+        "per-target",
+        "0.5498",
+        "pairwise-interactions",
+        "rank-based",
+        "1.0",
+        "2-way",
+        "50/50",
+        "0.5426"
+      ]
+    },
+    "memory:memory/2026-05-12.md:20:37": {
+      "key": "memory:memory/2026-05-12.md:20:37",
+      "path": "memory/2026-05-12.md",
+      "startLine": 20,
+      "endLine": 37,
+      "source": "memory",
+      "snippet": "- **문제**: confidence filtering으로 OOF가 급락하는 것은 **overfitting 신호**일 수 있음. filtered sample 수가 50-100개면 CV fold간 분산 큼 - 특히 S3_t0.80에서 delta=+0.18373 (worst) → overfitting 반전 4. **Ensemble Optimization**: - S3가 가장 큰 개선: delta=-0.0624 (wide:0.3 + deep:0.7) - Q1도 good: delta=-0.0167 (wide:0.6 + v48:0.4) 5. **Noise Filtering**: remove 5-25 samples → consistent negative delta (모든 target에서) → noisy sample 제거가 OOF 개선에 도움 ### Critical Issue: V127 Reproduction Discrepancy - 자동화된 V127 repro: AVG OOF=0.61851 - 보고된 V127: AVG OOF=0.53731 - 차이: 0.081 — V127은 true 3-model ensemble (V121+V123+V115)이므로 단일 model repro로는 비교 불가 ### Next Direction 1. **V127 true reproduction**가 먼저 필요 → 3-model ensemble",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-13T00:02:34.939Z",
+      "lastRecalledAt": "2026-05-14T04:15:34.421Z",
+      "queryHashes": [
+        "43cddd582fea",
+        "62efb5952dcc"
+      ],
+      "recallDays": [
+        "2026-05-13",
+        "2026-05-14"
+      ],
+      "conceptTags": [
+        "50-100개면",
+        "s3-t0.80에서",
+        "0.18373",
+        "0.0624",
+        "0.3",
+        "0.7",
+        "0.0167",
+        "0.6"
+      ]
+    },
+    "memory:memory/2026-05-11.md:64:99": {
+      "key": "memory:memory/2026-05-11.md:64:99",
+      "path": "memory/2026-05-11.md",
+      "startLine": 64,
+      "endLine": 99,
+      "source": "memory",
+      "snippet": "- V127: train LL~0.50 → 예상 LB 0.55~0.60 - shift amplification 적용 시 더 낮아질 가능성 ### Dacon API - submit_api 0.1.2 설치 완료 - Token `54b8510a-9698-423d-8ea66c3597e1` 만료/무효 → 403 - 수동 제출 필요: https://dacon.io/competitions/official/236690 ## 제출 파일 목록 (20개 이상) - submission_v121_20260511_221621.csv (OOF 0.5482) - submission_v127_20260511_224000.csv (OOF 0.5373, BEST) - submission_v129_20260511_224500.csv - submission_v130_20260511_224500.csv - submission_v131_20260511_224500.csv - submission_v132a_20260511_224800.csv (OOF 0.5361) - submission_v132b_20260511_224800.csv - submission_v132c_20260511_224800.csv - submission_v133_per_*.csv, submission_v133_uni_*.csv - submission_v134a_20260511_225000.csv - s",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-13T00:02:34.939Z",
+      "lastRecalledAt": "2026-05-13T00:02:34.939Z",
+      "queryHashes": [
+        "43cddd582fea"
+      ],
+      "recallDays": [
+        "2026-05-13"
+      ],
+      "conceptTags": [
+        "0.50",
+        "0.55",
+        "0.60",
+        "submit-api",
+        "0.1.2",
+        "54b8510a-9698-423d-8ea66c3597e1",
+        "만료/무효",
+        "0.5482"
+      ]
+    },
+    "memory:memory/2026-05-12.md:1:24": {
+      "key": "memory:memory/2026-05-12.md:1:24",
+      "path": "memory/2026-05-12.md",
+      "startLine": 1,
+      "endLine": 24,
+      "source": "memory",
+      "snippet": "# 2026-05-12 ## V13 Domain Adaptation — 완료 ### V127 Reproduction (re-run) - AVG OOF: 0.61851 (SOTA 0.53731와 차이 큼 → V127은 true 3-model ensemble) ### Domain Similarity (Adversarial Validation) - A: AUC=1.0 (different_domain) — external vs train 완전히 구분 가능 - B: AUC=1.0 (different_domain) - C: AUC=1.0 (different_domain) - **인사이트**: feature mapping이 3~4개 column으로만 되어 있음 (Age, Phys Activity, Steps 등). 이 적은 feature로 adversarial validation 했기 때문에 AUC=1.0이 나왔을 가능성 높음 → 실제 domain gap는 크지만 measurement는 과소평가됨 ### Key Findings from V13: 1. **External data feature engineering**: A,B,C 각각 3~4개 column만 매핑 가능 → external representation learning이 제한적 2. **Curriculum Learning**: S1에 +0.00712 improvement 발견 —",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-13T00:02:34.939Z",
+      "lastRecalledAt": "2026-05-13T00:02:34.939Z",
+      "queryHashes": [
+        "43cddd582fea"
+      ],
+      "recallDays": [
+        "2026-05-13"
+      ],
+      "conceptTags": [
+        "re-run",
+        "0.61851",
+        "0.53731와",
+        "3-model",
+        "1.0",
+        "different-domain",
+        "1.0이",
+        "0.00712"
+      ]
+    },
+    "memory:memory/2026-05-13.md:1:31": {
+      "key": "memory:memory/2026-05-13.md:1:31",
+      "path": "memory/2026-05-13.md",
+      "startLine": 1,
+      "endLine": 31,
+      "source": "memory",
+      "snippet": "# 2026-05-13 ## V251 External Merge — 결과 분석 ### Experiment - V251: features_clean_v60 + external_data.parquet (8 external features: holiday, month, school_term, exam_period, lunar_holiday, daylight_hours, daylight_ratio, season_index) - 100% coverage for all 450 train and 250 test dates - Feature ranking (50-iter LGBM) → top-N selection per target - 7 targets trained with V127 per-target configs ### Results - V251 avg OOF: 0.69288 - V251 Δ: +0.00516 (worse) - Improvement in Q1 (-0.00159), Q3 (-0.08346), S3 (-0.00619) - Worsening in S1 (+0.02261), S2 (+0.08878), S4 (+0.02304) - Selected external features: daylight_hours (Q1, S2, S3), season_index (S2, S3), daylight_ratio (S3) - External fe",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.998968341192366,
+      "maxScore": 0.998968341192366,
+      "firstRecalledAt": "2026-05-14T04:15:34.421Z",
+      "lastRecalledAt": "2026-05-14T04:15:34.421Z",
+      "queryHashes": [
+        "62efb5952dcc"
+      ],
+      "recallDays": [
+        "2026-05-14"
+      ],
+      "conceptTags": [
+        "features-clean-v60",
+        "external-data.parquet",
+        "school-term",
+        "exam-period",
+        "lunar-holiday",
+        "daylight-hours",
+        "daylight-ratio",
+        "season-index"
+      ]
+    },
+    "memory:memory/2026-05-14.md:184:210": {
+      "key": "memory:memory/2026-05-14.md:184:210",
+      "path": "memory/2026-05-14.md",
+      "startLine": 184,
+      "endLine": 210,
+      "source": "memory",
+      "snippet": "| V260 Quantile+PSI Sub | LB=0.714592 (worse than exp) | ❌ Rejected | | V260 External Proxy | Δ=-0.003 (marginal) | ❌ Rejected | | V261 Cross-Target | Target leakage | ❌ Rejected | | V262 2x2x2 Factorial | Iso OOF=0.588 (Δ=-0.073) | ✅ | | V262 PSI filter bug | `psi.mean()` → `psi.sum()` | ✅ Fixed | | **V265 Root Cause** | Gap=0.11 structural | ✅ Complete | ## 문서 - `experiments/v265_roots_cause_analysis.md` — V265 상세 분석 (작성 필요 — workspace 밖에서 작성됨) - `docs/submission_lb_analysis.md` — V263 comprehensive LB analysis - `docs/validation_deep_analysis.md` — V264 deep analysis ## V270 (2026-05-15 00:30) — Per-Target + Isotonic + Multi-n_feat Ensemble - **Approach**: Per-target feature selection (",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-14T16:24:43.888Z",
+      "lastRecalledAt": "2026-05-14T16:24:43.888Z",
+      "queryHashes": [
+        "12a1e9aec499"
+      ],
+      "recallDays": [
+        "2026-05-15"
+      ],
+      "conceptTags": [
+        "0.714592",
+        "0.003",
+        "cross-target",
+        "0.588",
+        "0.073",
+        "psi.mean",
+        "psi.sum",
+        "0.11"
       ]
     }
   }
