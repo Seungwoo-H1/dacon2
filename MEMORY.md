@@ -32,6 +32,15 @@
 - sleep/wrist 직접 누수 feature 제거
 - S4 전용 feature set (single LGBM, n_feat=25)
 
+### V62 Full Feature Pipeline (2026-05-17)
+- **Train**: 450 rows × 153 cols (142 features + targets)
+- **Test**: 250 rows × 146 cols (142 features)
+- Column-set 완벽 일치 (original features.parquet 검증 완료)
+- 100-seed LGBM ensemble + JTD calibration + per-target n_feat 최적화
+- **Leaderboard: 0.6540794708** → 기존 V53 (0.6535822621)보다 0.0005점 개선
+- CV avg baseline: 0.5936
+- Target별 n_feat: Q1=18, Q2=12, Q3=20, S1=22, S2=16, S3=8, S4=22
+
 ### 오늘 (2026-05-08) — V63~V72
 - **V63**: Stacking + Temporal + Calibration (LGBM+XGB+Cat → LR meta)
 - **V64**: CatBoost+LGBM+XGB Ensemble + Calibration
@@ -75,8 +84,9 @@ CatBoost on features_clean_v60
 
 ## 현재 기준점
 - **Best CV**: V53 swept (GroupKFold 3-fold, avg 0.6806)
-- **Best Leaderboard**: V53 final (0.6535822621)
-- **Best Architecture**: V61 leakage-clean + stacking
+- **Best Leaderboard**: V62 (0.6540794708)
+- **Previous LB Record**: V53 final (0.6535822621)
+- **Best Architecture**: V62 — full 142-feature pipeline + 100-seed ensemble + JTD cal
 
 ## 파일 구조
 - `/home/mwoo423/projects/dacon2/src/` — 모든 실험 스크립트
