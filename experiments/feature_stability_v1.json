@@ -1,0 +1,4466 @@
+{
+  "Q1": [
+    {
+      "feature": "mWifi_wifi_strong_ratio_min",
+      "mean_imp": 0.12,
+      "cv": 2.0
+    },
+    {
+      "feature": "mActivity_m_activity_min",
+      "mean_imp": 0.09,
+      "cv": 1.531
+    },
+    {
+      "feature": "mAmbience_ambience_motor_vehicle_(road)_sum",
+      "mean_imp": 7.08,
+      "cv": 1.016
+    },
+    {
+      "feature": "mGps_gps_count_max",
+      "mean_imp": 1.75,
+      "cv": 0.994
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_large_room_or_hall_sum",
+      "mean_imp": 6.5,
+      "cv": 0.965
+    },
+    {
+      "feature": "mAmbience_ambience_car_sum",
+      "mean_imp": 2.82,
+      "cv": 0.876
+    },
+    {
+      "feature": "mActivity_m_activity_mean",
+      "mean_imp": 25.33,
+      "cv": 0.829
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_mean",
+      "mean_imp": 15.89,
+      "cv": 0.823
+    },
+    {
+      "feature": "mActivity_m_activity_max",
+      "mean_imp": 6.77,
+      "cv": 0.806
+    },
+    {
+      "feature": "mWifi_wifi_count_min",
+      "mean_imp": 4.43,
+      "cv": 0.798
+    },
+    {
+      "feature": "wLight_w_light_max",
+      "mean_imp": 15.16,
+      "cv": 0.729
+    },
+    {
+      "feature": "mGps_gps_count_min",
+      "mean_imp": 3.6,
+      "cv": 0.714
+    },
+    {
+      "feature": "mLight_m_light_count",
+      "mean_imp": 6.03,
+      "cv": 0.709
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_max",
+      "mean_imp": 29.15,
+      "cv": 0.678
+    },
+    {
+      "feature": "mGps_gps_max_speed_std",
+      "mean_imp": 13.33,
+      "cv": 0.676
+    },
+    {
+      "feature": "mACStatus_hour_morning",
+      "mean_imp": 18.51,
+      "cv": 0.675
+    },
+    {
+      "feature": "mBle_ble_max_rssi_min",
+      "mean_imp": 20.91,
+      "cv": 0.672
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_min",
+      "mean_imp": 26.01,
+      "cv": 0.646
+    },
+    {
+      "feature": "wPedo_pedo_distance_mean",
+      "mean_imp": 6.77,
+      "cv": 0.641
+    },
+    {
+      "feature": "mAmbience_ambience_truck_sum",
+      "mean_imp": 11.38,
+      "cv": 0.631
+    },
+    {
+      "feature": "wPedo_pedo_speed_mean",
+      "mean_imp": 2.8,
+      "cv": 0.63
+    },
+    {
+      "feature": "mBle_ble_rssi_std_std",
+      "mean_imp": 21.7,
+      "cv": 0.627
+    },
+    {
+      "feature": "mGps_gps_count_mean",
+      "mean_imp": 28.44,
+      "cv": 0.624
+    },
+    {
+      "feature": "mBle_ble_device_count_mean",
+      "mean_imp": 17.58,
+      "cv": 0.616
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_count",
+      "mean_imp": 28.28,
+      "cv": 0.606
+    },
+    {
+      "feature": "mActivity_m_activity_count",
+      "mean_imp": 9.07,
+      "cv": 0.59
+    },
+    {
+      "feature": "wPedo_pedo_speed_sum",
+      "mean_imp": 3.87,
+      "cv": 0.587
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_std",
+      "mean_imp": 24.19,
+      "cv": 0.584
+    },
+    {
+      "feature": "mBle_ble_count_max",
+      "mean_imp": 24.46,
+      "cv": 0.551
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_max",
+      "mean_imp": 7.39,
+      "cv": 0.546
+    },
+    {
+      "feature": "mBle_ble_rssi_std_mean",
+      "mean_imp": 15.15,
+      "cv": 0.536
+    },
+    {
+      "feature": "mLight_m_light_max",
+      "mean_imp": 23.15,
+      "cv": 0.533
+    },
+    {
+      "feature": "mBle_ble_device_count_max",
+      "mean_imp": 13.54,
+      "cv": 0.523
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_min",
+      "mean_imp": 44.76,
+      "cv": 0.52
+    },
+    {
+      "feature": "mBle_ble_device_count_min",
+      "mean_imp": 1.13,
+      "cv": 0.518
+    },
+    {
+      "feature": "mLight_m_light_mean",
+      "mean_imp": 18.75,
+      "cv": 0.517
+    },
+    {
+      "feature": "mGps_gps_avg_speed_max",
+      "mean_imp": 9.66,
+      "cv": 0.511
+    },
+    {
+      "feature": "mActivity_m_activity_std",
+      "mean_imp": 14.11,
+      "cv": 0.507
+    },
+    {
+      "feature": "wPedo_pedo_step_frequency_sum",
+      "mean_imp": 2.98,
+      "cv": 0.5
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_std",
+      "mean_imp": 24.65,
+      "cv": 0.499
+    },
+    {
+      "feature": "mGps_gps_alt_range_max",
+      "mean_imp": 10.68,
+      "cv": 0.495
+    },
+    {
+      "feature": "mWifi_wifi_count_max",
+      "mean_imp": 15.22,
+      "cv": 0.495
+    },
+    {
+      "feature": "mGps_gps_avg_speed_mean",
+      "mean_imp": 12.74,
+      "cv": 0.492
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_std",
+      "mean_imp": 20.15,
+      "cv": 0.492
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_mean",
+      "mean_imp": 29.82,
+      "cv": 0.488
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_mean",
+      "mean_imp": 41.37,
+      "cv": 0.488
+    },
+    {
+      "feature": "wLight_w_light_mean",
+      "mean_imp": 31.01,
+      "cv": 0.487
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_min",
+      "mean_imp": 1.52,
+      "cv": 0.484
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_mean",
+      "mean_imp": 19.84,
+      "cv": 0.483
+    },
+    {
+      "feature": "mWifi_wifi_count_mean",
+      "mean_imp": 39.27,
+      "cv": 0.481
+    },
+    {
+      "feature": "mScreenStatus_hour_evening",
+      "mean_imp": 21.42,
+      "cv": 0.478
+    },
+    {
+      "feature": "mBle_ble_count_min",
+      "mean_imp": 3.22,
+      "cv": 0.476
+    },
+    {
+      "feature": "mScreenStatus_hour_afternoon",
+      "mean_imp": 18.16,
+      "cv": 0.474
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_min",
+      "mean_imp": 33.52,
+      "cv": 0.47
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_max",
+      "mean_imp": 5.36,
+      "cv": 0.469
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_std",
+      "mean_imp": 14.8,
+      "cv": 0.467
+    },
+    {
+      "feature": "mGps_gps_alt_range_mean",
+      "mean_imp": 6.37,
+      "cv": 0.461
+    },
+    {
+      "feature": "wPedo_pedo_step_frequency_mean",
+      "mean_imp": 2.83,
+      "cv": 0.46
+    },
+    {
+      "feature": "wPedo_pedo_step_mean",
+      "mean_imp": 8.84,
+      "cv": 0.458
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_std",
+      "mean_imp": 43.74,
+      "cv": 0.456
+    },
+    {
+      "feature": "mGps_gps_max_speed_max",
+      "mean_imp": 17.55,
+      "cv": 0.45
+    },
+    {
+      "feature": "mLight_m_light_std",
+      "mean_imp": 22.71,
+      "cv": 0.44
+    },
+    {
+      "feature": "mACStatus_hour_evening",
+      "mean_imp": 15.62,
+      "cv": 0.432
+    },
+    {
+      "feature": "mGps_gps_avg_speed_std",
+      "mean_imp": 5.53,
+      "cv": 0.426
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_std",
+      "mean_imp": 6.77,
+      "cv": 0.421
+    },
+    {
+      "feature": "mBle_ble_max_rssi_max",
+      "mean_imp": 26.39,
+      "cv": 0.415
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_min",
+      "mean_imp": 20.12,
+      "cv": 0.404
+    },
+    {
+      "feature": "mAmbience_ambience_vehicle_sum",
+      "mean_imp": 8.17,
+      "cv": 0.402
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_max",
+      "mean_imp": 26.45,
+      "cv": 0.401
+    },
+    {
+      "feature": "mBle_ble_rssi_std_max",
+      "mean_imp": 27.03,
+      "cv": 0.387
+    },
+    {
+      "feature": "mBle_ble_min_rssi_min",
+      "mean_imp": 6.24,
+      "cv": 0.385
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_rural_or_natural_sum",
+      "mean_imp": 9.43,
+      "cv": 0.375
+    },
+    {
+      "feature": "mBle_ble_min_rssi_max",
+      "mean_imp": 27.63,
+      "cv": 0.375
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_mean",
+      "mean_imp": 50.87,
+      "cv": 0.375
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_max",
+      "mean_imp": 1.7,
+      "cv": 0.372
+    },
+    {
+      "feature": "mGps_gps_alt_range_std",
+      "mean_imp": 13.91,
+      "cv": 0.371
+    },
+    {
+      "feature": "wPedo_pedo_burned_calories_mean",
+      "mean_imp": 9.1,
+      "cv": 0.361
+    },
+    {
+      "feature": "wPedo_pedo_distance_sum",
+      "mean_imp": 9.09,
+      "cv": 0.356
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_mean",
+      "mean_imp": 16.28,
+      "cv": 0.356
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_mean",
+      "mean_imp": 29.52,
+      "cv": 0.343
+    },
+    {
+      "feature": "wPedo_pedo_burned_calories_sum",
+      "mean_imp": 13.78,
+      "cv": 0.342
+    },
+    {
+      "feature": "mBle_ble_device_count_std",
+      "mean_imp": 11.48,
+      "cv": 0.339
+    },
+    {
+      "feature": "mBle_ble_min_rssi_std",
+      "mean_imp": 22.92,
+      "cv": 0.333
+    },
+    {
+      "feature": "mAmbience_ambience_music_sum",
+      "mean_imp": 30.66,
+      "cv": 0.328
+    },
+    {
+      "feature": "mBle_ble_count_mean",
+      "mean_imp": 22.05,
+      "cv": 0.311
+    },
+    {
+      "feature": "mAmbience_ambience_speech_sum",
+      "mean_imp": 20.46,
+      "cv": 0.308
+    },
+    {
+      "feature": "mBle_ble_max_rssi_std",
+      "mean_imp": 17.02,
+      "cv": 0.307
+    },
+    {
+      "feature": "wLight_w_light_std",
+      "mean_imp": 12.57,
+      "cv": 0.303
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_max",
+      "mean_imp": 12.47,
+      "cv": 0.3
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_std",
+      "mean_imp": 48.19,
+      "cv": 0.295
+    },
+    {
+      "feature": "mACStatus_hour_afternoon",
+      "mean_imp": 28.4,
+      "cv": 0.289
+    },
+    {
+      "feature": "mBle_ble_rssi_std_min",
+      "mean_imp": 18.66,
+      "cv": 0.288
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_urban_or_manmade_sum",
+      "mean_imp": 14.78,
+      "cv": 0.285
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_small_room_sum",
+      "mean_imp": 21.64,
+      "cv": 0.28
+    },
+    {
+      "feature": "mScreenStatus_hour_morning",
+      "mean_imp": 35.61,
+      "cv": 0.278
+    },
+    {
+      "feature": "mAmbience_ambience_top5_sum",
+      "mean_imp": 23.64,
+      "cv": 0.264
+    },
+    {
+      "feature": "mACStatus_m_charging_std",
+      "mean_imp": 14.44,
+      "cv": 0.252
+    },
+    {
+      "feature": "mGps_gps_max_speed_mean",
+      "mean_imp": 8.86,
+      "cv": 0.241
+    },
+    {
+      "feature": "mScreenStatus_hour_night",
+      "mean_imp": 12.37,
+      "cv": 0.239
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_max",
+      "mean_imp": 9.99,
+      "cv": 0.238
+    },
+    {
+      "feature": "mACStatus_m_charging_count",
+      "mean_imp": 13.63,
+      "cv": 0.237
+    },
+    {
+      "feature": "wPedo_pedo_step_sum",
+      "mean_imp": 9.7,
+      "cv": 0.232
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_std",
+      "mean_imp": 18.73,
+      "cv": 0.216
+    },
+    {
+      "feature": "mACStatus_hour_night",
+      "mean_imp": 32.18,
+      "cv": 0.209
+    },
+    {
+      "feature": "mWifi_wifi_count_std",
+      "mean_imp": 13.32,
+      "cv": 0.202
+    },
+    {
+      "feature": "mBle_ble_max_rssi_mean",
+      "mean_imp": 15.98,
+      "cv": 0.193
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_std",
+      "mean_imp": 19.32,
+      "cv": 0.191
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_max",
+      "mean_imp": 22.01,
+      "cv": 0.19
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_mean",
+      "mean_imp": 15.6,
+      "cv": 0.17
+    },
+    {
+      "feature": "mGps_gps_count_std",
+      "mean_imp": 8.49,
+      "cv": 0.153
+    },
+    {
+      "feature": "mBle_ble_count_std",
+      "mean_imp": 20.31,
+      "cv": 0.144
+    },
+    {
+      "feature": "mACStatus_m_charging_mean",
+      "mean_imp": 21.13,
+      "cv": 0.143
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_mean",
+      "mean_imp": 29.67,
+      "cv": 0.142
+    },
+    {
+      "feature": "wLight_w_light_count",
+      "mean_imp": 44.74,
+      "cv": 0.11
+    },
+    {
+      "feature": "mBle_ble_min_rssi_mean",
+      "mean_imp": 12.37,
+      "cv": 0.105
+    },
+    {
+      "feature": "mACStatus_m_charging_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mACStatus_m_charging_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mLight_m_light_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wLight_w_light_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wPedo_pedo_running_step_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wPedo_pedo_running_step_sum",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wPedo_pedo_walking_step_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wPedo_pedo_walking_step_sum",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_avg_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_max_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_alt_range_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    }
+  ],
+  "Q2": [
+    {
+      "feature": "mActivity_m_activity_max",
+      "mean_imp": 0.76,
+      "cv": 1.026
+    },
+    {
+      "feature": "mGps_gps_count_max",
+      "mean_imp": 7.32,
+      "cv": 1.023
+    },
+    {
+      "feature": "mBle_ble_device_count_min",
+      "mean_imp": 1.1,
+      "cv": 0.955
+    },
+    {
+      "feature": "mAmbience_ambience_car_sum",
+      "mean_imp": 3.98,
+      "cv": 0.866
+    },
+    {
+      "feature": "mBle_ble_count_min",
+      "mean_imp": 4.21,
+      "cv": 0.814
+    },
+    {
+      "feature": "wPedo_pedo_step_frequency_sum",
+      "mean_imp": 8.27,
+      "cv": 0.791
+    },
+    {
+      "feature": "mGps_gps_max_speed_std",
+      "mean_imp": 10.64,
+      "cv": 0.769
+    },
+    {
+      "feature": "wPedo_pedo_burned_calories_sum",
+      "mean_imp": 13.02,
+      "cv": 0.727
+    },
+    {
+      "feature": "wPedo_pedo_distance_sum",
+      "mean_imp": 14.88,
+      "cv": 0.702
+    },
+    {
+      "feature": "mLight_m_light_count",
+      "mean_imp": 3.55,
+      "cv": 0.685
+    },
+    {
+      "feature": "wPedo_pedo_step_sum",
+      "mean_imp": 19.08,
+      "cv": 0.678
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_std",
+      "mean_imp": 17.3,
+      "cv": 0.677
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_urban_or_manmade_sum",
+      "mean_imp": 5.44,
+      "cv": 0.676
+    },
+    {
+      "feature": "mAmbience_ambience_vehicle_sum",
+      "mean_imp": 4.34,
+      "cv": 0.646
+    },
+    {
+      "feature": "wPedo_pedo_speed_sum",
+      "mean_imp": 5.14,
+      "cv": 0.643
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_large_room_or_hall_sum",
+      "mean_imp": 2.88,
+      "cv": 0.639
+    },
+    {
+      "feature": "mWifi_wifi_count_max",
+      "mean_imp": 14.75,
+      "cv": 0.609
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_mean",
+      "mean_imp": 7.92,
+      "cv": 0.603
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_min",
+      "mean_imp": 1.36,
+      "cv": 0.58
+    },
+    {
+      "feature": "mBle_ble_count_std",
+      "mean_imp": 8.16,
+      "cv": 0.576
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_mean",
+      "mean_imp": 16.44,
+      "cv": 0.569
+    },
+    {
+      "feature": "mBle_ble_min_rssi_min",
+      "mean_imp": 4.28,
+      "cv": 0.566
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_std",
+      "mean_imp": 11.57,
+      "cv": 0.56
+    },
+    {
+      "feature": "mBle_ble_max_rssi_min",
+      "mean_imp": 5.14,
+      "cv": 0.544
+    },
+    {
+      "feature": "mBle_ble_device_count_max",
+      "mean_imp": 6.43,
+      "cv": 0.524
+    },
+    {
+      "feature": "mGps_gps_count_mean",
+      "mean_imp": 11.95,
+      "cv": 0.517
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_min",
+      "mean_imp": 32.25,
+      "cv": 0.516
+    },
+    {
+      "feature": "mGps_gps_count_min",
+      "mean_imp": 6.23,
+      "cv": 0.501
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_mean",
+      "mean_imp": 23.35,
+      "cv": 0.489
+    },
+    {
+      "feature": "mAmbience_ambience_motor_vehicle_(road)_sum",
+      "mean_imp": 4.34,
+      "cv": 0.489
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_max",
+      "mean_imp": 10.33,
+      "cv": 0.486
+    },
+    {
+      "feature": "mBle_ble_device_count_std",
+      "mean_imp": 3.24,
+      "cv": 0.484
+    },
+    {
+      "feature": "mGps_gps_alt_range_max",
+      "mean_imp": 41.14,
+      "cv": 0.483
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_max",
+      "mean_imp": 19.29,
+      "cv": 0.481
+    },
+    {
+      "feature": "mActivity_m_activity_mean",
+      "mean_imp": 17.41,
+      "cv": 0.478
+    },
+    {
+      "feature": "mAmbience_ambience_truck_sum",
+      "mean_imp": 12.25,
+      "cv": 0.471
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_rural_or_natural_sum",
+      "mean_imp": 10.16,
+      "cv": 0.453
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_min",
+      "mean_imp": 14.53,
+      "cv": 0.452
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_mean",
+      "mean_imp": 10.24,
+      "cv": 0.45
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_min",
+      "mean_imp": 28.48,
+      "cv": 0.442
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_std",
+      "mean_imp": 21.84,
+      "cv": 0.439
+    },
+    {
+      "feature": "mLight_m_light_std",
+      "mean_imp": 9.24,
+      "cv": 0.438
+    },
+    {
+      "feature": "mACStatus_hour_morning",
+      "mean_imp": 11.75,
+      "cv": 0.437
+    },
+    {
+      "feature": "mLight_m_light_max",
+      "mean_imp": 17.91,
+      "cv": 0.434
+    },
+    {
+      "feature": "mACStatus_hour_night",
+      "mean_imp": 29.83,
+      "cv": 0.433
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_max",
+      "mean_imp": 18.38,
+      "cv": 0.429
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_std",
+      "mean_imp": 19.0,
+      "cv": 0.421
+    },
+    {
+      "feature": "mGps_gps_avg_speed_std",
+      "mean_imp": 4.66,
+      "cv": 0.416
+    },
+    {
+      "feature": "mBle_ble_max_rssi_std",
+      "mean_imp": 11.38,
+      "cv": 0.404
+    },
+    {
+      "feature": "mGps_gps_avg_speed_max",
+      "mean_imp": 20.77,
+      "cv": 0.403
+    },
+    {
+      "feature": "mACStatus_hour_afternoon",
+      "mean_imp": 14.52,
+      "cv": 0.401
+    },
+    {
+      "feature": "mScreenStatus_hour_afternoon",
+      "mean_imp": 13.7,
+      "cv": 0.399
+    },
+    {
+      "feature": "wPedo_pedo_speed_mean",
+      "mean_imp": 1.8,
+      "cv": 0.398
+    },
+    {
+      "feature": "mBle_ble_min_rssi_max",
+      "mean_imp": 10.11,
+      "cv": 0.395
+    },
+    {
+      "feature": "wPedo_pedo_burned_calories_mean",
+      "mean_imp": 14.98,
+      "cv": 0.391
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_max",
+      "mean_imp": 34.91,
+      "cv": 0.391
+    },
+    {
+      "feature": "wPedo_pedo_step_frequency_mean",
+      "mean_imp": 3.17,
+      "cv": 0.383
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_std",
+      "mean_imp": 60.64,
+      "cv": 0.381
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_std",
+      "mean_imp": 15.4,
+      "cv": 0.371
+    },
+    {
+      "feature": "mACStatus_m_charging_std",
+      "mean_imp": 93.27,
+      "cv": 0.369
+    },
+    {
+      "feature": "mScreenStatus_hour_morning",
+      "mean_imp": 12.04,
+      "cv": 0.368
+    },
+    {
+      "feature": "mActivity_m_activity_count",
+      "mean_imp": 5.23,
+      "cv": 0.36
+    },
+    {
+      "feature": "mAmbience_ambience_speech_sum",
+      "mean_imp": 23.61,
+      "cv": 0.344
+    },
+    {
+      "feature": "mGps_gps_count_std",
+      "mean_imp": 17.41,
+      "cv": 0.342
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_min",
+      "mean_imp": 11.98,
+      "cv": 0.34
+    },
+    {
+      "feature": "mGps_gps_max_speed_max",
+      "mean_imp": 21.47,
+      "cv": 0.338
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_std",
+      "mean_imp": 25.44,
+      "cv": 0.337
+    },
+    {
+      "feature": "mBle_ble_count_max",
+      "mean_imp": 17.02,
+      "cv": 0.336
+    },
+    {
+      "feature": "mWifi_wifi_count_std",
+      "mean_imp": 30.98,
+      "cv": 0.333
+    },
+    {
+      "feature": "mGps_gps_max_speed_mean",
+      "mean_imp": 7.3,
+      "cv": 0.328
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_max",
+      "mean_imp": 5.9,
+      "cv": 0.319
+    },
+    {
+      "feature": "wLight_w_light_max",
+      "mean_imp": 11.28,
+      "cv": 0.318
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_mean",
+      "mean_imp": 11.01,
+      "cv": 0.315
+    },
+    {
+      "feature": "wLight_w_light_mean",
+      "mean_imp": 19.63,
+      "cv": 0.314
+    },
+    {
+      "feature": "wPedo_pedo_distance_mean",
+      "mean_imp": 5.82,
+      "cv": 0.313
+    },
+    {
+      "feature": "wPedo_pedo_step_mean",
+      "mean_imp": 8.69,
+      "cv": 0.308
+    },
+    {
+      "feature": "mBle_ble_rssi_std_mean",
+      "mean_imp": 34.6,
+      "cv": 0.308
+    },
+    {
+      "feature": "mGps_gps_alt_range_std",
+      "mean_imp": 7.72,
+      "cv": 0.307
+    },
+    {
+      "feature": "mBle_ble_max_rssi_max",
+      "mean_imp": 15.45,
+      "cv": 0.305
+    },
+    {
+      "feature": "mBle_ble_rssi_std_max",
+      "mean_imp": 32.69,
+      "cv": 0.305
+    },
+    {
+      "feature": "mBle_ble_count_mean",
+      "mean_imp": 9.21,
+      "cv": 0.303
+    },
+    {
+      "feature": "mGps_gps_avg_speed_mean",
+      "mean_imp": 7.45,
+      "cv": 0.298
+    },
+    {
+      "feature": "mWifi_wifi_count_mean",
+      "mean_imp": 31.66,
+      "cv": 0.298
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_count",
+      "mean_imp": 18.99,
+      "cv": 0.296
+    },
+    {
+      "feature": "mACStatus_hour_evening",
+      "mean_imp": 30.25,
+      "cv": 0.295
+    },
+    {
+      "feature": "mWifi_wifi_count_min",
+      "mean_imp": 2.48,
+      "cv": 0.286
+    },
+    {
+      "feature": "mLight_m_light_mean",
+      "mean_imp": 29.12,
+      "cv": 0.285
+    },
+    {
+      "feature": "mScreenStatus_hour_night",
+      "mean_imp": 15.55,
+      "cv": 0.28
+    },
+    {
+      "feature": "mBle_ble_device_count_mean",
+      "mean_imp": 4.72,
+      "cv": 0.278
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_std",
+      "mean_imp": 13.73,
+      "cv": 0.277
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_max",
+      "mean_imp": 13.62,
+      "cv": 0.273
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_std",
+      "mean_imp": 137.21,
+      "cv": 0.267
+    },
+    {
+      "feature": "wLight_w_light_std",
+      "mean_imp": 10.63,
+      "cv": 0.263
+    },
+    {
+      "feature": "mBle_ble_rssi_std_std",
+      "mean_imp": 12.37,
+      "cv": 0.258
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_mean",
+      "mean_imp": 23.27,
+      "cv": 0.258
+    },
+    {
+      "feature": "mACStatus_m_charging_mean",
+      "mean_imp": 46.33,
+      "cv": 0.255
+    },
+    {
+      "feature": "mBle_ble_max_rssi_mean",
+      "mean_imp": 13.88,
+      "cv": 0.251
+    },
+    {
+      "feature": "mBle_ble_min_rssi_std",
+      "mean_imp": 10.09,
+      "cv": 0.25
+    },
+    {
+      "feature": "mScreenStatus_hour_evening",
+      "mean_imp": 23.17,
+      "cv": 0.245
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_max",
+      "mean_imp": 9.93,
+      "cv": 0.237
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_mean",
+      "mean_imp": 16.79,
+      "cv": 0.232
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_mean",
+      "mean_imp": 26.32,
+      "cv": 0.23
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_mean",
+      "mean_imp": 37.91,
+      "cv": 0.219
+    },
+    {
+      "feature": "mGps_gps_alt_range_mean",
+      "mean_imp": 12.68,
+      "cv": 0.216
+    },
+    {
+      "feature": "mActivity_m_activity_std",
+      "mean_imp": 46.71,
+      "cv": 0.194
+    },
+    {
+      "feature": "mBle_ble_min_rssi_mean",
+      "mean_imp": 24.38,
+      "cv": 0.182
+    },
+    {
+      "feature": "mAmbience_ambience_music_sum",
+      "mean_imp": 17.2,
+      "cv": 0.164
+    },
+    {
+      "feature": "wLight_w_light_count",
+      "mean_imp": 24.01,
+      "cv": 0.151
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_small_room_sum",
+      "mean_imp": 23.05,
+      "cv": 0.151
+    },
+    {
+      "feature": "mAmbience_ambience_top5_sum",
+      "mean_imp": 10.92,
+      "cv": 0.144
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_max",
+      "mean_imp": 22.82,
+      "cv": 0.111
+    },
+    {
+      "feature": "mACStatus_m_charging_count",
+      "mean_imp": 10.34,
+      "cv": 0.099
+    },
+    {
+      "feature": "mBle_ble_rssi_std_min",
+      "mean_imp": 27.83,
+      "cv": 0.052
+    },
+    {
+      "feature": "mACStatus_m_charging_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mACStatus_m_charging_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mActivity_m_activity_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mLight_m_light_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wLight_w_light_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wPedo_pedo_running_step_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wPedo_pedo_running_step_sum",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wPedo_pedo_walking_step_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wPedo_pedo_walking_step_sum",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_avg_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_max_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_alt_range_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    }
+  ],
+  "Q3": [
+    {
+      "feature": "mWifi_wifi_strong_ratio_min",
+      "mean_imp": 0.33,
+      "cv": 2.0
+    },
+    {
+      "feature": "mGps_gps_count_max",
+      "mean_imp": 1.22,
+      "cv": 1.312
+    },
+    {
+      "feature": "mGps_gps_count_mean",
+      "mean_imp": 11.3,
+      "cv": 1.143
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_max",
+      "mean_imp": 0.71,
+      "cv": 1.083
+    },
+    {
+      "feature": "mBle_ble_min_rssi_min",
+      "mean_imp": 8.32,
+      "cv": 1.073
+    },
+    {
+      "feature": "mBle_ble_device_count_max",
+      "mean_imp": 17.0,
+      "cv": 0.973
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_large_room_or_hall_sum",
+      "mean_imp": 3.73,
+      "cv": 0.967
+    },
+    {
+      "feature": "mGps_gps_avg_speed_max",
+      "mean_imp": 9.06,
+      "cv": 0.911
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_mean",
+      "mean_imp": 13.22,
+      "cv": 0.889
+    },
+    {
+      "feature": "mAmbience_ambience_truck_sum",
+      "mean_imp": 9.45,
+      "cv": 0.855
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_min",
+      "mean_imp": 0.06,
+      "cv": 0.839
+    },
+    {
+      "feature": "mBle_ble_max_rssi_mean",
+      "mean_imp": 18.82,
+      "cv": 0.827
+    },
+    {
+      "feature": "mGps_gps_max_speed_std",
+      "mean_imp": 9.9,
+      "cv": 0.792
+    },
+    {
+      "feature": "mBle_ble_max_rssi_min",
+      "mean_imp": 6.73,
+      "cv": 0.79
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_std",
+      "mean_imp": 16.93,
+      "cv": 0.775
+    },
+    {
+      "feature": "mAmbience_ambience_motor_vehicle_(road)_sum",
+      "mean_imp": 2.72,
+      "cv": 0.745
+    },
+    {
+      "feature": "mWifi_wifi_count_min",
+      "mean_imp": 1.58,
+      "cv": 0.742
+    },
+    {
+      "feature": "wPedo_pedo_burned_calories_sum",
+      "mean_imp": 4.77,
+      "cv": 0.741
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_rural_or_natural_sum",
+      "mean_imp": 5.29,
+      "cv": 0.739
+    },
+    {
+      "feature": "mGps_gps_max_speed_mean",
+      "mean_imp": 1.93,
+      "cv": 0.732
+    },
+    {
+      "feature": "mBle_ble_count_std",
+      "mean_imp": 12.88,
+      "cv": 0.727
+    },
+    {
+      "feature": "mActivity_m_activity_max",
+      "mean_imp": 2.0,
+      "cv": 0.721
+    },
+    {
+      "feature": "wPedo_pedo_distance_sum",
+      "mean_imp": 4.49,
+      "cv": 0.714
+    },
+    {
+      "feature": "mWifi_wifi_count_max",
+      "mean_imp": 12.11,
+      "cv": 0.71
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_std",
+      "mean_imp": 2.82,
+      "cv": 0.693
+    },
+    {
+      "feature": "mBle_ble_device_count_std",
+      "mean_imp": 7.72,
+      "cv": 0.689
+    },
+    {
+      "feature": "mBle_ble_count_min",
+      "mean_imp": 3.13,
+      "cv": 0.669
+    },
+    {
+      "feature": "wPedo_pedo_step_frequency_sum",
+      "mean_imp": 1.12,
+      "cv": 0.636
+    },
+    {
+      "feature": "mAmbience_ambience_vehicle_sum",
+      "mean_imp": 6.11,
+      "cv": 0.612
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_mean",
+      "mean_imp": 6.74,
+      "cv": 0.612
+    },
+    {
+      "feature": "mBle_ble_min_rssi_max",
+      "mean_imp": 9.99,
+      "cv": 0.604
+    },
+    {
+      "feature": "wPedo_pedo_speed_sum",
+      "mean_imp": 1.87,
+      "cv": 0.592
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_std",
+      "mean_imp": 32.5,
+      "cv": 0.581
+    },
+    {
+      "feature": "mBle_ble_device_count_min",
+      "mean_imp": 0.78,
+      "cv": 0.558
+    },
+    {
+      "feature": "mAmbience_ambience_speech_sum",
+      "mean_imp": 7.0,
+      "cv": 0.546
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_max",
+      "mean_imp": 10.63,
+      "cv": 0.545
+    },
+    {
+      "feature": "mScreenStatus_hour_morning",
+      "mean_imp": 14.62,
+      "cv": 0.545
+    },
+    {
+      "feature": "wLight_w_light_count",
+      "mean_imp": 6.48,
+      "cv": 0.536
+    },
+    {
+      "feature": "mGps_gps_count_min",
+      "mean_imp": 6.62,
+      "cv": 0.522
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_urban_or_manmade_sum",
+      "mean_imp": 2.5,
+      "cv": 0.519
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_max",
+      "mean_imp": 6.78,
+      "cv": 0.51
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_min",
+      "mean_imp": 10.16,
+      "cv": 0.497
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_min",
+      "mean_imp": 11.11,
+      "cv": 0.493
+    },
+    {
+      "feature": "mBle_ble_rssi_std_min",
+      "mean_imp": 12.19,
+      "cv": 0.486
+    },
+    {
+      "feature": "mBle_ble_device_count_mean",
+      "mean_imp": 3.12,
+      "cv": 0.474
+    },
+    {
+      "feature": "mBle_ble_max_rssi_std",
+      "mean_imp": 11.07,
+      "cv": 0.469
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_min",
+      "mean_imp": 7.93,
+      "cv": 0.465
+    },
+    {
+      "feature": "mGps_gps_alt_range_max",
+      "mean_imp": 10.48,
+      "cv": 0.462
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_max",
+      "mean_imp": 3.92,
+      "cv": 0.461
+    },
+    {
+      "feature": "wPedo_pedo_step_sum",
+      "mean_imp": 4.22,
+      "cv": 0.456
+    },
+    {
+      "feature": "mGps_gps_alt_range_std",
+      "mean_imp": 9.72,
+      "cv": 0.445
+    },
+    {
+      "feature": "mActivity_m_activity_count",
+      "mean_imp": 2.1,
+      "cv": 0.443
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_std",
+      "mean_imp": 14.99,
+      "cv": 0.443
+    },
+    {
+      "feature": "mActivity_m_activity_mean",
+      "mean_imp": 12.9,
+      "cv": 0.437
+    },
+    {
+      "feature": "mAmbience_ambience_car_sum",
+      "mean_imp": 2.34,
+      "cv": 0.436
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_max",
+      "mean_imp": 9.1,
+      "cv": 0.433
+    },
+    {
+      "feature": "mScreenStatus_hour_afternoon",
+      "mean_imp": 6.94,
+      "cv": 0.429
+    },
+    {
+      "feature": "mBle_ble_count_max",
+      "mean_imp": 38.09,
+      "cv": 0.426
+    },
+    {
+      "feature": "mGps_gps_avg_speed_std",
+      "mean_imp": 22.79,
+      "cv": 0.425
+    },
+    {
+      "feature": "mGps_gps_avg_speed_mean",
+      "mean_imp": 4.91,
+      "cv": 0.42
+    },
+    {
+      "feature": "mScreenStatus_hour_evening",
+      "mean_imp": 14.58,
+      "cv": 0.416
+    },
+    {
+      "feature": "mACStatus_m_charging_count",
+      "mean_imp": 7.31,
+      "cv": 0.413
+    },
+    {
+      "feature": "mACStatus_m_charging_mean",
+      "mean_imp": 12.44,
+      "cv": 0.412
+    },
+    {
+      "feature": "mACStatus_hour_night",
+      "mean_imp": 7.2,
+      "cv": 0.409
+    },
+    {
+      "feature": "mLight_m_light_std",
+      "mean_imp": 10.57,
+      "cv": 0.408
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_max",
+      "mean_imp": 2.42,
+      "cv": 0.404
+    },
+    {
+      "feature": "mBle_ble_rssi_std_mean",
+      "mean_imp": 11.31,
+      "cv": 0.403
+    },
+    {
+      "feature": "mBle_ble_rssi_std_max",
+      "mean_imp": 9.81,
+      "cv": 0.403
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_mean",
+      "mean_imp": 3.29,
+      "cv": 0.395
+    },
+    {
+      "feature": "mLight_m_light_count",
+      "mean_imp": 7.66,
+      "cv": 0.391
+    },
+    {
+      "feature": "mBle_ble_rssi_std_std",
+      "mean_imp": 6.0,
+      "cv": 0.372
+    },
+    {
+      "feature": "mGps_gps_alt_range_mean",
+      "mean_imp": 7.67,
+      "cv": 0.371
+    },
+    {
+      "feature": "mACStatus_m_charging_std",
+      "mean_imp": 7.95,
+      "cv": 0.367
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_small_room_sum",
+      "mean_imp": 12.52,
+      "cv": 0.367
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_min",
+      "mean_imp": 17.36,
+      "cv": 0.367
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_max",
+      "mean_imp": 24.74,
+      "cv": 0.358
+    },
+    {
+      "feature": "mBle_ble_min_rssi_std",
+      "mean_imp": 9.94,
+      "cv": 0.357
+    },
+    {
+      "feature": "wPedo_pedo_burned_calories_mean",
+      "mean_imp": 3.04,
+      "cv": 0.356
+    },
+    {
+      "feature": "mAmbience_ambience_music_sum",
+      "mean_imp": 24.04,
+      "cv": 0.355
+    },
+    {
+      "feature": "wPedo_pedo_speed_mean",
+      "mean_imp": 1.51,
+      "cv": 0.339
+    },
+    {
+      "feature": "mGps_gps_count_std",
+      "mean_imp": 17.7,
+      "cv": 0.328
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_mean",
+      "mean_imp": 7.38,
+      "cv": 0.327
+    },
+    {
+      "feature": "mBle_ble_count_mean",
+      "mean_imp": 6.52,
+      "cv": 0.324
+    },
+    {
+      "feature": "mScreenStatus_hour_night",
+      "mean_imp": 15.01,
+      "cv": 0.317
+    },
+    {
+      "feature": "mWifi_wifi_count_mean",
+      "mean_imp": 12.53,
+      "cv": 0.316
+    },
+    {
+      "feature": "mBle_ble_min_rssi_mean",
+      "mean_imp": 9.48,
+      "cv": 0.314
+    },
+    {
+      "feature": "mACStatus_hour_afternoon",
+      "mean_imp": 13.65,
+      "cv": 0.31
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_mean",
+      "mean_imp": 13.12,
+      "cv": 0.308
+    },
+    {
+      "feature": "mGps_gps_max_speed_max",
+      "mean_imp": 15.28,
+      "cv": 0.307
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_count",
+      "mean_imp": 7.69,
+      "cv": 0.304
+    },
+    {
+      "feature": "mAmbience_ambience_top5_sum",
+      "mean_imp": 18.41,
+      "cv": 0.303
+    },
+    {
+      "feature": "mLight_m_light_mean",
+      "mean_imp": 50.61,
+      "cv": 0.297
+    },
+    {
+      "feature": "mACStatus_hour_evening",
+      "mean_imp": 9.04,
+      "cv": 0.297
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_std",
+      "mean_imp": 13.88,
+      "cv": 0.295
+    },
+    {
+      "feature": "wPedo_pedo_distance_mean",
+      "mean_imp": 3.67,
+      "cv": 0.293
+    },
+    {
+      "feature": "mActivity_m_activity_std",
+      "mean_imp": 25.47,
+      "cv": 0.291
+    },
+    {
+      "feature": "wLight_w_light_mean",
+      "mean_imp": 7.17,
+      "cv": 0.283
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_std",
+      "mean_imp": 7.77,
+      "cv": 0.282
+    },
+    {
+      "feature": "wLight_w_light_std",
+      "mean_imp": 7.39,
+      "cv": 0.268
+    },
+    {
+      "feature": "mBle_ble_max_rssi_max",
+      "mean_imp": 9.49,
+      "cv": 0.266
+    },
+    {
+      "feature": "wPedo_pedo_step_frequency_mean",
+      "mean_imp": 1.67,
+      "cv": 0.258
+    },
+    {
+      "feature": "wLight_w_light_max",
+      "mean_imp": 5.98,
+      "cv": 0.235
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_std",
+      "mean_imp": 9.63,
+      "cv": 0.226
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_mean",
+      "mean_imp": 19.22,
+      "cv": 0.226
+    },
+    {
+      "feature": "mACStatus_hour_morning",
+      "mean_imp": 9.09,
+      "cv": 0.216
+    },
+    {
+      "feature": "mLight_m_light_max",
+      "mean_imp": 21.57,
+      "cv": 0.215
+    },
+    {
+      "feature": "mWifi_wifi_count_std",
+      "mean_imp": 7.74,
+      "cv": 0.214
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_mean",
+      "mean_imp": 12.65,
+      "cv": 0.204
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_max",
+      "mean_imp": 13.12,
+      "cv": 0.187
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_std",
+      "mean_imp": 23.05,
+      "cv": 0.184
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_mean",
+      "mean_imp": 13.05,
+      "cv": 0.176
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_mean",
+      "mean_imp": 11.76,
+      "cv": 0.176
+    },
+    {
+      "feature": "wPedo_pedo_step_mean",
+      "mean_imp": 6.15,
+      "cv": 0.173
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_std",
+      "mean_imp": 6.11,
+      "cv": 0.164
+    },
+    {
+      "feature": "mACStatus_m_charging_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mACStatus_m_charging_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mActivity_m_activity_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mLight_m_light_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wLight_w_light_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wPedo_pedo_running_step_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wPedo_pedo_running_step_sum",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wPedo_pedo_walking_step_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "wPedo_pedo_walking_step_sum",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_avg_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_max_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_alt_range_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    }
+  ],
+  "S1": [
+    {
+      "feature": "mActivity_m_activity_min",
+      "mean_imp": 0.08,
+      "cv": 2.0
+    },
+    {
+      "feature": "mBle_ble_device_count_min",
+      "mean_imp": 0.01,
+      "cv": 2.0
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_mean",
+      "mean_imp": 10.59,
+      "cv": 1.797
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_min",
+      "mean_imp": 0.96,
+      "cv": 1.726
+    },
+    {
+      "feature": "mWifi_wifi_count_min",
+      "mean_imp": 7.88,
+      "cv": 1.364
+    },
+    {
+      "feature": "mBle_ble_count_min",
+      "mean_imp": 0.39,
+      "cv": 1.331
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_max",
+      "mean_imp": 1.22,
+      "cv": 1.267
+    },
+    {
+      "feature": "mAmbience_ambience_truck_sum",
+      "mean_imp": 0.98,
+      "cv": 1.243
+    },
+    {
+      "feature": "mBle_ble_count_mean",
+      "mean_imp": 0.99,
+      "cv": 1.166
+    },
+    {
+      "feature": "mBle_ble_min_rssi_min",
+      "mean_imp": 1.79,
+      "cv": 1.157
+    },
+    {
+      "feature": "mBle_ble_rssi_std_mean",
+      "mean_imp": 10.37,
+      "cv": 1.095
+    },
+    {
+      "feature": "mLight_m_light_count",
+      "mean_imp": 0.54,
+      "cv": 1.05
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_min",
+      "mean_imp": 2.09,
+      "cv": 1.02
+    },
+    {
+      "feature": "mBle_ble_max_rssi_min",
+      "mean_imp": 6.43,
+      "cv": 1.015
+    },
+    {
+      "feature": "mActivity_m_activity_count",
+      "mean_imp": 1.25,
+      "cv": 1.007
+    },
+    {
+      "feature": "mGps_gps_count_min",
+      "mean_imp": 1.91,
+      "cv": 0.953
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_mean",
+      "mean_imp": 16.03,
+      "cv": 0.946
+    },
+    {
+      "feature": "mBle_ble_device_count_max",
+      "mean_imp": 0.13,
+      "cv": 0.923
+    },
+    {
+      "feature": "mGps_gps_avg_speed_std",
+      "mean_imp": 1.45,
+      "cv": 0.922
+    },
+    {
+      "feature": "mGps_gps_max_speed_std",
+      "mean_imp": 1.69,
+      "cv": 0.922
+    },
+    {
+      "feature": "mGps_gps_avg_speed_mean",
+      "mean_imp": 2.58,
+      "cv": 0.914
+    },
+    {
+      "feature": "mBle_ble_device_count_mean",
+      "mean_imp": 0.39,
+      "cv": 0.908
+    },
+    {
+      "feature": "mBle_ble_device_count_std",
+      "mean_imp": 1.11,
+      "cv": 0.905
+    },
+    {
+      "feature": "mGps_gps_avg_speed_max",
+      "mean_imp": 3.23,
+      "cv": 0.84
+    },
+    {
+      "feature": "mAmbience_ambience_motor_vehicle_(road)_sum",
+      "mean_imp": 2.42,
+      "cv": 0.812
+    },
+    {
+      "feature": "mBle_ble_max_rssi_max",
+      "mean_imp": 1.33,
+      "cv": 0.808
+    },
+    {
+      "feature": "mBle_ble_rssi_std_max",
+      "mean_imp": 3.11,
+      "cv": 0.8
+    },
+    {
+      "feature": "mAmbience_ambience_music_sum",
+      "mean_imp": 1.62,
+      "cv": 0.781
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_mean",
+      "mean_imp": 1.82,
+      "cv": 0.78
+    },
+    {
+      "feature": "mACStatus_m_charging_count",
+      "mean_imp": 1.91,
+      "cv": 0.768
+    },
+    {
+      "feature": "mGps_gps_alt_range_std",
+      "mean_imp": 3.34,
+      "cv": 0.747
+    },
+    {
+      "feature": "mACStatus_m_charging_std",
+      "mean_imp": 1.7,
+      "cv": 0.746
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_std",
+      "mean_imp": 0.49,
+      "cv": 0.741
+    },
+    {
+      "feature": "mBle_ble_count_std",
+      "mean_imp": 3.54,
+      "cv": 0.738
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_count",
+      "mean_imp": 5.31,
+      "cv": 0.736
+    },
+    {
+      "feature": "mAmbience_ambience_vehicle_sum",
+      "mean_imp": 0.86,
+      "cv": 0.734
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_std",
+      "mean_imp": 3.21,
+      "cv": 0.703
+    },
+    {
+      "feature": "mScreenStatus_hour_night",
+      "mean_imp": 2.13,
+      "cv": 0.7
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_urban_or_manmade_sum",
+      "mean_imp": 1.8,
+      "cv": 0.697
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_mean",
+      "mean_imp": 2.22,
+      "cv": 0.695
+    },
+    {
+      "feature": "mWifi_wifi_count_max",
+      "mean_imp": 14.0,
+      "cv": 0.684
+    },
+    {
+      "feature": "mACStatus_hour_evening",
+      "mean_imp": 14.61,
+      "cv": 0.679
+    },
+    {
+      "feature": "mBle_ble_max_rssi_std",
+      "mean_imp": 3.63,
+      "cv": 0.667
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_min",
+      "mean_imp": 15.33,
+      "cv": 0.666
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_max",
+      "mean_imp": 18.93,
+      "cv": 0.665
+    },
+    {
+      "feature": "mGps_gps_count_mean",
+      "mean_imp": 2.51,
+      "cv": 0.658
+    },
+    {
+      "feature": "mAmbience_ambience_car_sum",
+      "mean_imp": 2.01,
+      "cv": 0.654
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_large_room_or_hall_sum",
+      "mean_imp": 2.18,
+      "cv": 0.641
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_min",
+      "mean_imp": 8.03,
+      "cv": 0.641
+    },
+    {
+      "feature": "mGps_gps_count_max",
+      "mean_imp": 0.89,
+      "cv": 0.639
+    },
+    {
+      "feature": "mGps_gps_alt_range_mean",
+      "mean_imp": 3.41,
+      "cv": 0.627
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_mean",
+      "mean_imp": 6.78,
+      "cv": 0.617
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_max",
+      "mean_imp": 2.89,
+      "cv": 0.607
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_mean",
+      "mean_imp": 6.29,
+      "cv": 0.602
+    },
+    {
+      "feature": "mACStatus_hour_afternoon",
+      "mean_imp": 2.42,
+      "cv": 0.577
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_min",
+      "mean_imp": 6.83,
+      "cv": 0.573
+    },
+    {
+      "feature": "mScreenStatus_hour_morning",
+      "mean_imp": 5.94,
+      "cv": 0.573
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_std",
+      "mean_imp": 2.4,
+      "cv": 0.571
+    },
+    {
+      "feature": "mACStatus_hour_night",
+      "mean_imp": 2.89,
+      "cv": 0.558
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_rural_or_natural_sum",
+      "mean_imp": 2.74,
+      "cv": 0.548
+    },
+    {
+      "feature": "mBle_ble_min_rssi_max",
+      "mean_imp": 13.67,
+      "cv": 0.541
+    },
+    {
+      "feature": "mBle_ble_max_rssi_mean",
+      "mean_imp": 4.85,
+      "cv": 0.54
+    },
+    {
+      "feature": "mAmbience_ambience_speech_sum",
+      "mean_imp": 3.18,
+      "cv": 0.539
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_max",
+      "mean_imp": 11.33,
+      "cv": 0.539
+    },
+    {
+      "feature": "mWifi_wifi_count_mean",
+      "mean_imp": 5.03,
+      "cv": 0.531
+    },
+    {
+      "feature": "mACStatus_m_charging_mean",
+      "mean_imp": 1.64,
+      "cv": 0.515
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_std",
+      "mean_imp": 9.13,
+      "cv": 0.513
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_std",
+      "mean_imp": 7.42,
+      "cv": 0.507
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_small_room_sum",
+      "mean_imp": 3.09,
+      "cv": 0.496
+    },
+    {
+      "feature": "mBle_ble_min_rssi_std",
+      "mean_imp": 3.46,
+      "cv": 0.475
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_std",
+      "mean_imp": 5.93,
+      "cv": 0.474
+    },
+    {
+      "feature": "mLight_m_light_mean",
+      "mean_imp": 2.15,
+      "cv": 0.468
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_max",
+      "mean_imp": 1.5,
+      "cv": 0.466
+    },
+    {
+      "feature": "mGps_gps_max_speed_max",
+      "mean_imp": 4.76,
+      "cv": 0.461
+    },
+    {
+      "feature": "mLight_m_light_std",
+      "mean_imp": 10.41,
+      "cv": 0.457
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_mean",
+      "mean_imp": 18.85,
+      "cv": 0.457
+    },
+    {
+      "feature": "mGps_gps_max_speed_mean",
+      "mean_imp": 3.86,
+      "cv": 0.456
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_max",
+      "mean_imp": 4.12,
+      "cv": 0.45
+    },
+    {
+      "feature": "mBle_ble_count_max",
+      "mean_imp": 1.14,
+      "cv": 0.437
+    },
+    {
+      "feature": "mACStatus_hour_morning",
+      "mean_imp": 2.33,
+      "cv": 0.437
+    },
+    {
+      "feature": "mGps_gps_alt_range_max",
+      "mean_imp": 3.11,
+      "cv": 0.431
+    },
+    {
+      "feature": "mAmbience_ambience_top5_sum",
+      "mean_imp": 4.91,
+      "cv": 0.42
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_mean",
+      "mean_imp": 7.01,
+      "cv": 0.414
+    },
+    {
+      "feature": "mScreenStatus_hour_afternoon",
+      "mean_imp": 10.98,
+      "cv": 0.411
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_std",
+      "mean_imp": 7.79,
+      "cv": 0.401
+    },
+    {
+      "feature": "mGps_gps_count_std",
+      "mean_imp": 3.28,
+      "cv": 0.387
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_max",
+      "mean_imp": 10.59,
+      "cv": 0.363
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_mean",
+      "mean_imp": 5.74,
+      "cv": 0.361
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_max",
+      "mean_imp": 2.65,
+      "cv": 0.36
+    },
+    {
+      "feature": "mActivity_m_activity_mean",
+      "mean_imp": 12.81,
+      "cv": 0.349
+    },
+    {
+      "feature": "mScreenStatus_hour_evening",
+      "mean_imp": 7.99,
+      "cv": 0.339
+    },
+    {
+      "feature": "mBle_ble_rssi_std_std",
+      "mean_imp": 4.5,
+      "cv": 0.295
+    },
+    {
+      "feature": "mLight_m_light_max",
+      "mean_imp": 10.43,
+      "cv": 0.281
+    },
+    {
+      "feature": "mBle_ble_min_rssi_mean",
+      "mean_imp": 1.95,
+      "cv": 0.279
+    },
+    {
+      "feature": "mBle_ble_rssi_std_min",
+      "mean_imp": 6.03,
+      "cv": 0.268
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_std",
+      "mean_imp": 11.75,
+      "cv": 0.208
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_std",
+      "mean_imp": 5.35,
+      "cv": 0.163
+    },
+    {
+      "feature": "mWifi_wifi_count_std",
+      "mean_imp": 2.04,
+      "cv": 0.147
+    },
+    {
+      "feature": "mActivity_m_activity_std",
+      "mean_imp": 5.01,
+      "cv": 0.108
+    },
+    {
+      "feature": "mACStatus_m_charging_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mACStatus_m_charging_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mActivity_m_activity_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mLight_m_light_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_avg_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_max_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_alt_range_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    }
+  ],
+  "S2": [
+    {
+      "feature": "mGps_gps_avg_speed_min",
+      "mean_imp": 0.02,
+      "cv": 2.0
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_min",
+      "mean_imp": 0.17,
+      "cv": 2.0
+    },
+    {
+      "feature": "mActivity_m_activity_max",
+      "mean_imp": 3.01,
+      "cv": 1.55
+    },
+    {
+      "feature": "mGps_gps_count_max",
+      "mean_imp": 26.19,
+      "cv": 0.937
+    },
+    {
+      "feature": "mAmbience_ambience_motor_vehicle_(road)_sum",
+      "mean_imp": 4.03,
+      "cv": 0.933
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_urban_or_manmade_sum",
+      "mean_imp": 3.1,
+      "cv": 0.877
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_max",
+      "mean_imp": 11.96,
+      "cv": 0.861
+    },
+    {
+      "feature": "mActivity_m_activity_count",
+      "mean_imp": 9.31,
+      "cv": 0.839
+    },
+    {
+      "feature": "mBle_ble_count_min",
+      "mean_imp": 2.18,
+      "cv": 0.74
+    },
+    {
+      "feature": "mGps_gps_count_min",
+      "mean_imp": 7.2,
+      "cv": 0.737
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_min",
+      "mean_imp": 1.69,
+      "cv": 0.722
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_max",
+      "mean_imp": 2.54,
+      "cv": 0.7
+    },
+    {
+      "feature": "mACStatus_m_charging_count",
+      "mean_imp": 11.55,
+      "cv": 0.697
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_max",
+      "mean_imp": 5.95,
+      "cv": 0.642
+    },
+    {
+      "feature": "mLight_m_light_count",
+      "mean_imp": 1.04,
+      "cv": 0.64
+    },
+    {
+      "feature": "mBle_ble_min_rssi_min",
+      "mean_imp": 13.16,
+      "cv": 0.64
+    },
+    {
+      "feature": "mBle_ble_rssi_std_mean",
+      "mean_imp": 25.97,
+      "cv": 0.64
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_std",
+      "mean_imp": 28.23,
+      "cv": 0.639
+    },
+    {
+      "feature": "mBle_ble_device_count_min",
+      "mean_imp": 0.87,
+      "cv": 0.619
+    },
+    {
+      "feature": "mWifi_wifi_count_std",
+      "mean_imp": 15.91,
+      "cv": 0.596
+    },
+    {
+      "feature": "mGps_gps_count_mean",
+      "mean_imp": 29.43,
+      "cv": 0.587
+    },
+    {
+      "feature": "mAmbience_ambience_truck_sum",
+      "mean_imp": 1.3,
+      "cv": 0.582
+    },
+    {
+      "feature": "mBle_ble_max_rssi_max",
+      "mean_imp": 16.78,
+      "cv": 0.581
+    },
+    {
+      "feature": "mGps_gps_avg_speed_std",
+      "mean_imp": 12.06,
+      "cv": 0.574
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_large_room_or_hall_sum",
+      "mean_imp": 4.49,
+      "cv": 0.571
+    },
+    {
+      "feature": "mBle_ble_min_rssi_max",
+      "mean_imp": 19.5,
+      "cv": 0.565
+    },
+    {
+      "feature": "mGps_gps_avg_speed_mean",
+      "mean_imp": 7.72,
+      "cv": 0.549
+    },
+    {
+      "feature": "mAmbience_ambience_car_sum",
+      "mean_imp": 1.09,
+      "cv": 0.548
+    },
+    {
+      "feature": "mAmbience_ambience_vehicle_sum",
+      "mean_imp": 3.39,
+      "cv": 0.544
+    },
+    {
+      "feature": "mBle_ble_rssi_std_std",
+      "mean_imp": 42.78,
+      "cv": 0.522
+    },
+    {
+      "feature": "mBle_ble_device_count_std",
+      "mean_imp": 12.19,
+      "cv": 0.515
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_max",
+      "mean_imp": 113.75,
+      "cv": 0.512
+    },
+    {
+      "feature": "mGps_gps_avg_speed_max",
+      "mean_imp": 24.71,
+      "cv": 0.504
+    },
+    {
+      "feature": "mAmbience_ambience_top5_sum",
+      "mean_imp": 17.6,
+      "cv": 0.5
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_mean",
+      "mean_imp": 27.19,
+      "cv": 0.5
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_mean",
+      "mean_imp": 31.71,
+      "cv": 0.495
+    },
+    {
+      "feature": "mGps_gps_count_std",
+      "mean_imp": 42.74,
+      "cv": 0.492
+    },
+    {
+      "feature": "mBle_ble_rssi_std_max",
+      "mean_imp": 17.09,
+      "cv": 0.485
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_max",
+      "mean_imp": 5.42,
+      "cv": 0.481
+    },
+    {
+      "feature": "mGps_gps_max_speed_mean",
+      "mean_imp": 18.85,
+      "cv": 0.476
+    },
+    {
+      "feature": "mWifi_wifi_count_min",
+      "mean_imp": 4.64,
+      "cv": 0.472
+    },
+    {
+      "feature": "mACStatus_hour_evening",
+      "mean_imp": 36.64,
+      "cv": 0.472
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_std",
+      "mean_imp": 12.95,
+      "cv": 0.467
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_mean",
+      "mean_imp": 12.41,
+      "cv": 0.466
+    },
+    {
+      "feature": "mBle_ble_min_rssi_mean",
+      "mean_imp": 20.17,
+      "cv": 0.459
+    },
+    {
+      "feature": "mGps_gps_alt_range_max",
+      "mean_imp": 19.45,
+      "cv": 0.459
+    },
+    {
+      "feature": "mWifi_wifi_count_max",
+      "mean_imp": 20.97,
+      "cv": 0.457
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_mean",
+      "mean_imp": 23.35,
+      "cv": 0.454
+    },
+    {
+      "feature": "mBle_ble_device_count_max",
+      "mean_imp": 8.52,
+      "cv": 0.444
+    },
+    {
+      "feature": "mACStatus_hour_morning",
+      "mean_imp": 9.57,
+      "cv": 0.444
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_mean",
+      "mean_imp": 47.03,
+      "cv": 0.44
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_mean",
+      "mean_imp": 14.26,
+      "cv": 0.423
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_mean",
+      "mean_imp": 31.25,
+      "cv": 0.416
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_min",
+      "mean_imp": 6.25,
+      "cv": 0.409
+    },
+    {
+      "feature": "mAmbience_ambience_speech_sum",
+      "mean_imp": 13.56,
+      "cv": 0.404
+    },
+    {
+      "feature": "mActivity_m_activity_std",
+      "mean_imp": 21.89,
+      "cv": 0.399
+    },
+    {
+      "feature": "mGps_gps_max_speed_max",
+      "mean_imp": 20.55,
+      "cv": 0.399
+    },
+    {
+      "feature": "mBle_ble_count_std",
+      "mean_imp": 12.39,
+      "cv": 0.395
+    },
+    {
+      "feature": "mACStatus_hour_afternoon",
+      "mean_imp": 20.54,
+      "cv": 0.394
+    },
+    {
+      "feature": "mBle_ble_rssi_std_min",
+      "mean_imp": 15.91,
+      "cv": 0.391
+    },
+    {
+      "feature": "mScreenStatus_hour_evening",
+      "mean_imp": 28.68,
+      "cv": 0.39
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_std",
+      "mean_imp": 14.98,
+      "cv": 0.385
+    },
+    {
+      "feature": "mScreenStatus_hour_night",
+      "mean_imp": 15.18,
+      "cv": 0.38
+    },
+    {
+      "feature": "mGps_gps_alt_range_std",
+      "mean_imp": 10.16,
+      "cv": 0.378
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_max",
+      "mean_imp": 6.98,
+      "cv": 0.378
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_std",
+      "mean_imp": 19.71,
+      "cv": 0.378
+    },
+    {
+      "feature": "mActivity_m_activity_mean",
+      "mean_imp": 21.13,
+      "cv": 0.374
+    },
+    {
+      "feature": "mLight_m_light_std",
+      "mean_imp": 19.02,
+      "cv": 0.371
+    },
+    {
+      "feature": "mBle_ble_min_rssi_std",
+      "mean_imp": 12.61,
+      "cv": 0.369
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_min",
+      "mean_imp": 14.36,
+      "cv": 0.368
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_min",
+      "mean_imp": 35.09,
+      "cv": 0.363
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_max",
+      "mean_imp": 44.48,
+      "cv": 0.359
+    },
+    {
+      "feature": "mBle_ble_max_rssi_min",
+      "mean_imp": 10.87,
+      "cv": 0.352
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_std",
+      "mean_imp": 11.05,
+      "cv": 0.347
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_mean",
+      "mean_imp": 12.94,
+      "cv": 0.338
+    },
+    {
+      "feature": "mACStatus_hour_night",
+      "mean_imp": 23.52,
+      "cv": 0.331
+    },
+    {
+      "feature": "mBle_ble_count_max",
+      "mean_imp": 19.0,
+      "cv": 0.326
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_rural_or_natural_sum",
+      "mean_imp": 13.45,
+      "cv": 0.322
+    },
+    {
+      "feature": "mLight_m_light_max",
+      "mean_imp": 32.27,
+      "cv": 0.318
+    },
+    {
+      "feature": "mGps_gps_max_speed_std",
+      "mean_imp": 8.88,
+      "cv": 0.318
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_std",
+      "mean_imp": 6.87,
+      "cv": 0.317
+    },
+    {
+      "feature": "mScreenStatus_hour_afternoon",
+      "mean_imp": 22.11,
+      "cv": 0.317
+    },
+    {
+      "feature": "mACStatus_m_charging_std",
+      "mean_imp": 35.8,
+      "cv": 0.312
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_max",
+      "mean_imp": 19.08,
+      "cv": 0.307
+    },
+    {
+      "feature": "mBle_ble_device_count_mean",
+      "mean_imp": 6.06,
+      "cv": 0.306
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_small_room_sum",
+      "mean_imp": 19.07,
+      "cv": 0.299
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_mean",
+      "mean_imp": 25.91,
+      "cv": 0.298
+    },
+    {
+      "feature": "mACStatus_m_charging_mean",
+      "mean_imp": 10.94,
+      "cv": 0.297
+    },
+    {
+      "feature": "mAmbience_ambience_music_sum",
+      "mean_imp": 17.32,
+      "cv": 0.291
+    },
+    {
+      "feature": "mBle_ble_count_mean",
+      "mean_imp": 12.8,
+      "cv": 0.283
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_std",
+      "mean_imp": 21.76,
+      "cv": 0.281
+    },
+    {
+      "feature": "mBle_ble_max_rssi_mean",
+      "mean_imp": 16.56,
+      "cv": 0.271
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_count",
+      "mean_imp": 11.44,
+      "cv": 0.269
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_std",
+      "mean_imp": 23.97,
+      "cv": 0.263
+    },
+    {
+      "feature": "mScreenStatus_hour_morning",
+      "mean_imp": 31.51,
+      "cv": 0.258
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_std",
+      "mean_imp": 30.73,
+      "cv": 0.247
+    },
+    {
+      "feature": "mWifi_wifi_count_mean",
+      "mean_imp": 21.09,
+      "cv": 0.238
+    },
+    {
+      "feature": "mBle_ble_max_rssi_std",
+      "mean_imp": 13.23,
+      "cv": 0.232
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_min",
+      "mean_imp": 22.96,
+      "cv": 0.221
+    },
+    {
+      "feature": "mLight_m_light_mean",
+      "mean_imp": 38.93,
+      "cv": 0.167
+    },
+    {
+      "feature": "mGps_gps_alt_range_mean",
+      "mean_imp": 21.28,
+      "cv": 0.166
+    },
+    {
+      "feature": "mACStatus_m_charging_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mACStatus_m_charging_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mActivity_m_activity_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mLight_m_light_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_max_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_alt_range_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    }
+  ],
+  "S3": [
+    {
+      "feature": "mWifi_wifi_strong_ratio_min",
+      "mean_imp": 0.32,
+      "cv": 2.0
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_max",
+      "mean_imp": 0.17,
+      "cv": 2.0
+    },
+    {
+      "feature": "mGps_gps_count_max",
+      "mean_imp": 0.34,
+      "cv": 1.81
+    },
+    {
+      "feature": "mAmbience_ambience_truck_sum",
+      "mean_imp": 0.36,
+      "cv": 1.742
+    },
+    {
+      "feature": "mBle_ble_rssi_std_max",
+      "mean_imp": 0.29,
+      "cv": 1.622
+    },
+    {
+      "feature": "mAmbience_ambience_car_sum",
+      "mean_imp": 1.34,
+      "cv": 1.595
+    },
+    {
+      "feature": "mBle_ble_device_count_min",
+      "mean_imp": 0.5,
+      "cv": 1.565
+    },
+    {
+      "feature": "mAmbience_ambience_speech_sum",
+      "mean_imp": 3.78,
+      "cv": 1.365
+    },
+    {
+      "feature": "mGps_gps_count_min",
+      "mean_imp": 1.21,
+      "cv": 1.355
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_large_room_or_hall_sum",
+      "mean_imp": 6.59,
+      "cv": 1.351
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_rural_or_natural_sum",
+      "mean_imp": 4.25,
+      "cv": 1.306
+    },
+    {
+      "feature": "mAmbience_ambience_motor_vehicle_(road)_sum",
+      "mean_imp": 0.44,
+      "cv": 1.228
+    },
+    {
+      "feature": "mAmbience_ambience_vehicle_sum",
+      "mean_imp": 0.57,
+      "cv": 1.223
+    },
+    {
+      "feature": "mBle_ble_count_min",
+      "mean_imp": 0.49,
+      "cv": 1.203
+    },
+    {
+      "feature": "mBle_ble_max_rssi_min",
+      "mean_imp": 2.1,
+      "cv": 1.188
+    },
+    {
+      "feature": "mScreenStatus_hour_morning",
+      "mean_imp": 4.07,
+      "cv": 1.171
+    },
+    {
+      "feature": "mBle_ble_min_rssi_std",
+      "mean_imp": 26.63,
+      "cv": 1.094
+    },
+    {
+      "feature": "mActivity_m_activity_count",
+      "mean_imp": 0.67,
+      "cv": 1.085
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_mean",
+      "mean_imp": 17.21,
+      "cv": 1.08
+    },
+    {
+      "feature": "mBle_ble_device_count_std",
+      "mean_imp": 4.99,
+      "cv": 1.056
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_mean",
+      "mean_imp": 6.34,
+      "cv": 1.024
+    },
+    {
+      "feature": "mLight_m_light_count",
+      "mean_imp": 0.82,
+      "cv": 1.023
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_mean",
+      "mean_imp": 11.83,
+      "cv": 1.017
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_max",
+      "mean_imp": 7.21,
+      "cv": 1.01
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_std",
+      "mean_imp": 3.17,
+      "cv": 0.974
+    },
+    {
+      "feature": "mActivity_m_activity_max",
+      "mean_imp": 1.75,
+      "cv": 0.958
+    },
+    {
+      "feature": "mBle_ble_min_rssi_mean",
+      "mean_imp": 6.7,
+      "cv": 0.952
+    },
+    {
+      "feature": "mGps_gps_alt_range_max",
+      "mean_imp": 20.38,
+      "cv": 0.938
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_small_room_sum",
+      "mean_imp": 5.0,
+      "cv": 0.923
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_std",
+      "mean_imp": 4.53,
+      "cv": 0.911
+    },
+    {
+      "feature": "mBle_ble_min_rssi_max",
+      "mean_imp": 1.86,
+      "cv": 0.899
+    },
+    {
+      "feature": "mBle_ble_rssi_std_std",
+      "mean_imp": 3.71,
+      "cv": 0.888
+    },
+    {
+      "feature": "mBle_ble_rssi_std_min",
+      "mean_imp": 1.32,
+      "cv": 0.868
+    },
+    {
+      "feature": "mBle_ble_device_count_max",
+      "mean_imp": 4.01,
+      "cv": 0.832
+    },
+    {
+      "feature": "mACStatus_m_charging_std",
+      "mean_imp": 20.19,
+      "cv": 0.82
+    },
+    {
+      "feature": "mGps_gps_count_mean",
+      "mean_imp": 58.06,
+      "cv": 0.811
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_min",
+      "mean_imp": 8.36,
+      "cv": 0.811
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_std",
+      "mean_imp": 2.21,
+      "cv": 0.81
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_min",
+      "mean_imp": 1.46,
+      "cv": 0.808
+    },
+    {
+      "feature": "mBle_ble_count_mean",
+      "mean_imp": 0.69,
+      "cv": 0.795
+    },
+    {
+      "feature": "mBle_ble_count_std",
+      "mean_imp": 2.34,
+      "cv": 0.783
+    },
+    {
+      "feature": "mBle_ble_rssi_std_mean",
+      "mean_imp": 1.4,
+      "cv": 0.779
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_count",
+      "mean_imp": 3.3,
+      "cv": 0.775
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_mean",
+      "mean_imp": 6.56,
+      "cv": 0.773
+    },
+    {
+      "feature": "mBle_ble_min_rssi_min",
+      "mean_imp": 33.73,
+      "cv": 0.77
+    },
+    {
+      "feature": "mGps_gps_max_speed_std",
+      "mean_imp": 1.83,
+      "cv": 0.769
+    },
+    {
+      "feature": "mAmbience_ambience_music_sum",
+      "mean_imp": 2.62,
+      "cv": 0.766
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_max",
+      "mean_imp": 6.25,
+      "cv": 0.736
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_max",
+      "mean_imp": 9.8,
+      "cv": 0.726
+    },
+    {
+      "feature": "mACStatus_m_charging_count",
+      "mean_imp": 2.28,
+      "cv": 0.714
+    },
+    {
+      "feature": "mScreenStatus_hour_night",
+      "mean_imp": 9.89,
+      "cv": 0.713
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_mean",
+      "mean_imp": 7.8,
+      "cv": 0.703
+    },
+    {
+      "feature": "mScreenStatus_hour_afternoon",
+      "mean_imp": 4.68,
+      "cv": 0.698
+    },
+    {
+      "feature": "mScreenStatus_hour_evening",
+      "mean_imp": 10.52,
+      "cv": 0.686
+    },
+    {
+      "feature": "mGps_gps_avg_speed_max",
+      "mean_imp": 20.58,
+      "cv": 0.677
+    },
+    {
+      "feature": "mGps_gps_max_speed_mean",
+      "mean_imp": 11.82,
+      "cv": 0.675
+    },
+    {
+      "feature": "mWifi_wifi_count_min",
+      "mean_imp": 4.26,
+      "cv": 0.659
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_std",
+      "mean_imp": 6.67,
+      "cv": 0.658
+    },
+    {
+      "feature": "mBle_ble_device_count_mean",
+      "mean_imp": 1.63,
+      "cv": 0.656
+    },
+    {
+      "feature": "mLight_m_light_mean",
+      "mean_imp": 4.67,
+      "cv": 0.651
+    },
+    {
+      "feature": "mWifi_wifi_count_std",
+      "mean_imp": 5.12,
+      "cv": 0.65
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_max",
+      "mean_imp": 13.42,
+      "cv": 0.642
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_min",
+      "mean_imp": 4.53,
+      "cv": 0.635
+    },
+    {
+      "feature": "mBle_ble_max_rssi_max",
+      "mean_imp": 23.85,
+      "cv": 0.63
+    },
+    {
+      "feature": "mGps_gps_max_speed_max",
+      "mean_imp": 6.85,
+      "cv": 0.629
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_std",
+      "mean_imp": 1.21,
+      "cv": 0.607
+    },
+    {
+      "feature": "mWifi_wifi_count_mean",
+      "mean_imp": 14.29,
+      "cv": 0.594
+    },
+    {
+      "feature": "mLight_m_light_std",
+      "mean_imp": 7.12,
+      "cv": 0.59
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_urban_or_manmade_sum",
+      "mean_imp": 1.73,
+      "cv": 0.589
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_max",
+      "mean_imp": 103.36,
+      "cv": 0.577
+    },
+    {
+      "feature": "mACStatus_hour_afternoon",
+      "mean_imp": 11.07,
+      "cv": 0.564
+    },
+    {
+      "feature": "mGps_gps_avg_speed_mean",
+      "mean_imp": 11.91,
+      "cv": 0.556
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_std",
+      "mean_imp": 29.67,
+      "cv": 0.544
+    },
+    {
+      "feature": "mACStatus_hour_night",
+      "mean_imp": 5.33,
+      "cv": 0.534
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_min",
+      "mean_imp": 2.51,
+      "cv": 0.521
+    },
+    {
+      "feature": "mGps_gps_alt_range_mean",
+      "mean_imp": 12.01,
+      "cv": 0.52
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_max",
+      "mean_imp": 8.71,
+      "cv": 0.488
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_std",
+      "mean_imp": 6.38,
+      "cv": 0.481
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_mean",
+      "mean_imp": 10.19,
+      "cv": 0.479
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_std",
+      "mean_imp": 10.83,
+      "cv": 0.466
+    },
+    {
+      "feature": "mActivity_m_activity_std",
+      "mean_imp": 5.32,
+      "cv": 0.465
+    },
+    {
+      "feature": "mGps_gps_alt_range_std",
+      "mean_imp": 19.98,
+      "cv": 0.453
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_mean",
+      "mean_imp": 36.52,
+      "cv": 0.44
+    },
+    {
+      "feature": "mBle_ble_max_rssi_mean",
+      "mean_imp": 14.39,
+      "cv": 0.439
+    },
+    {
+      "feature": "mACStatus_m_charging_mean",
+      "mean_imp": 17.49,
+      "cv": 0.434
+    },
+    {
+      "feature": "mWifi_wifi_count_max",
+      "mean_imp": 15.47,
+      "cv": 0.409
+    },
+    {
+      "feature": "mGps_gps_avg_speed_std",
+      "mean_imp": 5.81,
+      "cv": 0.399
+    },
+    {
+      "feature": "mGps_gps_count_std",
+      "mean_imp": 33.24,
+      "cv": 0.393
+    },
+    {
+      "feature": "mBle_ble_count_max",
+      "mean_imp": 2.93,
+      "cv": 0.391
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_mean",
+      "mean_imp": 4.8,
+      "cv": 0.385
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_max",
+      "mean_imp": 7.54,
+      "cv": 0.381
+    },
+    {
+      "feature": "mAmbience_ambience_top5_sum",
+      "mean_imp": 17.74,
+      "cv": 0.373
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_min",
+      "mean_imp": 5.81,
+      "cv": 0.371
+    },
+    {
+      "feature": "mACStatus_hour_morning",
+      "mean_imp": 2.5,
+      "cv": 0.367
+    },
+    {
+      "feature": "mBle_ble_max_rssi_std",
+      "mean_imp": 8.36,
+      "cv": 0.359
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_mean",
+      "mean_imp": 40.07,
+      "cv": 0.35
+    },
+    {
+      "feature": "mLight_m_light_max",
+      "mean_imp": 4.41,
+      "cv": 0.34
+    },
+    {
+      "feature": "mACStatus_hour_evening",
+      "mean_imp": 16.8,
+      "cv": 0.327
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_std",
+      "mean_imp": 8.1,
+      "cv": 0.272
+    },
+    {
+      "feature": "mActivity_m_activity_mean",
+      "mean_imp": 14.2,
+      "cv": 0.223
+    },
+    {
+      "feature": "mACStatus_m_charging_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mACStatus_m_charging_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mActivity_m_activity_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mLight_m_light_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_avg_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_max_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_alt_range_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    }
+  ],
+  "S4": [
+    {
+      "feature": "mActivity_m_activity_max",
+      "mean_imp": 0.03,
+      "cv": 2.0
+    },
+    {
+      "feature": "mBle_ble_device_count_min",
+      "mean_imp": 0.02,
+      "cv": 2.0
+    },
+    {
+      "feature": "mWifi_wifi_count_min",
+      "mean_imp": 4.32,
+      "cv": 1.724
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_large_room_or_hall_sum",
+      "mean_imp": 1.1,
+      "cv": 1.48
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_max",
+      "mean_imp": 0.65,
+      "cv": 1.399
+    },
+    {
+      "feature": "mScreenStatus_hour_morning",
+      "mean_imp": 3.49,
+      "cv": 1.311
+    },
+    {
+      "feature": "mBle_ble_min_rssi_min",
+      "mean_imp": 1.85,
+      "cv": 1.294
+    },
+    {
+      "feature": "mGps_gps_count_min",
+      "mean_imp": 2.23,
+      "cv": 1.228
+    },
+    {
+      "feature": "mLight_m_light_count",
+      "mean_imp": 0.11,
+      "cv": 1.225
+    },
+    {
+      "feature": "mAmbience_ambience_vehicle_sum",
+      "mean_imp": 0.24,
+      "cv": 1.202
+    },
+    {
+      "feature": "mAmbience_ambience_car_sum",
+      "mean_imp": 0.17,
+      "cv": 1.174
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_std",
+      "mean_imp": 10.3,
+      "cv": 1.114
+    },
+    {
+      "feature": "mGps_gps_count_mean",
+      "mean_imp": 3.53,
+      "cv": 1.089
+    },
+    {
+      "feature": "mBle_ble_count_min",
+      "mean_imp": 1.92,
+      "cv": 1.035
+    },
+    {
+      "feature": "mScreenStatus_hour_afternoon",
+      "mean_imp": 4.37,
+      "cv": 1.029
+    },
+    {
+      "feature": "mBle_ble_count_max",
+      "mean_imp": 1.12,
+      "cv": 1.027
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_max",
+      "mean_imp": 1.64,
+      "cv": 0.986
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_max",
+      "mean_imp": 2.97,
+      "cv": 0.974
+    },
+    {
+      "feature": "mAmbience_ambience_truck_sum",
+      "mean_imp": 0.7,
+      "cv": 0.967
+    },
+    {
+      "feature": "mGps_gps_count_max",
+      "mean_imp": 0.78,
+      "cv": 0.94
+    },
+    {
+      "feature": "mBle_ble_max_rssi_mean",
+      "mean_imp": 1.88,
+      "cv": 0.938
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_rural_or_natural_sum",
+      "mean_imp": 3.45,
+      "cv": 0.934
+    },
+    {
+      "feature": "mBle_ble_device_count_std",
+      "mean_imp": 0.44,
+      "cv": 0.913
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_max",
+      "mean_imp": 1.84,
+      "cv": 0.906
+    },
+    {
+      "feature": "mGps_gps_alt_range_max",
+      "mean_imp": 10.37,
+      "cv": 0.903
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_std",
+      "mean_imp": 4.12,
+      "cv": 0.851
+    },
+    {
+      "feature": "mBle_ble_count_std",
+      "mean_imp": 0.8,
+      "cv": 0.85
+    },
+    {
+      "feature": "mGps_gps_avg_speed_mean",
+      "mean_imp": 3.97,
+      "cv": 0.844
+    },
+    {
+      "feature": "mACStatus_hour_night",
+      "mean_imp": 4.51,
+      "cv": 0.808
+    },
+    {
+      "feature": "mActivity_m_activity_std",
+      "mean_imp": 4.16,
+      "cv": 0.774
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_std",
+      "mean_imp": 5.62,
+      "cv": 0.773
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_max",
+      "mean_imp": 2.57,
+      "cv": 0.759
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_max",
+      "mean_imp": 2.56,
+      "cv": 0.752
+    },
+    {
+      "feature": "mAmbience_ambience_motor_vehicle_(road)_sum",
+      "mean_imp": 0.92,
+      "cv": 0.744
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_std",
+      "mean_imp": 11.03,
+      "cv": 0.74
+    },
+    {
+      "feature": "mScreenStatus_hour_night",
+      "mean_imp": 2.26,
+      "cv": 0.735
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_max",
+      "mean_imp": 0.71,
+      "cv": 0.717
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_std",
+      "mean_imp": 0.58,
+      "cv": 0.705
+    },
+    {
+      "feature": "mBle_ble_min_rssi_max",
+      "mean_imp": 14.29,
+      "cv": 0.646
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_mean",
+      "mean_imp": 2.66,
+      "cv": 0.643
+    },
+    {
+      "feature": "mBle_ble_min_rssi_mean",
+      "mean_imp": 4.11,
+      "cv": 0.636
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_count",
+      "mean_imp": 4.4,
+      "cv": 0.633
+    },
+    {
+      "feature": "mWifi_wifi_bssid_count_min",
+      "mean_imp": 0.09,
+      "cv": 0.62
+    },
+    {
+      "feature": "mGps_gps_max_speed_max",
+      "mean_imp": 2.02,
+      "cv": 0.615
+    },
+    {
+      "feature": "mBle_ble_device_count_mean",
+      "mean_imp": 2.27,
+      "cv": 0.592
+    },
+    {
+      "feature": "mBle_ble_max_rssi_min",
+      "mean_imp": 4.48,
+      "cv": 0.591
+    },
+    {
+      "feature": "mACStatus_m_charging_count",
+      "mean_imp": 2.75,
+      "cv": 0.567
+    },
+    {
+      "feature": "mBle_ble_device_count_max",
+      "mean_imp": 0.37,
+      "cv": 0.566
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_mean",
+      "mean_imp": 5.8,
+      "cv": 0.566
+    },
+    {
+      "feature": "mGps_gps_alt_range_std",
+      "mean_imp": 1.91,
+      "cv": 0.555
+    },
+    {
+      "feature": "mACStatus_hour_morning",
+      "mean_imp": 2.77,
+      "cv": 0.554
+    },
+    {
+      "feature": "mBle_ble_count_mean",
+      "mean_imp": 3.05,
+      "cv": 0.548
+    },
+    {
+      "feature": "mBle_ble_rssi_std_std",
+      "mean_imp": 5.29,
+      "cv": 0.548
+    },
+    {
+      "feature": "mBle_ble_min_rssi_std",
+      "mean_imp": 3.23,
+      "cv": 0.545
+    },
+    {
+      "feature": "mActivity_m_activity_count",
+      "mean_imp": 2.38,
+      "cv": 0.543
+    },
+    {
+      "feature": "mGps_gps_alt_range_mean",
+      "mean_imp": 7.55,
+      "cv": 0.541
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_mean",
+      "mean_imp": 16.05,
+      "cv": 0.533
+    },
+    {
+      "feature": "mBle_ble_max_rssi_std",
+      "mean_imp": 5.12,
+      "cv": 0.529
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_mean",
+      "mean_imp": 13.12,
+      "cv": 0.525
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_std",
+      "mean_imp": 3.87,
+      "cv": 0.517
+    },
+    {
+      "feature": "mBle_ble_rssi_std_mean",
+      "mean_imp": 4.81,
+      "cv": 0.515
+    },
+    {
+      "feature": "mLight_m_light_mean",
+      "mean_imp": 12.35,
+      "cv": 0.511
+    },
+    {
+      "feature": "mBle_ble_avg_rssi_min",
+      "mean_imp": 5.99,
+      "cv": 0.505
+    },
+    {
+      "feature": "mGps_gps_avg_speed_std",
+      "mean_imp": 4.7,
+      "cv": 0.505
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_min",
+      "mean_imp": 8.38,
+      "cv": 0.5
+    },
+    {
+      "feature": "mAmbience_ambience_outside,_urban_or_manmade_sum",
+      "mean_imp": 1.23,
+      "cv": 0.494
+    },
+    {
+      "feature": "mScreenStatus_hour_evening",
+      "mean_imp": 2.64,
+      "cv": 0.462
+    },
+    {
+      "feature": "mACStatus_hour_afternoon",
+      "mean_imp": 7.33,
+      "cv": 0.445
+    },
+    {
+      "feature": "mAmbience_ambience_inside,_small_room_sum",
+      "mean_imp": 4.91,
+      "cv": 0.442
+    },
+    {
+      "feature": "mGps_gps_max_speed_std",
+      "mean_imp": 1.27,
+      "cv": 0.442
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_std",
+      "mean_imp": 6.18,
+      "cv": 0.442
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_mean",
+      "mean_imp": 12.47,
+      "cv": 0.442
+    },
+    {
+      "feature": "mACStatus_m_charging_mean",
+      "mean_imp": 4.57,
+      "cv": 0.44
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_std",
+      "mean_imp": 9.53,
+      "cv": 0.435
+    },
+    {
+      "feature": "mBle_ble_rssi_std_max",
+      "mean_imp": 8.54,
+      "cv": 0.432
+    },
+    {
+      "feature": "mBle_ble_rssi_std_min",
+      "mean_imp": 8.03,
+      "cv": 0.414
+    },
+    {
+      "feature": "mAmbience_ambience_speech_sum",
+      "mean_imp": 6.98,
+      "cv": 0.41
+    },
+    {
+      "feature": "mBle_ble_max_rssi_max",
+      "mean_imp": 16.61,
+      "cv": 0.397
+    },
+    {
+      "feature": "mAmbience_ambience_music_sum",
+      "mean_imp": 4.87,
+      "cv": 0.396
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_mean",
+      "mean_imp": 16.04,
+      "cv": 0.389
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_mean",
+      "mean_imp": 10.57,
+      "cv": 0.376
+    },
+    {
+      "feature": "mGps_gps_avg_speed_max",
+      "mean_imp": 40.37,
+      "cv": 0.373
+    },
+    {
+      "feature": "mActivity_m_activity_mean",
+      "mean_imp": 13.99,
+      "cv": 0.367
+    },
+    {
+      "feature": "mWifi_wifi_count_mean",
+      "mean_imp": 9.69,
+      "cv": 0.346
+    },
+    {
+      "feature": "mWifi_wifi_avg_rssi_mean",
+      "mean_imp": 11.74,
+      "cv": 0.345
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_mean",
+      "mean_imp": 16.15,
+      "cv": 0.335
+    },
+    {
+      "feature": "mGps_gps_count_std",
+      "mean_imp": 4.47,
+      "cv": 0.33
+    },
+    {
+      "feature": "mWifi_wifi_count_std",
+      "mean_imp": 2.22,
+      "cv": 0.329
+    },
+    {
+      "feature": "mWifi_wifi_count_max",
+      "mean_imp": 6.15,
+      "cv": 0.325
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_min",
+      "mean_imp": 7.12,
+      "cv": 0.325
+    },
+    {
+      "feature": "mACStatus_m_charging_std",
+      "mean_imp": 5.47,
+      "cv": 0.319
+    },
+    {
+      "feature": "mGps_gps_max_speed_mean",
+      "mean_imp": 4.18,
+      "cv": 0.315
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_std",
+      "mean_imp": 10.78,
+      "cv": 0.297
+    },
+    {
+      "feature": "mLight_m_light_max",
+      "mean_imp": 9.0,
+      "cv": 0.286
+    },
+    {
+      "feature": "mAmbience_ambience_top5_sum",
+      "mean_imp": 9.09,
+      "cv": 0.266
+    },
+    {
+      "feature": "mUsageStats_usage_total_time_max",
+      "mean_imp": 6.13,
+      "cv": 0.254
+    },
+    {
+      "feature": "mWifi_wifi_max_rssi_min",
+      "mean_imp": 2.49,
+      "cv": 0.247
+    },
+    {
+      "feature": "mLight_m_light_std",
+      "mean_imp": 20.09,
+      "cv": 0.2
+    },
+    {
+      "feature": "mACStatus_hour_evening",
+      "mean_imp": 5.16,
+      "cv": 0.195
+    },
+    {
+      "feature": "mACStatus_m_charging_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mACStatus_m_charging_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mActivity_m_activity_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mLight_m_light_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mScreenStatus_m_screen_use_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_avg_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_max_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_alt_range_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mGps_gps_has_speed_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mWifi_wifi_strong_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_app_count_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_major_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_mean",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_std",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_max",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    },
+    {
+      "feature": "mUsageStats_usage_game_ratio_min",
+      "mean_imp": 0.0,
+      "cv": 0.0
+    }
+  ]
+}
