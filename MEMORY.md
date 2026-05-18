@@ -13,12 +13,38 @@
 
 ## ⭐ 현재 BEST (실제 제출 확인됨)
 
-### V127 — 3-way Ensemble (2026-05-11)
+### V140 — Proper CV Stacking (BEST — 2026-05-18)
+- **Leaderboard: 0.64072** | OOF: 0.64116
+- 구성: 3 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=0.1)
+- OOF-LB 갭: 0.00044 (overfitting 거의 없음, generalization 매우 안정적)
+- Submission: `submission_v140_stacking_20260518_021155.csv`
+
+### V141 — Drift-Aware Stacking (테스트됨, LB=0.64031)
+- OOF: 0.63678 → LB: 0.64031
+- OOF-LB 갭: 0.00353 (V140 대비 8배 증가)
+- fold drift weighting은 noise fitting으로 일반화 저하
+- **V140이 현재 BEST (OOF-LB correlation 최상)**
+
+### V142 — Stability-Weighted Stacking (OOF만 테스트)
+- V142-A (feat sel only): OOF=0.63565
+- V142-B (fold drift weights): OOF=0.63483
+- OOF는 V140보다 낮지만, OOF-LB correlation 깨질 가능성 높음
+- **제출 안 함** — OOF 개선이 LB로 직결되지 않음 (V142 교훈)
+
+### V143 — Multi-Config Stacking (실패)
+- 4 configs × 3 seeds = 12 students
+- OOF=0.63873 (개선看似) but student OOF 1.2~1.4 (성능 붕괴)
+- 모든 config에 동일 features 사용 → prediction scale 붕괴
+- V140의 config→target 매핑이 이미 최적
+- **제출 안 함**
+
+### V127 — 3-way Ensemble (2026-05-11, 구 BEST)
 - **Leaderboard: 0.64763** | OOF: 0.53731
 - 구성: V121 (pairwise) + V123 (transformed) + V115 (base)
 - Weight: 0.35 / 0.25 / 0.40
 - Temperature scaling T=0.86
-- **아직 0.5 점수가 나옴** — V127이 현재 undisputed best
+- **LB 0.64763 → V140이 0.64072로 갱신**
+- OOF-LB 갭 0.11 (심각한 overfitting)
 - Submission: `submissions/submission_v127_20260511_224000.csv`
 
 ## 핵심 결과 타임라인
@@ -79,13 +105,15 @@ Test:  250 rows × 146 cols (142 features + meta)
 ```
 
 ## 주요 인사이트
-- **V127이 undisputed best** (LB=0.64763, OOF=0.53731)
-- V45a leakage 발견 → pipeline에 leakage 가능성 상존
-- Distribution correction (Quantile+PSI): 효과 없음
+- **V140이 BEST (LB=0.64072, OOF=0.64116, 갭=0.00044)**
+- V140의 핵심: proper CV stacking, OOF≈LB (stable generalization)
+- **fold drift weighting은 noise fitting** (V142 실패 — OOF↓했지만 LB↑)
+- **config→target 매핑이 이미 최적** — 깨면 성능 붕괴 (V143 실패)
+- **V142 교훈: OOF↓ ≠ LB↓**, OOF-LB correlation 유지가 최우선
 - Isotonic calibration: OOF에서는 강력하지만 LB에는 역효과
 - **LB 0.50은 매우 어려움** (OOF <0.47 필요)
-- Ensemble diversity 중요 (avg correlation 0.785 — 낮을수록 좋음)
-- **V62는 142 features 풀 파이프라인이 train+test 모두에서 완벽하게 작동함을 확인** — V127 beating이 목표
+- 단순 feature engineering, calendar, naive ensemble 재탕 금지
+- 다음 실험은 OOF-LB gap <0.002일 때만 제출
 
 ## 파일 구조
 - `/home/mwoo423/projects/dacon2/src/` — 모든 실험 스크립트
@@ -97,7 +125,10 @@ Test:  250 rows × 146 cols (142 features + meta)
 
 ## 작업 원칙
 1. 모든 실험은 메타 JSON 남기기
-2. 신규 실험은 **V127 (LB=0.64763) 기준** 비교 후 제출
-3. Leak 제거 필수: LEAK_S, LEAK_Q, NIGHTTIME_LEAK, SLEEP_DIRECT_LEAK
-4. CV/OOF = 리더보드 점수 아님. 오버피팅 주의
-5. Submission은 승우さんが 수동으로 DaCon에 제출 (API 403)
+2. 신규 실험은 **V140 (LB=0.64072, OOF=0.64116)** 기준 비교
+3. **OOF-LB correlation 유지가 최우선** (gap <0.002면 submit 가능)
+4. Leak 제거 필수: LEAK_S, LEAK_Q, NIGHTTIME_LEAK, SLEEP_DIRECT_LEAK
+5. CV/OOF = 리더보드 점수 아님. 오버피팅 주의
+6. Submission은 3회 제한 — 실험은 로컬에서 다 하고 OOF-LB gap 작을 때만 제출
+7. **V140의 stacking 구조(local optimum)에 가까운 것 같음** — 큰 개선을 원하면 아키텍처 전환 필요
+8. 단순 feature engineering 반복 금지
