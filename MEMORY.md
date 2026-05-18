@@ -19,6 +19,16 @@
 - OOF-LB 갭: 0.00044 (overfitting 거의 없음, generalization 매우 안정적)
 - Submission: `submission_v140_stacking_20260518_021155.csv`
 
+### V146 — Optimized Stacking (OOF 테스트, 미제출)
+- OOF: 0.63169 | Δ vs V140: **-0.00941**
+- 구성: 5 LGBM seeds × GroupKFold 5-fold → LR meta-learner (**C=10**, V140: 0.1)
+- **핵심 발견**: V140의 C=0.1은 과소 규제. C=10이 OOF에서 유의미 개선.
+- **OOF-LB gap 아직 확인 안 됨** — 3일 제출 제한으로 미제출
+- OOF-LB gap < 0.002면 제출 후보
+- Submission: `submission_v146_optimized_20260518_181206.csv`
+
+## V140-V146 결과 정리
+
 ### V141 — Drift-Aware Stacking (테스트됨, LB=0.64031)
 - OOF: 0.63678 → LB: 0.64031
 - OOF-LB 갭: 0.00353 (V140 대비 8배 증가)
@@ -33,83 +43,43 @@
 
 ### V143 — Multi-Config Stacking (실패)
 - 4 configs × 3 seeds = 12 students
-- OOF=0.63873 (개선看似) but student OOF 1.2~1.4 (성능 붕괴)
+- OOF=0.63873 (대시시) but student OOF 1.2~1.4 (성능 붕괴)
 - 모든 config에 동일 features 사용 → prediction scale 붕괴
 - V140의 config→target 매핑이 이미 최적
 - **제출 안 함**
 
-### V127 — 3-way Ensemble (2026-05-11, 구 BEST)
-- **Leaderboard: 0.64763** | OOF: 0.53731
-- 구성: V121 (pairwise) + V123 (transformed) + V115 (base)
-- Weight: 0.35 / 0.25 / 0.40
-- Temperature scaling T=0.86
-- **LB 0.64763 → V140이 0.64072로 갱신**
-- OOF-LB 갭 0.11 (심각한 overfitting)
-- Submission: `submissions/submission_v127_20260511_224000.csv`
+### V144 — Double-Blind Ensemble Stacking (실패)
+- Pipeline A (V140 top-K) + Pipeline B (4× wider) → equal-weight ensemble
+- OOF: 0.64987 | Δ: +0.00877 (악화)
+- 4× widened features는 noise만 추가
+- **제출 안 함**
 
-## 핵심 결과 타임라인
+### V145 — Heterogeneous Multi-Model Stacking (실패)
+- 2 LGBM + 2 CatBoost + 2 XGBoost = 6 students
+- OOF: 0.66032 | Δ: +0.01922 (심각 악화)
+- CatBoost early stopping으로 17 iteration만 learning → OOF 1.3
+- 다른 model family는 V140의 정교한 LGBM 설계를 망가뜨림
+- **제출 안 함**
 
-### 베이스라인 (2026-05-01)
-- **LGBM V10**: CV 0.6038
+## 핵심 결과 비교표 (V140-V146)
 
-### Ensemble 실험 (2026-05-07)
-- **V58** (LGBM+CatBoost+XGB stacking): avg CV 0.6253
-- **V59** (multi-seed): V58과 동등
-- **V60** (interactions): 역개선 (-0.0046)
+| Version | Method | Seeds | Meta C | AVG OOF | Δ vs V140 | Status |
+|---------|--------|-------|--------|---------|-----------|--------|
+| V140 | LGBM stacking | 3 | 0.1 | 0.64110 | baseline | ⭐ LB=0.64072 |
+| V141 | Drift-aware | 5 | 0.1 | 0.63678 | -0.00432 | LB=0.64031 (gap↑) |
+| V142 | Stability-weighted | 5 | 0.1 | 0.63483 | -0.00627 | local (overfit risk) |
+| V143 | Multi-config | 12 | 0.1 | 0.63873 | -0.00237 | failed |
+| V144 | A+B ensemble | 6 | - | 0.64987 | +0.00877 | worse |
+| V145 | Hetero (CB+XGB) | 6 | 0.1 | 0.66032 | +0.01922 | worse |
+| **V146** | **Optimized** | **5** | **10** | **0.63169** | **-0.00941** | **local only** |
 
-### Leakage Clean (2026-05-07)
-- **V61** (CatBoost + leakage-clean): avg CV 0.5830
-- S4 전용 feature set (single LGBM, n_feat=25)
-
-### V63~V72 (2026-05-08)
-- Stacking, Ensemble, Calibration, interaction 실험 등 다수
-- V127보다 낮은 성능 — V127이 undisputed best
-
-### V259~V263 (2026-05-14)
-- **V259 Isotonic Calibration**: Δ=-0.019 (OOF)
-- **V260 Quantile+PSI**: 실제 LB=0.714592 (버림 — 역효과)
-- **V262 2x2x2 Factorial**: Isotonic Δ=-0.073 (강력한 gain)
-- **V263**: V127이 BEST 확인 (LB=0.64763, OOF=0.53731)
-- V45a/V46: leakage 발견 (100%/99.6% accuracy)
-
-### V62 Full Feature Pipeline (2026-05-17) — 확인 안 됨
-- 142 features train AND test 동일하게 적용 (column-set 일치 검증 완료)
-- 100-seed LGBM ensemble + JTD calibration + z-score personalization
-- V127보다 더 높은 점수 나올 가능성 있지만 **아직 리더보드 확인 안 됨**
-- Submission: `submissions/submission_v62_20260517_055940.csv`
-
-## 핵심 아키텍처 패턴
-
-### V127 (3-way Ensemble — BEST)
-```
-V121 (pairwise_interactions) + V123 (transformed) + V115 (base)
-→ Weight: 0.35 / 0.25 / 0.40
-→ Temperature scaling T=0.86
-→ LB: 0.64763, OOF: 0.53731
-```
-
-### V53 (Baseline)
-```
-LGBM seed ensemble (50 seeds)
-→ 개인별 z-score feature
-→ 타겟별 top-K feature selection
-→ Leakage column 제거
-```
-
-### V62 (Full 142-Feature — 아직 제출 전)
-```
-02_feature_engineering.py → train+test 동일 pipeline 적용
-Train: 450 rows × 153 cols (142 features + 7 targets + meta)
-Test:  250 rows × 146 cols (142 features + meta)
-100-seed LGBM ensemble + JTD calibration + z-score per-subject
-```
-
-## 주요 인사이트
+## 핵심 인사이트
 - **V140이 BEST (LB=0.64072, OOF=0.64116, 갭=0.00044)**
 - V140의 핵심: proper CV stacking, OOF≈LB (stable generalization)
 - **fold drift weighting은 noise fitting** (V142 실패 — OOF↓했지만 LB↑)
 - **config→target 매핑이 이미 최적** — 깨면 성능 붕괴 (V143 실패)
 - **V142 교훈: OOF↓ ≠ LB↓**, OOF-LB correlation 유지가 최우선
+- **meta C=10이 C=0.1보다 OOF 개선** (V146, -0.00941). OOF-LB gap 확인 필요.
 - Isotonic calibration: OOF에서는 강력하지만 LB에는 역효과
 - **LB 0.50은 매우 어려움** (OOF <0.47 필요)
 - 단순 feature engineering, calendar, naive ensemble 재탕 금지
@@ -132,3 +102,4 @@ Test:  250 rows × 146 cols (142 features + meta)
 6. Submission은 3회 제한 — 실험은 로컬에서 다 하고 OOF-LB gap 작을 때만 제출
 7. **V140의 stacking 구조(local optimum)에 가까운 것 같음** — 큰 개선을 원하면 아키텍처 전환 필요
 8. 단순 feature engineering 반복 금지
+9. **meta-learner C는 실험 필요**: C=0.1 → C=10으로 OOF 개선 확인됨
