@@ -1,0 +1,152 @@
+{
+  "results": [
+    {
+      "target": "Q1",
+      "best_k": 5,
+      "best_oof": 0.62282,
+      "features": [
+        "mUsageStats_usage_major_ratio_mean",
+        "mWifi_wifi_max_rssi_std",
+        "mUsageStats_usage_total_time_mean",
+        "mWifi_wifi_max_rssi_mean",
+        "mBle_ble_count_std"
+      ]
+    },
+    {
+      "target": "Q2",
+      "best_k": 15,
+      "best_oof": 0.57657,
+      "features": [
+        "mUsageStats_usage_app_count_std",
+        "mACStatus_m_charging_mean",
+        "mACStatus_m_charging_std",
+        "mUsageStats_usage_major_ratio_std",
+        "mActivity_m_activity_std",
+        "mWifi_wifi_count_std",
+        "mGps_gps_alt_range_max",
+        "mBle_ble_rssi_std_min",
+        "mWifi_wifi_avg_rssi_max",
+        "mBle_ble_rssi_std_mean",
+        "mAmbience_ambience_inside,_small_room_sum",
+        "mBle_ble_min_rssi_mean",
+        "mBle_ble_rssi_std_max",
+        "mACStatus_hour_night",
+        "mBle_ble_avg_rssi_min"
+      ]
+    },
+    {
+      "target": "Q3",
+      "best_k": 18,
+      "best_oof": 0.60527,
+      "features": [
+        "mLight_m_light_mean",
+        "mBle_ble_count_max",
+        "mWifi_wifi_max_rssi_std",
+        "mWifi_wifi_avg_rssi_min",
+        "mWifi_wifi_avg_rssi_max",
+        "mUsageStats_usage_total_time_std",
+        "mActivity_m_activity_std",
+        "mACStatus_hour_afternoon",
+        "mWifi_wifi_avg_rssi_mean",
+        "mAmbience_ambience_music_sum",
+        "mGps_gps_avg_speed_std",
+        "mBle_ble_device_count_max",
+        "mWifi_wifi_max_rssi_mean",
+        "mUsageStats_usage_total_time_mean",
+        "mWifi_wifi_count_max",
+        "mGps_gps_max_speed_std",
+        "mBle_ble_avg_rssi_min",
+        "mScreenStatus_hour_night"
+      ]
+    },
+    {
+      "target": "S1",
+      "best_k": 15,
+      "best_oof": 0.55473,
+      "features": [
+        "mWifi_wifi_max_rssi_max",
+        "mWifi_wifi_avg_rssi_min",
+        "mScreenStatus_m_screen_use_std",
+        "mUsageStats_usage_total_time_mean",
+        "mScreenStatus_hour_evening",
+        "wHr_hr_std",
+        "mWifi_wifi_count_max",
+        "mUsageStats_usage_major_ratio_std",
+        "mACStatus_hour_evening",
+        "mWifi_wifi_max_rssi_std",
+        "mLight_m_light_max",
+        "wHr_hr_count",
+        "mScreenStatus_hour_afternoon",
+        "mWifi_wifi_avg_rssi_max",
+        "mScreenStatus_m_screen_use_mean"
+      ]
+    },
+    {
+      "target": "S2",
+      "best_k": 18,
+      "best_oof": 0.56316,
+      "features": [
+        "mWifi_wifi_max_rssi_max",
+        "mWifi_wifi_avg_rssi_max",
+        "mScreenStatus_m_screen_use_mean",
+        "mBle_ble_avg_rssi_min",
+        "mLight_m_light_mean",
+        "mGps_gps_count_std",
+        "mBle_ble_rssi_std_std",
+        "mGps_gps_count_mean",
+        "mLight_m_light_max",
+        "mScreenStatus_hour_morning",
+        "mScreenStatus_hour_evening",
+        "mBle_ble_max_rssi_mean",
+        "mUsageStats_usage_app_count_std",
+        "mUsageStats_usage_major_ratio_mean",
+        "mUsageStats_usage_app_count_mean",
+        "mBle_ble_device_count_std",
+        "mBle_ble_min_rssi_mean",
+        "mScreenStatus_m_screen_use_std"
+      ]
+    },
+    {
+      "target": "S3",
+      "best_k": 12,
+      "best_oof": 0.59807,
+      "features": [
+        "mWifi_wifi_max_rssi_max",
+        "mUsageStats_usage_total_time_mean",
+        "mWifi_wifi_max_rssi_mean",
+        "mGps_gps_count_std",
+        "mBle_ble_max_rssi_max",
+        "wHr_hr_mean",
+        "mACStatus_m_charging_mean",
+        "mGps_gps_count_mean",
+        "wHr_hr_std",
+        "mBle_ble_min_rssi_min",
+        "mUsageStats_usage_app_count_std",
+        "mGps_gps_avg_speed_max"
+      ]
+    },
+    {
+      "target": "S4",
+      "best_k": 15,
+      "best_oof": 0.58682,
+      "features": [
+        "mGps_gps_avg_speed_max",
+        "wLight_w_light_max",
+        "mUsageStats_usage_major_ratio_mean",
+        "mBle_ble_max_rssi_max",
+        "mBle_ble_min_rssi_max",
+        "mLight_m_light_std",
+        "mWifi_wifi_avg_rssi_min",
+        "mUsageStats_usage_app_count_mean",
+        "mScreenStatus_m_screen_use_mean",
+        "mWifi_wifi_strong_ratio_mean",
+        "wPedo_pedo_burned_calories_sum",
+        "mWifi_wifi_max_rssi_mean",
+        "mLight_m_light_mean",
+        "mWifi_wifi_strong_ratio_std",
+        "mBle_ble_rssi_std_min"
+      ]
+    }
+  ],
+  "avg": 0.58678
+}

@@ -577,16 +577,28 @@ def main():
     train_feat = create_day_features(train_parquet, labels=labels)
     print(f"  Train shape: {train_feat.shape}")
     
-    # Generate test features
+    # Generate test features — ONLY for the exact 250 date pairs in sample
     print("\n── Generating test features ──")
+    
+    # For test, we need features for only the 250 date pairs in sample_submission
+    # Strategy: generate features for sample dates, then filter
     test_subjects = set(sample['subject_id'].unique())
     test_parquet = load_and_filter_parquet(test_subjects)
+    
+    # Generate features for all dates for these subjects, then filter to sample dates
     test_feat = create_day_features(test_parquet, labels=None)
     
-    # Merge sleep_date, lifelog_date from sample
+    # Merge with sample to get sleep_date, lifelog_date
     sample_key = sample[['subject_id','date','sleep_date','lifelog_date']]
-    test_feat = test_feat.merge(sample_key, on=['subject_id','date'], how='left')
+    test_feat = test_feat.merge(sample_key, on=['subject_id','date'], how='inner')
+    
+    # Sort to match sample order
+    test_feat = test_feat.sort_values(['subject_id', 'date']).reset_index(drop=True)
+    
+    # Final shape should be 250
     print(f"  Test shape: {test_feat.shape}")
+    if len(test_feat) != 250:
+        print(f"  ⚠️ WARNING: Expected 250 rows but got {len(test_feat)}")
     
     # Compare columns
     train_cols = sorted([c for c in train_feat.columns if c not in META_COLS | set(TARGETS)])

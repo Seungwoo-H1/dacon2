@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 
 # ── 경로 설정 ─────────────────────────────────────────────
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = Path('/root/.openclaw/workspace')
 DATA_RAW = PROJECT_ROOT / "data_raw"
 DATA_DIR = DATA_RAW / "ch2025_data_items"
 DATA_PROCESSED = PROJECT_ROOT / "data_processed"

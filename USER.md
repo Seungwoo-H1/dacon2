@@ -7,11 +7,14 @@
 - **Notes:** Telegram으로 대화함. 한국어 사용자.
 - **Dacon 제출 방식:** API 제출 금지. 파일 만들고 커밋만 하면 승우さんが 수동으로 올림. API 403 발생 시 자동으로 파일 생성 모드로 전환.
 
-## 🚨 Git Commit Rule
+## 🚨 Git Commit Rule (반드시 지켜)
 
-**절대 `Seungwoo-H1`로 커밋하지 마.** 해당 계정은 본인 것이 아님.
-- Git identity: `Seungwoo Hong` / `mwoo423@gmail.com`
-- GitHub account: `Seungwoo-H1`로 push할 때만 토큰 사용, 커밋 author는 반드시 본인 계정으로
+- **Git author name:** `Seungwoo-H1`
+- **Git author email:** `mwoo423@gmail.com`
+- **절대 `seungwoo-h`로 커밋하지 마.** 해당 계정은 다른 사람.
+- 모든 git commit/push 시 이 identity로만 작업
+- `git config --global user.name` → `Seungwoo-H1`
+- `git config --global user.email` → `mwoo423@gmail.com`
 - `.env`의 `GITHUB_TOKEN`, `GITHUB_USER_ID`는 push 전용
 
 ## Context

@@ -1,0 +1,28 @@
+{
+  "version": "v273",
+  "time": "2026-05-16T04:46:07.921314",
+  "avg_oof": 0.004352,
+  "target_oof": {
+    "Q1": 0.004347,
+    "Q2": 0.004349,
+    "Q3": 0.004337,
+    "S1": 0.004367,
+    "S2": 0.004316,
+    "S3": 0.004391,
+    "S4": 0.004361
+  },
+  "est_lb": 0.109352,
+  "est_gap": 0.105,
+  "weights": {
+    "lgbm_deep": 1.0,
+    "lgbm_wide": 0.0,
+    "xgb_deep": 0.0,
+    "xgb_wide": 0.0,
+    "cat_deep": 0.0,
+    "cat_wide": 0.0
+  },
+  "n_feat_raw": 62,
+  "n_feat_zscore": 70,
+  "method": "6-arch ensemble + per-target top-K + per-person zscore",
+  "time_total": 360.9
+}

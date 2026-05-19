@@ -1,0 +1,41 @@
+{
+  "v127_exact_repro": {
+    "Q1": {
+      "cfg": "deep",
+      "oof": 0.69826,
+      "n_seeds": 50
+    },
+    "Q2": {
+      "cfg": "deep",
+      "oof": 0.66186,
+      "n_seeds": 50
+    },
+    "Q3": {
+      "cfg": "v48",
+      "oof": 0.67206,
+      "n_seeds": 50
+    },
+    "S1": {
+      "cfg": "wide",
+      "oof": 0.62135,
+      "n_seeds": 50
+    },
+    "S2": {
+      "cfg": "deep",
+      "oof": 0.64031,
+      "n_seeds": 50
+    },
+    "S3": {
+      "cfg": "safety",
+      "oof": 0.65931,
+      "n_seeds": 50
+    },
+    "S4": {
+      "cfg": "wide",
+      "oof": 0.679,
+      "n_seeds": 50
+    }
+  },
+  "n_seeds": 50,
+  "avg_oof": 0.66173
+}

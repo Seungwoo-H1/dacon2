@@ -128,7 +128,7 @@ def create_ambience_features(df):
         col = f"ambience_{korean_name}"
         if col in df.columns:
             grouped = df.groupby(["subject_id", "date"])["ambience_value"].agg(["sum", "mean"]).reset_index()
-            grouped.columns = [f"ambience_value", f"ambience_{eng_name}_{f}" for f in ['sum', 'mean']]
+            grouped.columns = ['ambience_value'] + [f'ambience_{eng_name}_{f}' for f in ['sum', 'mean']]
             grouped['subject_id'] = df['subject_id'].values[:len(grouped)]
             grouped['date'] = df['date'].values[:len(grouped)]
             result_dfs.append(grouped)

@@ -1,0 +1,40 @@
+{
+  "v300": {},
+  "iterations": [],
+  "exp_A_baseline": {
+    "avg_oof": 0.66166
+  },
+  "exp_B_calibration": {
+    "avg_oof": 0.64376
+  },
+  "exp_C_feature_select": {
+    "avg_oof": 0.62693
+  },
+  "exp_D_feature_select_cal": {
+    "avg_oof": 0.60137
+  },
+  "exp_E_multi_config": {
+    "avg_oof": 0.62713
+  },
+  "exp_F_final": {
+    "avg_oof": 0.60292
+  },
+  "summary": {
+    "A_baseline": 0.661658993195034,
+    "B_calibration": 0.6437635259740204,
+    "C_feature_select": 0.6269333473605491,
+    "D_feature_select_cal": 0.6013688094198238,
+    "E_multi_config": 0.6271323880172869,
+    "F_multi_config_cal": 0.6029188725482174
+  },
+  "top_k_sets": {
+    "Q1": "['mUsageStats_usage_major_ratio_mean', 'mWifi_wifi_max_rssi_std', 'mUsageStats_usage_total_time_mean', 'mWifi_wifi_max_rssi_mean', 'mBle_ble_count_std', 'mScreenStatus_hour_morning', 'mWifi_wifi_max_rssi_min', 'mAmbience_ambience_top5_sum', 'mBle_ble_device_count_mean', 'wHr_hr_std']...(20 total)",
+    "Q2": "['mUsageStats_usage_app_count_std', 'mACStatus_m_charging_mean', 'mACStatus_m_charging_std', 'mUsageStats_usage_major_ratio_std', 'mActivity_m_activity_std', 'mWifi_wifi_count_std', 'mGps_gps_alt_range_max', 'mBle_ble_rssi_std_min', 'mWifi_wifi_avg_rssi_max', 'mBle_ble_rssi_std_mean']...(20 total)",
+    "Q3": "['mLight_m_light_mean', 'mBle_ble_count_max', 'mWifi_wifi_max_rssi_std', 'mWifi_wifi_avg_rssi_min', 'mWifi_wifi_avg_rssi_max', 'mUsageStats_usage_total_time_std', 'mActivity_m_activity_std', 'mACStatus_hour_afternoon', 'mWifi_wifi_avg_rssi_mean', 'mAmbience_ambience_music_sum']...(20 total)",
+    "S1": "['mWifi_wifi_max_rssi_max', 'mWifi_wifi_avg_rssi_min', 'mScreenStatus_m_screen_use_std', 'mUsageStats_usage_total_time_mean', 'mScreenStatus_hour_evening', 'wHr_hr_std', 'mWifi_wifi_count_max', 'mUsageStats_usage_major_ratio_std', 'mACStatus_hour_evening', 'mWifi_wifi_max_rssi_std']...(20 total)",
+    "S2": "['mWifi_wifi_max_rssi_max', 'mWifi_wifi_avg_rssi_max', 'mScreenStatus_m_screen_use_mean', 'mBle_ble_avg_rssi_min', 'mLight_m_light_mean', 'mGps_gps_count_std', 'mBle_ble_rssi_std_std', 'mGps_gps_count_mean', 'mLight_m_light_max', 'mScreenStatus_hour_morning']...(20 total)",
+    "S3": "['mWifi_wifi_max_rssi_max', 'mUsageStats_usage_total_time_mean', 'mWifi_wifi_max_rssi_mean', 'mGps_gps_count_std', 'mBle_ble_max_rssi_max', 'wHr_hr_mean', 'mACStatus_m_charging_mean', 'mGps_gps_count_mean', 'wHr_hr_std', 'mBle_ble_min_rssi_min']...(20 total)",
+    "S4": "['mGps_gps_avg_speed_max', 'wLight_w_light_max', 'mUsageStats_usage_major_ratio_mean', 'mBle_ble_max_rssi_max', 'mBle_ble_min_rssi_max', 'mLight_m_light_std', 'mWifi_wifi_avg_rssi_min', 'mUsageStats_usage_app_count_mean', 'mScreenStatus_m_screen_use_mean', 'mWifi_wifi_strong_ratio_mean']...(20 total)"
+  },
+  "time": 383.8
+}

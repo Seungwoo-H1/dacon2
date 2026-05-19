@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-14T16:24:43.888Z",
+  "updatedAt": "2026-05-15T15:57:26.897Z",
   "entries": {
     "memory:memory/2026-05-01.md:1:32": {
       "key": "memory:memory/2026-05-01.md:1:32",
@@ -582,6 +582,68 @@
         "psi.mean",
         "psi.sum",
         "0.11"
+      ]
+    },
+    "memory:memory/2026-05-11.md:1:41": {
+      "key": "memory:memory/2026-05-11.md:1:41",
+      "path": "memory/2026-05-11.md",
+      "startLine": 1,
+      "endLine": 41,
+      "source": "memory",
+      "snippet": "# 2026-05-11 (금) — DaCon2 연구日志 ## DaCon2 핵심 결과 ### V106 (LB 1.057 실패) - OOF 0.5250 → LB 1.0571 (심각한 OOF-LB mismatch) - 원인: 예측값 train mean과 systematically misaligned (S3: 0.39 vs train 0.66) - **제출 완료, LB 분석용으로 기록** ### V114 (수동 제출 완료) - OOF 0.6544 - isotonic calibration 없음 → V115(0.5476)보다 떨어짐 - **제출 완료, LB 결과 대기 중** ### V115 (pipeline best before ensemble) - OOF **0.5476** (isotonic calibration + personalization) - 베이스라인: base 141 cols + zscore 141 cols + meta 12 cols = 294 cols ### V119 (base-only isotonic) - OOF 0.5706 (pairwise/transformed 없음) - pairwise/transformed가 핵심 발견 ### V121 (current best single model) - OOF **0.5482** (pairwise+transformed per-target × 50 seeds) - pairwise/",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-15T15:57:26.897Z",
+      "lastRecalledAt": "2026-05-15T15:57:26.897Z",
+      "queryHashes": [
+        "704383919f44"
+      ],
+      "recallDays": [
+        "2026-05-15"
+      ],
+      "conceptTags": [
+        "1.057",
+        "0.5250",
+        "1.0571",
+        "oof-lb",
+        "0.39",
+        "0.66",
+        "0.6544",
+        "0.5476"
+      ]
+    },
+    "memory:memory/2026-05-08.md:1:37": {
+      "key": "memory:memory/2026-05-08.md:1:37",
+      "path": "memory/2026-05-08.md",
+      "startLine": 1,
+      "endLine": 37,
+      "source": "memory",
+      "snippet": "# 2026-05-08 Daily Log — 최종 요약 ## 세션 복원 (12:27) - 승우: OPENCLAW_HANDOFF_20260506.md 읽고 현황 파악, MEMORY.md 생성 요청 -MEMORY.md 생성 완료: `/home/mwoo423/projects/dacon2/MEMORY.md` - daily log 생성: `/home/mwoo423/projects/dacon2/memory/2026-05-08.md` ## 전체 타임라인 복원 ### 2026-05-01: 베이스라인 - LGBM V10: CV 0.6038 — 2주간 최고 기록 - V11~V14: 개인화 피처, calibration 시도 → V10 미달 - V25: LGBM rolling features, Cal 0.6462 - V30: XGB, Cal 0.6685 ### 2026-05-05: V35~V40 실패 - 메모리 부족 (SIGKILL), RAM 16GB+Swap 4GB 부족 - V37 완주: Avg 0.6144 (-0.0106 vs V10) - **결론: V10이 당시 최고** ### 2026-05-06: V53 Deep Feature Engineering - **V53 final**: 리더보드 **0.6535822621** (LGBM seed ensemble 50) - 타깃별 cfg/feature 선택: deep/wide/v48/safety -",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-15T15:57:26.897Z",
+      "lastRecalledAt": "2026-05-15T15:57:26.897Z",
+      "queryHashes": [
+        "704383919f44"
+      ],
+      "recallDays": [
+        "2026-05-15"
+      ],
+      "conceptTags": [
+        "openclaw-handoff-20260506.md",
+        "memory.md",
+        "0.6038",
+        "0.6462",
+        "0.6685",
+        "0.6144",
+        "0.0106",
+        "0.6535822621"
       ]
     }
   }
