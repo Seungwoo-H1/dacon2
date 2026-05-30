@@ -15,6 +15,13 @@
 
 ### V140 — Proper CV Stacking (BEST — 2026-05-18)
 - **Leaderboard: 0.64072** | OOF: 0.64116
+- V146 (2026-05-30 제출) 결과 확인 전
+
+### V146 — Optimized Stacking (제출 완료 — 2026-05-30)
+- OOF: 0.63169 | Δ vs V140: **-0.00941**
+- 2026-05-30 수동 제출 완료
+- Leaderboard 결과 기다리는 중
+- **제출 파일**: `submission_v146_submit_20260530.csv`
 - 구성: 3 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=0.1)
 - OOF-LB 갭: 0.00044 (overfitting 거의 없음, generalization 매우 안정적)
 - Submission: `submission_v140_stacking_20260518_021155.csv`
