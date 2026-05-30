@@ -20,7 +20,7 @@
 - **제출 파일**: `submission_v146_submit_20260530.csv`
 - 구성: 5 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=10)
 
-## V140-V160 결과 정리
+## V140-V164 결과 정리
 
 ### V141 — Drift-Aware Stacking (테스트됨, LB=0.64031)
 - OOF: 0.63678 → LB: 0.64031
@@ -97,6 +97,51 @@
 - **Predicted LB**: ~0.620-0.625 (better than V146)
 - **Submission candidate**: YES (OOF improvement consistent, low overfitting risk)
 - **Status**: Not yet submitted — needs user approval for submission
+
+### V161 — Iterative Pseudo-Labeling with V160 Seeds (실패)
+- 15 seeds + pseudo-labeling (threshold=0.50, weight=0.5)
+- Only 46 pseudo-labels generated (Q1:1, Q2:14, Q3:3, S1:5, S2:17, S3:2, S4:4)
+- Too few pseudo-labels to affect training
+- **Δ vs R1: +0.00000** (no change)
+- V160 meta still too conservative for pseudo-labeling
+- **제출 안 함**
+
+### V162 — More Diverse Seeds (Random Range) (실패)
+- Diverse seeds from range [42, 300): AVG OOF = 0.62534
+- Regular seeds (step=7): AVG OOF = 0.62240
+- Diverse seeds were **worse** (+0.00294 vs V160)
+- LGBM internal randomness dominates over seed spacing
+- **제출 안 함**
+
+### V163 — Two-Level Stacking (Hierarchical) (실패)
+- 15 seeds → 3 groups of 5 → 3 LR → 1 final LR
+- AVG OOF: 0.63019 | Δ vs V160: **+0.00779** (worse)
+- Hierarchical structure adds parameters without benefit
+- 450 samples too few for 3 intermediate LR + 1 final LR
+- **제출 안 함**
+
+### V164 — Cross-Fold Feature Ranking (미완료)
+- Cross-fold feature ranking takes too long
+- Feature ranking was consistent across folds in sampling
+- **Next**: skip if not proven beneficial
+
+## ⭐ V160 — Current BEST (OOF 테스트 완료, 미제출)
+- **AVG OOF: 0.62240** (vs V146: 0.63169, Δ=-0.00929)
+- **All 7 targets improved** (no degradation)
+- **Low overfitting risk**: same LR(C=10) meta as V146
+- **Architecture**: 15 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=10)
+- **Seed selection**: SEED=42, step=7 (42,49,56,...,140)
+- **Expected LB**: ~0.620-0.625 (similar OOF-LB gap as V146)
+- **Submission candidate**: YES
+- **Status**: Waiting for user approval — V146 LB result 확인 필요
+
+## V146 — Optimized Stacking (제출 완료 — 2026-05-30)
+- OOF: 0.63169 | Δ vs V140: **-0.00941**
+- 2026-05-30 수동 제출 완료
+- Leaderboard 결과 기다리는 중
+- **제출 파일**: 
+- 구성: 5 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=10)
+- V160 OOF에서 개선 확인되었으나 LB 제출 검증 필요
 
 ### V141 — Drift-Aware Stacking (테스트됨, LB=0.64031)
 - OOF: 0.63678 → LB: 0.64031
