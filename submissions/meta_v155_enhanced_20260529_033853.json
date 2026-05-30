@@ -1,0 +1,74 @@
+{
+  "version": "V155",
+  "timestamp": "20260529_033853",
+  "description": "Enhanced Multi-Model Stacking (LGBM+XGB+CB, 7 seeds, target-specific)",
+  "params": {
+    "n_seeds": 7,
+    "n_folds": 5,
+    "top_k": 9,
+    "meta_c_values": [
+      0.1,
+      1,
+      10,
+      100
+    ],
+    "n_features": 141
+  },
+  "results": {
+    "avg_student_oof": 0.6025167974255428,
+    "avg_best_meta_oof": 0.464474004295094,
+    "delta_vs_v140": -0.17668599570490595,
+    "per_target": {
+      "Q1": {
+        "avg_student_oof": 0.5015543926118087,
+        "meta_oof": 0.4880287374874014,
+        "best_meta_oof": 0.4880287374874014,
+        "best_c": "weighted",
+        "n_selected": 5
+      },
+      "Q2": {
+        "avg_student_oof": 0.5629374418240131,
+        "meta_oof": 0.4765295162664261,
+        "best_meta_oof": 0.4765295162664261,
+        "best_c": "weighted",
+        "n_selected": 5
+      },
+      "Q3": {
+        "avg_student_oof": 0.598049051464536,
+        "meta_oof": 0.4791331886033709,
+        "best_meta_oof": 0.4791331886033709,
+        "best_c": "weighted",
+        "n_selected": 5
+      },
+      "S1": {
+        "avg_student_oof": 0.6838508633833328,
+        "meta_oof": 0.44564703162927943,
+        "best_meta_oof": 0.44564703162927943,
+        "best_c": "weighted",
+        "n_selected": 5
+      },
+      "S2": {
+        "avg_student_oof": 0.650551051028113,
+        "meta_oof": 0.45356774258507887,
+        "best_meta_oof": 0.45356774258507887,
+        "best_c": "weighted",
+        "n_selected": 5
+      },
+      "S3": {
+        "avg_student_oof": 0.6652297321054261,
+        "meta_oof": 0.4339914941673969,
+        "best_meta_oof": 0.4339914941673969,
+        "best_c": "weighted",
+        "n_selected": 5
+      },
+      "S4": {
+        "avg_student_oof": 0.5554450495615698,
+        "meta_oof": 0.4744203193267039,
+        "best_meta_oof": 0.4744203193267039,
+        "best_c": "weighted",
+        "n_selected": 5
+      }
+    }
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v155_enhanced_20260529_033853.csv"
+}
