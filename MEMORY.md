@@ -13,28 +13,90 @@
 
 ## ⭐ 현재 BEST (실제 제출 확인됨)
 
-### V140 — Proper CV Stacking (BEST — 2026-05-18)
-- **Leaderboard: 0.64072** | OOF: 0.64116
-- V146 (2026-05-30 제출) 결과 확인 전
-
 ### V146 — Optimized Stacking (제출 완료 — 2026-05-30)
 - OOF: 0.63169 | Δ vs V140: **-0.00941**
 - 2026-05-30 수동 제출 완료
 - Leaderboard 결과 기다리는 중
 - **제출 파일**: `submission_v146_submit_20260530.csv`
-- 구성: 3 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=0.1)
-- OOF-LB 갭: 0.00044 (overfitting 거의 없음, generalization 매우 안정적)
-- Submission: `submission_v140_stacking_20260518_021155.csv`
+- 구성: 5 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=10)
 
-### V146 — Optimized Stacking (OOF 테스트, 미제출)
-- OOF: 0.63169 | Δ vs V140: **-0.00941**
-- 구성: 5 LGBM seeds × GroupKFold 5-fold → LR meta-learner (**C=10**, V140: 0.1)
-- **핵심 발견**: V140의 C=0.1은 과소 규제. C=10이 OOF에서 유의미 개선.
-- **OOF-LB gap 아직 확인 안 됨** — 3일 제출 제한으로 미제출
-- OOF-LB gap < 0.002면 제출 후보
-- Submission: `submission_v146_optimized_20260518_181206.csv`
+## V140-V160 결과 정리
 
-## V140-V146 결과 정리
+### V141 — Drift-Aware Stacking (테스트됨, LB=0.64031)
+- OOF: 0.63678 → LB: 0.64031
+- OOF-LB 갭: 0.00353 (V140 대비 8배 증가)
+- fold drift weighting은 noise fitting으로 일반화 저하
+- **제출 안 함**
+
+### V142 — Stability-Weighted Stacking (OOF만 테스트)
+- V142-A (feat sel only): OOF=0.63565
+- V142-B (fold drift weights): OOF=0.63483
+- OOF는 V140보다 낮지만, OOF-LB correlation 깨질 가능성 높음
+- **제출 안 함**
+
+### V143 — Multi-Config Stacking (실패)
+- 4 configs × 3 seeds = 12 students
+- OOF=0.63873 but student OOF 1.2~1.4 (성능 붕괴)
+- **제출 안 함**
+
+### V144 — Double-Blind Ensemble Stacking (실패)
+- Pipeline A + Pipeline B → equal-weight ensemble
+- OOF: 0.64987 | Δ: +0.00877 (악화)
+- **제출 안 함**
+
+### V145 — Heterogeneous Multi-Model Stacking (실패)
+- 2 LGBM + 2 CatBoost + 2 XGBoost = 6 students
+- OOF: 0.66032 | Δ: +0.01922 (심각 악화)
+- 다른 model family는 V140의 정교한 LGBM 설계를 망가뜨림
+- **제출 안 함**
+
+### V155 — Heterogeneous Multi-Model (실패)
+- OOF=0.46447 but severe overfitting (Student OOF 0.602 vs Meta OOF 0.464, gap -0.138)
+- **NOT submitted**
+
+### V156 — Group-Enriched Stacking (실패)
+- Added 564 group features + 55 cross-domain interactions + multi-meta
+- AVG OOF: 0.62768 (better) but student OOF very poor (Q1: 0.72-0.76)
+- Group features are pure noise. Multi-meta averaging masked poor student predictions.
+- **제출 안 함**
+
+### V157 — Wider Feature Selection (실패)
+- top-K×2 feature selection (same 141 base features)
+- AVG OOF: 0.64317 | Δ vs V146: **+0.01148** (worse)
+- Wider feature selection = more noise. V146's conservative selection is optimal.
+- **제출 안 함**
+
+### V158 — Pseudo-Labeling (실패)
+- V146 meta output too conservative (|pred - 0.5| < 0.05 for all)
+- No high-confidence predictions selected (threshold=0.55)
+- Pseudo-labeling requires confident predictions to be useful
+- **제출 안 함**
+
+### V159 — Non-linear Meta-learner (실패)
+- GBM meta-learner (8 leaves, depth=2, 50 trees)
+- AVG OOF: 0.54298 | Δ vs V146: **-0.08871** (but severe overfitting)
+- Student OOF: 0.63-0.80 | Meta OOF: 0.51-0.57 → gap 0.12-0.24
+- Non-linear meta overfits with only 450 training samples
+- Same pattern as V155: meta memorizes training patterns
+- **제출 안 함**
+
+### V160 — More Seeds Ensemble (성공 ⭐)
+- 15 seeds vs V146's 5 seeds, same architecture (LR C=10 meta)
+- **AVG OOF: 0.62240 | Δ vs V146: -0.00929**
+- All 7 targets improved consistently:
+  - Q1: 0.67694 → 0.67121 (-0.00573)
+  - Q2: 0.62758 → 0.61828 (-0.00930)
+  - Q3: 0.64119 → 0.63507 (-0.00612)
+  - S1: 0.58833 → 0.57792 (-0.01041)
+  - S2: 0.60366 → 0.59058 (-0.01308)
+  - S3: 0.63244 → 0.62331 (-0.00913)
+  - S4: 0.65171 → 0.64040 (-0.01131)
+- **Key insight**: Ensemble diversity (more seeds) reduces variance without overfitting
+- **Risk**: Low — same LR(C=10) meta, proven architecture
+- **Expected LB**: Similar OOF-LB gap as V146 (~0.000-0.002)
+- **Predicted LB**: ~0.620-0.625 (better than V146)
+- **Submission candidate**: YES (OOF improvement consistent, low overfitting risk)
+- **Status**: Not yet submitted — needs user approval for submission
 
 ### V141 — Drift-Aware Stacking (테스트됨, LB=0.64031)
 - OOF: 0.63678 → LB: 0.64031
@@ -92,6 +154,14 @@
 - **LB 0.50은 매우 어려움** (OOF <0.47 필요)
 - 단순 feature engineering, calendar, naive ensemble 재탕 금지
 - 다음 실험은 OOF-LB gap <0.002일 때만 제출
+- **V156 교훈: group features = noise** — 추가 feature는 오히려 해로움
+- **V157 교훈: wider feature selection = noise** — V146의 feature selection 이미 최적
+- **V158 교훈: V146 meta output too conservative** — pseudo-labeling 무용
+- **V159 교훈: non-linear meta = overfitting** — 450 samples에는 linear meta가 안전
+- **V160 발견: 더 많은 seeds = 더 나은 ensemble** (Δ=-0.00929, 모든 타겟 개선)
+- Seeds 증가(5→15)는 가장 low-risk한 개선 방법
+- Non-linear meta는 training data에 과적합됨 (V155, V159 동일 패턴)
+- 다음 실험: V160 제출 후보 (OOF 0.62240 vs V146 0.63169)
 
 ## 파일 구조
 - `/home/mwoo423/projects/dacon2/src/` — 모든 실험 스크립트

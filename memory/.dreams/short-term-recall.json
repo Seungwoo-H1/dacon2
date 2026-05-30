@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-15T15:57:26.897Z",
+  "updatedAt": "2026-05-24T02:06:10.550Z",
   "entries": {
     "memory:memory/2026-05-01.md:1:32": {
       "key": "memory:memory/2026-05-01.md:1:32",
@@ -270,27 +270,29 @@
       "endLine": 45,
       "source": "memory",
       "snippet": "# 2026-05-07 (update) ## V53 Handoff 작업 완료 - `OPENCLAW_HANDOFF_20260506.md` 기반 작업 진행 ### 작업 내용 1. ✅ **V53 재현 검증** — V53 final 재생성 확인 2. ✅ **n_feat sweep** — V53_feat_sweep.py 작성, CV 7타깃 중 6개 개선 3. ✅ **V53 Swept 제출물** — `submission_v53_swept_20260507_010256.csv` ### 멀티에이전트 실험 (3 에이전트 동시 가동) #### V58 CatBoost 직접 구현 - CatBoost vs LGBM OOF 비교 - **ALL 7 targets improvement!** - Q1: +0.1367, S3: +0.1787가 가장 큼 - AVG CV: 0.5904 (V53=0.6806, delta=+0.0927) #### V58 개발 에이전트 (Stack) - avg delta +0.053 (6/7 improvement) #### V60 Leakage-clean CatBoost - Nighttime features (hour_night, hour_morning, light_sum, charging_sum/max) 제거 - Sleep-direct features (gps speed/count, activity sum/max/min) 제거 -",
-      "recallCount": 6,
+      "recallCount": 7,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 6,
+      "totalScore": 7,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-08T06:04:14.824Z",
-      "lastRecalledAt": "2026-05-14T04:15:34.421Z",
+      "lastRecalledAt": "2026-05-24T02:06:10.550Z",
       "queryHashes": [
         "f19e60ae999c",
         "be7beca81d35",
         "674513fd5c62",
         "b0daf50d259c",
         "51ea32405f4e",
-        "62efb5952dcc"
+        "62efb5952dcc",
+        "6df512644bbc"
       ],
       "recallDays": [
         "2026-05-08",
         "2026-05-09",
         "2026-05-10",
         "2026-05-11",
-        "2026-05-14"
+        "2026-05-14",
+        "2026-05-24"
       ],
       "conceptTags": [
         "openclaw-handoff-20260506.md",
@@ -467,18 +469,20 @@
       "endLine": 99,
       "source": "memory",
       "snippet": "- V127: train LL~0.50 → 예상 LB 0.55~0.60 - shift amplification 적용 시 더 낮아질 가능성 ### Dacon API - submit_api 0.1.2 설치 완료 - Token `54b8510a-9698-423d-8ea66c3597e1` 만료/무효 → 403 - 수동 제출 필요: https://dacon.io/competitions/official/236690 ## 제출 파일 목록 (20개 이상) - submission_v121_20260511_221621.csv (OOF 0.5482) - submission_v127_20260511_224000.csv (OOF 0.5373, BEST) - submission_v129_20260511_224500.csv - submission_v130_20260511_224500.csv - submission_v131_20260511_224500.csv - submission_v132a_20260511_224800.csv (OOF 0.5361) - submission_v132b_20260511_224800.csv - submission_v132c_20260511_224800.csv - submission_v133_per_*.csv, submission_v133_uni_*.csv - submission_v134a_20260511_225000.csv - s",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 2,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-13T00:02:34.939Z",
-      "lastRecalledAt": "2026-05-13T00:02:34.939Z",
+      "lastRecalledAt": "2026-05-24T02:06:10.550Z",
       "queryHashes": [
-        "43cddd582fea"
+        "43cddd582fea",
+        "6df512644bbc"
       ],
       "recallDays": [
-        "2026-05-13"
+        "2026-05-13",
+        "2026-05-24"
       ],
       "conceptTags": [
         "0.50",
@@ -591,18 +595,22 @@
       "endLine": 41,
       "source": "memory",
       "snippet": "# 2026-05-11 (금) — DaCon2 연구日志 ## DaCon2 핵심 결과 ### V106 (LB 1.057 실패) - OOF 0.5250 → LB 1.0571 (심각한 OOF-LB mismatch) - 원인: 예측값 train mean과 systematically misaligned (S3: 0.39 vs train 0.66) - **제출 완료, LB 분석용으로 기록** ### V114 (수동 제출 완료) - OOF 0.6544 - isotonic calibration 없음 → V115(0.5476)보다 떨어짐 - **제출 완료, LB 결과 대기 중** ### V115 (pipeline best before ensemble) - OOF **0.5476** (isotonic calibration + personalization) - 베이스라인: base 141 cols + zscore 141 cols + meta 12 cols = 294 cols ### V119 (base-only isotonic) - OOF 0.5706 (pairwise/transformed 없음) - pairwise/transformed가 핵심 발견 ### V121 (current best single model) - OOF **0.5482** (pairwise+transformed per-target × 50 seeds) - pairwise/",
-      "recallCount": 1,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 3,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-15T15:57:26.897Z",
-      "lastRecalledAt": "2026-05-15T15:57:26.897Z",
+      "lastRecalledAt": "2026-05-24T02:06:10.550Z",
       "queryHashes": [
-        "704383919f44"
+        "704383919f44",
+        "6c93796aff0d",
+        "6df512644bbc"
       ],
       "recallDays": [
-        "2026-05-15"
+        "2026-05-15",
+        "2026-05-19",
+        "2026-05-24"
       ],
       "conceptTags": [
         "1.057",
@@ -622,18 +630,22 @@
       "endLine": 37,
       "source": "memory",
       "snippet": "# 2026-05-08 Daily Log — 최종 요약 ## 세션 복원 (12:27) - 승우: OPENCLAW_HANDOFF_20260506.md 읽고 현황 파악, MEMORY.md 생성 요청 -MEMORY.md 생성 완료: `/home/mwoo423/projects/dacon2/MEMORY.md` - daily log 생성: `/home/mwoo423/projects/dacon2/memory/2026-05-08.md` ## 전체 타임라인 복원 ### 2026-05-01: 베이스라인 - LGBM V10: CV 0.6038 — 2주간 최고 기록 - V11~V14: 개인화 피처, calibration 시도 → V10 미달 - V25: LGBM rolling features, Cal 0.6462 - V30: XGB, Cal 0.6685 ### 2026-05-05: V35~V40 실패 - 메모리 부족 (SIGKILL), RAM 16GB+Swap 4GB 부족 - V37 완주: Avg 0.6144 (-0.0106 vs V10) - **결론: V10이 당시 최고** ### 2026-05-06: V53 Deep Feature Engineering - **V53 final**: 리더보드 **0.6535822621** (LGBM seed ensemble 50) - 타깃별 cfg/feature 선택: deep/wide/v48/safety -",
-      "recallCount": 1,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 3,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-15T15:57:26.897Z",
-      "lastRecalledAt": "2026-05-15T15:57:26.897Z",
+      "lastRecalledAt": "2026-05-24T02:06:10.550Z",
       "queryHashes": [
-        "704383919f44"
+        "704383919f44",
+        "6c93796aff0d",
+        "6df512644bbc"
       ],
       "recallDays": [
-        "2026-05-15"
+        "2026-05-15",
+        "2026-05-19",
+        "2026-05-24"
       ],
       "conceptTags": [
         "openclaw-handoff-20260506.md",
