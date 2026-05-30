@@ -40,7 +40,7 @@
 - OOF: 0.63678 → LB: 0.64031
 - OOF-LB 갭: 0.00353 (V140 대비 8배 증가)
 - fold drift weighting은 noise fitting으로 일반화 저하
-- **V140이 현재 BEST (OOF-LB correlation 최상)**
+- **V140→V146: V140 OOF-LB correlation 최상, V146이 OOF 개선**
 
 ### V142 — Stability-Weighted Stacking (OOF만 테스트)
 - V142-A (feat sel only): OOF=0.63565
@@ -72,7 +72,7 @@
 
 | Version | Method | Seeds | Meta C | AVG OOF | Δ vs V140 | Status |
 |---------|--------|-------|--------|---------|-----------|--------|
-| V140 | LGBM stacking | 3 | 0.1 | 0.64110 | baseline | ⭐ LB=0.64072 |
+| V140 | LGBM stacking | 3 | 0.1 | 0.64110 | baseline | LB=0.64072 (submitted) |
 | V141 | Drift-aware | 5 | 0.1 | 0.63678 | -0.00432 | LB=0.64031 (gap↑) |
 | V142 | Stability-weighted | 5 | 0.1 | 0.63483 | -0.00627 | local (overfit risk) |
 | V143 | Multi-config | 12 | 0.1 | 0.63873 | -0.00237 | failed |
