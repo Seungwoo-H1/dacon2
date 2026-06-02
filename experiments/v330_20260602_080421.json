@@ -1,0 +1,33 @@
+{
+  "version": "V330",
+  "name": "Domain Cross-Interactions + Feature Group Stats",
+  "avg_oof": 0.55603,
+  "n_features_total": 2064,
+  "n_seeds": 15,
+  "v329_avg_oof": 0.54365,
+  "v328_avg_oof": 0.56298,
+  "delta_vs_v329": 0.01238,
+  "per_target_oof": {
+    "Q1": 0.56187,
+    "Q2": 0.56242,
+    "Q3": 0.5829,
+    "S1": 0.5067,
+    "S2": 0.55691,
+    "S3": 0.56785,
+    "S4": 0.55353
+  },
+  "student_oof_avg": {
+    "Q1": 0.68361,
+    "Q2": 0.71393,
+    "Q3": 0.72686,
+    "S1": 0.6052,
+    "S2": 0.71062,
+    "S3": 0.68403,
+    "S4": 0.65072
+  },
+  "predicted_lb": 0.57503,
+  "v308_actual_lb": 0.63893,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v330_dom_inter_20260602_080421.csv",
+  "timestamp": "20260602_080421",
+  "total_time_s": 55.0
+}
