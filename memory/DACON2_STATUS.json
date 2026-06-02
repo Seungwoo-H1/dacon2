@@ -1,16 +1,27 @@
-{
-  "last_run": {
-    "version": "V312",
-    "timestamp": "2026-06-02T02:45:09Z",
-    "avg_oof": 0.61448,
-    "submission_file": "submission_v312_per_target_C_20260602_024509.csv",
-    "lb_status": "pending_submission",
-    "best_confirmed": "V308 (LB=0.63893)"
-  },
-  "next_steps": [
-    "승우님이 V312 submission 수동 제출",
-    "LB 결과 기다렸다가 V308(0.63893) 대비 개선 여부 확인",
-    "개선 시: V312 best model 갱신",
-    "개선 없거나 악화 시: V313 실험 (H2: More Seeds 15→30 우선)"
-  ]
-}
+# DACon2 Status (2026-06-02 03:00 UTC)
+
+## Current Best (LB Verified)
+| Version | OOF | LB | Seeds | Meta C | Status |
+|---------|-----|----|-------|--------|--------|
+| V308 | 0.62235 | **0.63893** | 15 | 10 | ✅ Verified |
+
+## Pending Submissions
+| Version | OOF | Seeds | Meta C | vs V308 Δ |
+|---------|-----|-------|--------|-----------|
+| V312 | 0.61448 | 15 | 500 | -0.00787 |
+| V313 | 0.59512 | 30 | 500 | -0.02723 |
+
+## Key Finding: Seeds × C Interaction
+- 15 seeds + C=10 (V308) → OOF 0.62235
+- 15 seeds + C=500 (V312) → OOF 0.61448 (Δ -0.00787)
+- 30 seeds + C=500 (V313) → OOF 0.59512 (Δ -0.02723 vs V308)
+- **30 seeds + C=500 is the new sweet spot**
+
+## Next Actions
+1. Submit V312 and V313 to LB
+2. If V313 LB < V308 → new best model
+3. If V313 gap > V308 gap → investigate calibration
+
+## V313 Prediction
+- If OOF-LB gap = V308's gap (+0.01658) → LB = 0.61170
+- Expected improvement over V308: **-0.027**
