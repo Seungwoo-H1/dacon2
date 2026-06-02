@@ -1,0 +1,36 @@
+{
+  "version": "V324",
+  "name": "Multi-Config Ensemble Stacking (4 cfgs \u00d7 4 seeds)",
+  "avg_oof": 0.61518,
+  "n_students": 16,
+  "n_configs": 4,
+  "v321_avg_oof": 0.60569,
+  "v312_avg_oof": 0.61448,
+  "v308_avg_oof": 0.62235,
+  "delta_vs_v321": 0.00949,
+  "per_target_oof": {
+    "Q1": 0.6666,
+    "Q2": 0.62081,
+    "Q3": 0.61229,
+    "S1": 0.57334,
+    "S2": 0.6133,
+    "S3": 0.59014,
+    "S4": 0.62978
+  },
+  "student_oof_avg": {
+    "Q1": 0.76636,
+    "Q2": 0.66491,
+    "Q3": 0.6996,
+    "S1": 0.60977,
+    "S2": 0.69031,
+    "S3": 0.65516,
+    "S4": 0.68398
+  },
+  "predicted_lb": 0.63476,
+  "v308_actual_lb": 0.63893,
+  "predicted_improvement_vs_v308": -0.00417,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v324_multi_config_20260602_065642.csv",
+  "timestamp": "20260602_065642",
+  "total_time_s": 47.0,
+  "key_difference": "4 configs \u00d7 4 seeds = 16 students per target"
+}
