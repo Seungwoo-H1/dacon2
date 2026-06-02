@@ -1,12 +1,13 @@
 """
-V337: Two-Stage Stacking — Student Predictions as Features
+V400: Three-Stage Stacking
 
-Stage 1: Train V329-style students → get OOF predictions per seed
-Stage 2: Build augmented feature set = (original + pred_mean, pred_std)
-         → Train new students on augmented features
-Stage 3: LR meta on Stage 2 students
+Three-level hierarchy:
+1. Stage 1: 15 seeds of V329-style students → OOF predictions
+2. Stage 2: 15 seeds on augmented features (Stage 1 preds as features) → OOF predictions  
+3. Stage 3: 15 seeds on doubly-augmented features (Stage 1 + Stage 2 preds as features) → OOF predictions
+4. LR meta on Stage 3 students
 
-Clean, correct implementation with matching column names.
+Hypothesis: Each additional stacking layer extracts more signal from the ensemble diversity.
 """
 import sys, gc, logging, json, re, time, warnings
 from pathlib import Path
@@ -52,7 +53,7 @@ LEAK_Q = {
 
 SEED = 42
 N_FOLDS = 5
-N_SEEDS = 10
+N_SEEDS = 15
 META_C = 10.0
 FEATURE_BAG_FRACTION = 0.75
 
@@ -164,50 +165,6 @@ def generate_base_features(train_df, test_df):
                 df_src[f'ps_{fn}_{col}'] = fv.values
     return train_df, test_df
 
-def add_cross_subject_features(train_df, test_df):
-    log.info("Generating cross-subject features...")
-    train_df = train_df.copy()
-    test_df = test_df.copy()
-    base_cols = [c for c in train_df.columns if c not in META_COLS | set(TARGETS) | {'date'}
-                 and not c.endswith('_zscore') and not c.endswith('_interact')
-                 and not c.endswith('_ratio') and not c.startswith('ps_')
-                 and np.issubdtype(train_df[c].dtype, np.number)]
-    for col in base_cols[:80]:
-        pop_mean = train_df[col].fillna(0).mean()
-        pop_std = train_df[col].fillna(0).std(ddof=0)
-        if pop_std < 1e-8: pop_std = 1e-8
-        train_df[f'cs_zscore_{col}'] = (train_df[col].fillna(0) - pop_mean) / pop_std
-        test_df[f'cs_zscore_{col}'] = (test_df[col].fillna(0) - pop_mean) / pop_std
-
-    domains_dict = {
-        'wHr': [c for c in train_df.columns if c.startswith('wHr_')],
-        'wPedo': [c for c in train_df.columns if c.startswith('wPedo_')],
-        'mLight': [c for c in train_df.columns if c.startswith('mLight_')],
-        'mScreenStatus': [c for c in train_df.columns if c.startswith('mScreenStatus_')],
-        'mGps': [c for c in train_df.columns if c.startswith('mGps_')],
-        'mBle': [c for c in train_df.columns if c.startswith('mBle_')],
-        'mWifi': [c for c in train_df.columns if c.startswith('mWifi_')],
-        'mUsageStats': [c for c in train_df.columns if c.startswith('mUsageStats_')],
-    }
-    for domain_name, cols in domains_dict.items():
-        if not cols: continue
-        domain_base = [c for c in cols if c not in META_COLS | set(TARGETS) | {'date'}
-                       and not c.endswith('_zscore') and not c.endswith('_interact')
-                       and not c.endswith('_ratio') and not c.startswith('ps_')
-                       and np.issubdtype(train_df[c].dtype, np.number)]
-        if not domain_base: continue
-        for df_src, grp in [(train_df, train_df.groupby('subject_id')[domain_base]),
-                            (test_df, test_df.groupby('subject_id')[domain_base])]:
-            dm = grp.mean()
-            ds = grp.std().fillna(0)
-            df_name = f'{domain_name.lower()}_domain'
-            df_src[f'{df_name}_mean'] = dm.mean(axis=1).reindex(df_src['subject_id']).values
-            df_src[f'{df_name}_std'] = ds.mean(axis=1).reindex(df_src['subject_id']).values
-
-    log.info(f"  Cross-subject z-scores: {len(base_cols[:80])}")
-    log.info(f"  Domain aggregations: {len(domains_dict)}")
-    return train_df, test_df
-
 CFGS = {
     'wide':   {'num_leaves': 30, 'max_depth': 3, 'learning_rate': 0.05, 'n_estimators': 300,
                'subsample': 0.8, 'colsample_bytree': 0.8, 'reg_alpha': 2.0, 'reg_lambda': 5.0, 'min_child_samples': 5},
@@ -228,39 +185,11 @@ V53_SWEEP = {
     'S4':  {'cfg': 'wide',   'n_feat': 20},
 }
 
-def train_students_on_features(train_df, sel_cols, y, group, gkf, n_seeds, cfg, n_feat):
-    """Train students on given features and return OOF predictions (list of 15 arrays)."""
-    n_train = len(train_df)
-    oofs = []
-    for si in range(n_seeds):
-        seed = SEED + si * 7
-        rng = np.random.RandomState(seed)
-        feat_list = list(sel_cols)
-        n_bag = max(int(len(feat_list) * FEATURE_BAG_FRACTION), n_feat)
-        if len(feat_list) > n_bag:
-            bag = rng.choice(feat_list, size=n_bag, replace=False)
-        else:
-            bag = feat_list
-        seed_oof = np.zeros(n_train)
-        for fold, (tr_idx, va_idx) in enumerate(gkf.split(train_df, y, group)):
-            X_tr = train_df[feat_list].iloc[tr_idx].fillna(0).values.astype(np.float64)
-            X_va = train_df[feat_list].iloc[va_idx].fillna(0).values.astype(np.float64)
-            y_tr = y[tr_idx]
-            spw = max(((y_tr == 0).sum()) / max((y_tr == 1).sum(), 1), 0.1)
-            params = {**cfg, 'scale_pos_weight': spw, 'random_state': seed,
-                      'force_row_wise': True, 'n_jobs': 1, 'verbose': -1}
-            sn = [sanitize_col(c) for c in feat_list]
-            ds = lgb.Dataset(X_tr, label=y_tr, feature_name=sn)
-            m = lgb.train(params, ds, num_boost_round=cfg['n_estimators'])
-            seed_oof[va_idx] = m.predict(X_va)
-        oofs.append(np.clip(seed_oof, 0.001, 0.999))
-    return oofs
-
 def main():
     global t_start
     t_start = time.time()
     log.info("=" * 70)
-    log.info("V337 — Two-Stage Stacking: Student Predictions as Features")
+    log.info("V400 — Three-Stage Stacking")
     log.info("=" * 70)
 
     train_df = pd.read_parquet(DATA / "features.parquet")
@@ -273,13 +202,9 @@ def main():
 
     log.info("Generating base features...")
     train_df, test_df = generate_base_features(train_df, test_df)
-    train_df, test_df = add_cross_subject_features(train_df, test_df)
 
     all_feat_cols = get_feature_cols(train_df)
-    base_cols = [c for c in all_feat_cols if '_zscore' not in c
-                 and 'ps_' not in c and '_interact' not in c and 'ratio' not in c and 'domain' not in c]
-
-    log.info(f"\nFeature counts: Base={len(base_cols)}, Total={len(all_feat_cols)}")
+    log.info(f"\nFeature counts: Total={len(all_feat_cols)}")
 
     group = train_df['subject_id'].values
     gkf = GroupKFold(n_splits=N_FOLDS)
@@ -287,7 +212,7 @@ def main():
 
     # ========== STAGE 1: V329-style students ==========
     log.info("\nSTAGE 1: Training V329-style students...")
-    stage1_oofs = {}  # target -> list of 15 OOF arrays (each 450)
+    stage1_oofs = {}
 
     for t in TARGETS:
         y = train_df[t].values.astype(np.float64)
@@ -295,22 +220,32 @@ def main():
         cfg_name = V53_SWEEP[t]['cfg']
         cfg = CFGS[cfg_name]
         ranked = rank_features(train_df, feat_cols_clean, t)
-        oofs = train_students_on_features(train_df, ranked, y, group, gkf, N_SEEDS, cfg, V53_SWEEP[t]['n_feat'])
+        oofs = []
+        for si in range(N_SEEDS):
+            s = SEED + si * 7
+            rng = np.random.RandomState(s)
+            n_bag = max(int(len(ranked) * FEATURE_BAG_FRACTION), V53_SWEEP[t]['n_feat'])
+            bag = rng.choice(ranked, size=min(n_bag, len(ranked)), replace=False)
+            seed_oof = np.zeros(n_train)
+            for fold, (tr_idx, va_idx) in enumerate(gkf.split(train_df, y, group)):
+                X_tr = train_df[list(bag)].iloc[tr_idx].fillna(0).values.astype(np.float64)
+                X_va = train_df[list(bag)].iloc[va_idx].fillna(0).values.astype(np.float64)
+                y_tr = y[tr_idx]
+                spw = max(((y_tr == 0).sum()) / max((y_tr == 1).sum(), 1), 0.1)
+                params = {**cfg, 'scale_pos_weight': spw, 'random_state': s,
+                          'force_row_wise': True, 'n_jobs': 1, 'verbose': -1}
+                sn = [sanitize_col(c) for c in bag]
+                ds = lgb.Dataset(X_tr, label=y_tr, feature_name=sn)
+                m = lgb.train(params, ds, num_boost_round=cfg['n_estimators'])
+                seed_oof[va_idx] = m.predict(X_va)
+            oofs.append(np.clip(seed_oof, 0.001, 0.999))
         stage1_oofs[t] = oofs
         avg_soof = np.mean([log_loss(y, p) for p in oofs])
         log.info(f"  {t}: avg student OOF = {avg_soof:.5f}")
 
-    # ========== STAGE 2: Student predictions as features ==========
-    log.info("\nSTAGE 2: Building augmented features + training new students...")
-
-    target_oofs = {}
-    student_avg_oofs = {}
-    meta_weights_info = {}
-
-    # For each target, build augmented feature matrix
-    stage2_aug_dfs = {}
-    stage2_sel_cols = {}
-    stage2_aug_names = {}
+    # ========== STAGE 2: Students on Stage 1 predictions ==========
+    log.info("\nSTAGE 2: Training students on Stage 1 predictions...")
+    stage2_oofs = {}
 
     for t in TARGETS:
         log.info(f"\n  Target: {t}")
@@ -318,29 +253,24 @@ def main():
         cfg_name = V53_SWEEP[t]['cfg']
         cfg = CFGS[cfg_name]
 
-        # Build per-seed prediction matrix from Stage 1
+        # Build augmented features from Stage 1
         oof_matrix = np.column_stack(stage1_oofs[t])
         pred_mean = np.mean(oof_matrix, axis=1)
         pred_std = np.std(oof_matrix, axis=1)
 
-        # Other target predictions
         other_targets = [ot for ot in TARGETS if ot != t]
         other_pred = np.column_stack([np.mean(np.column_stack(stage1_oofs[ot]), axis=1) for ot in other_targets])
 
-        # Original features
         feat_cols_clean = remove_leak(all_feat_cols, t)
-
-        # Build augmented dataframe with matching column names
         aug_df = train_df[feat_cols_clean].copy()
-        aug_df['st1_' + t + '_pred_mean'] = pred_mean
-        aug_df['st1_' + t + '_pred_std'] = pred_std
+        aug_df['s1_' + t + '_pred_mean'] = pred_mean
+        aug_df['s1_' + t + '_pred_std'] = pred_std
         for i, ot in enumerate(other_targets):
-            aug_df[f'st1_{ot}_pred_mean'] = other_pred[:, i]
+            aug_df[f's1_{ot}_pred_mean'] = other_pred[:, i]
 
-        # Build augmented column names
-        aug_names = list(feat_cols_clean) + [f'st1_{t}_pred_mean', f'st1_{t}_pred_std'] + [f'st1_{ot}_pred_mean' for ot in other_targets]
+        aug_names = list(aug_df.columns)
 
-        # Rank augmented features
+        # Rank and select
         X_aug = aug_df.values.astype(np.float64)
         spw = max(((y == 0).sum()) / max((y == 1).sum(), 1), 0.1)
         params_rank = {
@@ -357,64 +287,137 @@ def main():
 
         n_feat = V53_SWEEP[t]['n_feat']
         sel_cols = ranked_names[:n_feat]
-
-        log.info(f"  Augmented features: {len(aug_names)}, selected: {n_feat}")
+        log.info(f"  Selected: {n_feat} from {len(aug_names)}")
         log.info(f"  Top 5: {ranked_names[:5]}")
 
-        stage2_aug_dfs[t] = aug_df
-        stage2_sel_cols[t] = sel_cols
-        stage2_aug_names[t] = aug_names
-
-        # Train stage 2 students on augmented features
+        # Train Stage 2 students
         oofs = []
         for si in range(N_SEEDS):
             seed = SEED + si * 7
             rng = np.random.RandomState(seed)
             n_bag = max(int(len(sel_cols) * FEATURE_BAG_FRACTION), n_feat)
-            if len(sel_cols) > n_bag:
-                bag = rng.choice(sel_cols, size=n_bag, replace=False)
-            else:
-                bag = sel_cols
-            bag_set = set(bag)
-            bag_feats = [f for f in sel_cols if f in bag_set][:n_feat]
-            if len(bag_feats) < n_feat:
-                remaining = [f for f in sel_cols if f not in bag_set][:n_feat - len(bag_feats)]
-                bag_feats.extend(remaining)
-
+            bag = rng.choice(sel_cols, size=min(n_bag, len(sel_cols)), replace=False)
             seed_oof = np.zeros(n_train)
             for fold, (tr_idx, va_idx) in enumerate(gkf.split(aug_df, y, group)):
-                X_tr = aug_df[bag_feats].iloc[tr_idx].fillna(0).values.astype(np.float64)
-                X_va = aug_df[bag_feats].iloc[va_idx].fillna(0).values.astype(np.float64)
+                X_tr = aug_df[bag].iloc[tr_idx].fillna(0).values.astype(np.float64)
+                X_va = aug_df[bag].iloc[va_idx].fillna(0).values.astype(np.float64)
                 y_tr = y[tr_idx]
                 spw = max(((y_tr == 0).sum()) / max((y_tr == 1).sum(), 1), 0.1)
                 params = {**cfg, 'scale_pos_weight': spw, 'random_state': seed,
                           'force_row_wise': True, 'n_jobs': 1, 'verbose': -1}
-                sn = [sanitize_col(c) for c in bag_feats]
+                sn = [sanitize_col(c) for c in bag]
                 ds = lgb.Dataset(X_tr, label=y_tr, feature_name=sn)
                 m = lgb.train(params, ds, num_boost_round=cfg['n_estimators'])
                 seed_oof[va_idx] = m.predict(X_va)
             oofs.append(np.clip(seed_oof, 0.001, 0.999))
 
-        # Meta-learner
-        meta = LogisticRegression(C=META_C, max_iter=1000, random_state=SEED)
-        meta.fit(np.column_stack(oofs), y)
-        train_pred = meta.predict_proba(np.column_stack(oofs))[:, 1]
-        target_oofs[t] = log_loss(y, np.clip(train_pred, 0.001, 0.999))
-        student_avg_oofs[t] = np.mean([log_loss(y, p) for p in oofs])
-        meta_weights_info[t] = meta.coef_[0]
+        stage2_oofs[t] = oofs
+        avg_soof = np.mean([log_loss(y, p) for p in oofs])
+        log.info(f"  {t}: avg student OOF = {avg_soof:.5f}")
 
-        log.info(f"  {t}: OOF={target_oofs[t]:.5f} (student={student_avg_oofs[t]:.5f}, gap={student_avg_oofs[t] - target_oofs[t]:+.4f})")
+    # ========== STAGE 3: Students on Stage 1 + Stage 2 predictions ==========
+    log.info("\nSTAGE 3: Training students on Stage 1 + Stage 2 predictions...")
+    stage3_oofs = {}
+
+    for t in TARGETS:
+        log.info(f"\n  Target: {t}")
+        y = train_df[t].values.astype(np.float64)
+        cfg_name = V53_SWEEP[t]['cfg']
+        cfg = CFGS[cfg_name]
+
+        # Build doubly-augmented features
+        oof_matrix_s1 = np.column_stack(stage1_oofs[t])
+        pred_mean_s1 = np.mean(oof_matrix_s1, axis=1)
+        pred_std_s1 = np.std(oof_matrix_s1, axis=1)
+
+        oof_matrix_s2 = np.column_stack(stage2_oofs[t])
+        pred_mean_s2 = np.mean(oof_matrix_s2, axis=1)
+        pred_std_s2 = np.std(oof_matrix_s2, axis=1)
+
+        other_targets = [ot for ot in TARGETS if ot != t]
+        other_pred = np.column_stack([np.mean(np.column_stack(stage1_oofs[ot]), axis=1) for ot in other_targets])
+
+        feat_cols_clean = remove_leak(all_feat_cols, t)
+        aug_df = train_df[feat_cols_clean].copy()
+        aug_df['s1_' + t + '_pred_mean'] = pred_mean_s1
+        aug_df['s1_' + t + '_pred_std'] = pred_std_s1
+        aug_df['s2_' + t + '_pred_mean'] = pred_mean_s2
+        aug_df['s2_' + t + '_pred_std'] = pred_std_s2
+        for i, ot in enumerate(other_targets):
+            aug_df[f's1_{ot}_pred_mean'] = other_pred[:, i]
+
+        aug_names = list(aug_df.columns)
+
+        # Rank and select
+        X_aug = aug_df.values.astype(np.float64)
+        spw = max(((y == 0).sum()) / max((y == 1).sum(), 1), 0.1)
+        params_rank = {
+            'objective': 'binary', 'metric': 'binary_logloss', 'verbose': -1,
+            'num_leaves': 20, 'max_depth': 5, 'learning_rate': 0.05, 'n_estimators': 50,
+            'scale_pos_weight': spw, 'random_state': SEED, 'force_row_wise': True, 'n_jobs': 1
+        }
+        sn = [sanitize_col(c) for c in aug_names]
+        ds = lgb.Dataset(X_aug, label=y, feature_name=sn)
+        m_rank = lgb.train(params_rank, ds, num_boost_round=50)
+        imp = m_rank.feature_importance(importance_type='gain')
+        ranked_aug = sorted(zip(aug_names, imp), key=lambda x: -x[1])
+        ranked_names = [r[0] for r in ranked_aug]
+
+        n_feat = V53_SWEEP[t]['n_feat']
+        sel_cols = ranked_names[:n_feat]
+        log.info(f"  Selected: {n_feat} from {len(aug_names)}")
+        log.info(f"  Top 5: {ranked_names[:5]}")
+
+        # Train Stage 3 students
+        oofs = []
+        for si in range(N_SEEDS):
+            seed = SEED + si * 7
+            rng = np.random.RandomState(seed)
+            n_bag = max(int(len(sel_cols) * FEATURE_BAG_FRACTION), n_feat)
+            bag = rng.choice(sel_cols, size=min(n_bag, len(sel_cols)), replace=False)
+            seed_oof = np.zeros(n_train)
+            for fold, (tr_idx, va_idx) in enumerate(gkf.split(aug_df, y, group)):
+                X_tr = aug_df[bag].iloc[tr_idx].fillna(0).values.astype(np.float64)
+                X_va = aug_df[bag].iloc[va_idx].fillna(0).values.astype(np.float64)
+                y_tr = y[tr_idx]
+                spw = max(((y_tr == 0).sum()) / max((y_tr == 1).sum(), 1), 0.1)
+                params = {**cfg, 'scale_pos_weight': spw, 'random_state': seed,
+                          'force_row_wise': True, 'n_jobs': 1, 'verbose': -1}
+                sn = [sanitize_col(c) for c in bag]
+                ds = lgb.Dataset(X_tr, label=y_tr, feature_name=sn)
+                m = lgb.train(params, ds, num_boost_round=cfg['n_estimators'])
+                seed_oof[va_idx] = m.predict(X_va)
+            oofs.append(np.clip(seed_oof, 0.001, 0.999))
+
+        stage3_oofs[t] = oofs
+        avg_soof = np.mean([log_loss(y, p) for p in oofs])
+        log.info(f"  {t}: avg student OOF = {avg_soof:.5f}")
+
+    # ========== Meta-learner on Stage 3 ==========
+    log.info("\nMeta-learner on Stage 3 students...")
+    target_oofs = {}
+    student_avg_oofs = {}
+    meta_weights_info = {}
+
+    for t in TARGETS:
+        y = train_df[t].values.astype(np.float64)
+        meta = LogisticRegression(C=META_C, max_iter=1000, random_state=SEED)
+        meta.fit(np.column_stack(stage3_oofs[t]), y)
+        train_pred = meta.predict_proba(np.column_stack(stage3_oofs[t]))[:, 1]
+        target_oofs[t] = log_loss(y, np.clip(train_pred, 0.001, 0.999))
+        student_avg_oofs[t] = np.mean([log_loss(y, p) for p in stage3_oofs[t]])
+        meta_weights_info[t] = meta.coef_[0]
+        log.info(f"  {t}: OOF={target_oofs[t]:.5f} (student={student_avg_oofs[t]:.5f})")
 
     avg_oof = np.mean(list(target_oofs.values()))
     avg_student = np.mean(list(student_avg_oofs.values()))
 
     log.info(f"\n{'='*70}")
-    log.info(f"V337 RESULTS — Two-Stage Stacking (Student Preds as Features)")
+    log.info(f"V400 RESULTS — Three-Stage Stacking")
     log.info(f"{'='*70}")
     for t in TARGETS:
         gap = student_avg_oofs[t] - target_oofs[t]
-        w_sum = np.sum(np.abs(meta_weights_info[t]))
-        log.info(f"  {t}: OOF={target_oofs[t]:.5f} (student={student_avg_oofs[t]:.5f}, gap={gap:+.4f}, |W|={w_sum:.3f})")
+        log.info(f"  {t}: OOF={target_oofs[t]:.5f} (student={student_avg_oofs[t]:.5f}, gap={gap:+.4f})")
     log.info(f"  AVG OOF: {avg_oof:.5f}")
     log.info(f"  AVG Student: {avg_student:.5f}")
     log.info(f"  V329_cross_ps: 0.54365 | V329_cross_ps student: 0.64698")
@@ -426,7 +429,7 @@ def main():
 
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    # Build submission — retrain full pipeline on all data, predict on test
+    # Build submission
     sub = pd.DataFrame()
     sub['subject_id'] = test_df['subject_id'].values
     sub['sleep_date'] = test_df['sleep_date'].values
@@ -437,101 +440,57 @@ def main():
         cfg_name = V53_SWEEP[t]['cfg']
         cfg = CFGS[cfg_name]
         feat_cols_clean = remove_leak(all_feat_cols, t)
-        sel_cols_t = stage2_sel_cols[t]
+        ranked = rank_features(train_df, feat_cols_clean, t)
 
-        # Generate Stage 1 test predictions (need these as features for Stage 2)
-        ranked_stage1 = rank_features(train_df, feat_cols_clean, t)
-        test_s1_preds = np.zeros((len(test_df), N_SEEDS))
+        # Stage 1 test predictions
+        test_oofs_t = np.zeros((len(test_df), N_SEEDS))
         for si in range(N_SEEDS):
             seed = SEED + si * 7
             rng = np.random.RandomState(seed)
-            n_bag = max(int(len(ranked_stage1) * FEATURE_BAG_FRACTION), V53_SWEEP[t]['n_feat'])
-            bag = rng.choice(ranked_stage1, size=n_bag, replace=False)
-            sel = [c for c in bag if c in ranked_stage1][:V53_SWEEP[t]['n_feat']]
+            n_bag = max(int(len(ranked) * FEATURE_BAG_FRACTION), V53_SWEEP[t]['n_feat'])
+            bag = rng.choice(ranked, size=min(n_bag, len(ranked)), replace=False)
             seed_test = np.zeros(len(test_df))
             for fold, (tr_idx, va_idx) in enumerate(
                 GroupKFold(n_splits=N_FOLDS).split(train_df, y, group)):
-                X_tr = train_df[sel].iloc[tr_idx].fillna(0).values.astype(np.float64)
+                X_tr = train_df[list(bag)].iloc[tr_idx].fillna(0).values.astype(np.float64)
                 y_tr = y[tr_idx]
                 spw = max(((y_tr == 0).sum()) / max((y_tr == 1).sum(), 1), 0.1)
                 params = {**cfg, 'scale_pos_weight': spw, 'random_state': seed,
                           'force_row_wise': True, 'n_jobs': 1, 'verbose': -1}
-                sn = [sanitize_col(c) for c in sel]
+                sn = [sanitize_col(c) for c in bag]
                 ds = lgb.Dataset(X_tr, label=y_tr, feature_name=sn)
                 m = lgb.train(params, ds, num_boost_round=cfg['n_estimators'])
-                seed_test += m.predict(test_df[sel].fillna(0).values.astype(np.float64))
+                seed_test += m.predict(test_df[list(bag)].fillna(0).values.astype(np.float64))
             seed_test /= N_FOLDS
-            test_s1_preds[:, si] = seed_test
+            test_oofs_t[:, si] = seed_test
 
-        # Build augmented test features matching training augmented features
-        pred_mean_t = np.mean(test_s1_preds, axis=1)
-        pred_std_t = np.std(test_s1_preds, axis=1)
-        other_targets_t = [ot for ot in TARGETS if ot != t]
-        # For test, use predicted means from other targets' Stage 1 predictions
-        other_pred_t = []
-        for ot in other_targets_t:
-            other_y = train_df[ot].values.astype(np.float64)
-            other_ranked = rank_features(train_df, remove_leak(all_feat_cols, ot), ot)
-            other_test_preds = np.zeros((len(test_df), N_SEEDS))
-            for si in range(N_SEEDS):
-                seed = SEED + si * 7
-                rng2 = np.random.RandomState(seed)
-                bag2 = rng2.choice(other_ranked, size=max(int(len(other_ranked)*FEATURE_BAG_FRACTION), V53_SWEEP[ot]['n_feat']), replace=False)
-                sel2 = [c for c in bag2 if c in other_ranked][:V53_SWEEP[ot]['n_feat']]
-                st = np.zeros(len(test_df))
-                for fold, (tr_i, va_i) in enumerate(
-                    GroupKFold(n_splits=N_FOLDS).split(train_df, other_y, group)):
-                    X_tr = train_df[sel2].iloc[tr_i].fillna(0).values.astype(np.float64)
-                    yt = other_y[tr_i]
-                    spw2 = max(((yt == 0).sum()) / max((yt == 1).sum(), 1), 0.1)
-                    params2 = {**CFGS[V53_SWEEP[ot]['cfg']], 'scale_pos_weight': spw2, 'random_state': seed,
-                              'force_row_wise': True, 'n_jobs': 1, 'verbose': -1}
-                    sn2 = [sanitize_col(c) for c in sel2]
-                    ds2 = lgb.Dataset(X_tr, label=yt, feature_name=sn2)
-                    m2 = lgb.train(params2, ds2, num_boost_round=CFGS[V53_SWEEP[ot]['cfg']]['n_estimators'])
-                    st += m2.predict(test_df[sel2].fillna(0).values.astype(np.float64))
-                st /= N_FOLDS
-                other_test_preds[:, si] = st
-            other_pred_t.append(np.mean(other_test_preds, axis=1))
-        other_pred_t = np.column_stack(other_pred_t)
-
-        # Build test augmented dataframe
-        test_aug_df = test_df[feat_cols_clean].copy()
-        test_aug_df['st1_' + t + '_pred_mean'] = pred_mean_t
-        test_aug_df['st1_' + t + '_pred_std'] = pred_std_t
-        for i, ot in enumerate(other_targets_t):
-            test_aug_df[f'st1_{ot}_pred_mean'] = other_pred_t[:, i]
-
-        # Apply same feature selection from Stage 2
-        bag_feats_t = [f for f in sel_cols_t if f in test_aug_df.columns]
-
-        # Train new students on all data, then meta on all data
         meta_t = LogisticRegression(C=META_C, max_iter=1000, random_state=SEED)
-        meta_t.fit(np.column_stack(stage1_oofs[t]), y)
-        sub[t] = meta_t.predict_proba(test_s1_preds)[:, 1]
+        meta_t.fit(np.column_stack(stage3_oofs[t]), y)
+        sub[t] = meta_t.predict_proba(test_oofs_t)[:, 1]
 
-    sub_path = SUBMIT / f"submission_v337_stage2_features_{ts}.csv"
+    sub_path = SUBMIT / f"submission_v400_three_stage_{ts}.csv"
     sub.to_csv(sub_path, index=False)
     log.info(f"Saved submission: {sub_path}")
 
     meta_data = {
-        'version': 'V337',
-        'name': 'Two-Stage Stacking: Student Predictions as Features',
+        'version': 'V400',
+        'name': 'Three-Stage Stacking',
         'avg_oof': round(float(avg_oof), 5),
         'avg_student_oof': round(float(avg_student), 5),
         'n_features_total': len(all_feat_cols),
         'n_seeds': N_SEEDS,
         'meta_c': META_C,
+        'n_stages': 3,
         'per_target_oof': {t: round(float(target_oofs[t]), 5) for t in TARGETS},
         'student_oof_avg': {t: round(float(student_avg_oofs[t]), 5) for t in TARGETS},
         'predicted_lb': round(float(pred_lb), 5),
         'submission_file': str(sub_path),
         'timestamp': ts,
         'total_time_s': round(time.time() - t_start, 0),
-        'key_difference': 'Stage 2: original features + student OOF predictions (mean, std, other-target means) as additional features',
+        'key_difference': 'Three-stage stacking: S1(base)→S2(S1 preds)→S3(S1+S2 preds)→LR meta',
     }
 
-    meta_path = EXPERIMENTS / f'v337_{ts}.json'
+    meta_path = EXPERIMENTS / f'v400_{ts}.json'
     with open(meta_path, 'w') as f:
         json.dump(meta_data, f, indent=2)
     log.info(f"Saved meta: {meta_path}")
