@@ -1,0 +1,16 @@
+{
+  "last_run": {
+    "version": "V312",
+    "timestamp": "2026-06-02T02:45:09Z",
+    "avg_oof": 0.61448,
+    "submission_file": "submission_v312_per_target_C_20260602_024509.csv",
+    "lb_status": "pending_submission",
+    "best_confirmed": "V308 (LB=0.63893)"
+  },
+  "next_steps": [
+    "승우님이 V312 submission 수동 제출",
+    "LB 결과 기다렸다가 V308(0.63893) 대비 개선 여부 확인",
+    "개선 시: V312 best model 갱신",
+    "개선 없거나 악화 시: V313 실험 (H2: More Seeds 15→30 우선)"
+  ]
+}
