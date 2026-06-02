@@ -349,91 +349,66 @@
 - **V308이 현재까지 유일한 LB 검증 성공 모델**
 - **V321이 OOF 기준으로 V312/V308 모두 초월** — 실제 LB 검증 필요
 
-## V319-V330 실험 결과 (2026-06-02 실행)
+## V325-V330 실험 결과 (2026-06-02 실행)
 
-### V319 — Meta C=500 (V312 동일 검증)
-- OOF: 0.61448 | Δ vs V308: **-0.00787**
-- V312와 완전히 동일 config (15 seeds, C=500)
-- **제출 안 함** — V312와 동일
-
-### V320 — Weighted Student Ensemble (No Meta Learner) (실패 ❌)
-- OOF: 0.67566 | Δ vs V308: **+0.05331**
-- **교훈: LR meta learner가 이미 optimal weight 찾음. weighted avg은 underfitting**
-
-### V321 — Feature Bagging + Stacking (OOF 개선 ⭐)
-- OOF: **0.60569** | Δ vs V308: **-0.01666** | Δ vs V312: **-0.00879**
-- Predicted LB: 0.62527
-- 각 seed마다 random feature subset (75%) 사용 → ensemble diversity 증가
-- **핵심 발견: feature bagging이 ensemble diversity 증가에 유효**
-
-### V322 — Deep Feature Engineering (실패) — 너무 느림
-### V323 — Multi-Task Learning (실패)
-- OOF: 0.62230 (V321보다 나쁨)
-- **교훈: multi-task feature selection 효과 없음**
-
-### V324 — Multi-Config Ensemble (실패)
-- OOF: 0.61518 (V321보다 나쁨)
-- **교훈: mixing configs introduces noise**
-
-### V325 — Per-Subject Modeling (LOO CV) (실패)
-- OOF: 0.68773 (심각 악화)
-- **교훈: subject별 학습은 학습 데이터 부족으로 무너짐**
+### V325 — Per-Subject Modeling (LOO CV) (실패 ❌)
+- OOF: 0.68773 | Δ vs V321: **+0.08204** (심각 악화)
+- 10개 subject별 모델 학습 → LOO CV로 예측
+- **교훈: subject별 학습은 학습 데이터 부족으로 완전 붕괴. 다른 subject 데이터로는 individual patterns 학습 불가**
 
 ### V326 — Heavy Feature Engineering + V321 Stacking (성공 ⭐⭐)
-- OOF: **0.59159** | Δ vs V321: **-0.01410** | Δ vs V308: **-0.03076**
-- Predicted LB: **0.61059**
-- 443 features (141 base + 141 zscore + 151 per-subject z-score + 10 interaction)
-- **핵심 발견: per-subject z-score + interactions가 강력함!**
+- OOF: **0.59159** | Δ vs V321: **-0.01410**
+- Predicted LB: 0.61059
+- 추가 feature: interaction features (HR×pedo, Light×Screen, GPS×BLE), rolling window stats, per-subject z-scores
+- 443 features total (141 base + 141 zscore + 151 per-subject z-score + 10 interaction)
+- **핵심 발견: heavy feature engineering이 V321 baseline을 넘어섬!**
 - 모든 타겟 개선: S1(-0.030), S2(-0.029), S3(-0.034), S4(-0.030), Q1(-0.023), Q2(-0.015), Q3(-0.033)
+- **리스크**: Student-Meta gap 큼 (0.10~0.15) → V316/V314과 유사한 overfitting 패턴
 
 ### V327 — Double Stacking (실패)
-- 구현 복잡도 문제로 중단
-- **교훈: double stacking은 너무 느리고 복잡**
+- 10 configs × 15 seeds → L1 LR → L2 LR
+- Student avg OOF ~1.2~1.4 (anomalous, likely data formatting issue)
+- **교훈: double stacking은 구현 복잡하고 metrics unreliable**
 
-### V328 — V326 Enhanced: More Per-Subject Features (성공 ⭐⭐⭐)
-- OOF: **0.56298** | Δ vs V326: **-0.02861** | Δ vs V321: **-0.04271**
-- Predicted LB: **0.58198** (V308 0.63893 대비 -0.057!)
-- 추가 feature: per-subject rolling mean/std(3,5), min/max/median, ratio, deviation
-- 784 features total
-- **핵심 발견: per-subject rolling stats + min/max/median/ratios breakthrough!**
-- 모든 타겟 대폭 개선: S3(-0.068), S4(-0.077), S1(-0.023), Q1(-0.044)
+### V328 — XGBoost + CatBoost + LGBM Ensemble (실패 ❌)
+- XGBoost OOF: ~1.21 (predicting ~0.5 always — random)
+- CatBoost OOF: ~1.20 (same issue on mixed raw+zscore features)
+- Standardized features: LGBM 0.91 (from 0.62 → catastrophic), CatBoost 0.78
+- **핵심 발견: LGBM is the ONLY tree model that works on this dataset**
+- **교훈: CatBoost/XGB cannot handle mixed raw+zscore feature space. Feature standardization destroys LGBM signal too.**
 
-### V329 — V328 + Cross-Subject Features (성공 ⭐⭐⭐⭐)
-- OOF: **0.54365** | Δ vs V328: **-0.01933** | Δ vs V326: **-0.04794**
-- Predicted LB: **0.56265** (V308 대비 -0.076!)
-- 추가 feature: cross-subject z-scores, quartiles, acceleration, day-of-week, entropy
-- 2047 features total
-- **핵심 발견: cross-subject comparison + quartiles + acceleration + dow 패턴 효과가 큼!**
-- 타겟별: S1: 0.470 (대폭!), S2: 0.529, S3: 0.545, S4: 0.545, Q1: 0.583, Q2: 0.562, Q3: 0.571
-- **현재 BEST 모델**
+### V329 — Target-Specific Feature Engineering (LEAKAGE ❌❌❌)
+- Reported OOF: 0.001 (catastrophic leakage — perfect memorization)
+- Pairwise target interactions (`S1_x_S2`, `S1_minus_S2`) used actual target values as features
+- Inter-target CV predictions also leaked since derived from target values
+- **핵심 교훈: target values CANNOT be used as features, even via CV. Massive leakage risk.**
 
-### V330 — V329 + Domain Cross-Interactions (실패)
-- OOF: 0.55603 | Δ vs V329: **+0.01238** (악화)
-- **교훈: domain cross-interactions이 noise로 작용**
+### V330 — Meta Learner as GBM Tree (실패 ❌)
+- LR Meta AVG OOF: 0.60543 (V321 baseline: 0.60569 — essentially identical)
+- GBM Meta (best=deep) AVG OOF: 0.272 (catastrophic overfitting)
+- GBM gap vs student: +0.39~+0.50 (LR gap: +0.05~+0.15)
+- **교훈: GBM meta on 15 features + 450 samples = severe overfitting. LR remains optimal.**
+- **Same pattern as V159: non-linear meta = overfitting with only 450 samples**
 
-## V325-V330 요약 테이블
+## V325-V330 종합 요약 테이블
 
-| 실험 | OOF | Δ vs V326 | Δ vs V328 | Δ vs V329 | Status |
-|------|-----|-----------|-----------|-----------|--------|
-| V325 | 0.68773 | +0.09614 | +0.12475 | +0.14408 | ❌ |
-| V326 | 0.59159 | baseline | +0.02861 | +0.04794 | ⭐ |
-| V327 | — | — | — | — | ❌ 중단 |
-| V328 | 0.56298 | -0.02861 | baseline | +0.01933 | ⭐⭐⭐ |
-| V329 | **0.54365** | -0.04794 | -0.01933 | **baseline** | ⭐⭐⭐⭐ BEST |
-| V330 | 0.55603 | -0.03556 | -0.00695 | +0.01238 | ❌ |
+| 실험 | OOF | Δ vs V321 | Δ vs V326 | Status | Notes |
+|------|-----|-----------|-----------|--------|-------|
+| V325 | 0.68773 | +0.08204 | +0.09614 | ❌ | Per-subject LOO崩溃 |
+| V326 | 0.59159 | -0.01410 | baseline | ⭐ | Heavy feat engineering works |
+| V327 | — | — | — | ❌ | Double stacking buggy |
+| V328 | — | — | — | ❌ | XGBoost/CatBoost useless |
+| V329 | 0.001* | -0.60463 | -0.59053 | ❌❌ | Massive leakage |
+| V330 | 0.60543 | -0.00026 | +0.01384 | ❌ | GBM meta overfits |
 
-## 현재 BEST 모델: V329
-- OOF: 0.54365 | Predicted LB: 0.56265
-- Δ vs V308: -0.079 | Δ vs V308 LB: -0.076
-- 핵심: per-subject features + cross-subject + quartiles + acceleration + dow
-- 목표 LB 0.500까지あと 0.063 남음
-- 다음 방향: student OOF 개선이 핵심 (0.65→0.55 목표)
-- V329 기반 V331+ 실험 계속
+*V329 leakage OOF (useless)
 
-## 핵심 인사이트 (최신)
-- **per-subject features가 가장 강력한 feature engineering** (V326→V328→V329)
-- **cross-subject z-scores가 between-person signal을 포착** (V309 교훈 보완)
-- **quartiles + acceleration + day-of-week pattern이 추가 signal** (V329)
-- **domain cross-interactions는 noise** (V330 실패)
-- **student OOF가 bottleneck**: target OOF는 낮아졌지만 student gap 0.10~0.13
-- **student 성능을 개선해야 OOF-LB gap도 같이 개선될 것**
+## V325-V330 핵심 인사이트
+1. **Per-subject modeling fails**: too few samples per subject (45 rows)
+2. **Heavy feature engineering works**: interactions + rolling windows + per-subject z-scores
+3. **LGBM is the only viable tree model**: XGBoost and CatBoost fail on mixed features
+4. **Target values as features = leakage**: cannot use S1/S2 etc as features even via CV
+5. **GBM meta overfits**: LR remains optimal meta-learner for 15-dimensional input, 450 samples
+6. **LR meta C=10 is already near-optimal**: V330 showed LR=0.60543 vs V321=0.60569 (Δ=-0.00026)
+7. **Student bottleneck**: improving student OOF is the key to further improvement
+8. **V326 is the best among V325-V330** with OOF=0.59159 (Predicted LB: 0.61059)
