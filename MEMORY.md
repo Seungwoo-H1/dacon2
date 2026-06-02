@@ -232,6 +232,49 @@
 - **Student avg가 configs 간에 일정(0.692) → OOF-LB gap도 유사할 가능성**
 - **V312와 V313 모두 V308을 넘을 가능성 높음 — LB 검증 대기 중**
 
+### V313 — LB 확인 결과 (실패)
+- **Actual LB: 0.6467217671** (V308 0.63893 대비 **-0.0078 나쁨**)
+- OOF: 0.59512 → LB 0.6467, **OOF-LB gap: +0.0516** (V308 +0.01658 대비 3배)
+- 원인: C=500 + 30 seeds 조합이 과도한 overfitting
+- student avg OOF: 0.69193 (V308 0.69212와 동일) → student 성능은 이미 최적점 도달
+- 핵심 교훈: student avg OOF는 configs 간에 거의 일정. Meta OOF만 낮출 뿐.
+- **Student avg가 0.692에서 수렴 → student 성능 개선이瓶颈**
+
+### V314 — Per-Target Meta C Sweeping + 20 Seeds (실패)
+- OOF: 0.60669 | Δ vs V308: **-0.01566**
+- 모든 타겟에서 C=500이最佳 (V312 재확인)
+- Seeds 20도 15보다 약간 나아짐
+- Student avg OOF: 0.69211 (V308/V312/V313과 동일)
+- Student-Meta gap: 0.085 (V308: 0.070, V313: 0.097)
+- OOF-LB gap이 V308 대비 5배 → 신뢰도 낮은 예측
+- **LB 예측은 V308 이하일 가능성 높음 (과적합 리스크)**
+- 제출 안 함
+- 핵심 교훈: C=500과 seeds 증가만으로는 student bottleneck을 뚫을 수 없음
+
+### V315 — Per-Target Feature Consensus Selection (실패 — 무변화)
+- OOF: 0.62235 | Δ vs V308: **+0.00000 (완전히 동일)**
+- 5 ranking runs 모두에서 100% consensus (all features identical across runs)
+- top-5 features가 5 runs 동안 완전히 동일
+- Feature ranking이 이미 매우 안정적 → consensus selection = single ranking
+- Feature selection이 bottleneck이 아님
+- 제출 안 함 — V308과 동일
+- 핵심 교훈: feature ranking stability 높음, consensus feature selection 효과 없음
+
+### V316 — Per-Target Student Hyperparameter Optimization (성공적 개선 ⭐)
+- OOF: 0.61800 | Δ vs V308: **-0.00435**
+- Δ vs V146: **-0.01369**
+- **Global Student avg: 0.65165** (V308 0.692 대비 -0.04035 대폭 개선!)
+- Per-target best cfg: Q1=aggressive, Q2=safety, Q3=safety, S1=aggressive, S2=safety, S3=wide, S4=aggressive
+- **S1이 0.55373으로 가장 크게 개선** (V308 대비 -0.024)
+- Predicted LB: 0.63458 (V308 0.63893 대비 -0.004)
+- **핵심 발견: student cfg per-target optimization이 student bottleneck(0.692)을 0.651로 돌파**
+- **과적합 리스크: Q1 gap 0.053, Q3 gap 0.041, S4 gap 0.042 → 일부 타겟에서 gap 확대**
+- **Q2 gap 0.010은 매우 좋음 → safety cfg가 안정적인 효과**
+- **제출 여부는 승우에게 양도** (LB 검증 필요, OOF-LB gap 불균일)
+- **교훈: cfg variant search space가 너무 좁았음. 더 다양한 cfg 테스트 필요.**
+
+## 핵심 인사이트
+
 ## 파일 구조
 - `/home/mwoo423/projects/dacon2/src/` — 모든 실험 스크립트
 - `/home/mwoo423/projects/dacon2/submissions/` — 제출물 + 메타
@@ -251,3 +294,40 @@
 8. 단순 feature engineering 반복 금지
 9. **meta-learner C는 실험 필요**: C=0.1 → C=10으로 OOF 개선 확인됨
 10. **C=500이 C=10보다 우월** (V312). **seeds 30이 15보다 우월** (V313)
+
+## V316~V317 실험 결과 정리
+
+### V316 — Per-Target Student Hyperparameter Optimization (성공적 개선)
+- OOF: 0.61800 | Δ vs V308: **-0.00435**
+- **Global Student avg: 0.65165** (V308 0.692 대비 -0.04035 대폭 개선!)
+- Per-target best cfg: Q1=aggressive, Q2=safety, Q3=safety, S1=aggressive, S2=safety, S3=wide, S4=aggressive
+- **S1이 0.55373으로 가장 크게 개선** (V308 대비 -0.024)
+- Predicted LB: 0.63458 (V308 0.63893 대비 -0.004)
+- **핵심 발견: student cfg per-target optimization이 student bottleneck(0.692)을 0.651로 돌파**
+- **과적합 리스크: Q1 gap 0.053, Q3 gap 0.041, S4 gap 0.042 → 일부 타겟에서 gap 확대**
+- **Q2 gap 0.010은 매우 좋음 → safety cfg가 안정적인 효과**
+- **제출 안 함** (actual LB 확인 안 됨)
+- **교훈: cfg variant search space가 너무 좁았음. 더 다양한 cfg 테스트 필요.**
+
+### V317 — Gap-Balanced Student HP Optimization (실패)
+- OOF: 0.61859 | Δ vs V308: **-0.00376**
+- Δ vs V316: **+0.00059** (거의 동일)
+- **Global Student avg: 0.638** (V316 0.651보다 낮아짐 — gap balancing 효과)
+- Gap 균일화 성공: Q1(0.053→0.004), Q3(0.041→0.003), S2(0.032→0.011)
+- **하지만 S4 gap 0.0425 그대로** (aggressive cfg 선택됨)
+- Predicted LB: 0.63982 (V308 0.63893 대비 **+0.00089** → 악화)
+- 제출 안 함 — predicted LB가 V308보다 나쁨
+- 핵심 교훈: gap balancing으로 student avg는 낮아졌지만 OOF가 올라감. S4 aggressive가 여전히 optimal.
+- S4 aggressive를 더 강한 regularization으로 overriding하는 시도 필요
+- **gap balancing vs OOF 트레이드오프가 있음** — OOF↓하면 gap↑, gap↓하면 OOF↑
+
+### V318 — Forced Strong Regularization on Q1/Q3/S4 (실패)
+- OOF: 0.63327 | Δ vs V308: **+0.01092 (명확한 악화)**
+- Gap 균일화는 완벽: Q1(0.05→0.00), Q3(0.04→0.00), S4(0.04→0.00)
+- **하지만 S4 student avg 0.685 → OOF 0.680 폭등** (V316의 0.618 대비 +0.062)
+- Predicted LB: 0.64428 (V308 대비 +0.005 악화)
+- 제출 안 함 — OOF가 V308보다 확실히 나쁨
+- **핵심 교훈: Q1/Q3/S4는 inherently noisy target. reg_heavy로 gap↓시키면 OOF↑가 너무 큼.**
+- regularization trade-off: gap↓하면 OOF↑가 반드시 따라옴
+- **Gap 최소화는 OOF 희생으로 인해 LB 개선으로 이어지지 않음**
+- **이제 stacking 아키텍처 한계임이 확실해짐**

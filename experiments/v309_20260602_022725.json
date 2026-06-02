@@ -1,0 +1,26 @@
+{
+  "version": "V309",
+  "name": "Per-Subject Z-Score Enriched Stacking",
+  "avg_oof": 0.62415,
+  "n_features_total": 282,
+  "n_base_features": 141,
+  "n_zscore_features": 141,
+  "n_seeds": 15,
+  "v146_avg_oof": 0.63169,
+  "v308_avg_oof": 0.62235,
+  "delta_vs_v146": -0.00754,
+  "delta_vs_v308": 0.0018,
+  "per_target_oof": {
+    "Q1": 0.66148,
+    "Q2": 0.63035,
+    "Q3": 0.62803,
+    "S1": 0.57909,
+    "S2": 0.62183,
+    "S3": 0.61935,
+    "S4": 0.62894
+  },
+  "use_per_subject_zscore": true,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v309_per_sub_zscore_20260602_022725.csv",
+  "timestamp": "20260602_022725",
+  "total_time_s": 47.0
+}

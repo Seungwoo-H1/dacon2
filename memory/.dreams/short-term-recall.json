@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-02T02:54:09.746Z",
+  "updatedAt": "2026-06-02T04:42:03.544Z",
   "entries": {
     "memory:memory/2026-05-01.md:1:32": {
       "key": "memory:memory/2026-05-01.md:1:32",
@@ -691,6 +691,37 @@
         "0.63129",
         "0.00981",
         "0.63567"
+      ]
+    },
+    "memory:memory/2026-05-08.md:30:58": {
+      "key": "memory:memory/2026-05-08.md:30:58",
+      "path": "memory/2026-05-08.md",
+      "startLine": 30,
+      "endLine": 58,
+      "source": "memory",
+      "snippet": "- **V60** (interactions): 역개선 (-0.0046) - **V61** (CatBoost leakage-clean): avg CV 0.5830 - **V62** (advanced ensemble, 100 seeds) - `features_clean_v60.parquet` 생성 (with z-score, 878KB) ### 2026-05-08 오늘: V63~V72 (AI agent 자동 실행) | Version | Method | Seeds | Features | Time | |---------|--------|-------|----------|------| | V63 | Stacking + Temporal + Cal | 5×3 | features.parquet | - | | V64 | CatBoost+LGBM+XGB + Cal | - | - | - | | V65 | CatBoost single + z-score + param sweep | 20 | features_clean_v60 | - | | V66 | CatBoost + leakage-clean + per-target opt | 50 | - | 452s | | V67 | CatBoost + conservative reg | 30 | - | 171s | | V68 | (script 미존재) | - | - | - | | V69 | (script 미존재) | - |",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-06-02T04:42:03.544Z",
+      "lastRecalledAt": "2026-06-02T04:42:03.544Z",
+      "queryHashes": [
+        "09d7688bb54e"
+      ],
+      "recallDays": [
+        "2026-06-02"
+      ],
+      "conceptTags": [
+        "0.0046",
+        "leakage-clean",
+        "0.5830",
+        "features-clean-v60.parquet",
+        "z-score",
+        "features.parquet",
+        "features-clean-v60",
+        "per-target"
       ]
     }
   }

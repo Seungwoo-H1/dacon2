@@ -1,0 +1,70 @@
+{
+  "version": "V317",
+  "name": "Gap-Balanced Student HP Optim + 15 Seeds, C=10.0",
+  "avg_oof": 0.61859,
+  "n_features_total": 282,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "v146_avg_oof": 0.63169,
+  "v308_avg_oof": 0.62235,
+  "v316_avg_oof": 0.618,
+  "delta_vs_v146": -0.0131,
+  "delta_vs_v308": -0.00376,
+  "delta_vs_v316": 0.00059,
+  "per_target_oof": {
+    "Q1": 0.69012,
+    "Q2": 0.61033,
+    "Q3": 0.62987,
+    "S1": 0.55373,
+    "S2": 0.63094,
+    "S3": 0.59669,
+    "S4": 0.61841
+  },
+  "per_target_best_cfg": {
+    "Q1": "reg_heavy",
+    "Q2": "deep_balanced",
+    "Q3": "shallow_safe",
+    "S1": "aggressive",
+    "S2": "reg_strong",
+    "S3": "wide",
+    "S4": "aggressive"
+  },
+  "student_oof_avg": {
+    "Q1": 0.69454,
+    "Q2": 0.63259,
+    "Q3": 0.63295,
+    "S1": 0.58086,
+    "S2": 0.64163,
+    "S3": 0.62541,
+    "S4": 0.66087
+  },
+  "student_oof_std": {
+    "Q1": 0.00025,
+    "Q2": 0.0052,
+    "Q3": 0.00095,
+    "S1": 0.00553,
+    "S2": 0.00109,
+    "S3": 0.00337,
+    "S4": 0.00595
+  },
+  "per_target_gap": {
+    "Q1": 0.00442,
+    "Q2": 0.02226,
+    "Q3": 0.00307,
+    "S1": 0.02712,
+    "S2": 0.01068,
+    "S3": 0.02872,
+    "S4": 0.04246
+  },
+  "global_student_avg_oof": 0.63841,
+  "max_gap": 0.04246,
+  "avg_gap": 0.01982,
+  "estimated_gap": 0.02123,
+  "gap_confidence": "MEDIUM",
+  "predicted_lb": 0.63982,
+  "v308_actual_lb": 0.63893,
+  "predicted_improvement_vs_v308": 0.00089,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v317_gap_balanced_20260602_050805.csv",
+  "timestamp": "20260602_050805",
+  "total_time_s": 185.0
+}

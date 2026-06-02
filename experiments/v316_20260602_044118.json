@@ -1,0 +1,66 @@
+{
+  "version": "V316",
+  "name": "Per-Target Student Hyperparameter Optimization + 15 Seeds, C=10.0",
+  "avg_oof": 0.618,
+  "n_features_total": 282,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "n_cfg_variants": 7,
+  "student_cfg_variants": [
+    "wide",
+    "deep",
+    "v48",
+    "safety",
+    "shallow_fast",
+    "balanced",
+    "aggressive"
+  ],
+  "v146_avg_oof": 0.63169,
+  "v308_avg_oof": 0.62235,
+  "delta_vs_v146": -0.01369,
+  "delta_vs_v308": -0.00435,
+  "per_target_oof": {
+    "Q1": 0.66297,
+    "Q2": 0.63576,
+    "Q3": 0.63297,
+    "S1": 0.55373,
+    "S2": 0.62544,
+    "S3": 0.59669,
+    "S4": 0.61841
+  },
+  "per_target_best_cfg": {
+    "Q1": "aggressive",
+    "Q2": "safety",
+    "Q3": "safety",
+    "S1": "aggressive",
+    "S2": "safety",
+    "S3": "wide",
+    "S4": "aggressive"
+  },
+  "student_oof_avg": {
+    "Q1": 0.71641,
+    "Q2": 0.64599,
+    "Q3": 0.67433,
+    "S1": 0.58086,
+    "S2": 0.65766,
+    "S3": 0.62541,
+    "S4": 0.66087
+  },
+  "student_oof_std": {
+    "Q1": 0.00643,
+    "Q2": 0.00174,
+    "Q3": 0.00438,
+    "S1": 0.00553,
+    "S2": 0.00291,
+    "S3": 0.00337,
+    "S4": 0.00595
+  },
+  "global_student_avg_oof": 0.65165,
+  "predicted_lb_v308_gap": 0.63458,
+  "v308_actual_lb": 0.63893,
+  "v313_actual_lb": 0.6467,
+  "predicted_improvement_vs_v308": -0.00435,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v316_per_target_cfg_20260602_044118.csv",
+  "timestamp": "20260602_044118",
+  "total_time_s": 207.0
+}
