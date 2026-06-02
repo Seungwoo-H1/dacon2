@@ -1,0 +1,39 @@
+{
+  "version": "V321",
+  "name": "Feature Bagging + Stacking (0.75 bag fraction)",
+  "avg_oof": 0.60569,
+  "n_features_total": 282,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "feature_bag_fraction": 0.75,
+  "v146_avg_oof": 0.63169,
+  "v308_avg_oof": 0.62235,
+  "v312_avg_oof": 0.61448,
+  "delta_vs_v308": -0.01666,
+  "delta_vs_v312": -0.00879,
+  "per_target_oof": {
+    "Q1": 0.6387,
+    "Q2": 0.61016,
+    "Q3": 0.61188,
+    "S1": 0.56086,
+    "S2": 0.60386,
+    "S3": 0.60091,
+    "S4": 0.61346
+  },
+  "student_oof_avg": {
+    "Q1": 0.79267,
+    "Q2": 0.74707,
+    "Q3": 0.76652,
+    "S1": 0.6298,
+    "S2": 0.75782,
+    "S3": 0.65102,
+    "S4": 0.70636
+  },
+  "predicted_lb": 0.62527,
+  "v308_actual_lb": 0.63893,
+  "predicted_improvement_vs_v308": -0.01366,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v321_feature_bagging_20260602_055920.csv",
+  "timestamp": "20260602_055920",
+  "total_time_s": 47.0,
+  "key_difference": "feature bagging per seed for diversity"
+}

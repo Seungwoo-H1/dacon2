@@ -1,0 +1,42 @@
+{
+  "version": "V319",
+  "name": "V308 Arch + Meta C=500 + 15 Seeds",
+  "avg_oof": 0.61448,
+  "n_features_total": 282,
+  "n_seeds": 15,
+  "meta_c": 500.0,
+  "v146_avg_oof": 0.63169,
+  "v308_avg_oof": 0.62235,
+  "v312_avg_oof": 0.61448,
+  "delta_vs_v146": -0.01721,
+  "delta_vs_v308": -0.00787,
+  "delta_vs_v312": -0.0,
+  "per_target_oof": {
+    "Q1": 0.66817,
+    "Q2": 0.61994,
+    "Q3": 0.61482,
+    "S1": 0.56863,
+    "S2": 0.61,
+    "S3": 0.5871,
+    "S4": 0.63269
+  },
+  "per_target_student_oof": {
+    "Q1": 0.78413,
+    "Q2": 0.70165,
+    "Q3": 0.74313,
+    "S1": 0.59927,
+    "S2": 0.71311,
+    "S3": 0.62649,
+    "S4": 0.67703
+  },
+  "predicted_lb_v308_gap": 0.63106,
+  "predicted_lb_conservative": 0.63606,
+  "v308_actual_lb": 0.63893,
+  "v312_actual_lb": "?",
+  "predicted_improvement_vs_v308": -0.00287,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v319_c500_20260602_055157.csv",
+  "timestamp": "20260602_055157",
+  "total_time_s": 48.0,
+  "key_difference_from_v308": "meta C=10 \u2192 C=500",
+  "key_difference_from_v312": "identical architecture"
+}
