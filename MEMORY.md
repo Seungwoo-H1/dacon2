@@ -317,9 +317,34 @@
 | V317 | 0.61859 | -0.00376 | 0.63982 | +0.00089 | ❌ |
 | V318 | 0.63327 | +0.01092 | 0.64428 | +0.00535 | ❌ |
 
+### V319 — Meta C=500 (V312 동일 검증)
+- OOF: 0.61448 | Δ vs V308: **-0.00787**
+- V312와 완전히 동일 config (15 seeds, C=500)
+- **제출 안 함** — V312와 동일하므로 V312 LB 검증 필요
+- **교훈: C=500이 C=10보다 OOF에서 우위**
+
+### V320 — Weighted Student Ensemble (No Meta Learner) (실패 ❌)
+- OOF: 0.67566 | Δ vs V308: **+0.05331** (심각 악화!)
+- Weight optimization이 단일 seed만 선택 (S1: seed3 100%, S2: seed6 99.88%)
+- Stacking의 LR meta learner가 weighted avg보다 나은 평균화 역할
+- **교훈: LR meta learner가 이미 optimal weight 찾음. weighted avg은 underfitting**
+
+### V321 — Feature Bagging + Stacking (OOF 개선 ⭐)
+- OOF: 0.60569 | Δ vs V308: **-0.01666** | Δ vs V312: **-0.00879**
+- Predicted LB: 0.62527 (V308 0.63893 대비 **-0.014**)
+- 각 seed마다 random feature subset (75%) 사용 → ensemble diversity 증가
+- 모든 타겟 개선 (Q1: 0.639, Q2: 0.610, Q3: 0.612, S1: 0.561, S2: 0.604, S3: 0.601, S4: 0.613)
+- Student gap 큼 (Q1: 0.15, S2: 0.15) → V316 같은 test overfitting 리스크
+- **핵심 차이 V316 vs V321**: V316은 per-target cfg customization (실패), V321은 동일 cfg + feature bagging (성공 가능성)
+- **제출 후보** — V312 LB 미검증, V321이 V312보다 OOF에서도 우위
+- **리스크**: student gap이 V308보다 큼. 실제 LB에서 gap 유지 여부 중요
+
 ## 교훈 정리
 - **OOF 개선 ≠ LB 개선** — V313은 OOF 0.595인데 LB 0.6467, V316은 OOF 0.618인데 LB 0.6505
 - **per-target cfg customization = test overfitting** (V316)
 - **gap balancing = OOF 희생** (V317/V318)
-- **stacking 아키텍처 한계 명확** — 큰 개선을 원하면 architecture 전환 필요
-- **V308이 현재까지 유일한 성공 모델**
+- **weighted ensemble (meta learner 없음) = underfitting** (V320)
+- **feature bagging이 ensemble diversity 증가에 유효** (V321)
+- **LR meta learner가 이미 optimal aggregation** — meta learner 제거하면 오히려 악화
+- **V308이 현재까지 유일한 LB 검증 성공 모델**
+- **V321이 OOF 기준으로 V312/V308 모두 초월** — 실제 LB 검증 필요
