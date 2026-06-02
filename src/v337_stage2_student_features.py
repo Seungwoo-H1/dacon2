@@ -333,6 +333,8 @@ def main():
         # Augmented features
         aug_names = feat_cols_clean + [f'st1_{t}_pred_mean', f'st1_{t}_pred_std'] + [f'st1_{ot}_pred_mean' for ot in other_targets]
         X_aug = np.column_stack([X_base, pred_mean, pred_std, other_pred])
+        # Keep a mapping from aug_names to actual columns
+        aug_col_map = {n: n for n in aug_names}
 
         # Rank augmented features
         params_rank = {
@@ -355,13 +357,12 @@ def main():
         log.info(f"  Top 5: {ranked_names[:5]}")
 
         # Train stage 2 students on augmented features
-        # Need to rebuild train_df with augmented features for Stage 2
-        # Create augmented train dataframe
+        # Create augmented train dataframe — use matching column names
         aug_df = train_df[feat_cols_clean].copy()
-        aug_df['s1_mean'] = pred_mean
-        aug_df['s1_std'] = pred_std
+        aug_df['st1_' + t + '_pred_mean'] = pred_mean
+        aug_df['st1_' + t + '_pred_std'] = pred_std
         for i, ot in enumerate(other_targets):
-            aug_df[f's1_{ot}_mean'] = other_pred[:, i]
+            aug_df[f'st1_{ot}_pred_mean'] = other_pred[:, i]
 
         oofs = []
         for si in range(N_SEEDS):
