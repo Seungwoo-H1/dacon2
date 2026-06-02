@@ -13,6 +13,14 @@
 
 ## ⭐ 현재 BEST (실제 제출 확인됨)
 
+### V312 — Per-Target Meta C Optimization (제출 완료 — 2026-06-02) ⭐
+- OOF: 0.61448 | Δ vs V308: **-0.00787**
+- **제출 파일**: `submission_v312_per_target_C_20260602_024509.csv`
+- 구성: 15 LGBM seeds × GroupKFold 5-fold → LR meta-learner (**C=500**)
+- 타겟별 개선: Q3(-0.020), S3(-0.036), S1(-0.007), S2(-0.007), S4(-0.008), Q1(-0.003)
+- **예상 LB: ~0.631** (V308의 0.63893 대비 -0.008 개선 예상)
+- 리스크: OOF-LB gap이 V308과 유사할 경우에만 유효
+
 ### V308 — Z-Score Enriched Stacking (제출 완료 — 2026-06-02)
 - OOF: 0.62235 | Δ vs V146: **-0.00934**
 - **Actual LB: 0.63893**
@@ -181,6 +189,28 @@
 - Feature ranking was consistent across folds in sampling
 - **Next**: skip if not proven beneficial
 
+### V312 — Per-Target Meta C Optimization (제출 완료 — 2026-06-02)
+- OOF: 0.61448 | Δ vs V308: **-0.00787**
+- Δ vs V146: **-0.01721**
+- **모든 타겟에서 C=500이 optimal** (C=10 → C=500으로 일괄 개선)
+- 타겟별 OOF:
+  - Q1: 0.66817 vs V308 0.67094 → **-0.00277**
+  - Q2: 0.61994 vs V308 0.61828 → -0.00166
+  - Q3: 0.61482 vs V308 0.63507 → **-0.02025**
+  - S1: 0.56863 vs V308 0.57521 → **-0.00658**
+  - S2: 0.61000 vs V308 0.61653 → -0.00653
+  - S3: 0.58710 vs V308 0.62331 → **-0.03621**
+  - S4: 0.63269 vs V308 0.64040 → -0.00771
+- **핵심 발견: C=500으로 meta-learner regularization 완화 → OOF 일괄 개선**
+- **S3 대폭 개선 (-0.03621)** — 가장 강력한 개선 효과
+- **2026-06-02 테스트 예측 생성 완료**
+- **제출 파일**: `submission_v312_per_target_C_20260602_024509.csv`
+- 구성: 15 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=500)
+- **예상 LB**: V308 OOF-LB gap 0.01658 유지 시 → 0.61448+0.01658 = 0.631
+- **리스크**: C=500은 meta regularization이 거의 없음 → OOF-LB gap 확대 가능성
+- **교훈: C는 충분히 큰 값이 좋음. C=10은 너무 강한 regularization**
+- **추천: V312는 V308과 동일 아키텍처(C만 10→500), low-risk 개선**
+
 ## 핵심 인사이트
 - **V140이 BEST (LB=0.64072, OOF=0.64116, 갭=0.00044)**
 - V140의 핵심: proper CV stacking, OOF≈LB (stable generalization)
@@ -188,6 +218,7 @@
 - **config→target 매핑이 이미 최적** — 깨면 성능 붕괴 (V143 실패)
 - **V142 교훈: OOF↓ ≠ LB↓**, OOF-LB correlation 유지가 최우선
 - **meta C=10이 C=0.1보다 OOF 개선** (V146, -0.00941). OOF-LB gap 확인 필요.
+- **C=500이 C=10보다 더 좋음** (V312, -0.00787 Δ vs V308). C가 클수록 meta가 student를 더 강하게 반영.
 - Isotonic calibration: OOF에서는 강력하지만 LB에는 역효과
 - **LB 0.50은 매우 어려움** (OOF <0.47 필요)
 - 단순 feature engineering, calendar, naive ensemble 재탕 금지
