@@ -403,12 +403,69 @@
 
 *V329 leakage OOF (useless)
 
-## V325-V330 핵심 인사이트
+## V325-V334 실험 결과 (2026-06-02 실행)
+
+### V328 — V326 Enhanced: More Per-Subject Features (성공 ⭐⭐⭐)
+- OOF: **0.56298** | Δ vs V326: **-0.02861**
+- Predicted LB: **0.58198**
+- 추가 feature: per-subject rolling mean/std(3,5), min/max/median, ratio, deviation, acceleration
+- 784 features total
+
+### V329 — V328 + Cross-Subject Features (성공 ⭐⭐⭐⭐ BEST)
+- OOF: **0.54365** | Δ vs V328: **-0.01933**
+- Predicted LB: **0.56265**
+- 추가 feature: cross-subject z-scores, quartiles, acceleration, day-of-week, entropy
+- 2047 features total
+- **현재 BEST 모델**
+
+### V330 — V329 + Domain Cross-Interactions (실패)
+- OOF: 0.55603 | Δ vs V329: **+0.01238** (악화)
+- **교훈: domain cross-interactions이 noise로 작용**
+
+### V331 — V329 + Top-100 Feature Selection (실패 ❌)
+- OOF: **0.58429** | Δ vs V329: **+0.04064** (심각 악화)
+- **교훈: top-100 feature removal이 signal 손실. 2047 features 중 noise가 아님.**
+- Q-targets가 특히 나쁨 (Q1: 0.621, Q2: 0.614)
+
+### V332 — V329 + 30 Seeds + Meta C=500 (OOF 개선 but student gap 큼 ⚠️)
+- OOF: **0.51539** | Δ vs V329: **-0.02826** (개선)
+- Predicted LB: 0.53439
+- **학생 gap 문제**: Q1(0.129), Q2(0.163), S1(0.140), S2(0.152) — V313과 동일한 패턴
+- Student avg OOF: V329와 거의 동일 (~0.65-0.69). C=500은 meta만 낮춤.
+- **V313 교훈**: 이 패턴은 LB에서 OOF-LB gap이 클 것 (V313: OOF 0.595 → LB 0.647)
+
+### V333 — V329 + Stronger Regularization (실패 ❌)
+- OOF: **0.57818** | Δ vs V329: **+0.03453** (악화)
+- Stronger regularization이 student OOF를 낮췄으나(meta OOF도 낮아져서) net negative
+- **교훈: student OOF 개선 ≠ meta OOF 개선. student gap을 메우는 것이 아님.**
+
+### V334 — V329 + 30 Seeds + C=500 Combined
+- OOF: **0.51539** (V332와 동일)
+- 같은 config이므로 같은 결과
+
+## V325-V334 종합 요약 테이블
+
+| 실험 | OOF | Δ vs V329 | Status |
+|------|-----|-----------|--------|
+| V326 | 0.59159 | +0.04794 | ⭐ |
+| V328 | 0.56298 | +0.01933 | ⭐⭐⭐ |
+| V329 | **0.54365** | **baseline** | ⭐⭐⭐⭐ BEST |
+| V330 | 0.55603 | +0.01238 | ❌ |
+| V331 | 0.58429 | +0.04064 | ❌ Top-100 너무 aggressive |
+| V332 | 0.51539 | -0.02826 | ⚠️ 큰 student gap |
+| V333 | 0.57818 | +0.03453 | ❌ Regularization too strong |
+| V334 | 0.51539 | -0.02826 | ⚠️ V332 동일 |
+
+## V325-V334 핵심 인사이트
 1. **Per-subject modeling fails**: too few samples per subject (45 rows)
-2. **Heavy feature engineering works**: interactions + rolling windows + per-subject z-scores
+2. **Heavy feature engineering works**: per-subject features + cross-subject z-scores + quartiles + acceleration + dow (V329)
 3. **LGBM is the only viable tree model**: XGBoost and CatBoost fail on mixed features
 4. **Target values as features = leakage**: cannot use S1/S2 etc as features even via CV
 5. **GBM meta overfits**: LR remains optimal meta-learner for 15-dimensional input, 450 samples
-6. **LR meta C=10 is already near-optimal**: V330 showed LR=0.60543 vs V321=0.60569 (Δ=-0.00026)
-7. **Student bottleneck**: improving student OOF is the key to further improvement
-8. **V326 is the best among V325-V330** with OOF=0.59159 (Predicted LB: 0.61059)
+6. **C=500 helps OOF but not student avg**: V332/V334 student avg ~0.65-0.69 (same as V329 C=10)
+7. **Student bottleneck persists**: student avg OOF 수렴 ~0.65-0.69. 근본적 feature engineering 필요.
+8. **Top-100 feature removal backfires**: 2047 features contain mostly signal, not noise
+9. **Stronger regularization helps student but hurts meta**: net negative
+10. **V329 is the best confirmed model**: OOF=0.54365, Predicted LB=0.56265
+11. **V332 student gap pattern matches V313**: OOF 0.515 → LB likely 0.62-0.65 (OOF-LB gap ~0.10+)
+12. **LB 0.500 목표**: student OOF를 ~0.55까지 낮추는 것이 필요 — 새로운 feature engineering 방향이 필요
