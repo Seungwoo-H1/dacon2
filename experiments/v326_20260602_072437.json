@@ -1,0 +1,41 @@
+{
+  "version": "V326",
+  "name": "Heavy Feature Engineering + V321 Stacking",
+  "avg_oof": 0.59159,
+  "n_features_total": 443,
+  "n_features_base": 141,
+  "n_features_zscore": 141,
+  "n_features_interaction": 10,
+  "n_features_ps_zscore": 151,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "feature_bag_fraction": 0.75,
+  "v321_avg_oof": 0.60569,
+  "v312_avg_oof": 0.61448,
+  "v308_avg_oof": 0.62235,
+  "delta_vs_v321": -0.0141,
+  "delta_vs_v312": -0.02289,
+  "per_target_oof": {
+    "Q1": 0.64456,
+    "Q2": 0.57337,
+    "Q3": 0.60209,
+    "S1": 0.54143,
+    "S2": 0.54934,
+    "S3": 0.60188,
+    "S4": 0.62846
+  },
+  "student_oof_avg": {
+    "Q1": 0.77956,
+    "Q2": 0.72541,
+    "Q3": 0.71142,
+    "S1": 0.6496,
+    "S2": 0.6782,
+    "S3": 0.70716,
+    "S4": 0.72563
+  },
+  "predicted_lb": 0.61059,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v326_heavy_feat_20260602_072437.csv",
+  "timestamp": "20260602_072437",
+  "total_time_s": 50.0,
+  "key_difference": "heavy feature engineering + V321 stacking"
+}
