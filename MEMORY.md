@@ -13,12 +13,23 @@
 
 ## ⭐ 현재 BEST (실제 제출 확인됨)
 
+### V308 — Z-Score Enriched Stacking (OOF 테스트 완료 — 2026-06-02)
+- OOF: 0.62235 | Δ vs V146: **-0.00934**
+- 2026-06-02 테스트 예측 생성 완료
+- **제출 파일**: `submission_v308_zscore_20260602_021028.csv`
+- 구성: 15 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=10)
+- 282 features (141 base + 141 zscore) + per-target top-K selection
+- 모든 타겟 개선 (S2 제외: -0.005 ~ -0.022, S2: +0.012)
+- Student OOF 안정성 우수 (S1: 0.59-0.60, S3: 0.62-0.63)
+- Predicted LB: ~0.624 (V146 대비 -0.008 개선)
+
 ### V146 — Optimized Stacking (제출 완료 — 2026-05-30)
 - OOF: 0.63169 | Δ vs V140: **-0.00941**
 - 2026-05-30 수동 제출 완료
 - Leaderboard 결과 기다리는 중
 - **제출 파일**: `submission_v146_submit_20260530.csv`
 - 구성: 5 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=10)
+- V308이 OOF -0.00934로 V146 초월
 
 ## V140-V164 결과 정리
 

@@ -1,0 +1,25 @@
+{
+  "version": "V307",
+  "name": "Z-Score Enriched Stacking (15 seeds, 273 feats)",
+  "avg_oof": 0.6139,
+  "n_features_total": 273,
+  "n_base_features": 141,
+  "n_zscore_features": 132,
+  "n_seeds": 15,
+  "v146_avg_oof": 0.63169,
+  "delta_vs_v146": -0.01779,
+  "per_target_oof": {
+    "Q1": 0.65435,
+    "Q2": 0.59534,
+    "Q3": 0.62993,
+    "S1": 0.55544,
+    "S2": 0.5842,
+    "S3": 0.62281,
+    "S4": 0.65522
+  },
+  "use_zscore": true,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v307_cv_20260602_020611.csv",
+  "timestamp": "20260602_020611",
+  "total_time_s": 47.0,
+  "note": "CV-only (no test enhanced features generated)"
+}
