@@ -1,0 +1,31 @@
+{
+  "version": "V333",
+  "name": "V329 + Stronger Regularization (Student OOF)",
+  "avg_oof": 0.57818,
+  "n_features_total": 2047,
+  "n_seeds": 15,
+  "v329_avg_oof": 0.54365,
+  "delta_vs_v329": 0.03453,
+  "per_target_oof": {
+    "Q1": 0.59364,
+    "Q2": 0.57619,
+    "Q3": 0.57309,
+    "S1": 0.53037,
+    "S2": 0.56207,
+    "S3": 0.57924,
+    "S4": 0.63263
+  },
+  "student_oof_avg": {
+    "Q1": 0.64051,
+    "Q2": 0.63171,
+    "Q3": 0.61415,
+    "S1": 0.57749,
+    "S2": 0.61506,
+    "S3": 0.63863,
+    "S4": 0.66652
+  },
+  "predicted_lb": 0.59718,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v333_strong_reg_20260602_082140.csv",
+  "timestamp": "20260602_082140",
+  "total_time_s": 25.0
+}

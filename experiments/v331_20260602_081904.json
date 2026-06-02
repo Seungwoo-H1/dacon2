@@ -1,0 +1,34 @@
+{
+  "version": "V331",
+  "name": "V329 + Aggressive Top-100 Feature Selection",
+  "avg_oof": 0.58429,
+  "n_features_total": 2047,
+  "n_features_used": 100,
+  "n_seeds": 15,
+  "v329_avg_oof": 0.54365,
+  "v328_avg_oof": 0.56298,
+  "delta_vs_v329": 0.04064,
+  "delta_vs_v328": 0.02131,
+  "per_target_oof": {
+    "Q1": 0.62076,
+    "Q2": 0.61395,
+    "Q3": 0.60884,
+    "S1": 0.49805,
+    "S2": 0.55475,
+    "S3": 0.58806,
+    "S4": 0.60562
+  },
+  "student_oof_avg": {
+    "Q1": 0.6488,
+    "Q2": 0.63955,
+    "Q3": 0.62885,
+    "S1": 0.51902,
+    "S2": 0.57615,
+    "S3": 0.65354,
+    "S4": 0.63183
+  },
+  "predicted_lb": 0.60329,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v331_top100_20260602_081904.csv",
+  "timestamp": "20260602_081904",
+  "total_time_s": 88.0
+}
