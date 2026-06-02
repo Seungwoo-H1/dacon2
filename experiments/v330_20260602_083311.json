@@ -1,0 +1,40 @@
+{
+  "version": "V330",
+  "name": "V329 Enhanced \u2014 Lag Features + Cross-Domain Ratios",
+  "avg_oof": 0.56924,
+  "avg_student_oof": 0.68972,
+  "n_features_total": 1346,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "feature_bag_fraction": 0.75,
+  "v321_avg_oof": 0.60569,
+  "v326_avg_oof": 0.59159,
+  "v328_avg_oof": 0.5805,
+  "v329_avg_oof": 0.57742,
+  "delta_vs_v321": -0.03645,
+  "delta_vs_v326": -0.02235,
+  "delta_vs_v329": -0.00818,
+  "per_target_oof": {
+    "Q1": 0.60833,
+    "Q2": 0.59877,
+    "Q3": 0.57616,
+    "S1": 0.53672,
+    "S2": 0.55426,
+    "S3": 0.57654,
+    "S4": 0.53387
+  },
+  "student_oof_avg": {
+    "Q1": 0.72691,
+    "Q2": 0.77422,
+    "Q3": 0.71559,
+    "S1": 0.60583,
+    "S2": 0.65583,
+    "S3": 0.71356,
+    "S4": 0.63609
+  },
+  "predicted_lb": 0.58824,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v330_lag_crossdomain_20260602_083311.csv",
+  "timestamp": "20260602_083311",
+  "total_time_s": 52.0,
+  "key_difference": "V329 + lag features (lag1, lag2, lag_diff) + cross-domain ratios + total activity proxy"
+}

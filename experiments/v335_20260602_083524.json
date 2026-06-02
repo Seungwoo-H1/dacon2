@@ -1,0 +1,38 @@
+{
+  "version": "V335",
+  "name": "Target-Grouped Students \u2014 Q_pool + S_pool",
+  "avg_oof": 0.61709,
+  "avg_student_oof": 0.80379,
+  "n_features_total": 1223,
+  "n_features_base": 109,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "feature_bag_fraction": 0.75,
+  "q_pool_size": 500,
+  "s_pool_size": 500,
+  "delta_vs_v329": 0.07344,
+  "delta_student_vs_v329": 0.15681,
+  "per_target_oof": {
+    "Q1": 0.66119,
+    "Q2": 0.64749,
+    "Q3": 0.61755,
+    "S1": 0.56568,
+    "S2": 0.58784,
+    "S3": 0.60758,
+    "S4": 0.63228
+  },
+  "student_oof_avg": {
+    "Q1": 0.8259,
+    "Q2": 0.91925,
+    "Q3": 0.78806,
+    "S1": 0.65814,
+    "S2": 0.86779,
+    "S3": 0.77852,
+    "S4": 0.78883
+  },
+  "predicted_lb": 0.63609,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v335_target_grouped_20260602_083524.csv",
+  "timestamp": "20260602_083524",
+  "total_time_s": 52.0,
+  "key_difference": "Q_pool shared across Q1/Q2/Q3, S_pool shared across S1/S2/S3/S4 \u2014 group-based feature sharing"
+}

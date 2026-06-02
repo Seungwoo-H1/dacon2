@@ -450,11 +450,26 @@
 | V326 | 0.59159 | +0.04794 | ⭐ |
 | V328 | 0.56298 | +0.01933 | ⭐⭐⭐ |
 | V329 | **0.54365** | **baseline** | ⭐⭐⭐⭐ BEST |
+| V335 | 0.61709 | +0.07344 | ❌ target-grouped sharing no benefit |
+| V336 | 0.58242 | +0.03877 | ❌ domain pairwise interactions noise |
 | V330 | 0.55603 | +0.01238 | ❌ domain cross-interactions noise |
 | V331 | 0.58429 | +0.04064 | ❌ Top-100 너무 aggressive, signal 손실 |
 | V332 | 0.51539 | -0.02826 | ⚠️ 큰 student gap (Q1: 0.13, Q2: 0.16) |
 | V333 | 0.57818 | +0.03453 | ❌ Regularization too strong, net negative |
 | V334 | 0.51539 | -0.02826 | ⚠️ V332 동일 config |
+| V335 | 0.61709 | +0.07344 | ❌ target-grouped student sharing no benefit |
+| V336 | 0.58242 | +0.03877 | ❌ domain pairwise interactions noise |
+
+### V335 — V329 + Target-Grouped Students (Q_pool + S_pool) (실패 ❌)
+- OOF: 0.61709 | Δ vs V329: **+0.07344**
+- Q-targets 공유, S-targets 공유 → 전혀 도움이 안 됨
+- **교훈: target별 독립 학습이 이미 최적. target-group sharing은 overfitting/underfitting 유발**
+
+### V336 — V329 + Deep Feature Interactions (도메인 간 pairwise) (실패 ❌)
+- OOF: 0.58242 | Δ vs V329: **+0.03877**
+- 도메인 간 pairwise interaction 추가 (pedo×hr, light×screen 등)
+- V330과 같은 패턴 → interactions는 noise
+- **교훈: feature interactions은 이미 V330에서 실패. 재탕 금지.**
 
 ### V331 — V329 + Top-100 Feature Selection (실패 ❌)
 - OOF: 0.58429 | Δ vs V329: **+0.04064**
@@ -478,7 +493,7 @@
 - OOF: 0.51539 (V332와 동일)
 - 같은 config이므로 같은 결과
 
-## V325-V334 핵심 인사이트
+## V325-V336 핵심 인사이트
 1. **Per-subject modeling fails**: too few samples per subject (45 rows)
 2. **Heavy feature engineering works**: per-subject features + cross-subject z-scores + quartiles + acceleration + dow (V329)
 3. **LGBM is the only viable tree model**: XGBoost and CatBoost fail on mixed features
@@ -491,3 +506,5 @@
 10. **V329 is the best confirmed model**: OOF=0.54365, Predicted LB=0.56265
 11. **V332 student gap pattern matches V313**: OOF 0.515 → LB likely 0.62-0.65 (OOF-LB gap ~0.10+)
 12. **LB 0.500 목표**: student OOF를 ~0.55까지 낮추는 것이 필요 — 새로운 feature engineering 방향이 필요
+13. **V335 교훈: target-grouped sharing = no benefit** — target별 독립이 이미 최적
+14. **V336 교훈: domain pairwise interactions = noise** — V330과 동일
