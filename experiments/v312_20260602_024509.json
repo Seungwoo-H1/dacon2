@@ -1,0 +1,32 @@
+{
+  "version": "V312",
+  "name": "Per-Target Meta C Optimization",
+  "avg_oof": 0.61448,
+  "n_features_total": 282,
+  "n_seeds": 15,
+  "v146_avg_oof": 0.63169,
+  "v308_avg_oof": 0.62235,
+  "delta_vs_v146": -0.01721,
+  "delta_vs_v308": -0.00787,
+  "per_target_oof": {
+    "Q1": 0.66817,
+    "Q2": 0.61994,
+    "Q3": 0.61482,
+    "S1": 0.56863,
+    "S2": 0.61,
+    "S3": 0.5871,
+    "S4": 0.63269
+  },
+  "best_cs": {
+    "Q1": 500.0,
+    "Q2": 500.0,
+    "Q3": 500.0,
+    "S1": 500.0,
+    "S2": 500.0,
+    "S3": 500.0,
+    "S4": 500.0
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v312_per_target_C_20260602_024509.csv",
+  "timestamp": "20260602_024509",
+  "total_time_s": 47.0
+}
