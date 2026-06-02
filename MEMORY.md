@@ -13,15 +13,7 @@
 
 ## ⭐ 현재 BEST (실제 제출 확인됨)
 
-### V312 — Per-Target Meta C Optimization (제출 완료 — 2026-06-02) ⭐
-- OOF: 0.61448 | Δ vs V308: **-0.00787**
-- **제출 파일**: `submission_v312_per_target_C_20260602_024509.csv`
-- 구성: 15 LGBM seeds × GroupKFold 5-fold → LR meta-learner (**C=500**)
-- 타겟별 개선: Q3(-0.020), S3(-0.036), S1(-0.007), S2(-0.007), S4(-0.008), Q1(-0.003)
-- **예상 LB: ~0.631** (V308의 0.63893 대비 -0.008 개선 예상)
-- 리스크: OOF-LB gap이 V308과 유사할 경우에만 유효
-
-### V308 — Z-Score Enriched Stacking (제출 완료 — 2026-06-02)
+### V308 — Z-Score Enriched Stacking (제출 완료 — 2026-06-02) ⭐
 - OOF: 0.62235 | Δ vs V146: **-0.00934**
 - **Actual LB: 0.63893**
 - 2026-06-02 테스트 예측 생성 완료
@@ -210,6 +202,8 @@
 - **리스크**: C=500은 meta regularization이 거의 없음 → OOF-LB gap 확대 가능성
 - **교훈: C는 충분히 큰 값이 좋음. C=10은 너무 강한 regularization**
 - **추천: V312는 V308과 동일 아키텍처(C만 10→500), low-risk 개선**
+- **V312 LB 검증 필요**: OOF-LB gap이 V308과 유사하면 실제 LB 개선 가능
+- **V312는 아직 LB 미검증** — V308이 actual LB로 검증된 BEST
 
 ## 핵심 인사이트
 - **V140이 BEST (LB=0.64072, OOF=0.64116, 갭=0.00044)**
