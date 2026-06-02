@@ -348,3 +348,92 @@
 - **LR meta learner가 이미 optimal aggregation** — meta learner 제거하면 오히려 악화
 - **V308이 현재까지 유일한 LB 검증 성공 모델**
 - **V321이 OOF 기준으로 V312/V308 모두 초월** — 실제 LB 검증 필요
+
+## V319-V330 실험 결과 (2026-06-02 실행)
+
+### V319 — Meta C=500 (V312 동일 검증)
+- OOF: 0.61448 | Δ vs V308: **-0.00787**
+- V312와 완전히 동일 config (15 seeds, C=500)
+- **제출 안 함** — V312와 동일
+
+### V320 — Weighted Student Ensemble (No Meta Learner) (실패 ❌)
+- OOF: 0.67566 | Δ vs V308: **+0.05331**
+- **교훈: LR meta learner가 이미 optimal weight 찾음. weighted avg은 underfitting**
+
+### V321 — Feature Bagging + Stacking (OOF 개선 ⭐)
+- OOF: **0.60569** | Δ vs V308: **-0.01666** | Δ vs V312: **-0.00879**
+- Predicted LB: 0.62527
+- 각 seed마다 random feature subset (75%) 사용 → ensemble diversity 증가
+- **핵심 발견: feature bagging이 ensemble diversity 증가에 유효**
+
+### V322 — Deep Feature Engineering (실패) — 너무 느림
+### V323 — Multi-Task Learning (실패)
+- OOF: 0.62230 (V321보다 나쁨)
+- **교훈: multi-task feature selection 효과 없음**
+
+### V324 — Multi-Config Ensemble (실패)
+- OOF: 0.61518 (V321보다 나쁨)
+- **교훈: mixing configs introduces noise**
+
+### V325 — Per-Subject Modeling (LOO CV) (실패)
+- OOF: 0.68773 (심각 악화)
+- **교훈: subject별 학습은 학습 데이터 부족으로 무너짐**
+
+### V326 — Heavy Feature Engineering + V321 Stacking (성공 ⭐⭐)
+- OOF: **0.59159** | Δ vs V321: **-0.01410** | Δ vs V308: **-0.03076**
+- Predicted LB: **0.61059**
+- 443 features (141 base + 141 zscore + 151 per-subject z-score + 10 interaction)
+- **핵심 발견: per-subject z-score + interactions가 강력함!**
+- 모든 타겟 개선: S1(-0.030), S2(-0.029), S3(-0.034), S4(-0.030), Q1(-0.023), Q2(-0.015), Q3(-0.033)
+
+### V327 — Double Stacking (실패)
+- 구현 복잡도 문제로 중단
+- **교훈: double stacking은 너무 느리고 복잡**
+
+### V328 — V326 Enhanced: More Per-Subject Features (성공 ⭐⭐⭐)
+- OOF: **0.56298** | Δ vs V326: **-0.02861** | Δ vs V321: **-0.04271**
+- Predicted LB: **0.58198** (V308 0.63893 대비 -0.057!)
+- 추가 feature: per-subject rolling mean/std(3,5), min/max/median, ratio, deviation
+- 784 features total
+- **핵심 발견: per-subject rolling stats + min/max/median/ratios breakthrough!**
+- 모든 타겟 대폭 개선: S3(-0.068), S4(-0.077), S1(-0.023), Q1(-0.044)
+
+### V329 — V328 + Cross-Subject Features (성공 ⭐⭐⭐⭐)
+- OOF: **0.54365** | Δ vs V328: **-0.01933** | Δ vs V326: **-0.04794**
+- Predicted LB: **0.56265** (V308 대비 -0.076!)
+- 추가 feature: cross-subject z-scores, quartiles, acceleration, day-of-week, entropy
+- 2047 features total
+- **핵심 발견: cross-subject comparison + quartiles + acceleration + dow 패턴 효과가 큼!**
+- 타겟별: S1: 0.470 (대폭!), S2: 0.529, S3: 0.545, S4: 0.545, Q1: 0.583, Q2: 0.562, Q3: 0.571
+- **현재 BEST 모델**
+
+### V330 — V329 + Domain Cross-Interactions (실패)
+- OOF: 0.55603 | Δ vs V329: **+0.01238** (악화)
+- **교훈: domain cross-interactions이 noise로 작용**
+
+## V325-V330 요약 테이블
+
+| 실험 | OOF | Δ vs V326 | Δ vs V328 | Δ vs V329 | Status |
+|------|-----|-----------|-----------|-----------|--------|
+| V325 | 0.68773 | +0.09614 | +0.12475 | +0.14408 | ❌ |
+| V326 | 0.59159 | baseline | +0.02861 | +0.04794 | ⭐ |
+| V327 | — | — | — | — | ❌ 중단 |
+| V328 | 0.56298 | -0.02861 | baseline | +0.01933 | ⭐⭐⭐ |
+| V329 | **0.54365** | -0.04794 | -0.01933 | **baseline** | ⭐⭐⭐⭐ BEST |
+| V330 | 0.55603 | -0.03556 | -0.00695 | +0.01238 | ❌ |
+
+## 현재 BEST 모델: V329
+- OOF: 0.54365 | Predicted LB: 0.56265
+- Δ vs V308: -0.079 | Δ vs V308 LB: -0.076
+- 핵심: per-subject features + cross-subject + quartiles + acceleration + dow
+- 목표 LB 0.500까지あと 0.063 남음
+- 다음 방향: student OOF 개선이 핵심 (0.65→0.55 목표)
+- V329 기반 V331+ 실험 계속
+
+## 핵심 인사이트 (최신)
+- **per-subject features가 가장 강력한 feature engineering** (V326→V328→V329)
+- **cross-subject z-scores가 between-person signal을 포착** (V309 교훈 보완)
+- **quartiles + acceleration + day-of-week pattern이 추가 signal** (V329)
+- **domain cross-interactions는 noise** (V330 실패)
+- **student OOF가 bottleneck**: target OOF는 낮아졌지만 student gap 0.10~0.13
+- **student 성능을 개선해야 OOF-LB gap도 같이 개선될 것**
