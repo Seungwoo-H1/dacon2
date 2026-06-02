@@ -24,6 +24,35 @@
 - Student OOF 안정성 우수 (S1: 0.59-0.60, S3: 0.62-0.63)
 - Predicted LB: ~0.624 (V146 대비 -0.008 개선)
 
+## ⏳ Pending LB Submission (V308 초월 가능성 높음)
+
+### V312 — Per-Target Meta C=500 (제출 완료 — 2026-06-02)
+- OOF: 0.61448 | Δ vs V308: **-0.00787**
+- Δ vs V146: **-0.01721**
+- **제출 파일**: `submission_v312_per_target_C_20260602_024509.csv`
+- 구성: 15 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=500)
+- 모든 타겟에서 C=500이 optimal (C=10 → C=500으로 일괄 개선)
+- 타겟별 개선: Q3(-0.020), S3(-0.036), S1(-0.007), S2(-0.007), S4(-0.008), Q1(-0.003)
+- 핵심 발견: C=500으로 meta regularization 완화 → OOF 일괄 개선
+- **예상 LB**: 0.631 (V308 0.63893 대비 -0.008)
+- **리스크**: OOF-LB gap이 V308보다 클 가능성
+- **V312는 아직 LB 미검증** — 승우님 수동 제출 필요
+- **핵심 교훈: C=500이 C=10보다 훨씬 좋음. C가 클수록 meta가 student를 더 강하게 반영**
+
+### V313 — 30 Seeds + C=500 (제출 완료 — 2026-06-02)
+- OOF: 0.59512 | Δ vs V308: **-0.02723**
+- Δ vs V312: **-0.01936**
+- Δ vs V146: **-0.03657**
+- **제출 파일**: `submission_v313_30seeds_C500_20260602_025815.csv`
+- 구성: 30 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=500)
+- **모든 7개 타겟 개선** (V312 대비):
+  - Q1: -0.02335 | Q2: -0.01951 | Q3: -0.01153
+  - S1: -0.02041 | S2: -0.02403 | S3: -0.01308 | S4: -0.02362
+- Student avg OOF: 0.692 (V312와 동일) → calibration 유사
+- **예상 LB (V308 gap 가정)**: 0.61170 (V308 0.63893 대비 **-0.027**)
+- **V308을 크게 넘을 가능성 높음** — LB 제출로 검증 필요
+- **핵심 발견: seeds 15→30 + C=500이 가장 강력한 조합**
+
 ### V310 — Z-Score + S2 Base-Only + Calibration (실패)
 - OOF: 0.60036 (calibration 후)
 - Δ vs V308: **-0.02199** (인위적 개선)
@@ -42,12 +71,6 @@
 - S2 z-score removal은 S2에 오히려 해로움 (ranked features에 z-score 포함 안 됨)
 - **제출 안 함**: V308과 거의 동률
 - **교훈: S2 z-score features가 ranking에서 선택 안 되어도 base features만으로도 V308과 동률**
-- OOF: 0.63169 | Δ vs V140: **-0.00941**
-- 2026-05-30 수동 제출 완료
-- Leaderboard 결과 기다리는 중
-- **제출 파일**: `submission_v146_submit_20260530.csv`
-- 구성: 5 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=10)
-- V308이 OOF -0.00934로 V146 초월
 
 ## V307-V309 결과 정리
 
@@ -181,30 +204,6 @@
 - Feature ranking was consistent across folds in sampling
 - **Next**: skip if not proven beneficial
 
-### V312 — Per-Target Meta C Optimization (제출 완료 — 2026-06-02)
-- OOF: 0.61448 | Δ vs V308: **-0.00787**
-- Δ vs V146: **-0.01721**
-- **모든 타겟에서 C=500이 optimal** (C=10 → C=500으로 일괄 개선)
-- 타겟별 OOF:
-  - Q1: 0.66817 vs V308 0.67094 → **-0.00277**
-  - Q2: 0.61994 vs V308 0.61828 → -0.00166
-  - Q3: 0.61482 vs V308 0.63507 → **-0.02025**
-  - S1: 0.56863 vs V308 0.57521 → **-0.00658**
-  - S2: 0.61000 vs V308 0.61653 → -0.00653
-  - S3: 0.58710 vs V308 0.62331 → **-0.03621**
-  - S4: 0.63269 vs V308 0.64040 → -0.00771
-- **핵심 발견: C=500으로 meta-learner regularization 완화 → OOF 일괄 개선**
-- **S3 대폭 개선 (-0.03621)** — 가장 강력한 개선 효과
-- **2026-06-02 테스트 예측 생성 완료**
-- **제출 파일**: `submission_v312_per_target_C_20260602_024509.csv`
-- 구성: 15 LGBM seeds × GroupKFold 5-fold → LR meta-learner (C=500)
-- **예상 LB**: V308 OOF-LB gap 0.01658 유지 시 → 0.61448+0.01658 = 0.631
-- **리스크**: C=500은 meta regularization이 거의 없음 → OOF-LB gap 확대 가능성
-- **교훈: C는 충분히 큰 값이 좋음. C=10은 너무 강한 regularization**
-- **추천: V312는 V308과 동일 아키텍처(C만 10→500), low-risk 개선**
-- **V312 LB 검증 필요**: OOF-LB gap이 V308과 유사하면 실제 LB 개선 가능
-- **V312는 아직 LB 미검증** — V308이 actual LB로 검증된 BEST
-
 ## 핵심 인사이트
 - **V140이 BEST (LB=0.64072, OOF=0.64116, 갭=0.00044)**
 - V140의 핵심: proper CV stacking, OOF≈LB (stable generalization)
@@ -228,7 +227,10 @@
 - V309 (per-subject z-score): OOF 0.62415 vs V308 0.62235
 - Student OOF V309: 0.79~0.82 (V308: 0.63~0.67)
 - Global z-score가 between-person signal도 포착 → 더 나은 generalization
-- 다음 실험: V308 아키텍처 유지하고 다른 개선점 탐색
+- **다음 실험: V308 아키텍처 유지하고 다른 개선점 탐색**
+- **V313 핵심 발견: seeds 15→30 + C=500이 현재까지 가장 강력한 조합**
+- **Student avg가 configs 간에 일정(0.692) → OOF-LB gap도 유사할 가능성**
+- **V312와 V313 모두 V308을 넘을 가능성 높음 — LB 검증 대기 중**
 
 ## 파일 구조
 - `/home/mwoo423/projects/dacon2/src/` — 모든 실험 스크립트
@@ -248,3 +250,4 @@
 7. **V140의 stacking 구조(local optimum)에 가까운 것 같음** — 큰 개선을 원하면 아키텍처 전환 필요
 8. 단순 feature engineering 반복 금지
 9. **meta-learner C는 실험 필요**: C=0.1 → C=10으로 OOF 개선 확인됨
+10. **C=500이 C=10보다 우월** (V312). **seeds 30이 15보다 우월** (V313)
