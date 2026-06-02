@@ -459,6 +459,25 @@
 | V334 | 0.51539 | -0.02826 | ⚠️ V332 동일 config |
 | V335 | 0.61709 | +0.07344 | ❌ target-grouped student sharing no benefit |
 | V336 | 0.58242 | +0.03877 | ❌ domain pairwise interactions noise |
+| V337 | 0.86361 | +0.31996 | ❌ identical feature sets ensemble useless |
+| V338 | 0.60532 | +0.06167 | ❌ C=500 fails with 30 seeds (student gap 0.30+) |
+| V337 | 0.86361 | +0.31996 | ❌ V329+V308 identical predictions (same seed → same bag) |
+| V338 | 0.60532 | +0.06167 | ❌ 30 seeds + C=500 worse than 15 seeds (student gap 0.30+) |
+
+### V337 — V329 + V308 Cross-Validated Ensemble (실패 ❌❌)
+- OOF: 0.86361 | Δ vs V329: **+0.31996** (치명적 실패)
+- V329와 V308의 OOF가 동일 (Q1: 1.31700 = V308 1.31700)
+- **원인**: feature bagging seed가 동일해서 두 pipeline이 완전히 같은 features 선택
+- V308은 V329의 subset이므로, 같은 features → identical predictions
+- **교훈: identical feature subsets을 쓰는 두 pipeline을 ensemble해도 의미 없음**
+- **새로운 교훈: ensemble을 하려면 완전히 다른 feature set 필요**
+
+### V338 — V329 + Multi-Config Ensemble (실패 ❌)
+- OOF: 0.60532 | Δ vs V329: **+0.06167** (실패)
+- Approach A (30 seeds + C=500)가 선택되었지만 student gap 큼 (Q1: 0.37)
+- Approach B (4 configs × 7 seeds)는 더 나쁨
+- **핵심 교훈: V329의 heavy feature set + C=500 조합은 student bottleneck 해결 못 함**
+- **C=500은 15 seeds 환경에서만 작동. 30 seeds로는 overfitting**
 
 ### V335 — V329 + Target-Grouped Students (Q_pool + S_pool) (실패 ❌)
 - OOF: 0.61709 | Δ vs V329: **+0.07344**
@@ -493,7 +512,7 @@
 - OOF: 0.51539 (V332와 동일)
 - 같은 config이므로 같은 결과
 
-## V325-V336 핵심 인사이트
+## V325-V338 핵심 인사이트
 1. **Per-subject modeling fails**: too few samples per subject (45 rows)
 2. **Heavy feature engineering works**: per-subject features + cross-subject z-scores + quartiles + acceleration + dow (V329)
 3. **LGBM is the only viable tree model**: XGBoost and CatBoost fail on mixed features
@@ -508,3 +527,6 @@
 12. **LB 0.500 목표**: student OOF를 ~0.55까지 낮추는 것이 필요 — 새로운 feature engineering 방향이 필요
 13. **V335 교훈: target-grouped sharing = no benefit** — target별 독립이 이미 최적
 14. **V336 교훈: domain pairwise interactions = noise** — V330과 동일
+15. **V337 교훈: identical feature sets + ensemble = useless** — ensemble 하려면 완전히 다른 feature set 필요
+16. **V338 교훈: C=500은 15 seeds까지만 가능** — 30 seeds로 늘리면 student gap 0.30+로 폭증
+17. **Student avg OOF ~0.692에서 수렴** — student 성능 개선이 bottleneck
