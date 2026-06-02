@@ -1,0 +1,42 @@
+{
+  "version": "V329",
+  "name": "V328 Enhanced \u2014 Cross-Subject Z-Scores + Domain Aggregations",
+  "avg_oof": 0.57742,
+  "avg_student_oof": 0.70254,
+  "n_features_total": 1223,
+  "n_features_base": 109,
+  "n_features_cs_zscore": 80,
+  "n_features_domain": 16,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "feature_bag_fraction": 0.75,
+  "v321_avg_oof": 0.60569,
+  "v326_avg_oof": 0.59159,
+  "v328_avg_oof": 0.5805,
+  "delta_vs_v321": -0.02827,
+  "delta_vs_v326": -0.01417,
+  "delta_vs_v328": -0.00308,
+  "per_target_oof": {
+    "Q1": 0.62105,
+    "Q2": 0.61963,
+    "Q3": 0.59021,
+    "S1": 0.5217,
+    "S2": 0.55767,
+    "S3": 0.57296,
+    "S4": 0.55874
+  },
+  "student_oof_avg": {
+    "Q1": 0.78112,
+    "Q2": 0.75659,
+    "Q3": 0.74072,
+    "S1": 0.63964,
+    "S2": 0.66202,
+    "S3": 0.68227,
+    "S4": 0.65545
+  },
+  "predicted_lb": 0.59642,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v329_cross_subject_20260602_082751.csv",
+  "timestamp": "20260602_082751",
+  "total_time_s": 50.0,
+  "key_difference": "V328 + cross-subject z-scores + domain-level aggregations (mean/std per domain)"
+}

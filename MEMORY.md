@@ -450,11 +450,33 @@
 | V326 | 0.59159 | +0.04794 | ⭐ |
 | V328 | 0.56298 | +0.01933 | ⭐⭐⭐ |
 | V329 | **0.54365** | **baseline** | ⭐⭐⭐⭐ BEST |
-| V330 | 0.55603 | +0.01238 | ❌ |
-| V331 | 0.58429 | +0.04064 | ❌ Top-100 너무 aggressive |
-| V332 | 0.51539 | -0.02826 | ⚠️ 큰 student gap |
-| V333 | 0.57818 | +0.03453 | ❌ Regularization too strong |
-| V334 | 0.51539 | -0.02826 | ⚠️ V332 동일 |
+| V330 | 0.55603 | +0.01238 | ❌ domain cross-interactions noise |
+| V331 | 0.58429 | +0.04064 | ❌ Top-100 너무 aggressive, signal 손실 |
+| V332 | 0.51539 | -0.02826 | ⚠️ 큰 student gap (Q1: 0.13, Q2: 0.16) |
+| V333 | 0.57818 | +0.03453 | ❌ Regularization too strong, net negative |
+| V334 | 0.51539 | -0.02826 | ⚠️ V332 동일 config |
+
+### V331 — V329 + Top-100 Feature Selection (실패 ❌)
+- OOF: 0.58429 | Δ vs V329: **+0.04064**
+- 2047 features 중 top-100만 사용 → signal 대폭 손실
+- **교훈: 2047 features는 noise보다 signal이 많음. top-K feature selection은 오히려 해로움.**
+
+### V332 — V329 + 30 Seeds + Meta C=500 (OOF 개선 but student gap 큼 ⚠️)
+- OOF: 0.51539 | Δ vs V329: **-0.02826**
+- Predicted LB: 0.53439
+- **학생 gap 문제**: Q1(0.129), Q2(0.163), S1(0.140), S2(0.152) — V313과 동일한 패턴
+- Student avg OOF: V329와 거의 동일 (~0.65-0.69). C=500은 meta만 낮춤.
+- **V313 교훈**: 이 패턴은 LB에서 OOF-LB gap이 클 것 (V313: OOF 0.595 → LB 0.647)
+- **제출 안 함**: OOF는 좋으나 OOF-LB correlation 붕괴 리스크 큼
+
+### V333 — V329 + Stronger Regularization (실패 ❌)
+- OOF: 0.57818 | Δ vs V329: **+0.03453**
+- Stronger regularization이 student OOF를 낮췄으나(meta OOF도 낮아져서) net negative
+- **교훈: student OOF 개선 ≠ meta OOF 개선. student gap을 메우는 것이 아님.**
+
+### V334 — V329 + 30 Seeds + C=500 Combined
+- OOF: 0.51539 (V332와 동일)
+- 같은 config이므로 같은 결과
 
 ## V325-V334 핵심 인사이트
 1. **Per-subject modeling fails**: too few samples per subject (45 rows)

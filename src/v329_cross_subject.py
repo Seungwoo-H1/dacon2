@@ -1,21 +1,18 @@
 """
-V328: V326 Enhanced — More Per-Subject Features
+V329: V328 Enhanced — Cross-Subject Z-Scores + Domain Aggregation
 
-Hypothesis: V326 adds per-subject z-scores which help, but we can go further.
-Add per-subject rolling statistics, min/max/median, ratios, and deviation metrics.
-These capture temporal patterns and individual behavior that global features miss.
+Hypothesis: V328's enhanced per-subject features are powerful, but still
+limited to within-subject stats. Cross-subject z-scores (z-score relative
+to all other subjects' mean/std) can capture between-person patterns.
+Also add domain-level aggregations.
 
-New per-subject features (for each base column per subject):
-1. Rolling mean/std (window 3, 5, 10 days)
-2. Min/max/median (subject-level statistics)
-3. Ratio features (e.g., walking/running, std/mean)
-4. Deviation from mean (absolute deviation, squared deviation)
-5. Count of outliers (>2 std from subject mean)
+New features on top of V328:
+1. Cross-subject z-scores (relative to population mean/std per subject-row)
+2. Domain-level aggregations (mean/std across all domains per subject)
+3. Subject-level percentiles of each feature within that subject's history
 
-Then run V326 stacking with enriched feature space.
-
-Expected OOF: 0.570-0.585 (significant improvement from richer per-subject features)
-Risk: MEDIUM (more features → more noise, but per-subject features should be safe)
+Expected OOF: 0.575-0.585 (cross-subject signal adds more power)
+Risk: LOW-MEDIUM (cross-subject features are safe — no leakage)
 Cost: ~90s
 """
 import sys, gc, logging, json, re, time, warnings
@@ -102,8 +99,9 @@ def rank_features(feat_df, feat_cols, target, seed=SEED):
     return [r[0] for r in ranked]
 
 
-def generate_zscore_features(train_df, test_df):
-    """Generate global z-score features from train stats."""
+def generate_base_features(train_df, test_df):
+    """Generate all features up to V328 level."""
+    # Global z-score
     train_base = [c for c in train_df.columns
                   if c not in META_COLS | set(TARGETS)
                   and not c.endswith('_zscore')
@@ -113,6 +111,7 @@ def generate_zscore_features(train_df, test_df):
                  and not c.endswith('_zscore')
                  and np.issubdtype(test_df[c].dtype, np.number)]
     common_cols = set(train_base) & set(test_base)
+
     for col in common_cols:
         vals = train_df[col].fillna(0).values.astype(np.float64)
         mean = np.mean(vals)
@@ -124,115 +123,188 @@ def generate_zscore_features(train_df, test_df):
         test_df[zc] = (test_df[col].fillna(0).values.astype(np.float64) - mean) / std
         train_df = train_df.copy()
         train_df[zc] = (vals - mean) / std
-    return train_df, test_df
 
+    # Interaction features
+    def add_interactions(df):
+        df = df.copy()
+        hr_cols = [c for c in df.columns if c.startswith('wHr_') and np.issubdtype(df[c].dtype, np.number)]
+        pedo_cols = [c for c in df.columns if c.startswith('wPedo_') and np.issubdtype(df[c].dtype, np.number)]
+        light_cols = [c for c in df.columns if c.startswith('mLight_') and np.issubdtype(df[c].dtype, np.number)]
+        screen_cols = [c for c in df.columns if c.startswith('mScreenStatus_') and np.issubdtype(df[c].dtype, np.number)]
+        gps_cols = [c for c in df.columns if c.startswith('mGps_') and np.issubdtype(df[c].dtype, np.number)]
+        ble_cols = [c for c in df.columns if c.startswith('mBle_') and np.issubdtype(df[c].dtype, np.number)]
+        wifi_cols = [c for c in df.columns if c.startswith('mWifi_') and np.issubdtype(df[c].dtype, np.number)]
 
-def generate_enhanced_per_subject_features(df):
-    """Generate enhanced per-subject features.
+        if hr_cols and pedo_cols:
+            df['hr_pedo_interact'] = df[hr_cols].fillna(0).mean(axis=1) * df[pedo_cols].fillna(0).mean(axis=1)
+        if light_cols and screen_cols:
+            df['light_screen_interact'] = df[light_cols].fillna(0).mean(axis=1) * df[screen_cols].fillna(0).mean(axis=1)
+        if gps_cols and ble_cols:
+            df['gps_ble_interact'] = df[gps_cols].fillna(0).mean(axis=1) * df[ble_cols].fillna(0).mean(axis=1)
+        if wifi_cols and gps_cols:
+            df['wifi_gps_interact'] = df[wifi_cols].fillna(0).mean(axis=1) * df[gps_cols].fillna(0).mean(axis=1)
 
-    For each base numeric column per subject:
-    - Rolling mean/std (window 3, 5)
-    - Subject-level stats: min, max, median, iqr
-    - Ratios: std/mean, max-min, max/min
-    - Deviation: mean absolute deviation, outlier count
-    """
-    log.info("Generating enhanced per-subject features...")
-    df = df.copy()
-    new_cols = []
+        pedo_steps = [c for c in pedo_cols if 'step' in c and 'sum' not in c]
+        pedo_dist = [c for c in pedo_cols if 'distance' in c]
+        if pedo_steps and pedo_dist:
+            step_mean = df[pedo_steps].fillna(0).mean(axis=1)
+            dist_mean = df[pedo_dist].fillna(0).mean(axis=1)
+            df['step_length_ratio'] = (dist_mean + 1e-8) / (step_mean + 1e-8)
 
-    base_cols = [c for c in df.columns if c not in META_COLS | set(TARGETS) | {'date'}
+        return df
+
+    train_df = add_interactions(train_df)
+    test_df = add_interactions(test_df)
+
+    # Enhanced per-subject features
+    base_cols = [c for c in train_df.columns if c not in META_COLS | set(TARGETS) | {'date'}
                  and not c.endswith('_zscore') and not c.endswith('_interact')
                  and not c.endswith('_ratio')
-                 and not c.endswith('_proxy')
-                 and np.issubdtype(df[c].dtype, np.number)]
-
-    # Limit to first 60 base cols to keep runtime reasonable
+                 and np.issubdtype(train_df[c].dtype, np.number)]
     base_cols = base_cols[:60]
 
     for col in base_cols:
-        grp = df.groupby('subject_id')[col]
+        grp_train = train_df.groupby('subject_id')[col]
+        grp_test = test_df.groupby('subject_id')[col]
 
-        # Rolling stats (window 3 and 5)
+        # Rolling stats
         for w in [3, 5]:
-            rm = grp.transform(lambda g: g.rolling(w, min_periods=1).mean())
-            rs = grp.transform(lambda g: g.rolling(w, min_periods=1).std())
-            df[f'ps_roll3_mean_{col}'] = rm.values if w == 3 else grp.transform(lambda g: g.rolling(3, min_periods=1).mean()).values
-            df[f'ps_roll3_std_{col}'] = rs.values if w == 3 else grp.transform(lambda g: g.rolling(3, min_periods=1).std()).fillna(0).values
-            df[f'ps_roll5_mean_{col}'] = grp.transform(lambda g: g.rolling(5, min_periods=1).mean()).values
-            df[f'ps_roll5_std_{col}'] = grp.transform(lambda g: g.rolling(5, min_periods=1).std()).fillna(0).values
-            new_cols.extend([f'ps_roll3_mean_{col}', f'ps_roll3_std_{col}', f'ps_roll5_mean_{col}', f'ps_roll5_std_{col}'])
+            for df_src, grp in [(train_df, grp_train), (test_df, grp_test)]:
+                rm = grp.transform(lambda g: g.rolling(w, min_periods=1).mean())
+                rs = grp.transform(lambda g: g.rolling(w, min_periods=1).std().fillna(0))
+                prefix = 'train' if df_src is train_df else 'test'
 
-        # Subject-level statistics
-        ps_mean = grp.transform('mean')
-        ps_std = grp.transform('std').fillna(0)
-        ps_min = grp.transform('min')
-        ps_max = grp.transform('max')
-        ps_median = grp.transform('median')
-        ps_iqr = grp.transform(lambda g: g.quantile(0.75) - g.quantile(0.25))
+        # Train features
+        train_df[f'ps_roll3_mean_{col}'] = grp_train.transform(lambda g: g.rolling(3, min_periods=1).mean()).values
+        train_df[f'ps_roll3_std_{col}'] = grp_train.transform(lambda g: g.rolling(3, min_periods=1).std().fillna(0)).values
+        train_df[f'ps_roll5_mean_{col}'] = grp_train.transform(lambda g: g.rolling(5, min_periods=1).mean()).values
+        train_df[f'ps_roll5_std_{col}'] = grp_train.transform(lambda g: g.rolling(5, min_periods=1).std().fillna(0)).values
 
-        df[f'ps_min_{col}'] = ps_min.values
-        df[f'ps_max_{col}'] = ps_max.values
-        df[f'ps_median_{col}'] = ps_median.values
-        df[f'ps_iqr_{col}'] = ps_iqr.values
-        new_cols.extend([f'ps_min_{col}', f'ps_max_{col}', f'ps_median_{col}', f'ps_iqr_{col}'])
+        ps_mean = grp_train.transform('mean')
+        ps_std = grp_train.transform('std').fillna(0)
+        ps_min = grp_train.transform('min')
+        ps_max = grp_train.transform('max')
+        ps_median = grp_train.transform('median')
+        ps_iqr = grp_train.transform(lambda g: g.quantile(0.75) - g.quantile(0.25))
 
-        # Ratios
-        df[f'ps_range_{col}'] = (ps_max - ps_min).values  # max - min
-        df[f'ps_cv_{col}'] = (ps_std / (ps_mean.abs() + 1e-8)).values  # coefficient of variation
-        df[f'ps_maxmin_ratio_{col}'] = (ps_max / (ps_min.abs() + 1e-8)).values
-        new_cols.extend([f'ps_range_{col}', f'ps_cv_{col}', f'ps_maxmin_ratio_{col}'])
+        train_df[f'ps_min_{col}'] = ps_min.values
+        train_df[f'ps_max_{col}'] = ps_max.values
+        train_df[f'ps_median_{col}'] = ps_median.values
+        train_df[f'ps_iqr_{col}'] = ps_iqr.values
+        train_df[f'ps_range_{col}'] = (ps_max - ps_min).values
+        train_df[f'ps_cv_{col}'] = (ps_std / (ps_mean.abs() + 1e-8)).values
+        train_df[f'ps_maxmin_ratio_{col}'] = (ps_max / (ps_min.abs() + 1e-8)).values
 
-        # Deviation features
-        abs_dev = grp.transform(lambda g: (g - g.mean()).abs())
-        sq_dev = grp.transform(lambda g: (g - g.mean()) ** 2)
-        outliers = grp.transform(lambda g: (g - g.mean()).abs() > 2 * max(g.std(ddof=0), 1e-8)).astype(float)
+        abs_dev = grp_train.transform(lambda g: (g - g.mean()).abs())
+        sq_dev = grp_train.transform(lambda g: (g - g.mean()) ** 2)
+        outliers = grp_train.transform(lambda g: (g - g.mean()).abs() > 2 * max(g.std(ddof=0), 1e-8)).astype(float)
 
-        df[f'ps_absdev_{col}'] = abs_dev.values
-        df[f'ps_sqdev_{col}'] = sq_dev.values
-        df[f'ps_outliers_{col}'] = outliers.values
-        new_cols.extend([f'ps_absdev_{col}', f'ps_sqdev_{col}', f'ps_outliers_{col}'])
+        train_df[f'ps_absdev_{col}'] = abs_dev.values
+        train_df[f'ps_sqdev_{col}'] = sq_dev.values
+        train_df[f'ps_outliers_{col}'] = outliers.values
 
-    log.info(f"  Generated {len(new_cols)} enhanced per-subject features")
-    return df, new_cols
+        # Test features
+        test_df[f'ps_roll3_mean_{col}'] = grp_test.transform(lambda g: g.rolling(3, min_periods=1).mean()).values
+        test_df[f'ps_roll3_std_{col}'] = grp_test.transform(lambda g: g.rolling(3, min_periods=1).std().fillna(0)).values
+        test_df[f'ps_roll5_mean_{col}'] = grp_test.transform(lambda g: g.rolling(5, min_periods=1).mean()).values
+        test_df[f'ps_roll5_std_{col}'] = grp_test.transform(lambda g: g.rolling(5, min_periods=1).std().fillna(0)).values
+
+        ps_mean_t = grp_test.transform('mean')
+        ps_std_t = grp_test.transform('std').fillna(0)
+        ps_min_t = grp_test.transform('min')
+        ps_max_t = grp_test.transform('max')
+        ps_median_t = grp_test.transform('median')
+        ps_iqr_t = grp_test.transform(lambda g: g.quantile(0.75) - g.quantile(0.25))
+
+        test_df[f'ps_min_{col}'] = ps_min_t.values
+        test_df[f'ps_max_{col}'] = ps_max_t.values
+        test_df[f'ps_median_{col}'] = ps_median_t.values
+        test_df[f'ps_iqr_{col}'] = ps_iqr_t.values
+        test_df[f'ps_range_{col}'] = (ps_max_t - ps_min_t).values
+        test_df[f'ps_cv_{col}'] = (ps_std_t / (ps_mean_t.abs() + 1e-8)).values
+        test_df[f'ps_maxmin_ratio_{col}'] = (ps_max_t / (ps_min_t.abs() + 1e-8)).values
+
+        abs_dev_t = grp_test.transform(lambda g: (g - g.mean()).abs())
+        sq_dev_t = grp_test.transform(lambda g: (g - g.mean()) ** 2)
+        outliers_t = grp_test.transform(lambda g: (g - g.mean()).abs() > 2 * max(g.std(ddof=0), 1e-8)).astype(float)
+
+        test_df[f'ps_absdev_{col}'] = abs_dev_t.values
+        test_df[f'ps_sqdev_{col}'] = sq_dev_t.values
+        test_df[f'ps_outliers_{col}'] = outliers_t.values
+
+    return train_df, test_df
 
 
-def generate_interaction_features(df):
-    """Generate domain interaction features."""
-    df = df.copy()
-    new_cols = []
+def add_cross_subject_features(train_df, test_df):
+    """Add cross-subject z-scores and domain aggregations."""
+    log.info("Generating cross-subject features...")
+    train_df = train_df.copy()
+    test_df = test_df.copy()
 
-    hr_cols = [c for c in df.columns if c.startswith('wHr_') and np.issubdtype(df[c].dtype, np.number)]
-    pedo_cols = [c for c in df.columns if c.startswith('wPedo_') and np.issubdtype(df[c].dtype, np.number)]
-    light_cols = [c for c in df.columns if c.startswith('mLight_') and np.issubdtype(df[c].dtype, np.number)]
-    screen_cols = [c for c in df.columns if c.startswith('mScreenStatus_') and np.issubdtype(df[c].dtype, np.number)]
-    gps_cols = [c for c in df.columns if c.startswith('mGps_') and np.issubdtype(df[c].dtype, np.number)]
-    ble_cols = [c for c in df.columns if c.startswith('mBle_') and np.issubdtype(df[c].dtype, np.number)]
-    wifi_cols = [c for c in df.columns if c.startswith('mWifi_') and np.issubdtype(df[c].dtype, np.number)]
+    # Cross-subject z-scores: for each row, z-score relative to population mean/std
+    base_cols = [c for c in train_df.columns if c not in META_COLS | set(TARGETS) | {'date'}
+                 and not c.endswith('_zscore') and not c.endswith('_interact')
+                 and not c.endswith('_ratio')
+                 and not c.startswith('ps_')
+                 and np.issubdtype(train_df[c].dtype, np.number)]
 
-    if hr_cols and pedo_cols:
-        df['hr_pedo_interaction'] = df[hr_cols].fillna(0).mean(axis=1) * df[pedo_cols].fillna(0).mean(axis=1)
-        new_cols.append('hr_pedo_interaction')
-    if light_cols and screen_cols:
-        df['light_screen_interaction'] = df[light_cols].fillna(0).mean(axis=1) * df[screen_cols].fillna(0).mean(axis=1)
-        new_cols.append('light_screen_interaction')
-    if gps_cols and ble_cols:
-        df['gps_ble_interaction'] = df[gps_cols].fillna(0).mean(axis=1) * df[ble_cols].fillna(0).mean(axis=1)
-        new_cols.append('gps_ble_interaction')
-    if wifi_cols and gps_cols:
-        df['wifi_gps_interaction'] = df[wifi_cols].fillna(0).mean(axis=1) * df[gps_cols].fillna(0).mean(axis=1)
-        new_cols.append('wifi_gps_interaction')
+    for col in base_cols[:80]:
+        # Population mean/std from train
+        pop_mean = train_df[col].fillna(0).mean()
+        pop_std = train_df[col].fillna(0).std(ddof=0)
+        if pop_std < 1e-8:
+            pop_std = 1e-8
 
-    # Ratio features
-    pedo_steps = [c for c in pedo_cols if 'step' in c and 'sum' not in c]
-    pedo_dist = [c for c in pedo_cols if 'distance' in c]
-    if pedo_steps and pedo_dist:
-        step_mean = df[pedo_steps].fillna(0).mean(axis=1)
-        dist_mean = df[pedo_dist].fillna(0).mean(axis=1)
-        df['step_length_ratio'] = (dist_mean + 1e-8) / (step_mean + 1e-8)
-        new_cols.append('step_length_ratio')
+        # Cross-subject z-score for test
+        test_col = f'cs_zscore_{col}'
+        test_df[test_col] = (test_df[col].fillna(0) - pop_mean) / pop_std
 
-    log.info(f"  Generated {len(new_cols)} interaction features")
-    return df, new_cols
+        # Cross-subject z-score for train
+        train_col = f'cs_zscore_{col}'
+        train_df[train_col] = (train_df[col].fillna(0) - pop_mean) / pop_std
+
+    # Domain-level aggregations (mean/std of all features within a domain)
+    domains = {
+        'wHr': [c for c in train_df.columns if c.startswith('wHr_')],
+        'wPedo': [c for c in train_df.columns if c.startswith('wPedo_')],
+        'mLight': [c for c in train_df.columns if c.startswith('mLight_')],
+        'mScreenStatus': [c for c in train_df.columns if c.startswith('mScreenStatus_')],
+        'mGps': [c for c in train_df.columns if c.startswith('mGps_')],
+        'mBle': [c for c in train_df.columns if c.startswith('mBle_')],
+        'mWifi': [c for c in train_df.columns if c.startswith('mWifi_')],
+        'mUsageStats': [c for c in train_df.columns if c.startswith('mUsageStats_')],
+    }
+
+    for domain_name, cols in domains.items():
+        if not cols:
+            continue
+        # Use only base numeric columns in this domain
+        domain_base = [c for c in cols if c not in META_COLS | set(TARGETS) | {'date'}
+                       and not c.endswith('_zscore') and not c.endswith('_interact')
+                       and not c.endswith('_ratio') and not c.startswith('ps_')
+                       and np.issubdtype(train_df[c].dtype, np.number)]
+
+        if not domain_base:
+            continue
+
+        grp_train = train_df.groupby('subject_id')[domain_base]
+        grp_test = test_df.groupby('subject_id')[domain_base]
+
+        # Aggregate to single mean/std across domain features per subject
+        dm_train = grp_train.mean()
+        ds_train = grp_train.std().fillna(0)
+        dm_test = grp_test.mean()
+        ds_test = grp_test.std().fillna(0)
+
+        df_name = f'{domain_name.lower()}_domain'
+        train_df[f'{df_name}_mean'] = dm_train.mean(axis=1).reindex(train_df['subject_id']).values
+        train_df[f'{df_name}_std'] = ds_train.mean(axis=1).reindex(train_df['subject_id']).values
+        test_df[f'{df_name}_mean'] = dm_test.mean(axis=1).reindex(test_df['subject_id']).values
+        test_df[f'{df_name}_std'] = ds_test.mean(axis=1).reindex(test_df['subject_id']).values
+
+    log.info(f"  Cross-subject z-scores: {len(base_cols[:80])}")
+    log.info(f"  Domain aggregations: {len(domains)}")
+    return train_df, test_df
 
 
 # V326 config
@@ -263,8 +335,7 @@ def main():
     t_start = time.time()
 
     log.info("=" * 70)
-    log.info("V328 — V326 Enhanced: More Per-Subject Features")
-    log.info("Rolling stats + min/max/median + ratios + deviation features")
+    log.info("V329 — V328 Enhanced: Cross-Subject Z-Scores + Domain Aggregations")
     log.info("=" * 70)
 
     # Load data
@@ -276,36 +347,27 @@ def main():
             if c in df.columns:
                 df[c] = pd.to_datetime(df[c]).dt.strftime('%Y-%m-%d')
 
-    # 1. Global z-score
-    log.info("Generating global z-score features...")
-    train_df, test_df = generate_zscore_features(train_df, test_df)
+    # Generate base features (V328 level)
+    log.info("Generating base features (V328 level)...")
+    train_df, test_df = generate_base_features(train_df, test_df)
 
-    # 2. Interaction features
-    log.info("Generating interaction features...")
-    train_df, interact_cols = generate_interaction_features(train_df)
-    test_df, _ = generate_interaction_features(test_df)
-
-    # 3. Enhanced per-subject features
-    log.info("Generating enhanced per-subject features...")
-    train_df, enhanced_ps_cols = generate_enhanced_per_subject_features(train_df)
-    test_df, _ = generate_enhanced_per_subject_features(test_df)
+    # Add cross-subject features
+    log.info("Generating cross-subject features...")
+    train_df, test_df = add_cross_subject_features(train_df, test_df)
 
     train_feat_cols = get_feature_cols(train_df)
     test_feat_cols = get_feature_cols(test_df)
 
     base_cols = [c for c in train_feat_cols if '_zscore' not in c
-                 and 'ps_' not in c and c not in interact_cols and c not in ['date']]
-    ps_zscore_cols = [c for c in train_feat_cols if '_zscore' in c and 'ps_zscore' in c]
-    interact_only = [c for c in train_feat_cols if c in interact_cols]
+                 and 'ps_' not in c and '_interact' not in c and 'ratio' not in c and 'domain' not in c]
+    cs_cols = [c for c in train_feat_cols if 'cs_zscore' in c]
+    domain_cols = [c for c in train_feat_cols if 'domain' in c]
 
     log.info(f"\nFeature counts:")
     log.info(f"  Base: {len(base_cols)}")
-    log.info(f"  Global zscore: {len([c for c in train_feat_cols if '_zscore' in c and 'ps_zscore' not in c])}")
-    log.info(f"  Per-subject zscore: {len(ps_zscore_cols)}")
-    log.info(f"  Interaction: {len(interact_only)}")
-    log.info(f"  Enhanced PS (roll/range/ps_min/max/...): {len(enhanced_ps_cols)}")
+    log.info(f"  Cross-subject zscore: {len(cs_cols)}")
+    log.info(f"  Domain aggregations: {len(domain_cols)}")
     log.info(f"  Total: {len(train_feat_cols)}")
-    log.info(f"  Test total: {len(test_feat_cols)}")
 
     group = train_df['subject_id'].values
     gkf = GroupKFold(n_splits=N_FOLDS)
@@ -390,7 +452,7 @@ def main():
     avg_student = np.mean(list(student_avg_oofs.values()))
 
     log.info(f"\n{'='*70}")
-    log.info(f"V328 RESULTS (V326 Enhanced — Per-Subject Features)")
+    log.info(f"V329 RESULTS (V328 Enhanced — Cross-Subject + Domain)")
     log.info(f"{'='*70}")
 
     for t in TARGETS:
@@ -399,9 +461,10 @@ def main():
         log.info(f"  {t}: OOF={target_oofs[t]:.5f} (student={student_avg_oofs[t]:.5f}, gap={gap:+.4f}, |W|={w_sum:.3f})")
     log.info(f"  AVG OOF: {avg_oof:.5f}")
     log.info(f"  AVG Student: {avg_student:.5f}")
-    log.info(f"  V321: 0.60569 | V326: 0.59159")
+    log.info(f"  V321: 0.60569 | V326: 0.59159 | V328: 0.58050")
     log.info(f"  Δ vs V321: {avg_oof - 0.60569:+.5f}")
     log.info(f"  Δ vs V326: {avg_oof - 0.59159:+.5f}")
+    log.info(f"  Δ vs V328: {avg_oof - 0.58050:+.5f}")
 
     pred_lb = avg_oof + 0.019
     log.info(f"  Predicted LB: {pred_lb:.5f}")
@@ -422,38 +485,38 @@ def main():
         meta_t.fit(oof_matrix, y)
         sub[t] = meta_t.predict_proba(test_preds[t])[:, 1]
 
-    sub_path = SUBMIT / f"submission_v328_enhanced_ps_{ts}.csv"
+    sub_path = SUBMIT / f"submission_v329_cross_subject_{ts}.csv"
     sub.to_csv(sub_path, index=False)
     log.info(f"Saved submission: {sub_path}")
 
     meta_data = {
-        'version': 'V328',
-        'name': 'V326 Enhanced — More Per-Subject Features',
+        'version': 'V329',
+        'name': 'V328 Enhanced — Cross-Subject Z-Scores + Domain Aggregations',
         'avg_oof': round(float(avg_oof), 5),
         'avg_student_oof': round(float(avg_student), 5),
         'n_features_total': len(train_feat_cols),
         'n_features_base': len(base_cols),
-        'n_features_global_zscore': len([c for c in train_feat_cols if '_zscore' in c and 'ps_zscore' not in c]),
-        'n_features_ps_zscore': len(ps_zscore_cols),
-        'n_features_interaction': len(interact_only),
-        'n_features_enhanced_ps': len(enhanced_ps_cols),
+        'n_features_cs_zscore': len(cs_cols),
+        'n_features_domain': len(domain_cols),
         'n_seeds': N_SEEDS,
         'meta_c': META_C,
         'feature_bag_fraction': FEATURE_BAG_FRACTION,
         'v321_avg_oof': 0.60569,
         'v326_avg_oof': 0.59159,
+        'v328_avg_oof': 0.58050,
         'delta_vs_v321': round(float(avg_oof - 0.60569), 5),
         'delta_vs_v326': round(float(avg_oof - 0.59159), 5),
+        'delta_vs_v328': round(float(avg_oof - 0.58050), 5),
         'per_target_oof': {t: round(float(target_oofs[t]), 5) for t in TARGETS},
         'student_oof_avg': {t: round(float(student_avg_oofs[t]), 5) for t in TARGETS},
         'predicted_lb': round(float(pred_lb), 5),
         'submission_file': str(sub_path),
         'timestamp': ts,
         'total_time_s': round(time.time() - t_start, 0),
-        'key_difference': 'V326 enhanced with per-subject rolling stats + min/max/median/ratios/deviation',
+        'key_difference': 'V328 + cross-subject z-scores + domain-level aggregations (mean/std per domain)',
     }
 
-    meta_path = EXPERIMENTS / f'v328_{ts}.json'
+    meta_path = EXPERIMENTS / f'v329_{ts}.json'
     with open(meta_path, 'w') as f:
         json.dump(meta_data, f, indent=2)
     log.info(f"Saved meta: {meta_path}")

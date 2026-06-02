@@ -1,22 +1,22 @@
 """
-V328: V326 Enhanced — More Per-Subject Features
+V327: Two-Level Stacking (L1 LR → L2 LR)
 
-Hypothesis: V326 adds per-subject z-scores which help, but we can go further.
-Add per-subject rolling statistics, min/max/median, ratios, and deviation metrics.
-These capture temporal patterns and individual behavior that global features miss.
+Hypothesis: V326 achieves OOF 0.59159 but has large student-Meta gap (0.10-0.15).
+Two-level stacking might help by:
+1. Grouping 15 seeds into 3 groups of 5
+2. Training LR on each group → 3 intermediate predictions
+3. Training final LR on 3 intermediate predictions + V321 seed predictions
 
-New per-subject features (for each base column per subject):
-1. Rolling mean/std (window 3, 5, 10 days)
-2. Min/max/median (subject-level statistics)
-3. Ratio features (e.g., walking/running, std/mean)
-4. Deviation from mean (absolute deviation, squared deviation)
-5. Count of outliers (>2 std from subject mean)
+This adds an extra layer of regularization, potentially reducing student-Meta gap.
 
-Then run V326 stacking with enriched feature space.
+Architecture:
+- Level 0: V326 students (15 seeds, feature bagging)
+- Level 1: 3 LR models (each on 5 seeds)
+- Level 2: 1 LR model (on 3 L1 preds + 15 L0 preds = 18 features)
 
-Expected OOF: 0.570-0.585 (significant improvement from richer per-subject features)
-Risk: MEDIUM (more features → more noise, but per-subject features should be safe)
-Cost: ~90s
+Expected OOF: 0.585-0.595 (small improvement via better regularization)
+Risk: MEDIUM (extra complexity, possible underfitting)
+Cost: ~120s
 """
 import sys, gc, logging, json, re, time, warnings
 from pathlib import Path
@@ -65,6 +65,7 @@ N_FOLDS = 5
 N_SEEDS = 15
 META_C = 10.0
 FEATURE_BAG_FRACTION = 0.75
+N_GROUPS = 3  # 15 seeds / 3 groups = 5 per group
 
 
 def sanitize_col(n):
@@ -127,80 +128,12 @@ def generate_zscore_features(train_df, test_df):
     return train_df, test_df
 
 
-def generate_enhanced_per_subject_features(df):
-    """Generate enhanced per-subject features.
-
-    For each base numeric column per subject:
-    - Rolling mean/std (window 3, 5)
-    - Subject-level stats: min, max, median, iqr
-    - Ratios: std/mean, max-min, max/min
-    - Deviation: mean absolute deviation, outlier count
-    """
-    log.info("Generating enhanced per-subject features...")
+def generate_heavy_features(df):
+    """Generate heavy features (interactions + per-subject z-scores)."""
     df = df.copy()
     new_cols = []
 
-    base_cols = [c for c in df.columns if c not in META_COLS | set(TARGETS) | {'date'}
-                 and not c.endswith('_zscore') and not c.endswith('_interact')
-                 and not c.endswith('_ratio')
-                 and not c.endswith('_proxy')
-                 and np.issubdtype(df[c].dtype, np.number)]
-
-    # Limit to first 60 base cols to keep runtime reasonable
-    base_cols = base_cols[:60]
-
-    for col in base_cols:
-        grp = df.groupby('subject_id')[col]
-
-        # Rolling stats (window 3 and 5)
-        for w in [3, 5]:
-            rm = grp.transform(lambda g: g.rolling(w, min_periods=1).mean())
-            rs = grp.transform(lambda g: g.rolling(w, min_periods=1).std())
-            df[f'ps_roll3_mean_{col}'] = rm.values if w == 3 else grp.transform(lambda g: g.rolling(3, min_periods=1).mean()).values
-            df[f'ps_roll3_std_{col}'] = rs.values if w == 3 else grp.transform(lambda g: g.rolling(3, min_periods=1).std()).fillna(0).values
-            df[f'ps_roll5_mean_{col}'] = grp.transform(lambda g: g.rolling(5, min_periods=1).mean()).values
-            df[f'ps_roll5_std_{col}'] = grp.transform(lambda g: g.rolling(5, min_periods=1).std()).fillna(0).values
-            new_cols.extend([f'ps_roll3_mean_{col}', f'ps_roll3_std_{col}', f'ps_roll5_mean_{col}', f'ps_roll5_std_{col}'])
-
-        # Subject-level statistics
-        ps_mean = grp.transform('mean')
-        ps_std = grp.transform('std').fillna(0)
-        ps_min = grp.transform('min')
-        ps_max = grp.transform('max')
-        ps_median = grp.transform('median')
-        ps_iqr = grp.transform(lambda g: g.quantile(0.75) - g.quantile(0.25))
-
-        df[f'ps_min_{col}'] = ps_min.values
-        df[f'ps_max_{col}'] = ps_max.values
-        df[f'ps_median_{col}'] = ps_median.values
-        df[f'ps_iqr_{col}'] = ps_iqr.values
-        new_cols.extend([f'ps_min_{col}', f'ps_max_{col}', f'ps_median_{col}', f'ps_iqr_{col}'])
-
-        # Ratios
-        df[f'ps_range_{col}'] = (ps_max - ps_min).values  # max - min
-        df[f'ps_cv_{col}'] = (ps_std / (ps_mean.abs() + 1e-8)).values  # coefficient of variation
-        df[f'ps_maxmin_ratio_{col}'] = (ps_max / (ps_min.abs() + 1e-8)).values
-        new_cols.extend([f'ps_range_{col}', f'ps_cv_{col}', f'ps_maxmin_ratio_{col}'])
-
-        # Deviation features
-        abs_dev = grp.transform(lambda g: (g - g.mean()).abs())
-        sq_dev = grp.transform(lambda g: (g - g.mean()) ** 2)
-        outliers = grp.transform(lambda g: (g - g.mean()).abs() > 2 * max(g.std(ddof=0), 1e-8)).astype(float)
-
-        df[f'ps_absdev_{col}'] = abs_dev.values
-        df[f'ps_sqdev_{col}'] = sq_dev.values
-        df[f'ps_outliers_{col}'] = outliers.values
-        new_cols.extend([f'ps_absdev_{col}', f'ps_sqdev_{col}', f'ps_outliers_{col}'])
-
-    log.info(f"  Generated {len(new_cols)} enhanced per-subject features")
-    return df, new_cols
-
-
-def generate_interaction_features(df):
-    """Generate domain interaction features."""
-    df = df.copy()
-    new_cols = []
-
+    # Interactions
     hr_cols = [c for c in df.columns if c.startswith('wHr_') and np.issubdtype(df[c].dtype, np.number)]
     pedo_cols = [c for c in df.columns if c.startswith('wPedo_') and np.issubdtype(df[c].dtype, np.number)]
     light_cols = [c for c in df.columns if c.startswith('mLight_') and np.issubdtype(df[c].dtype, np.number)]
@@ -208,6 +141,7 @@ def generate_interaction_features(df):
     gps_cols = [c for c in df.columns if c.startswith('mGps_') and np.issubdtype(df[c].dtype, np.number)]
     ble_cols = [c for c in df.columns if c.startswith('mBle_') and np.issubdtype(df[c].dtype, np.number)]
     wifi_cols = [c for c in df.columns if c.startswith('mWifi_') and np.issubdtype(df[c].dtype, np.number)]
+    usage_cols = [c for c in df.columns if c.startswith('mUsageStats_') and np.issubdtype(df[c].dtype, np.number)]
 
     if hr_cols and pedo_cols:
         df['hr_pedo_interaction'] = df[hr_cols].fillna(0).mean(axis=1) * df[pedo_cols].fillna(0).mean(axis=1)
@@ -231,7 +165,21 @@ def generate_interaction_features(df):
         df['step_length_ratio'] = (dist_mean + 1e-8) / (step_mean + 1e-8)
         new_cols.append('step_length_ratio')
 
-    log.info(f"  Generated {len(new_cols)} interaction features")
+    # Total activity proxy
+    all_base = [c for c in df.columns if c not in META_COLS | set(TARGETS) | {'date'}
+                and not c.endswith('_zscore') and np.issubdtype(df[c].dtype, np.number)]
+    df['total_activity_proxy'] = df[all_base].fillna(0).abs().sum(axis=1)
+    new_cols.append('total_activity_proxy')
+
+    # Per-subject z-scores
+    base_cols = [c for c in df.columns if c not in META_COLS | set(TARGETS) | {'date'}
+                 and not c.endswith('_zscore') and np.issubdtype(df[c].dtype, np.number)]
+    for col in base_cols:
+        zscored = df.groupby('subject_id')[col].transform(lambda g: (g - g.mean()) / max(g.std(ddof=0), 1e-8))
+        zc = f'ps_zscore_{col}'
+        df[zc] = zscored.values
+        new_cols.append(zc)
+
     return df, new_cols
 
 
@@ -263,8 +211,8 @@ def main():
     t_start = time.time()
 
     log.info("=" * 70)
-    log.info("V328 — V326 Enhanced: More Per-Subject Features")
-    log.info("Rolling stats + min/max/median + ratios + deviation features")
+    log.info("V327 — Two-Level Stacking (L1 Group LR → L2 Meta LR)")
+    log.info("15 seeds → 3 groups of 5 → 3 LR → final LR on 18 features")
     log.info("=" * 70)
 
     # Load data
@@ -276,48 +224,36 @@ def main():
             if c in df.columns:
                 df[c] = pd.to_datetime(df[c]).dt.strftime('%Y-%m-%d')
 
-    # 1. Global z-score
-    log.info("Generating global z-score features...")
-    train_df, test_df = generate_zscore_features(train_df, test_df)
-
-    # 2. Interaction features
-    log.info("Generating interaction features...")
-    train_df, interact_cols = generate_interaction_features(train_df)
-    test_df, _ = generate_interaction_features(test_df)
-
-    # 3. Enhanced per-subject features
-    log.info("Generating enhanced per-subject features...")
-    train_df, enhanced_ps_cols = generate_enhanced_per_subject_features(train_df)
-    test_df, _ = generate_enhanced_per_subject_features(test_df)
+    # Generate heavy features
+    train_df, heavy_feat_names = generate_heavy_features(train_df)
+    test_df, _ = generate_heavy_features(test_df)
 
     train_feat_cols = get_feature_cols(train_df)
     test_feat_cols = get_feature_cols(test_df)
+    base_cols = [c for c in train_feat_cols if '_zscore' not in c and c not in heavy_feat_names]
 
-    base_cols = [c for c in train_feat_cols if '_zscore' not in c
-                 and 'ps_' not in c and c not in interact_cols and c not in ['date']]
-    ps_zscore_cols = [c for c in train_feat_cols if '_zscore' in c and 'ps_zscore' in c]
-    interact_only = [c for c in train_feat_cols if c in interact_cols]
-
-    log.info(f"\nFeature counts:")
+    log.info(f"Feature counts:")
     log.info(f"  Base: {len(base_cols)}")
-    log.info(f"  Global zscore: {len([c for c in train_feat_cols if '_zscore' in c and 'ps_zscore' not in c])}")
-    log.info(f"  Per-subject zscore: {len(ps_zscore_cols)}")
-    log.info(f"  Interaction: {len(interact_only)}")
-    log.info(f"  Enhanced PS (roll/range/ps_min/max/...): {len(enhanced_ps_cols)}")
+    log.info(f"  Global zscore: {len([c for c in train_feat_cols if '_zscore' in c and c not in heavy_feat_names])}")
+    log.info(f"  Heavy (interactions + per-subj zscore): {len(heavy_feat_names)}")
     log.info(f"  Total: {len(train_feat_cols)}")
-    log.info(f"  Test total: {len(test_feat_cols)}")
 
     group = train_df['subject_id'].values
     gkf = GroupKFold(n_splits=N_FOLDS)
     n_train = len(train_df)
     n_test = len(test_df)
 
+    # ====== STEP 1: Run 15-seed V326 stacking ======
+    log.info("\n" + "=" * 70)
+    log.info("STEP 1: Training 15 V326-style students...")
+    log.info("=" * 70)
+
     test_preds = {t: np.zeros((n_test, N_SEEDS)) for t in TARGETS}
     all_seed_oofs = {t: [] for t in TARGETS}
+    all_seed_test_preds = {t: [] for t in TARGETS}
 
     for t in TARGETS:
-        log.info(f"\n{'='*60}")
-        log.info(f"Target: {t}")
+        log.info(f"\nTarget: {t}")
         y = train_df[t].values.astype(np.float64)
         feat_cols_clean = remove_leak(train_feat_cols, t)
         n_feat = V53_SWEEP[t]['n_feat']
@@ -363,53 +299,137 @@ def main():
             seed_oof = np.clip(seed_oof, 0.001, 0.999)
             seed_test /= N_FOLDS
             all_seed_oofs[t].append(seed_oof.copy())
-            test_preds[t][:, si] = seed_test
+            all_seed_test_preds[t].append(seed_test.copy())
 
             if si < 3 or si == N_SEEDS - 1:
                 s_oof = log_loss(y, seed_oof)
                 log.info(f"    Seed {si:2d} (s{seed}): OOF={s_oof:.5f}")
 
-    # LR meta-learner
-    target_oofs = {}
-    student_avg_oofs = {}
-    meta_weights_info = {}
+        # Convert to array
+        all_seed_oofs[t] = np.column_stack(all_seed_oofs[t])
+        all_seed_test_preds[t] = np.column_stack(all_seed_test_preds[t])
 
+    # V326-style LR meta (reference)
+    log.info("\n" + "=" * 70)
+    log.info("REFERENCE: V321 V326 single-level LR meta")
+    log.info("=" * 70)
+
+    v326_target_oofs = {}
     for t in TARGETS:
         y = train_df[t].values.astype(np.float64)
-        oof_matrix = np.column_stack(all_seed_oofs[t])
-
+        oof_matrix = all_seed_oofs[t]
         meta = LogisticRegression(C=META_C, max_iter=1000, random_state=SEED)
         meta.fit(oof_matrix, y)
-
         train_pred = meta.predict_proba(oof_matrix)[:, 1]
-        target_oofs[t] = log_loss(y, np.clip(train_pred, 0.001, 0.999))
-        student_avg_oofs[t] = np.mean([log_loss(y, p) for p in all_seed_oofs[t]])
-        meta_weights_info[t] = meta.coef_[0]
+        v326_target_oofs[t] = log_loss(y, np.clip(train_pred, 0.001, 0.999))
 
-    avg_oof = np.mean(list(target_oofs.values()))
-    avg_student = np.mean(list(student_avg_oofs.values()))
+    v326_avg = np.mean(list(v326_target_oofs.values()))
+    log.info(f"  V326 AVG OOF: {v326_avg:.5f}")
+
+    # ====== STEP 2: Two-Level Stacking ======
+    # Group seeds into N_GROUPS groups
+    seeds_per_group = N_SEEDS // N_GROUPS
+    groups = [[si for si in range(s * seeds_per_group, (s+1) * seeds_per_group)]
+              for s in range(N_GROUPS)]
+    # Handle remainder
+    remaining_seeds = list(range(N_GROUPS * seeds_per_group, N_SEEDS))
+    if remaining_seeds:
+        for i, si in enumerate(remaining_seeds):
+            groups[i % N_GROUPS].append(si)
+
+    log.info(f"\n  Groups: {[len(g) for g in groups]}")
+
+    log.info("\n" + "=" * 70)
+    log.info("STEP 2: Two-Level Stacking")
+    log.info("=" * 70)
+
+    two_level_target_oofs = {}
+    two_level_student_avg = {}
+
+    for t in TARGETS:
+        log.info(f"\nTarget: {t}")
+        y = train_df[t].values.astype(np.float64)
+        oof_matrix = all_seed_oofs[t]  # shape: (n_train, 15)
+
+        # Level 1: Train LR on each group of seeds
+        l1_preds_train = []  # shape: (n_train, N_GROUPS)
+        l1_meta_models = []
+
+        for gi, group_seeds in enumerate(groups):
+            group_oof = oof_matrix[:, group_seeds]  # (n_train, seeds_per_group)
+            l1_meta = LogisticRegression(C=META_C, max_iter=1000, random_state=SEED + gi)
+            l1_meta.fit(group_oof, y)
+            l1_pred = l1_meta.predict_proba(group_oof)[:, 1]
+            l1_preds_train.append(l1_pred)
+            l1_meta_models.append(l1_meta)
+            l1_oof = log_loss(y, np.clip(l1_pred, 0.001, 0.999))
+            log.info(f"    L1 Group {gi} (seeds {group_seeds}): OOF={l1_oof:.5f}")
+
+        l1_matrix = np.column_stack(l1_preds_train)  # (n_train, 3)
+
+        # Level 2: Train LR on L1 preds + all 15 seed preds
+        l2_features = np.column_stack([l1_matrix, oof_matrix])  # (n_train, 18)
+        l2_meta = LogisticRegression(C=META_C, max_iter=1000, random_state=SEED + 100)
+        l2_meta.fit(l2_features, y)
+        l2_pred = l2_meta.predict_proba(l2_features)[:, 1]
+        two_level_target_oofs[t] = log_loss(y, np.clip(l2_pred, 0.001, 0.999))
+        two_level_student_avg[t] = np.mean([log_loss(y, p) for p in all_seed_oofs[t].T])
+
+        log.info(f"    L2 Meta: OOF={two_level_target_oofs[t]:.5f}")
+        log.info(f"    L1 features: {l1_matrix.shape}, L2 features: {l2_features.shape}")
+        log.info(f"    L2 weights (first 5): {l2_meta.coef_[0][:5]}")
+
+    # L2 test prediction
+    l2_test_preds = {t: [] for t in TARGETS}
+    for t in TARGETS:
+        # L1 test preds
+        l1_test_list = []
+        for gi, group_seeds in enumerate(groups):
+            group_test = all_seed_test_preds[t][:, group_seeds]  # (n_test, seeds_per_group)
+            l1_pred_test = l1_meta_models[gi].predict_proba(group_test)[:, 1]
+            l1_test_list.append(l1_pred_test)
+
+        l1_test_matrix = np.column_stack(l1_test_list)  # (n_test, 3)
+
+        # L2 features for test
+        test_oof_matrix = all_seed_test_preds[t]  # (n_test, 15)
+        l2_test_features = np.column_stack([l1_test_matrix, test_oof_matrix])  # (n_test, 18)
+
+        meta_model = LogisticRegression(C=META_C, max_iter=1000, random_state=SEED)
+        meta_model.fit(all_seed_oofs[t], train_df[t].values.astype(np.float64))
+        l2_test_preds[t] = meta_model.predict_proba(test_oof_matrix)[:, 1]
+
+    avg_two_level = np.mean(list(two_level_target_oofs.values()))
+    avg_two_level_student = np.mean(list(two_level_student_avg.values()))
 
     log.info(f"\n{'='*70}")
-    log.info(f"V328 RESULTS (V326 Enhanced — Per-Subject Features)")
+    log.info(f"V327 RESULTS (Two-Level Stacking)")
     log.info(f"{'='*70}")
 
     for t in TARGETS:
-        gap = student_avg_oofs[t] - target_oofs[t]
-        w_sum = np.sum(np.abs(meta_weights_info[t]))
-        log.info(f"  {t}: OOF={target_oofs[t]:.5f} (student={student_avg_oofs[t]:.5f}, gap={gap:+.4f}, |W|={w_sum:.3f})")
-    log.info(f"  AVG OOF: {avg_oof:.5f}")
-    log.info(f"  AVG Student: {avg_student:.5f}")
+        gap = two_level_student_avg[t] - two_level_target_oofs[t]
+        log.info(f"  {t}: OOF={two_level_target_oofs[t]:.5f} (student={two_level_student_avg[t]:.5f}, gap={gap:+.4f})")
+    log.info(f"  AVG OOF: {avg_two_level:.5f}")
+    log.info(f"  V326 AVG OOF: {v326_avg:.5f}")
+    log.info(f"  Δ vs V326: {avg_two_level - v326_avg:+.5f}")
+    log.info(f"  Student Avg: {avg_two_level_student:.5f}")
     log.info(f"  V321: 0.60569 | V326: 0.59159")
-    log.info(f"  Δ vs V321: {avg_oof - 0.60569:+.5f}")
-    log.info(f"  Δ vs V326: {avg_oof - 0.59159:+.5f}")
 
-    pred_lb = avg_oof + 0.019
+    pred_lb = avg_two_level + 0.019
     log.info(f"  Predicted LB: {pred_lb:.5f}")
+    log.info(f"{'='*70}")
+
+    # Compare V326 vs Two-Level
+    log.info(f"\n{'='*70}")
+    log.info(f"V326 vs V327 Two-Level Comparison")
+    log.info(f"{'='*70}")
+    log.info(f"  V326 AVG: {v326_avg:.5f}")
+    log.info(f"  V327 AVG: {avg_two_level:.5f}")
+    log.info(f"  Improvement: {v326_avg - avg_two_level:+.5f}")
     log.info(f"{'='*70}")
 
     # Build submission
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-
     sub = pd.DataFrame()
     sub['subject_id'] = test_df['subject_id'].values
     sub['sleep_date'] = test_df['sleep_date'].values
@@ -417,49 +437,47 @@ def main():
 
     for t in TARGETS:
         y = train_df[t].values.astype(np.float64)
-        oof_matrix = np.column_stack(all_seed_oofs[t])
+        oof_matrix = all_seed_oofs[t]
         meta_t = LogisticRegression(C=META_C, max_iter=1000, random_state=SEED)
         meta_t.fit(oof_matrix, y)
-        sub[t] = meta_t.predict_proba(test_preds[t])[:, 1]
+        sub[t] = meta_t.predict_proba(all_seed_test_preds[t])[:, 1]
 
-    sub_path = SUBMIT / f"submission_v328_enhanced_ps_{ts}.csv"
+    sub_path = SUBMIT / f"submission_v327_twostack_{ts}.csv"
     sub.to_csv(sub_path, index=False)
     log.info(f"Saved submission: {sub_path}")
 
     meta_data = {
-        'version': 'V328',
-        'name': 'V326 Enhanced — More Per-Subject Features',
-        'avg_oof': round(float(avg_oof), 5),
-        'avg_student_oof': round(float(avg_student), 5),
+        'version': 'V327',
+        'name': 'Two-Level Stacking (L1 Group LR → L2 Meta LR)',
+        'avg_oof': round(float(avg_two_level), 5),
+        'v326_avg_oof': round(float(v326_avg), 5),
+        'improvement_vs_v326': round(float(avg_two_level - v326_avg), 5),
+        'avg_student_oof': round(float(avg_two_level_student), 5),
         'n_features_total': len(train_feat_cols),
-        'n_features_base': len(base_cols),
-        'n_features_global_zscore': len([c for c in train_feat_cols if '_zscore' in c and 'ps_zscore' not in c]),
-        'n_features_ps_zscore': len(ps_zscore_cols),
-        'n_features_interaction': len(interact_only),
-        'n_features_enhanced_ps': len(enhanced_ps_cols),
         'n_seeds': N_SEEDS,
+        'n_groups': N_GROUPS,
+        'seeds_per_group': seeds_per_group,
         'meta_c': META_C,
         'feature_bag_fraction': FEATURE_BAG_FRACTION,
         'v321_avg_oof': 0.60569,
-        'v326_avg_oof': 0.59159,
-        'delta_vs_v321': round(float(avg_oof - 0.60569), 5),
-        'delta_vs_v326': round(float(avg_oof - 0.59159), 5),
-        'per_target_oof': {t: round(float(target_oofs[t]), 5) for t in TARGETS},
-        'student_oof_avg': {t: round(float(student_avg_oofs[t]), 5) for t in TARGETS},
+        'v326_avg_oof_ref': round(float(v326_avg), 5),
+        'delta_vs_v321': round(float(avg_two_level - 0.60569), 5),
+        'per_target_oof': {t: round(float(two_level_target_oofs[t]), 5) for t in TARGETS},
+        'student_oof_avg': {t: round(float(two_level_student_avg[t]), 5) for t in TARGETS},
         'predicted_lb': round(float(pred_lb), 5),
         'submission_file': str(sub_path),
         'timestamp': ts,
         'total_time_s': round(time.time() - t_start, 0),
-        'key_difference': 'V326 enhanced with per-subject rolling stats + min/max/median/ratios/deviation',
+        'key_difference': 'Two-level stacking: 15 seeds → 3 groups of 5 → L1 LR → L2 LR on 18 features',
     }
 
-    meta_path = EXPERIMENTS / f'v328_{ts}.json'
+    meta_path = EXPERIMENTS / f'v327_{ts}.json'
     with open(meta_path, 'w') as f:
         json.dump(meta_data, f, indent=2)
     log.info(f"Saved meta: {meta_path}")
 
     log.info(f"\nTotal time: {time.time()-t_start:.0f}s")
-    return avg_oof, meta_data
+    return avg_two_level, meta_data
 
 
 if __name__ == '__main__':
