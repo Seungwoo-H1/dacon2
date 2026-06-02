@@ -1,27 +1,23 @@
-# DACon2 Status (2026-06-02 03:00 UTC)
+# DACon2 Status (2026-06-02 03:10 UTC)
 
 ## Current Best (LB Verified)
 | Version | OOF | LB | Seeds | Meta C | Status |
 |---------|-----|----|-------|--------|--------|
 | V308 | 0.62235 | **0.63893** | 15 | 10 | ✅ Verified |
 
-## Pending Submissions
-| Version | OOF | Seeds | Meta C | vs V308 Δ |
-|---------|-----|-------|--------|-----------|
-| V312 | 0.61448 | 15 | 500 | -0.00787 |
-| V313 | 0.59512 | 30 | 500 | -0.02723 |
+## Pending Submissions (V308 초과 가능성 높음)
+| Version | OOF | Seeds | Meta C | Pred LB(V308 gap) | vs V308 Δ |
+|---------|-----|-------|--------|-------------------|-----------|
+| V312 | 0.61448 | 15 | 500 | 0.63106 | **-0.008** |
+| V313 | 0.59512 | 30 | 500 | 0.61170 | **-0.027** |
 
-## Key Finding: Seeds × C Interaction
-- 15 seeds + C=10 (V308) → OOF 0.62235
-- 15 seeds + C=500 (V312) → OOF 0.61448 (Δ -0.00787)
-- 30 seeds + C=500 (V313) → OOF 0.59512 (Δ -0.02723 vs V308)
-- **30 seeds + C=500 is the new sweet spot**
+## Key Finding: Student Avg 일정 → OOF-LB Gap 일정할 가능성
+- 3 configs 모두 Student avg ≈ 0.692
+- Meta OOF만 seeds/C로 낮아짐
+- Student calibration이 동일하므로 OOF-LB gap도 유사할 것
+- **V312와 V313 모두 V308을 넘을 가능성 높음**
 
 ## Next Actions
-1. Submit V312 and V313 to LB
-2. If V313 LB < V308 → new best model
-3. If V313 gap > V308 gap → investigate calibration
-
-## V313 Prediction
-- If OOF-LB gap = V308's gap (+0.01658) → LB = 0.61170
-- Expected improvement over V308: **-0.027**
+1. V312, V313 승우님 수동 제출
+2. V313이 V308을 넘으면 연구 종료 (NEW BEST MODEL)
+3. 넘지 않으면 새로운 가설 탐색
