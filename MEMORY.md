@@ -260,19 +260,6 @@
 - 제출 안 함 — V308과 동일
 - 핵심 교훈: feature ranking stability 높음, consensus feature selection 효과 없음
 
-### V316 — Per-Target Student Hyperparameter Optimization (성공적 개선 ⭐)
-- OOF: 0.61800 | Δ vs V308: **-0.00435**
-- Δ vs V146: **-0.01369**
-- **Global Student avg: 0.65165** (V308 0.692 대비 -0.04035 대폭 개선!)
-- Per-target best cfg: Q1=aggressive, Q2=safety, Q3=safety, S1=aggressive, S2=safety, S3=wide, S4=aggressive
-- **S1이 0.55373으로 가장 크게 개선** (V308 대비 -0.024)
-- Predicted LB: 0.63458 (V308 0.63893 대비 -0.004)
-- **핵심 발견: student cfg per-target optimization이 student bottleneck(0.692)을 0.651로 돌파**
-- **과적합 리스크: Q1 gap 0.053, Q3 gap 0.041, S4 gap 0.042 → 일부 타겟에서 gap 확대**
-- **Q2 gap 0.010은 매우 좋음 → safety cfg가 안정적인 효과**
-- **제출 여부는 승우에게 양도** (LB 검증 필요, OOF-LB gap 불균일)
-- **교훈: cfg variant search space가 너무 좁았음. 더 다양한 cfg 테스트 필요.**
-
 ## 핵심 인사이트
 
 ## 파일 구조
@@ -297,37 +284,42 @@
 
 ## V316~V317 실험 결과 정리
 
-### V316 — Per-Target Student Hyperparameter Optimization (성공적 개선)
-- OOF: 0.61800 | Δ vs V308: **-0.00435**
-- **Global Student avg: 0.65165** (V308 0.692 대비 -0.04035 대폭 개선!)
-- Per-target best cfg: Q1=aggressive, Q2=safety, Q3=safety, S1=aggressive, S2=safety, S3=wide, S4=aggressive
-- **S1이 0.55373으로 가장 크게 개선** (V308 대비 -0.024)
-- Predicted LB: 0.63458 (V308 0.63893 대비 -0.004)
-- **핵심 발견: student cfg per-target optimization이 student bottleneck(0.692)을 0.651로 돌파**
-- **과적합 리스크: Q1 gap 0.053, Q3 gap 0.041, S4 gap 0.042 → 일부 타겟에서 gap 확대**
-- **Q2 gap 0.010은 매우 좋음 → safety cfg가 안정적인 효과**
-- **제출 안 함** (actual LB 확인 안 됨)
-- **교훈: cfg variant search space가 너무 좁았음. 더 다양한 cfg 테스트 필요.**
+
+## V316~V318 실험 결과 (LB 검증 완료)
+
+### V316 — Per-Target Student Hyperparameter Optimization (실제 LB 실패 ❌)
+- OOF: 0.61800 | Actual **LB: 0.650549** (V308 0.63893 대비 **+0.0116 악화!**)
+- Per-target cfg 최적화가 train OOF만 낮춤 → test에서 calibration 붕괴
+- **핵심 교훈: per-target student cfg customization은 test distribution에서 overfitting 유발**
+- Student avg 0.692→0.651 개선은 train distribution에만 fit된 것
+- **Per-target cfg 통일: 모든 target에 동일한 cfg 사용해야 test generalization 가능**
+- OOF-LB gap 추정 방식이 flawed — per-target cfg로는 correlation 붕괴
 
 ### V317 — Gap-Balanced Student HP Optimization (실패)
-- OOF: 0.61859 | Δ vs V308: **-0.00376**
-- Δ vs V316: **+0.00059** (거의 동일)
-- **Global Student avg: 0.638** (V316 0.651보다 낮아짐 — gap balancing 효과)
-- Gap 균일화 성공: Q1(0.053→0.004), Q3(0.041→0.003), S2(0.032→0.011)
-- **하지만 S4 gap 0.0425 그대로** (aggressive cfg 선택됨)
-- Predicted LB: 0.63982 (V308 0.63893 대비 **+0.00089** → 악화)
-- 제출 안 함 — predicted LB가 V308보다 나쁨
-- 핵심 교훈: gap balancing으로 student avg는 낮아졌지만 OOF가 올라감. S4 aggressive가 여전히 optimal.
-- S4 aggressive를 더 강한 regularization으로 overriding하는 시도 필요
-- **gap balancing vs OOF 트레이드오프가 있음** — OOF↓하면 gap↑, gap↓하면 OOF↑
+- OOF: 0.61859 | Predicted LB: 0.63982 (V308 대비 +0.00089 악화)
+- **제출 안 함** — predicted LB가 V308보다 나쁨
+- **핵심 교훈: gap balancing vs OOF 트레이드오프가 있음**
 
 ### V318 — Forced Strong Regularization on Q1/Q3/S4 (실패)
-- OOF: 0.63327 | Δ vs V308: **+0.01092 (명확한 악화)**
-- Gap 균일화는 완벽: Q1(0.05→0.00), Q3(0.04→0.00), S4(0.04→0.00)
-- **하지만 S4 student avg 0.685 → OOF 0.680 폭등** (V316의 0.618 대비 +0.062)
-- Predicted LB: 0.64428 (V308 대비 +0.005 악화)
-- 제출 안 함 — OOF가 V308보다 확실히 나쁨
-- **핵심 교훈: Q1/Q3/S4는 inherently noisy target. reg_heavy로 gap↓시키면 OOF↑가 너무 큼.**
-- regularization trade-off: gap↓하면 OOF↑가 반드시 따라옴
-- **Gap 최소화는 OOF 희생으로 인해 LB 개선으로 이어지지 않음**
-- **이제 stacking 아키텍처 한계임이 확실해짐**
+- OOF: 0.63327 | Predicted LB: 0.64428 (V308 대비 +0.00535 악화)
+- Gap 균일화는 완벽하지만 S4 OOF 폭등 (0.618→0.680)
+- **핵심 교훈: Q1/Q3/S4는 inherently noisy. regularization trade-off fatal**
+
+## V308 이후 실패 요약
+
+| 실험 | OOF | Δ vs V308 | Actual/Pred LB | Δ vs V308 LB | Status |
+|------|-----|-----------|----------------|--------------|--------|
+| V312 | 0.61448 | -0.00787 | ? | ? | 미제출 |
+| V313 | 0.59512 | -0.02723 | 0.6467 | +0.00777 | ❌ LB 악화 |
+| V314 | 0.60669 | -0.01566 | ? | ? | 미제출 |
+| V315 | 0.62235 | +0.00000 | ? | ? | V308 동일 |
+| V316 | 0.61800 | -0.00435 | **0.650549** | **+0.0116** | ❌ LB 악화 |
+| V317 | 0.61859 | -0.00376 | 0.63982 | +0.00089 | ❌ |
+| V318 | 0.63327 | +0.01092 | 0.64428 | +0.00535 | ❌ |
+
+## 교훈 정리
+- **OOF 개선 ≠ LB 개선** — V313은 OOF 0.595인데 LB 0.6467, V316은 OOF 0.618인데 LB 0.6505
+- **per-target cfg customization = test overfitting** (V316)
+- **gap balancing = OOF 희생** (V317/V318)
+- **stacking 아키텍처 한계 명확** — 큰 개선을 원하면 architecture 전환 필요
+- **V308이 현재까지 유일한 성공 모델**
