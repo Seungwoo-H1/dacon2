@@ -1,0 +1,33 @@
+{
+  "version": "V401",
+  "name": "V401 \u2014 Three-Stage Stacking + 50% Bagging",
+  "avg_oof": 0.59123,
+  "avg_student_oof": 0.68149,
+  "n_features_total": 1127,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "n_stages": 3,
+  "per_target_oof": {
+    "Q1": 0.60602,
+    "Q2": 0.61875,
+    "Q3": 0.62599,
+    "S1": 0.53704,
+    "S2": 0.57693,
+    "S3": 0.607,
+    "S4": 0.56685
+  },
+  "student_oof_avg": {
+    "Q1": 0.63886,
+    "Q2": 0.76407,
+    "Q3": 0.74493,
+    "S1": 0.58321,
+    "S2": 0.68617,
+    "S3": 0.74108,
+    "S4": 0.61209
+  },
+  "predicted_lb": 0.61023,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v400_three_stage_20260602_095457.csv",
+  "timestamp": "20260602_095457",
+  "total_time_s": 1146.0,
+  "key_difference": "Three-stage stacking: S1(base)\u2192S2(S1 preds)\u2192S3(S1+S2 preds)\u2192LR meta"
+}

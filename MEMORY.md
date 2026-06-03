@@ -512,7 +512,53 @@
 - OOF: 0.51539 (V332와 동일)
 - 같은 config이므로 같은 결과
 
-## V325-V338 핵심 인사이트
+### V337 — Two-Stage Stacking: Student Predictions as Features (실패 ❌)
+- **OOF: 0.60195** | Δ vs V329: **+0.05830** (심각 악화)
+- **Student avg OOF: 0.65905** | Δ vs V329: **+0.01207** (오히려 나빠짐)
+- Approach: Stage 1에서 15 seeds V329 → OOF predictions → Stage 2에서 이 preds를 features로 추가 → LR meta
+- Q-targets 특히 나쁨: Q2 OOF=0.61866 (student=0.75192, gap=+0.1333)
+- **교훈: 두꺼운 stacking이 student bottleneck을 해결 못함. Stage 1 student 자체가 V329보다 안좋음.**
+
+### V338 — Student Features + Aggressive Feature Bagging 50% (실패 ❌)
+- **OOF: 0.58670** | Δ vs V329: **+0.04305** (악화)
+- **Student avg OOF: 0.64290** | Δ vs V329: **-0.00408** (미미한 개선)
+- Predicted LB: 0.60570
+- Approach: V329 + cross-subject z-scores + feature bagging 50% + two-stage stacking
+- S1: 0.53993 (V329 대비 -0.00372 개선) — 가장 나은 결과
+- **교훈: feature bagging 50%가 V329 student OOF를 약간 낮췄으나(meta OOF는 높아짐) net negative**
+
+### V339 — Student Features + Cross-Subject Z + Aggressive Bagging (실패 ❌)
+- **OOF: 0.58689** | Δ vs V329: **+0.04324** (악화)
+- **Student avg OOF: 0.64922** | Δ vs V329: **+0.00224** (동일 수준)
+- Predicted LB: 0.60589
+- V338과 거의 동일한 결과. cross-subject z-scores가 추가 benefit 없음.
+- **교훈: V329의 feature set이 이미 optimal. 추가 feature engineering이 도움이 안됨.**
+
+### V400 — Three-Stage Stacking (실패 ❌)
+- **OOF: 0.59037** | Δ vs V329: **+0.04672** (악화)
+- **Student avg OOF: 0.66994** | Δ vs V329: **+0.02296** (나빠짐)
+- Predicted LB: 0.60937
+- Approach: S1(base) → S2(S1 preds) → S3(S1+S2 preds) → LR meta
+- **교훈: 3단계 stacking은 student OOF를 오히려 악화시킴. overfitting risk 큼.**
+
+### V401 — Three-Stage Stacking + 50% Bagging (실패 ❌)
+- **OOF: 0.59123** | Δ vs V329: **+0.04758** (악화)
+- **Student avg OOF: 0.68149** | Δ vs V329: **+0.03451** (심각 나빠짐)
+- Predicted LB: 0.61023
+- **교훈: V400보다 더 나쁨. feature bagging 50%가 3-stage stacking에서 해로움.**
+
+## V337-V339, V400-V401 종합 요약 테이블
+
+| 실험 | OOF | Δ vs V329 | Student OOF | Status |
+|------|-----|-----------|-------------|--------|
+| V329 | **0.54365** | **baseline** | 0.64698 | ⭐⭐⭐⭐ BEST |
+| V337 | 0.60195 | +0.05830 | 0.65905 | ❌ identical feat set ensemble |
+| V338 | 0.58670 | +0.04305 | 0.64290 | ❌ bagging 50% net negative |
+| V339 | 0.58689 | +0.04324 | 0.64922 | ❌ cross-subject z no benefit |
+| V400 | 0.59037 | +0.04672 | 0.66994 | ❌ 3-stage overfitting |
+| V401 | 0.59123 | +0.04758 | 0.68149 | ❌ 3-stage + 50% bagging worst |
+
+## V325-V339, V400-V401 핵심 인사이트
 1. **Per-subject modeling fails**: too few samples per subject (45 rows)
 2. **Heavy feature engineering works**: per-subject features + cross-subject z-scores + quartiles + acceleration + dow (V329)
 3. **LGBM is the only viable tree model**: XGBoost and CatBoost fail on mixed features
@@ -527,6 +573,9 @@
 12. **LB 0.500 목표**: student OOF를 ~0.55까지 낮추는 것이 필요 — 새로운 feature engineering 방향이 필요
 13. **V335 교훈: target-grouped sharing = no benefit** — target별 독립이 이미 최적
 14. **V336 교훈: domain pairwise interactions = noise** — V330과 동일
-15. **V337 교훈: identical feature sets + ensemble = useless** — ensemble 하려면 완전히 다른 feature set 필요
+15. **V337 교훈: stacking two similar pipelines = useless** — identical feature subsets → identical predictions
 16. **V338 교훈: C=500은 15 seeds까지만 가능** — 30 seeds로 늘리면 student gap 0.30+로 폭증
-17. **Student avg OOF ~0.692에서 수렴** — student 성능 개선이 bottleneck
+17. **V338-V339 교훈**: feature bagging 50%가 student OOF를 약간 낮췄으나, meta OOF가 더 높아짐 → net negative
+18. **V400-V401 교훈**: 3-stage stacking이 student OOF를 오히려 악화. stacking depth 증가 = overfitting
+19. **V329가 여전히 BEST**: 모든 새로운 접근법이 OOF를 악화시킴 → V329 pipeline이 이미 local optimum
+20. **Student avg OOF ~0.65에서 수렴**: student pipeline 개선이 bottleneck. new feature engineering 필요.

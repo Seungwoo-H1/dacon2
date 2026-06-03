@@ -1,0 +1,33 @@
+{
+  "version": "V338",
+  "name": "Student Features + Aggressive Feature Bagging (50%)",
+  "avg_oof": 0.5867,
+  "avg_student_oof": 0.6429,
+  "n_features_total": 1223,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "feature_bag_fraction": 0.5,
+  "per_target_oof": {
+    "Q1": 0.59643,
+    "Q2": 0.62328,
+    "Q3": 0.61315,
+    "S1": 0.53993,
+    "S2": 0.56104,
+    "S3": 0.5957,
+    "S4": 0.57734
+  },
+  "student_oof_avg": {
+    "Q1": 0.65006,
+    "Q2": 0.69816,
+    "Q3": 0.69866,
+    "S1": 0.57717,
+    "S2": 0.63303,
+    "S3": 0.64188,
+    "S4": 0.60136
+  },
+  "predicted_lb": 0.6057,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v338_student_features_bagging_20260602_095430.csv",
+  "timestamp": "20260602_095430",
+  "total_time_s": 1180.0,
+  "key_difference": "V337 + more aggressive feature bagging (50% vs 75%) + pred_min/pred_max features"
+}
