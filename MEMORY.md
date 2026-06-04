@@ -11,6 +11,13 @@
 - 학습 450 rows, 테스트 250 rows
 - Feature: 141 base + 141 zscore per-person = 282 columns
 
+## MISSION (2026-06-04 승우 명시)
+- 현재 최고 기준 모델: **V308**
+- 목표: V308의 LB 0.63893을 초과하는 모델 찾기
+- LB 예측이 V308 이하라면 보고 금지
+- 성능 개선 확인 전까지 연구 루프 계속
+- 동일 가설 반복 금지, 매 루프 새 가설 필수
+
 ## ⭐ 현재 BEST (실제 제출 확인됨)
 
 ### V308 — Z-Score Enriched Stacking (제출 완료 — 2026-06-02) ⭐
@@ -23,6 +30,49 @@
 - 모든 타겟 개선 (S2 제외: -0.005 ~ -0.022, S2: +0.012)
 - Student OOF 안정성 우수 (S1: 0.59-0.60, S3: 0.62-0.63)
 - Predicted LB: ~0.624 (V146 대비 -0.008 개선)
+
+### V339 — OOF Feature Augmentation (2026-06-04, ⏳)
+- OOF: 0.61244 | Δ vs V308: **-0.00991**
+- Method: V308 pipeline + per-target OOF prediction as augmented feature
+- 15 seeds, C=10, no bagging
+- Student-meta gap reasonable (~0.02-0.08, V308 수준)
+- Distribution to V308: very similar (S4: 0.006, Q1: 0.092)
+- Estimated LB: ~0.629 (V308 0.639 대비 -0.010) — **추정만, 검증 안됨**
+- V329의 OOF 0.544→LB 0.698 실패 교훈으로 인해 LB 검증 필요
+
+### V340 — OOF Feature + Bagging 98% + 30 Seeds (2026-06-04, ⏳)
+- OOF: 0.58958 | Δ vs V308: **-0.03277**
+- Bagging이 distribution을 너무 흐트러뜨림 (V308 대비 2-4배 std 증가)
+- Student-meta gap 큼 (S2: +0.069, S4: +0.079)
+- Estimated LB: ~0.660 (V308보다 나쁠 가능성)
+- V339보다 V340이 distribution similarity가 낮음 → V339가 더 유망
+
+## V330-V340 실험 결과 정리
+
+| 버전 | 방법 | AVG OOF | Δ vs V308 | Student-Meta Gap | Distribution | Status |
+|------|------|---------|-----------|------------------|-------------|--------|
+| V330 | 20 seeds | 0.61697 | -0.005 | — | — | ⏳ |
+| V331 | Temp scale | 0.62640 | +0.004 | — | — | ❌ |
+| V333 | Bag 80%+30s | 0.57287 | -0.049 | ~0.08 | extreme | ⏳ |
+| V334 | Bag 95%+C5 | 0.59989 | -0.022 | ~0.07 | wide | ⏳ |
+| V335 | No bag+C1 | 0.62990 | +0.008 | ~0.06 | good | ❌ |
+| V336 | Quantile norm | 0.64086 | +0.019 | — | — | ❌ |
+| V337 | Multi-config | 0.62571 | +0.003 | ~0.03 | good | ⏳ |
+| V338 | Meta C=0.1 | 0.63567 | +0.013 | ~0.05 | good | ❌ |
+| V339 | OOF feat | **0.61244** | **-0.010** | ~0.04 | **good** | ⏳ BEST |
+| V340 | OOF+Bag30s | 0.58958 | -0.033 | ~0.07 | wide | ⏳ |
+
+## 핵심 교훈 (V330-V340)
+1. **OOF 낮추면 student-meta gap 커짐** (V329/V333/V340 동일 패턴)
+2. **Bagging은 distribution을 흐트러뜨림** (V333/V334/V340)
+3. **Meta C=0.1은 underfitting** (V338, C=10이 최적)
+4. **Quantile norm은 역효과** (V336, OOF +0.019)
+5. **Temperature scaling은 OOF 악화** (V331, Q1에서 T=4.5)
+6. **Multi-config (동일 family)**는 V308과 동률 (V337)
+7. **OOF feature augmentation이 가장 유망** (V339, OOF -0.010, gap reasonable)
+8. **V308의 architecture가 local optimum**: OOF 낮추면 무조건 gap 커짐
+9. **OOF-LB gap이 핵심**: V329(OOF 0.544, LB 0.698, gap 0.154)의 교훈 살리기
+10. **V339가 현재까지 LB로 봤을 때 가장 유망**: OOF 개선 + distribution 유사 + gap reasonable
 
 ## ⏳ Pending LB Submission (V308 초월 가능성 높음)
 

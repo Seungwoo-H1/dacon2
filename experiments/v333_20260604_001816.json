@@ -1,0 +1,20 @@
+{
+  "version": "V333",
+  "name": "30 Seeds + Feature Bagging 80% + C=10",
+  "avg_oof": 0.57287,
+  "n_seeds": 30,
+  "bag_ratio": 0.8,
+  "meta_c": 10.0,
+  "delta_vs_v308": -0.04948,
+  "per_target_oof": {
+    "Q1": 0.611,
+    "Q2": 0.57764,
+    "Q3": 0.59396,
+    "S1": 0.52347,
+    "S2": 0.57282,
+    "S3": 0.55228,
+    "S4": 0.5789
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v333_20260604_001816.csv",
+  "timestamp": "20260604_001816"
+}

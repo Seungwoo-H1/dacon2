@@ -1,0 +1,19 @@
+{
+  "version": "V339",
+  "name": "OOF Feature Augmentation + V308 Pipeline",
+  "avg_oof": 0.61244,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "delta_vs_v308": -0.00991,
+  "per_target_oof": {
+    "Q1": 0.63869,
+    "Q2": 0.61,
+    "Q3": 0.62756,
+    "S1": 0.58136,
+    "S2": 0.58955,
+    "S3": 0.60771,
+    "S4": 0.63217
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v339_20260604_015643.csv",
+  "timestamp": "20260604_015643"
+}

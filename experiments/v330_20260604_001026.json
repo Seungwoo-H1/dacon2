@@ -1,0 +1,20 @@
+{
+  "version": "V330",
+  "name": "Temporal CV + 20 Seeds + Z-Score",
+  "avg_oof": 0.61697,
+  "n_seeds": 20,
+  "delta_vs_v308": -0.00538,
+  "per_target_oof": {
+    "Q1": 0.65667,
+    "Q2": 0.61546,
+    "Q3": 0.61856,
+    "S1": 0.57716,
+    "S2": 0.60986,
+    "S3": 0.60804,
+    "S4": 0.63302
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v330_20260604_001026.csv",
+  "timestamp": "20260604_001026",
+  "predicted_lb": null,
+  "actual_lb": null
+}

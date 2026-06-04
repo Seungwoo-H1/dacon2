@@ -1,0 +1,21 @@
+{
+  "version": "V338",
+  "name": "V308 + Meta C=0.1 + Student Clipping [0.05,0.95]",
+  "avg_oof": 0.63567,
+  "avg_student_oof": 0.66949,
+  "n_seeds": 15,
+  "meta_c": 0.1,
+  "delta_vs_v308": 0.01332,
+  "per_target_oof": {
+    "Q1": 0.68297,
+    "Q2": 0.63324,
+    "Q3": 0.63262,
+    "S1": 0.59398,
+    "S2": 0.6373,
+    "S3": 0.62086,
+    "S4": 0.6487
+  },
+  "estimated_lb": 0.65567,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v338_20260604_003406.csv",
+  "timestamp": "20260604_003406"
+}
