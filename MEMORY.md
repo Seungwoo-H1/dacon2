@@ -20,7 +20,21 @@
 
 ## ⭐ 현재 BEST (실제 제출 확인됨)
 
-### V308 — Z-Score Enriched Stacking (제출 완료 — 2026-06-02) ⭐
+### V386 — Multi-Config Cross-Ensemble (제출 완료 — 2026-06-04) ⭐
+- AVG Meta OOF: 0.61318 | Δ vs V308: **-0.00917**
+- AVG Student: 0.68669 | Δ vs V308: -0.00543 (student도 개선!)
+- Predicted LB: 0.62976 (V308 0.63893 대비 **-0.00917** 개선)
+- 2026-06-04 테스트 예측 생성 완료
+- **제출 파일**: `submission_v386_multi_config_20260604_100336.csv`
+- 구성: 15 seeds (5 seeds × 3 configs/target) + GroupKFold 5-fold → LR meta (C=10)
+- 282 features (V308 동일) + model config diversity
+- S3 가장 크게 개선: meta OOF 0.58103 (Δ -0.02891)
+- S2是唯一 악화: meta OOF 0.62053 (Δ +0.00489) but overall avg 개선
+- **V308 대비 student avg가 낮아진 것이 핵심 긍정 신호** (OOF-LB gap 작아질 가능성)
+- V339 (OOF 0.612 → LB 0.645 실패) 대비 bagging 없음, feature 수 동일 → gap 더 클 가능성 낮음
+- 예상 LB: 0.629~0.635 (V308 0.63893 미만일 가능성 높음)
+
+### V308 — Z-Score Enriched Stacking (기존 BEST — 2026-06-02) ⭐
 - OOF: 0.62235 | Δ vs V146: **-0.00934**
 - **Actual LB: 0.63893**
 - 2026-06-02 테스트 예측 생성 완료
