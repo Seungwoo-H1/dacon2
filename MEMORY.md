@@ -223,6 +223,24 @@
 - Group-averaged feature ranking → noise addition
 - **교훈**: V308의 per-target ranking이 이미 optimal. group averaging가 signal dilution.
 
+## V380 — Bagging + Meta C Sweep
+- AVG OOF: 0.60200 | Δ vs V308: -0.02035
+- Predicted LB (gap=0.017 가정): 0.61858
+- Student avg: 0.741 (V308 0.692 대비 +0.049 증가)
+- C sweep 결과: C=10이 meta OOF 최저 (0.602), student avg는 C 무관 (0.741 고정)
+- **제출 안 함**: V339 교훈 → OOF 낮을수록 gap 큼. student avg 0.741은 매우 위험
+- Bagging은 student avg를 0.692→0.741로 올림 → gap 증가 원인
+
+## V381 — Group-Rank + Top-K Sampling (실패 ❌)
+- AVG OOF: 0.60698 | Δ vs V308: -0.01537
+- Predicted LB (gap=0.017 가정): 0.62356
+- Student avg: 0.802 (V308 0.692 대비 +0.110 증가!) → **터졌다**
+- Group ranking + per-seed top-K sampling은 student calibration을 완전히 파괴
+- S3이 가장 좋음 (meta OOF 0.569, Δ -0.041) but student avg도 0.690으로 낮음
+- Q1-Q3/student avg 0.80-0.90 → meta가 student overfitting 복구 불가
+- **핵심 교훈**: group ranking은 noise Addition → V378과 동일한 실패
+- Top-K sampling은 diversity를 주지만 calibration 파괴
+
 ## Silent Replies
 When you have nothing to say, respond with ONLY: NO_REPLY
 ⚠️ Rules:
