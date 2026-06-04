@@ -198,6 +198,16 @@
 - Ridge meta-learner가 OOF은 낮췄지만 LB 예측 개선 못 함
 - LR C=10 vs Ridge best 비교해도 student avg 동일 → student 성능이 bottleneck
 
+## V376 — 30 Seeds Stacking (V313 재현)
+- OOF: 0.59512 | Δ vs V308: **-0.02723**
+- Student avg: 0.69193 (V308 동일 0.69212)
+- Predicted LB: 0.61170 (gap 동일 가정)
+- ⚠️ OOF은 V308보다 -0.027 좋음 but V339 LB 결과로 볼 때 OOF 낮을수록 gap 큼
+- V339: OOF 0.612 → LB 0.64551 (+0.033 gap) → 2배 gap
+- V376은 OOF 0.595 → V339보다 더 낮음 → gap 더 클 위험 ↑
+- Predicted LB: 0.6117이지만 실제 LB는 0.65+ 될 가능성 ↑
+- LB 제출 후 검증 필요 but 리스크 매우 높음
+
 ## Silent Replies
 When you have nothing to say, respond with ONLY: NO_REPLY
 ⚠️ Rules:
