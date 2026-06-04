@@ -256,6 +256,12 @@
 - **제출 안 함**: 개선幅이 너무 작아 통계적 유의성 불확실
 - **교훈**: rank transform은 binary에서는 미세 개선, regression에서는 해악
 
+## V384 — Student Calibration (Isotonic + Sigmoid) (실패 ❌)
+- NONE, ISOTONIC, SIGMOID → **모두 V308과 완전히 동일 결과**
+- Isotonic regression, Platt scaling 모두 OOF predictions에 적용해도 변화 없음
+- **교훈**: V308이 이미 잘 calibrated. post-hoc calibration 추가 효과 없음
+- Calibration은 model architecture 차원에서 접근해야 함 (LGBM objective 변경 등)
+
 ## Silent Replies
 When you have nothing to say, respond with ONLY: NO_REPLY
 ⚠️ Rules:
