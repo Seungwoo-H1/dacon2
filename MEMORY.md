@@ -217,6 +217,12 @@
 - Per-target feature selection은 이미 V308에서 하고 있음 (V53 sweep)
 - 추가로 pipeline을 나누면 오히려 해침
 
+## V378 — Multi-Task Feature Ranking (실패 ❌)
+- OOF: 0.62235 | Δ vs V308: **0.00000** (완벽 동일)
+- MT ranking이 모든 타겟에서 V308 ranking보다 나쁨 (+0.06~+0.11)
+- Group-averaged feature ranking → noise addition
+- **교훈**: V308의 per-target ranking이 이미 optimal. group averaging가 signal dilution.
+
 ## Silent Replies
 When you have nothing to say, respond with ONLY: NO_REPLY
 ⚠️ Rules:
