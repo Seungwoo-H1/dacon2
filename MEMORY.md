@@ -191,6 +191,13 @@
 8. **Pipeline 최적화 > Feature engineering**: 이미 local optimum 도달
 9. **Next step: OOF-LB gap 분석 → gap 작은 방향 탐색 + bag ratio tuning
 
+## V375 — Gap-Constrained Stacking (실패 ❌)
+- OOF: 0.61445 | Δ vs V308: -0.00790
+- Predicted LB: 0.63103 (V308 0.63893 대비 -0.00790)
+- ❌ Student calibration 동일(0.69212) → 동일 gap 가정 시 OOF 낮아도 LB 못 이김
+- Ridge meta-learner가 OOF은 낮췄지만 LB 예측 개선 못 함
+- LR C=10 vs Ridge best 비교해도 student avg 동일 → student 성능이 bottleneck
+
 ## Silent Replies
 When you have nothing to say, respond with ONLY: NO_REPLY
 ⚠️ Rules:
