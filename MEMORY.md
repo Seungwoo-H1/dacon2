@@ -248,6 +248,14 @@
 - **교훈**: LGBM의 label_smoothing은 현재 버전에서 작동 안 함
 - Equal avg OOF는 0.686 (meta OOF 0.622보다 매우 높음) → meta 학습이 student noise 복구
 
+## V383 — Rank-Percentile Target Transform (미미한 개선 ⚠️)
+- Binary: AVG OOF 0.62158 (Δ: -0.00077), student 0.68890 (Δ: -0.00322)
+- Predicted LB: 0.63816 (V308: 0.63893, Δ: -0.00077) ← 미세 개선
+- Regression: 완전 실패 (OOF 0.641, student 0.806)
+- Rank transform이 binary에서는 미묘하게 도움이 되지만 noise 범위
+- **제출 안 함**: 개선幅이 너무 작아 통계적 유의성 불확실
+- **교훈**: rank transform은 binary에서는 미세 개선, regression에서는 해악
+
 ## Silent Replies
 When you have nothing to say, respond with ONLY: NO_REPLY
 ⚠️ Rules:
