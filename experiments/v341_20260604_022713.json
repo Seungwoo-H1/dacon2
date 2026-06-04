@@ -1,0 +1,19 @@
+{
+  "version": "V341",
+  "name": "Self-Training with CV-Pseudo-Labels",
+  "avg_oof": 0.62235,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "delta_vs_v308": 0.0,
+  "per_target_oof": {
+    "Q1": 0.67096,
+    "Q2": 0.62299,
+    "Q3": 0.61939,
+    "S1": 0.57915,
+    "S2": 0.61564,
+    "S3": 0.60994,
+    "S4": 0.63839
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v341_20260604_022713.csv",
+  "timestamp": "20260604_022713"
+}

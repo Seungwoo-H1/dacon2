@@ -1,0 +1,19 @@
+{
+  "version": "V344",
+  "name": "Per-Subject Calibration on Top of V308 Meta",
+  "avg_oof": 0.60233,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "delta_vs_v308": -0.02002,
+  "per_target_oof": {
+    "Q1": 0.64818,
+    "Q2": 0.61844,
+    "Q3": 0.61574,
+    "S1": 0.57063,
+    "S2": 0.58357,
+    "S3": 0.56737,
+    "S4": 0.61235
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v344_20260604_024634.csv",
+  "timestamp": "20260604_024634"
+}
