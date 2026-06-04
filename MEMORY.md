@@ -241,6 +241,13 @@
 - **핵심 교훈**: group ranking은 noise Addition → V378과 동일한 실패
 - Top-K sampling은 diversity를 주지만 calibration 파괴
 
+## V382 — Label Smoothing Sweep (실패 ❌)
+- LS=0.0, 0.05, 0.1, 0.15 → **모두 동일 결과**
+- LGBM v4.6.0의 label_smoothing이 warning만 내고 무시
+- 모든 타겟에서 LS 무관하게 동일 student_avg, equal_avg_OOF
+- **교훈**: LGBM의 label_smoothing은 현재 버전에서 작동 안 함
+- Equal avg OOF는 0.686 (meta OOF 0.622보다 매우 높음) → meta 학습이 student noise 복구
+
 ## Silent Replies
 When you have nothing to say, respond with ONLY: NO_REPLY
 ⚠️ Rules:
