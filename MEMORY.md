@@ -208,6 +208,15 @@
 - Predicted LB: 0.6117이지만 실제 LB는 0.65+ 될 가능성 ↑
 - LB 제출 후 검증 필요 but 리스크 매우 높음
 
+## V377 — Per-Target Isolated Pipeline (실패 ❌❌)
+- OOF: 0.66980 | Δ vs V308: **+0.04745** (대폭 악화)
+- 모든 타겟에서 V308보다 나쁨 (Q1: +0.072, Q2: +0.037, S1: +0.017...)
+- Target별 config 분리 → signal dilution (V369와 동일한 실패 유형)
+- Equal averaging > invOOF-weighted (가중치 최적화가 overfitting)
+- **핵심 교훈**: pipeline을 target별로 나누면 signal이 분산됨
+- Per-target feature selection은 이미 V308에서 하고 있음 (V53 sweep)
+- 추가로 pipeline을 나누면 오히려 해침
+
 ## Silent Replies
 When you have nothing to say, respond with ONLY: NO_REPLY
 ⚠️ Rules:
