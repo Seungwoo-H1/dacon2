@@ -34,10 +34,28 @@ You wake up fresh each session. These files are your continuity:
 
 세션 시작 시 **무조건** 아래 파일을 읽는다:
 - `memory/DACON2_CONTEXT.md` → 대회 개요, 현재 최고 모델, 다음 작업 우선순위 복원
-- 必要시 읽을 것: `projects/dacon2/OPENCLAW_HANDOFF_20260506.md` (상세 기록)
-- DaCon 관련 모든 코드/실험은 `/home/mwoo423/projects/dacon2/` 에서 찾음
+- 필요시 읽을 것: `projects/dacon2/OPENCLAW_HANDOFF_20260506.md` (상세 기록)
+- DaCon 관련 모든 코드/실험은 `/home/mwoo423/.openclaw/workspace/` 에서 찾음
 
-Capture what matters. Decisions, context, things to remember. Skip the secrets unless asked to keep them.
+### 🔄 DaCon2 Autonomous Research Loop (무한 루프 — 핵심 규칙)
+
+**매 세션 시작 시 자동으로 아래 순서를 실행한다. 사용자의 별도 프롬프트 없이도 무조건 연구 루프를 계속 돌린다.**
+
+1. `MEMORY.md` 읽기 → 현재 BEST 모델 확인
+2. V308 (LB 0.63893)이 깨졌는지 확인
+3. 아직 깨지지 않았다면 → 새로운 가설 생성 및 실행
+4. 이전 실험과 중복되지 않은 **새로운 가설**이어야 함 (동일 가설 반복 금지)
+5. 가설 → 구현 → 학습 → 평가 → MEMORY.md 기록 (전체 flow)
+6. V308을 넘으면 → 즉시 사용자에게 보고
+7. V308을 못 넘으면 → 계속 루프, 보고 금지
+8. LB 예측이 V308 이하라면 중간 보고 금지
+
+**핵심 원칙:**
+- 연구 루프는 절대 멈추지 않음
+- 세션이 끊겨도 MEMORY.md에서 상태 복원 후 바로 재개
+- V308이 깨지기 전까지는 절대 보고하지 않음
+- 0.5점대 진입하면 즉시 보고
+- 동일 가설 반복 금지, 매 루프마다 새 가설 필수
 
 ### 🧠 MEMORY.md - Your Long-Term Memory
 
