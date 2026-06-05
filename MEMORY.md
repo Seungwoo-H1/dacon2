@@ -123,6 +123,23 @@
     - **0.5점은 현재 데이터 구조상 현실적 목표 아님**
     - realistic 목표: V368의 OOF 0.605 → LB 0.62 수준
 
+## V386-V387 실험 결과
+
+### V386 — Multi-Config Cross-Ensemble (실패 ❌)
+- OOF: 0.61318 | Δ vs V308: -0.00917
+- Actual LB: **0.65003** (V308 0.63893 대비 **+0.0111 나쁨**)
+- OOF-LB gap: +0.03685 (V308 +0.01658 대비 2배 이상 큼)
+- Config diversity (15 seeds × 3 configs) → meta overfitting → gap 확대
+- **핵심 교훈**: config diversity 추가도 bagging 없이 OOF-LB gap을 키움
+
+### V387 — V308 + Bagged Ensemble (실패 ❌)
+- Ensemble OOF: 0.62713 | Δ vs V308: **+0.00478 (악화)**
+- Ensemble student: 0.72297 | Δ vs V308: +0.03085 증가
+- Predicted LB: 0.64371 (V308 0.63893 대비 +0.00478 악화)
+- Bagged student avg: 0.754 (V308 0.692 대비 +0.062)
+- Bagging ratio 0.6 + feature sampling이 student calibration 파괴
+- **핵심 교훈**: V308과 bagging을 평균해도 bagging의 높은 student가 ensemble을 dragging
+
 ## V369-V374 실험 결과
 
 ### V369 — Target-Conditional Feature Sets (실패 ❌)
@@ -186,6 +203,36 @@
 3. **Student calibration이 가장 중요한 bottleneck**
 4. **OOF-LB gap을 줄이려면 bagging 없이 student 낮추는 방향**
 5. **V308이 이미 local optimum일 가능성 높음**
+
+## V388 — Per-Fold Feature Ranking (실패 ❌)
+- AVG meta OOF: 0.62624 | Δ vs V308: **+0.00389 (악화)**
+- AVG student: 0.71721 | Δ vs V308: +0.02509 증가
+- Predicted LB: 0.64282 (V308 0.63893 대비 +0.00389 악화)
+- Per-fold ranking → ranking noise 증가 → meta-learner가 덜 robust
+- **교훈**: V308의 global ranking이 이미 optimal. per-fold ranking이 noise addition.
+
+## V389 — Student-aware Meta-Weighting (무의미한 개선 ⚠️)
+- AVG meta OOF: 0.62234 | Δ vs V308: **-0.00001** (반올림 차이, 완전히 동일)
+- AVG student: 0.69212 | Δ vs V308: **0.00000** (완벽 동일)
+- Predicted LB: 0.63892 (V308 0.63893 대비 -0.00001)
+- seed별 student OOF 편차가 너무 작음 (0.622~0.629) → weight 차이 0.985~1.021
+- **교훈**: V308의 seed들이 이미 균일하게 잘 calibrated → weighting 효과 없음
+- student calibration의 균일성이 오히려 V308의 강점
+
+## V390 — Confidence-Weighted Ensemble (실패 ❌)
+- meta OOF: 0.62235 | Δ vs V308: **0.00000** (완벽 동일)
+- confidence weights: 0.0654~0.0677 (편차 0.0023 → equal과 동일)
+- CW OOF: 0.68376 (악화)
+- **교훈**: seed별 confidence 편차가 너무 작음 → equal averaging과 동일 결과
+
+## V391 — Hyperparameter Diversity Seeds (실패 ❌)
+- AVG meta OOF: 0.62145 | Δ vs V308: **-0.00090** (미미)
+- AVG student: **0.74465** | Δ vs V308: **+0.05253** (매우 위험)
+- Predicted LB: 0.63803 (V308 0.63893 대비 -0.00090)
+- aggressive config: Q3 OOF 1.12588, S3 OOF 1.12588 → 터짐
+- **교훈**: hyperparameter diversity → student avg 폭주 (V339/V386 동일한 패턴)
+- V391 student avg 0.745 → 실제 LB 0.65+ 될 가능성 매우 높음
+- fewer seeds + diverse hyperparams → calibration 파괴
 
 ## 현재 BEST
 - **LB 기준**: V308 (0.63893, 제출 완료) ⭐
