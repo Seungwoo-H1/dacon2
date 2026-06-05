@@ -244,6 +244,13 @@
 - ⚠️ OOF 0.617는 V339 0.612보다 높지만 gap 검증 필요
 - **제출 파일**: `submission_v392_per_target_meta_c_20260605_004813.csv`
 
+## V393 — Trimmed Mean Ensemble (실패 ❌)
+- Equal: OOF 0.68374 | Δ vs V308: **+0.06139** (대폭 악화)
+- Trim-1: +0.06250, Trim-2: +0.06317, Trim-3: +0.06402
+- Best: Trim-0 (Equal) — trimming이 모두 equal보다 나쁨
+- **교훈**: equal averaging이 이미 V308 meta에 비해 나쁨. trimming는 equal보다 더 나쁘므로 무의미
+- equal average가 meta보다 0.622→0.683 나쁨 → meta-learner가 equal의 weakness를 보정
+
 ## 현재 BEST
 - **LB 기준**: V308 (0.63893, 제출 완료) ⭐
 - **Pending LB**: V368 (OOF 0.60492), V365 (OOF 0.60089), V364 (OOF 0.60641)
