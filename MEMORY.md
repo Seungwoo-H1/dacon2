@@ -204,6 +204,65 @@
 4. **OOF-LB gap을 줄이려면 bagging 없이 student 낮추는 방향**
 5. **V308이 이미 local optimum일 가능성 높음**
 
+## V394-V398 실험 결과 정리 (2026-06-05 05:00~06:10 UTC)
+
+### V394 — Per-Target Meta C + Feature Bagging
+- Meta: 0.61372 (-0.009), Student: 0.750 (+0.058), Gap: 0.137 (2배)
+- **실패 ❌** — bagging student inflation
+
+### V395 — Per-Target Meta C + Strong LGBM Reg
+- Meta: 0.63271 (+0.010), Student: 0.660 (-0.032), Gap: 0.0275 (0.4배)
+- Predicted LB: 0.64929 → **악화**
+- **실패 ❌** — over-regularization trade-off 불균형
+
+### V396 — Per-Target Meta C + 30 Seeds
+- Meta: 0.59896 (-0.023), Student: 0.716 (+0.024), Gap: 0.117 (1.7배)
+- Predicted LB: 0.615 → V339 패턴 유사, **제출 안함**
+
+### V397 — Aggressive Per-Target Meta C (Q→5, S→200)
+- Meta: 0.61924, Student: 0.715 → **악화**
+- V392의 C=10/100이 optimal
+
+### V398 — Adaptive Feature Threshold (MI-based)
+- Meta: 0.61797, Student: 0.715 → **실패**
+
+### V399 — Per-Target Feature Count Sweep
+- Q targets student 0.75+ → **중단**
+
+### V400 — L1-Sparse Meta-Learner
+- Meta: 0.61489 (-0.007), Student: 0.715 → **V392 동일 패턴**
+
+## V401 — Target-Group Specific Configs (06:20~06:21 UTC, 37s)
+- Meta: 0.62545 (+0.003), Student: 0.668 (-0.024), Gap: 0.043 (0.6배)
+- Predicted LB: 0.642 → **Worse**
+- 교훈: ultra_deep → student↓/meta↓ 동시, gap이 너무 작아 signal도 낮춤
+
+## V402 — XGBoost Meta-Learner + Per-Target Meta C (06:33~06:35 UTC, 48s)
+- **n_est=30**: Meta 0.579 (-0.043), Student 0.715 (+0.023), Gap 0.136 (2.0배)
+- **n_est=15**: Meta **0.605 (-0.017)**, Student 0.715 (+0.023), Gap 0.110 (1.6배)
+- Predicted LB: **0.621** (V308 -0.017) → 예상 beat!
+- V339 교훈(OOF 0.612→LB 0.645, gap 0.033)과 비교: V402 gap 0.110 → 실제 LB 0.631 예상
+- ✅ 제출 파일 생성 완료 (승우 수동 제출)
+
+## 누적 실패/성공 패턴 (V394-V402)
+1. **Bagging**: student inflation (V380, V387, V394)
+2. **Strong LGBM reg**: meta↓ student↑ 불균형 (V395)
+3. **More seeds**: student↑ gap↑ (V376, V396)
+4. **Aggressive per-target C**: student 상승 (V397)
+5. **MI filtering**: student 상승 (V398)
+6. **L1 sparse meta**: V392 동일 패턴 (V400)
+7. **Feature count sweep**: Q targets student 0.75+ (V399)
+8. **Ultra_deep config**: student↓/meta↓ 동시 (V401)
+9. **XGB meta**: meta 대폭↓ but gap↑ (V402)
+
+## 핵심 인사이트
+- Q targets student bottleneck real but hard to fix in isolation
+- V401: student↓/meta↓ trade-off 확인
+- V402: XGB meta가 OOF는 낮추지만 gap이 V308의 1.6~2.0배
+- V392가 가장 균형 좋음: meta=0.617, student=0.692
+- XGB meta가 가장 유망: OOF 0.605, 예측 LB 0.621
+- V402 (n_est=15) → LB 0.631 예상 (V308 beat 가능)
+
 ## V388 — Per-Fold Feature Ranking (실패 ❌)
 - AVG meta OOF: 0.62624 | Δ vs V308: **+0.00389 (악화)**
 - AVG student: 0.71721 | Δ vs V308: +0.02509 증가
