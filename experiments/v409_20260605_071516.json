@@ -1,0 +1,39 @@
+{
+  "version": "V409",
+  "name": "Feature Cross-Interaction",
+  "avg_meta_oof": 0.60045,
+  "avg_student_oof": 0.71364,
+  "v308_avg_oof": 0.62235,
+  "v308_avg_student": 0.69212,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_meta": -0.0219,
+  "delta_vs_v308_student": 0.02152,
+  "predicted_lb": 0.61703,
+  "estimated_lb_v339_pattern": 0.65398,
+  "student_meta_gap": 0.11319,
+  "v308_gap": 0.01658,
+  "n_seeds": 15,
+  "meta_type": "xgb_15_md3_lr0.1",
+  "cross_features_added": true,
+  "per_target_meta_oof": {
+    "Q1": 0.63217,
+    "Q2": 0.60565,
+    "Q3": 0.60366,
+    "S1": 0.56931,
+    "S2": 0.59404,
+    "S3": 0.57829,
+    "S4": 0.62003
+  },
+  "per_target_student_oof": {
+    "Q1": 0.79402,
+    "Q2": 0.68408,
+    "Q3": 0.79405,
+    "S1": 0.63823,
+    "S2": 0.73061,
+    "S3": 0.64965,
+    "S4": 0.70481
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v409_cross_feat_20260605_071516.csv",
+  "timestamp": "20260605_071516",
+  "total_time_s": 47.0
+}
