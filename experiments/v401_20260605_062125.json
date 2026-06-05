@@ -1,0 +1,52 @@
+{
+  "version": "V401",
+  "name": "Target-Group Specific Model Configs (Q\u2192ultra_deep)",
+  "avg_meta_oof": 0.62545,
+  "avg_student_oof": 0.66843,
+  "v308_avg_oof": 0.62235,
+  "v308_avg_student": 0.69212,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_meta": 0.0031,
+  "delta_vs_v308_student": -0.02369,
+  "predicted_lb": 0.64203,
+  "student_meta_gap": 0.04298,
+  "v308_gap": 0.01658,
+  "n_seeds": 15,
+  "q_config": "ultra_deep",
+  "s_config": {
+    "S1": "wide",
+    "S2": "deep",
+    "S3": "safety",
+    "S4": "wide"
+  },
+  "meta_c_per_target": {
+    "Q1": 10.0,
+    "Q2": 10.0,
+    "Q3": 10.0,
+    "S1": 100.0,
+    "S2": 100.0,
+    "S3": 100.0,
+    "S4": 100.0
+  },
+  "per_target_meta_oof": {
+    "Q1": 0.68538,
+    "Q2": 0.64166,
+    "Q3": 0.63576,
+    "S1": 0.55986,
+    "S2": 0.61817,
+    "S3": 0.59824,
+    "S4": 0.63906
+  },
+  "per_target_student_oof": {
+    "Q1": 0.70485,
+    "Q2": 0.6441,
+    "Q3": 0.64032,
+    "S1": 0.60998,
+    "S2": 0.74172,
+    "S3": 0.64161,
+    "S4": 0.69644
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v401_target_group_configs_20260605_062125.csv",
+  "timestamp": "20260605_062125",
+  "total_time_s": 37.0
+}
