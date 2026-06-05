@@ -1,0 +1,56 @@
+{
+  "version": "V400",
+  "name": "L1-Sparse Meta-Learner + Per-Target Meta C",
+  "avg_meta_oof": 0.61489,
+  "avg_student_oof": 0.71513,
+  "v308_avg_oof": 0.62235,
+  "v308_avg_student": 0.69212,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_meta": -0.00746,
+  "delta_vs_v308_student": 0.02301,
+  "predicted_lb": 0.63147,
+  "student_meta_gap": 0.10024,
+  "v308_gap": 0.01658,
+  "n_seeds": 15,
+  "penalty": "l1",
+  "solver": "saga",
+  "meta_c_per_target": {
+    "Q1": 10.0,
+    "Q2": 10.0,
+    "Q3": 10.0,
+    "S1": 100.0,
+    "S2": 100.0,
+    "S3": 100.0,
+    "S4": 100.0
+  },
+  "non_zero_per_target": {
+    "Q1": 13,
+    "Q2": 11,
+    "Q3": 12,
+    "S1": 15,
+    "S2": 14,
+    "S3": 13,
+    "S4": 15
+  },
+  "per_target_meta_oof": {
+    "Q1": 0.64573,
+    "Q2": 0.62375,
+    "Q3": 0.62369,
+    "S1": 0.55881,
+    "S2": 0.61801,
+    "S3": 0.59553,
+    "S4": 0.63872
+  },
+  "per_target_student_oof": {
+    "Q1": 0.82044,
+    "Q2": 0.68256,
+    "Q3": 0.81317,
+    "S1": 0.60998,
+    "S2": 0.74172,
+    "S3": 0.64161,
+    "S4": 0.69644
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v400_l1_sparse_meta_20260605_061116.csv",
+  "timestamp": "20260605_061116",
+  "total_time_s": 47.0
+}
