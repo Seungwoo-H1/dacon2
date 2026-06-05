@@ -1,0 +1,47 @@
+{
+  "version": "V411",
+  "name": "LGBM Seed Hyperparameter Tuning",
+  "avg_meta_oof": 0.60622,
+  "avg_student_oof": 0.65388,
+  "v308_avg_oof": 0.62235,
+  "v308_avg_student": 0.69212,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_meta": -0.01613,
+  "delta_vs_v308_student": -0.03824,
+  "predicted_lb": 0.6228,
+  "estimated_lb_v339_pattern": 0.62876,
+  "student_meta_gap": 0.04766,
+  "v308_gap": 0.01658,
+  "n_seeds": 15,
+  "meta_type": "xgb_15_md3_lr0.1",
+  "best_lgb_cfg": {
+    "Q1": "medium",
+    "Q2": "medium",
+    "Q3": "aggressive",
+    "S1": "wide",
+    "S2": "medium",
+    "S3": "safety",
+    "S4": "medium"
+  },
+  "per_target_meta_oof": {
+    "Q1": 0.65044,
+    "Q2": 0.61567,
+    "Q3": 0.60855,
+    "S1": 0.55404,
+    "S2": 0.6018,
+    "S3": 0.58948,
+    "S4": 0.62356
+  },
+  "per_target_student_oof": {
+    "Q1": 0.72389,
+    "Q2": 0.64507,
+    "Q3": 0.64032,
+    "S1": 0.60998,
+    "S2": 0.64454,
+    "S3": 0.64161,
+    "S4": 0.67173
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v411_lgb_tuning_20260605_073002.csv",
+  "timestamp": "20260605_073002",
+  "total_time_s": 164.0
+}
