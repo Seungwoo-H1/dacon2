@@ -20,21 +20,7 @@
 
 ## ⭐ 현재 BEST (실제 제출 확인됨)
 
-### V386 — Multi-Config Cross-Ensemble (제출 완료 — 2026-06-04) ⭐
-- AVG Meta OOF: 0.61318 | Δ vs V308: **-0.00917**
-- AVG Student: 0.68669 | Δ vs V308: -0.00543 (student도 개선!)
-- Predicted LB: 0.62976 (V308 0.63893 대비 **-0.00917** 개선)
-- 2026-06-04 테스트 예측 생성 완료
-- **제출 파일**: `submission_v386_multi_config_20260604_100336.csv`
-- 구성: 15 seeds (5 seeds × 3 configs/target) + GroupKFold 5-fold → LR meta (C=10)
-- 282 features (V308 동일) + model config diversity
-- S3 가장 크게 개선: meta OOF 0.58103 (Δ -0.02891)
-- S2是唯一 악화: meta OOF 0.62053 (Δ +0.00489) but overall avg 개선
-- **V308 대비 student avg가 낮아진 것이 핵심 긍정 신호** (OOF-LB gap 작아질 가능성)
-- V339 (OOF 0.612 → LB 0.645 실패) 대비 bagging 없음, feature 수 동일 → gap 더 클 가능성 낮음
-- 예상 LB: 0.629~0.635 (V308 0.63893 미만일 가능성 높음)
-
-### V308 — Z-Score Enriched Stacking (기존 BEST — 2026-06-02) ⭐
+### V308 — Z-Score Enriched Stacking (제출 완료 — 2026-06-02) ⭐
 - OOF: 0.62235 | Δ vs V146: **-0.00934**
 - **Actual LB: 0.63893**
 - 2026-06-02 테스트 예측 생성 완료
@@ -177,17 +163,29 @@
 9. **V368-V365 등 더 낮은 OOF도 V339보다 gap 클 위험** → LB 검증 필수
 10. **LB 검증 필요**: V368, V365, V364
 
-## V369-V374 핵심 교훈 요약
-1. **Target-conditional features = signal 분산** (V369)
-2. **Meta C 분리 = underfitting** (V370)
-3. **2-level stacking = 과포장** (V371)
-4. **Pseudo-labeling = distribution 왜곡** (V372)
-5. **Temperature scaling = 미미한 효과** (V373)
-6. **Probability smoothing = noise 추가** (V374)
-7. **Bagging + CV ranking + Meta C tuning이 유일한 개선 경로**
-8. **V368이 OOF 0.60492로 가장 낮은 수치는 기록**
-9. **0.5점대 진입은 현실적 목표가 아님**
-10. **V339 LB 0.64551 → OOF 추정 금지, LB 검증 필수**
+## V386-V387 실험 결과
+
+### V386 — Multi-Config Cross-Ensemble (실패 ❌)
+- OOF: 0.61318 | Δ vs V308: -0.00917
+- Actual LB: **0.65003** (V308 0.63893 대비 **+0.0111 나쁨**)
+- OOF-LB gap: +0.03685 (V308 +0.01658 대비 2배 이상 큼)
+- Config diversity (15 seeds × 3 configs) → meta overfitting → gap 확대
+- **핵심 교훈**: config diversity 추가도 bagging 없이 OOF-LB gap을 키움
+
+### V387 — V308 + Bagged Ensemble (실패 ❌)
+- Ensemble OOF: 0.62713 | Δ vs V308: **+0.00478 (악화)**
+- Ensemble student: 0.72297 | Δ vs V308: +0.03085 증가
+- Predicted LB: 0.64371 (V308 0.63893 대비 +0.00478 악화)
+- Bagged student avg: 0.754 (V308 0.692 대비 +0.062)
+- Bagging ratio 0.6 + feature sampling이 student calibration 파괴
+- **핵심 교훈**: V308과 bagging을 평균해도 bagging의 높은 student가 ensemble을 dragging
+
+## V386-V387 핵심 교훈 요약
+1. **Bagging 없는 multi-config ensemble도 gap 키움** (V386)
+2. **Bagging + V308 average도 bagging student가 ensemble dragging** (V387)
+3. **Student calibration이 가장 중요한 bottleneck**
+4. **OOF-LB gap을 줄이려면 bagging 없이 student 낮추는 방향**
+5. **V308이 이미 local optimum일 가능성 높음**
 
 ## 현재 BEST
 - **LB 기준**: V308 (0.63893, 제출 완료) ⭐
