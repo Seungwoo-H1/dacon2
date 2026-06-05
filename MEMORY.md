@@ -234,6 +234,16 @@
 - V391 student avg 0.745 → 실제 LB 0.65+ 될 가능성 매우 높음
 - fewer seeds + diverse hyperparams → calibration 파괴
 
+## V392 — Per-Target Meta C Optimization (유망 ⚠️)
+- AVG meta OOF: 0.61672 | Δ vs V308: **-0.00563** (개선)
+- AVG student: 0.69212 | Δ vs V308: **0.00000** (완벽 동일)
+- Predicted LB: 0.63330 (V308 0.63893 대비 **-0.00563**)
+- Best C: Q targets C=10 (V308 동일), S targets C=100 (V308 대비 10배)
+- S3이 가장 큰 개선: meta 0.59115 (Δ -0.01879)
+- Student avg 동일 → gap 유사 → V339 패턴 피할 수 있음
+- ⚠️ OOF 0.617는 V339 0.612보다 높지만 gap 검증 필요
+- **제출 파일**: `submission_v392_per_target_meta_c_20260605_004813.csv`
+
 ## 현재 BEST
 - **LB 기준**: V308 (0.63893, 제출 완료) ⭐
 - **Pending LB**: V368 (OOF 0.60492), V365 (OOF 0.60089), V364 (OOF 0.60641)
