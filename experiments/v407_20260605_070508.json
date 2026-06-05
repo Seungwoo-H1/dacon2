@@ -1,0 +1,68 @@
+{
+  "version": "V407",
+  "name": "XGB Meta with Early Stopping",
+  "avg_meta_oof": 0.62945,
+  "avg_student_oof": 0.71513,
+  "v308_avg_oof": 0.62235,
+  "v308_avg_student": 0.69212,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_meta": 0.0071,
+  "delta_vs_v308_student": 0.02301,
+  "predicted_lb": 0.64603,
+  "estimated_lb_v339_pattern": 0.66997,
+  "student_meta_gap": 0.08569,
+  "v308_gap": 0.01658,
+  "n_seeds": 15,
+  "meta_type": "xgb_early_stopping",
+  "best_meta_params": {
+    "Q1": {
+      "patience": 5,
+      "iteration": 1
+    },
+    "Q2": {
+      "patience": 5,
+      "iteration": 25
+    },
+    "Q3": {
+      "patience": 5,
+      "iteration": 3
+    },
+    "S1": {
+      "patience": 5,
+      "iteration": 1
+    },
+    "S2": {
+      "patience": 5,
+      "iteration": 1
+    },
+    "S3": {
+      "patience": 15,
+      "iteration": 44
+    },
+    "S4": {
+      "patience": 5,
+      "iteration": 3
+    }
+  },
+  "per_target_meta_oof": {
+    "Q1": 0.68908,
+    "Q2": 0.58079,
+    "Q3": 0.65653,
+    "S1": 0.61655,
+    "S2": 0.64221,
+    "S3": 0.55611,
+    "S4": 0.66484
+  },
+  "per_target_student_oof": {
+    "Q1": 0.82044,
+    "Q2": 0.68256,
+    "Q3": 0.81317,
+    "S1": 0.60998,
+    "S2": 0.74172,
+    "S3": 0.64161,
+    "S4": 0.69644
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v407_xgb_early_stop_20260605_070508.csv",
+  "timestamp": "20260605_070508",
+  "total_time_s": 47.0
+}
