@@ -1,0 +1,40 @@
+{
+  "version": "V393",
+  "name": "Trimmed Mean Ensemble",
+  "v308_avg_oof": 0.62235,
+  "v308_lb": 0.63893,
+  "student_avg_oof": 0.69212,
+  "best_trim_count": 0,
+  "results_by_trim": {
+    "0": {
+      "avg_oof": 0.68374,
+      "delta_vs_v308": 0.06139,
+      "avg_student": 0.68374,
+      "predicted_lb": 0.70032,
+      "beats_v308": false
+    },
+    "1": {
+      "avg_oof": 0.68485,
+      "delta_vs_v308": 0.0625,
+      "avg_student": 0.68485,
+      "predicted_lb": 0.70143,
+      "beats_v308": false
+    },
+    "2": {
+      "avg_oof": 0.68552,
+      "delta_vs_v308": 0.06317,
+      "avg_student": 0.68552,
+      "predicted_lb": 0.7021,
+      "beats_v308": false
+    },
+    "3": {
+      "avg_oof": 0.68637,
+      "delta_vs_v308": 0.06402,
+      "avg_student": 0.68637,
+      "predicted_lb": 0.70295,
+      "beats_v308": false
+    }
+  },
+  "timestamp": "20260605_014453",
+  "total_time_s": 48.0
+}

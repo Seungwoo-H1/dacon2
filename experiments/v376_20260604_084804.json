@@ -1,0 +1,40 @@
+{
+  "version": "V376",
+  "name": "30 Seeds Stacking (C=500)",
+  "avg_oof": 0.59512,
+  "n_features_total": 282,
+  "n_base_features": 141,
+  "n_zscore_features": 141,
+  "n_seeds": 30,
+  "meta_c": 500,
+  "v308_avg_oof": 0.62235,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_oof": -0.02723,
+  "predicted_lb_gap_v308": 0.6117,
+  "predicted_lb_scaled": 0.61169,
+  "beats_v308_scaled": true,
+  "student_avg_oof": 0.69193,
+  "v308_student_avg": 0.69212,
+  "student_avg_delta": -0.00019,
+  "per_target_oof": {
+    "Q1": 0.64482,
+    "Q2": 0.60043,
+    "Q3": 0.60329,
+    "S1": 0.54822,
+    "S2": 0.58597,
+    "S3": 0.57402,
+    "S4": 0.60907
+  },
+  "v308_per_target_oof": {
+    "Q1": 0.67096,
+    "Q2": 0.62299,
+    "Q3": 0.61939,
+    "S1": 0.57915,
+    "S2": 0.61564,
+    "S3": 0.60994,
+    "S4": 0.63839
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v376_30seeds_c500_20260604_084804.csv",
+  "timestamp": "20260604_084804",
+  "total_time_s": 96.0
+}

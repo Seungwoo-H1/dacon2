@@ -1,0 +1,45 @@
+{
+  "version": "V395",
+  "name": "Per-Target Meta C + Strong LGBM Regularization",
+  "avg_meta_oof": 0.63271,
+  "avg_student_oof": 0.66021,
+  "v308_avg_oof": 0.62235,
+  "v308_avg_student": 0.69212,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_meta": 0.01036,
+  "delta_vs_v308_student": -0.03191,
+  "predicted_lb": 0.64929,
+  "student_meta_gap": 0.0275,
+  "v308_gap": 0.01658,
+  "n_seeds": 15,
+  "meta_c_per_target": {
+    "Q1": 10.0,
+    "Q2": 10.0,
+    "Q3": 10.0,
+    "S1": 100.0,
+    "S2": 100.0,
+    "S3": 100.0,
+    "S4": 100.0
+  },
+  "per_target_meta_oof": {
+    "Q1": 0.68011,
+    "Q2": 0.63021,
+    "Q3": 0.63061,
+    "S1": 0.59069,
+    "S2": 0.61544,
+    "S3": 0.62584,
+    "S4": 0.65608
+  },
+  "per_target_student_oof": {
+    "Q1": 0.73162,
+    "Q2": 0.64504,
+    "Q3": 0.66795,
+    "S1": 0.60253,
+    "S2": 0.65044,
+    "S3": 0.6477,
+    "S4": 0.67616
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v395_per_target_meta_c_strong_reg_20260605_051049.csv",
+  "timestamp": "20260605_051049",
+  "total_time_s": 32.0
+}

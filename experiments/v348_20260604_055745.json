@@ -1,0 +1,33 @@
+{
+  "version": "V348",
+  "name": "Domain-Aggregate Features",
+  "avg_oof": 0.62358,
+  "avg_student_oof": 0.6907,
+  "n_features_total": 165,
+  "n_domain_aggs": 22,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "delta_vs_v308": 0.00123,
+  "delta_vs_v339": 0.01114,
+  "per_target_oof": {
+    "Q1": 0.66997,
+    "Q2": 0.61511,
+    "Q3": 0.64124,
+    "S1": 0.57269,
+    "S2": 0.61535,
+    "S3": 0.60652,
+    "S4": 0.64414
+  },
+  "per_target_student_oof": {
+    "Q1": 0.78667,
+    "Q2": 0.67593,
+    "Q3": 0.77178,
+    "S1": 0.58936,
+    "S2": 0.70941,
+    "S3": 0.61978,
+    "S4": 0.68198
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v348_domain_agg_20260604_055745.csv",
+  "timestamp": "20260604_055745",
+  "total_time_s": 49.0
+}

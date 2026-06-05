@@ -1,0 +1,45 @@
+{
+  "version": "V397",
+  "name": "Aggressive Per-Target Meta C",
+  "avg_meta_oof": 0.61924,
+  "avg_student_oof": 0.71513,
+  "v308_avg_oof": 0.62235,
+  "v308_avg_student": 0.69212,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_meta": -0.00311,
+  "delta_vs_v308_student": 0.02301,
+  "predicted_lb": 0.63582,
+  "student_meta_gap": 0.09589,
+  "v308_gap": 0.01658,
+  "n_seeds": 15,
+  "meta_c_per_target": {
+    "Q1": 5.0,
+    "Q2": 5.0,
+    "Q3": 5.0,
+    "S1": 200.0,
+    "S2": 200.0,
+    "S3": 200.0,
+    "S4": 200.0
+  },
+  "per_target_meta_oof": {
+    "Q1": 0.65936,
+    "Q2": 0.6276,
+    "Q3": 0.6353,
+    "S1": 0.55935,
+    "S2": 0.6181,
+    "S3": 0.59618,
+    "S4": 0.63878
+  },
+  "per_target_student_oof": {
+    "Q1": 0.82044,
+    "Q2": 0.68256,
+    "Q3": 0.81317,
+    "S1": 0.60998,
+    "S2": 0.74172,
+    "S3": 0.64161,
+    "S4": 0.69644
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v397_aggressive_per_target_c_20260605_051714.csv",
+  "timestamp": "20260605_051714",
+  "total_time_s": 47.0
+}

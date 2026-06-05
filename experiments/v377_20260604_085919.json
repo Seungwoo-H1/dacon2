@@ -1,0 +1,33 @@
+{
+  "version": "V377",
+  "name": "Per-Target Isolated Pipeline",
+  "avg_oof": 0.6698,
+  "n_features_total": 282,
+  "v308_avg_oof": 0.62235,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_oof": 0.04745,
+  "predicted_lb": 0.68638,
+  "beats_v308": false,
+  "student_avg_oof": 0.68436,
+  "per_target_oof": {
+    "Q1": 0.7427,
+    "Q2": 0.65969,
+    "Q3": 0.70576,
+    "S1": 0.59611,
+    "S2": 0.69199,
+    "S3": 0.6223,
+    "S4": 0.67003
+  },
+  "v308_per_target_oof": {
+    "Q1": 0.67096,
+    "Q2": 0.62299,
+    "Q3": 0.61939,
+    "S1": 0.57915,
+    "S2": 0.61564,
+    "S3": 0.60994,
+    "S4": 0.63839
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v377_per_target_isolated_20260604_085919.csv",
+  "timestamp": "20260604_085919",
+  "total_time_s": 38.0
+}

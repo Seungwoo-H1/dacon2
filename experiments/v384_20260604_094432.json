@@ -1,0 +1,31 @@
+{
+  "version": "V384",
+  "name": "Student Calibration (none)",
+  "best_method": "none",
+  "avg_oof": 0.62235,
+  "v308_avg_oof": 0.62235,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_oof": 0.0,
+  "predicted_lb": 0.63893,
+  "beats_v308": false,
+  "student_avg_oof": 0.69212,
+  "method_results": {
+    "none": {
+      "avg_meta_oof": 0.62235,
+      "avg_student": 0.69212,
+      "predicted_lb": 0.63893
+    },
+    "isotonic": {
+      "avg_meta_oof": 0.62235,
+      "avg_student": 0.69212,
+      "predicted_lb": 0.63893
+    },
+    "sigmoid": {
+      "avg_meta_oof": 0.62235,
+      "avg_student": 0.69212,
+      "predicted_lb": 0.63893
+    }
+  },
+  "timestamp": "20260604_094432",
+  "total_time_s": 183.0
+}

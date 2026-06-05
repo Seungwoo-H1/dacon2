@@ -1,0 +1,23 @@
+{
+  "version": "V378",
+  "name": "Multi-Task Feature Ranking",
+  "avg_oof": 0.62235,
+  "v308_avg_oof": 0.62235,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_oof": 0.0,
+  "predicted_lb": 0.63893,
+  "beats_v308": false,
+  "student_avg_oof": 0.69212,
+  "per_target_oof": {
+    "Q1": 0.67096,
+    "Q2": 0.62299,
+    "Q3": 0.61939,
+    "S1": 0.57915,
+    "S2": 0.61564,
+    "S3": 0.60994,
+    "S4": 0.63839
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v378_multi_task_ranking_20260604_090525.csv",
+  "timestamp": "20260604_090525",
+  "total_time_s": 81.0
+}

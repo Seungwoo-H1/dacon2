@@ -1,0 +1,32 @@
+{
+  "version": "V342b",
+  "name": "Per-Target Pruned Domains (top6)",
+  "sweep_used": "top6",
+  "avg_oof": 0.63009,
+  "avg_student_oof": 0.70314,
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "delta_vs_v308": 0.00774,
+  "delta_vs_v341": 0.01184,
+  "per_target_oof": {
+    "Q1": 0.65475,
+    "Q2": 0.64554,
+    "Q3": 0.62431,
+    "S1": 0.59823,
+    "S2": 0.6157,
+    "S3": 0.62508,
+    "S4": 0.647
+  },
+  "per_target_student_oof": {
+    "Q1": 0.72362,
+    "Q2": 0.77102,
+    "Q3": 0.70732,
+    "S1": 0.64202,
+    "S2": 0.6987,
+    "S3": 0.64689,
+    "S4": 0.73243
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v342b_top6_20260604_043803.csv",
+  "timestamp": "20260604_043803",
+  "total_time_s": 92.0
+}

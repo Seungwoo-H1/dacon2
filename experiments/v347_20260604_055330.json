@@ -1,0 +1,87 @@
+{
+  "version": "V347",
+  "name": "Cross-Target OOF (Best: Strategy A)",
+  "avg_oof": 0.61186,
+  "best_strategy": "A",
+  "avg_oof_A": 0.61186,
+  "avg_oof_B": 0.62261,
+  "avg_oof_D": 0.62042,
+  "cross_targets_map": {
+    "Q1": [
+      "S1",
+      "Q2"
+    ],
+    "Q2": [
+      "Q3",
+      "Q1"
+    ],
+    "Q3": [
+      "Q2",
+      "Q1"
+    ],
+    "S1": [
+      "S2",
+      "Q1"
+    ],
+    "S2": [
+      "S4",
+      "S3"
+    ],
+    "S3": [
+      "S2",
+      "Q1"
+    ],
+    "S4": [
+      "S2",
+      "S1"
+    ]
+  },
+  "cross_strict_map": {
+    "Q1": [
+      "S1"
+    ],
+    "Q2": [
+      "Q3"
+    ],
+    "Q3": [
+      "Q2"
+    ],
+    "S1": [
+      "S2",
+      "Q1"
+    ],
+    "S2": [
+      "S4",
+      "S3"
+    ],
+    "S3": [
+      "S2"
+    ],
+    "S4": [
+      "S2"
+    ]
+  },
+  "per_target_oof": {
+    "Q1": 0.64866,
+    "Q2": 0.60228,
+    "Q3": 0.63154,
+    "S1": 0.5782,
+    "S2": 0.58487,
+    "S3": 0.60754,
+    "S4": 0.6299
+  },
+  "per_target_student_oof": {
+    "Q1": 0.66639,
+    "Q2": 0.66728,
+    "Q3": 0.74148,
+    "S1": 0.60033,
+    "S2": 0.62032,
+    "S3": 0.61927,
+    "S4": 0.66048
+  },
+  "delta_vs_v339": -0.00058,
+  "delta_vs_v308": -0.01049,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v347_A_20260604_055330.csv",
+  "timestamp": "20260604_055330",
+  "total_time_s": 295.0
+}

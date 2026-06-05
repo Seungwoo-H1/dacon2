@@ -1,0 +1,36 @@
+{
+  "version": "V375",
+  "name": "Gap-Constrained Stacking",
+  "avg_oof": 0.61445,
+  "n_features_total": 282,
+  "n_base_features": 141,
+  "n_zscore_features": 141,
+  "n_seeds": 15,
+  "v308_avg_oof": 0.62235,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_oof": -0.0079,
+  "predicted_lb": 0.63103,
+  "beats_v308": true,
+  "per_target_oof": {
+    "Q1": 0.66814,
+    "Q2": 0.62171,
+    "Q3": 0.61573,
+    "S1": 0.56948,
+    "S2": 0.60741,
+    "S3": 0.58702,
+    "S4": 0.63163
+  },
+  "v308_per_target_oof": {
+    "Q1": 0.67096,
+    "Q2": 0.62299,
+    "Q3": 0.61939,
+    "S1": 0.57915,
+    "S2": 0.61564,
+    "S3": 0.60994,
+    "S4": 0.63839
+  },
+  "student_avg_oof": 0.69212,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v375_gap_constrained_20260604_074811.csv",
+  "timestamp": "20260604_074811",
+  "total_time_s": 49.0
+}

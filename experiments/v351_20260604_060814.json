@@ -1,0 +1,40 @@
+{
+  "version": "V351",
+  "name": "Per-Target Feature Count Optimization",
+  "avg_oof": 0.62806,
+  "avg_student_oof": 0.69273,
+  "v351_sweep": {
+    "Q1": 30,
+    "Q2": 22,
+    "Q3": 18,
+    "S1": 21,
+    "S2": 19,
+    "S3": 23,
+    "S4": 20
+  },
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "delta_vs_v308": 0.00571,
+  "delta_vs_v339": 0.01562,
+  "per_target_oof": {
+    "Q1": 0.67322,
+    "Q2": 0.62331,
+    "Q3": 0.64445,
+    "S1": 0.57252,
+    "S2": 0.62283,
+    "S3": 0.61463,
+    "S4": 0.64547
+  },
+  "per_target_student_oof": {
+    "Q1": 0.76216,
+    "Q2": 0.69089,
+    "Q3": 0.7377,
+    "S1": 0.6052,
+    "S2": 0.72012,
+    "S3": 0.64093,
+    "S4": 0.69209
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v351_featcount_20260604_060814.csv",
+  "timestamp": "20260604_060814",
+  "total_time_s": 54.0
+}

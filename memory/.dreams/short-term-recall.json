@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-02T04:42:03.544Z",
+  "updatedAt": "2026-06-04T07:24:06.571Z",
   "entries": {
     "memory:memory/2026-05-01.md:1:32": {
       "key": "memory:memory/2026-05-01.md:1:32",
@@ -722,6 +722,68 @@
         "features.parquet",
         "features-clean-v60",
         "per-target"
+      ]
+    },
+    "memory:memory/2026-05-14.md:1:30": {
+      "key": "memory:memory/2026-05-14.md:1:30",
+      "path": "memory/2026-05-14.md",
+      "startLine": 1,
+      "endLine": 30,
+      "source": "memory",
+      "snippet": "## 2026-05-14 (Afternoon) ### V265 Root-Cause Analysis - **Completed**: Comprehensive analysis of OOF/LB mismatch - **Key finding**: Gap ≈ 0.11 is STRUCTURAL (train-test drift), not validation error - **OOF verified as truly out-of-fold** (each row predicted exactly once) - **V127 undisputed best** (LB=0.648, OOF=0.537) — no hidden strong candidate - **V45/V46 confirmed leaked** (100%/99.6% accuracy) - **S1 target has highest fold variance** (std=0.111) - **Ensemble diversity LOW** (avg correlation 0.785) - **Best gap model**: OOF + 0.105 ### V266 Temperature Scaling - Created V127 with temperature scaling T=0.86 - OOF improvement: 0.53731 → 0.53517 (Δ=-0.00214) - Est LB improvement: 0.64",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-06-04T07:24:06.571Z",
+      "lastRecalledAt": "2026-06-04T07:24:06.571Z",
+      "queryHashes": [
+        "c605e439a5da"
+      ],
+      "recallDays": [
+        "2026-06-04"
+      ],
+      "conceptTags": [
+        "root-cause",
+        "oof/lb",
+        "0.11",
+        "train-test",
+        "out-of-fold",
+        "0.648",
+        "0.537",
+        "v45/v46"
+      ]
+    },
+    "memory:memory/2026-05-05.md:24:39": {
+      "key": "memory:memory/2026-05-05.md:24:39",
+      "path": "memory/2026-05-05.md",
+      "startLine": 24,
+      "endLine": 39,
+      "source": "memory",
+      "snippet": "| S3 | 0.5835 | 0.5993 | -0.0158 | | S4 | 0.6240 | 0.6199 | +0.0041 | | **Avg** | **0.6038** | **0.6144** | **-0.0106** | ### 결론 V10이 가장 좋음. V35~V40은 복잡도 증가만 했을 뿐 성능 개선 없음. ### 향후 방향 1. 피처 엔지니어링 개선 (`02_feature_engineering.py`) 2. 정규화 파라미터 tuning (`reg_alpha`, `reg_lambda`) 3. V10 submission으로 최종 제출 ### Git Push - 분석 문서: `docs/v35_v40_analysis.md` 커밋 & 푸시 완료 - V10 submission: `submissions/submission_v10_20260501_170715.csv`",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-06-04T07:24:06.571Z",
+      "lastRecalledAt": "2026-06-04T07:24:06.571Z",
+      "queryHashes": [
+        "c605e439a5da"
+      ],
+      "recallDays": [
+        "2026-06-04"
+      ],
+      "conceptTags": [
+        "0.5835",
+        "0.5993",
+        "0.0158",
+        "0.6240",
+        "0.6199",
+        "0.0041",
+        "0.6038",
+        "0.6144"
       ]
     }
   }

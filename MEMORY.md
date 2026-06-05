@@ -338,6 +338,55 @@
 - **교훈**: V308이 이미 잘 calibrated. post-hoc calibration 추가 효과 없음
 - Calibration은 model architecture 차원에서 접근해야 함 (LGBM objective 변경 등)
 
+## V394 — Per-Target Meta C + Feature Bagging (실패 ❌)
+- Meta OOF: 0.61372 | Δ vs V308: **-0.00863** (개선)
+- Student OOF: 0.75048 | Δ vs V308: **+0.05836** (폭망 🔥)
+- Student-Meta Gap: 0.137 (V308: 0.070, **2배**)
+- Predicted LB: 0.63030 (V308 0.63893 대비 -0.00863)
+- **실패**: feature bagging (ratio=0.7)이 student calibration 파괴
+- V380/V387와 동일한 패턴: bagging → student avg 폭주
+- **교훈**: feature bagging은 무조건 student inflation 유발.
+
+## V395 — Per-Target Meta C + Strong LGBM Reg (실패 ❌)
+- Meta OOF: 0.63271 | Δ vs V308: **+0.01036** (악화)
+- Student OOF: 0.66021 | Δ vs V308: **-0.03191** (개선)
+- Student-Meta Gap: 0.0275 (V308 0.070, **0.4배** — gap 작음)
+- Predicted LB: 0.64929 (V308 0.63893 대비 +0.01036 악화)
+- **실패**: over-regularization → meta 성능 저하. student 낮췄지만 meta가 더 나빠짐.
+- **교훈**: strong regularization은 student↓ meta↑ trade-off 불균형.
+
+## V396 — Per-Target Meta C + 30 Seeds (리스크 높음 ⚠️)
+- Meta OOF: 0.59896 | Δ vs V308: **-0.02339** (큰 개선)
+- Student OOF: 0.71583 | Δ vs V308: **+0.02371** (상승)
+- Student-Meta Gap: 0.117 (V308 0.070, **1.7배**)
+- Predicted LB: 0.61554 (V308 0.63893 대비 -0.023)
+- ⚠️ OOF는 크지만 student↑ + gap↑ → V339 패턴(0.612→0.645)과 유사
+- V339 교훈: OOF 0.612 → LB 0.645 (+0.033 gap). V396은 OOF 0.599 → gap 더 클 수 있음
+- **제출 안 함**: gap 검증 필요 but 리스크 매우 높음.
+
+## V395 — Per-Target Meta C + Strong LGBM Reg (실패 ❌)
+- Meta OOF: 0.63271 | Δ vs V308: **+0.01036** (악화)
+- Student OOF: 0.66021 | Δ vs V308: **-0.03191** (개선)
+- Student-Meta Gap: 0.0275 (V308 0.070, **0.4배**) — gap은 작지만 meta가 더 나빠짐
+- Predicted LB: 0.64929 (V308 0.63893 대비 +0.01036 **악화**)
+- **교훈**: over-regularization은 student↓ 하지만 meta↑↑ → 전체 LB Worse
+- Student-Meta gap이 작은 게 오히려 단점: meta OOF가 student보다 나빠서
+
+## V396 — Per-Target Meta C + 30 Seeds (리스크 높음 ⚠️)
+- Meta OOF: 0.59896 | Δ vs V308: **-0.02339** (큰 개선)
+- Student OOF: 0.71583 | Δ vs V308: **+0.02371** (상승)
+- Student-Meta Gap: 0.117 (V308 0.070, **1.7배**)
+- Predicted LB: 0.61554 (V308 0.63893 대비 -0.023)
+- ⚠️ V339 패턴(0.612→LB 0.645, +0.033 gap)과 유사 → 실제 LB 0.65+ 될 수 있음
+- **제출 안 함**: gap 검증 필요 but 리스크 매우 높음
+
+## V397 — Aggressive Per-Target Meta C (실패 ❌)
+- Meta OOF: 0.61924 | Δ vs V308: **-0.00311** (미미)
+- Student OOF: 0.71513 | Δ vs V308: **+0.02301** (상승)
+- Predicted LB: 0.63582 (V308 0.63893 대비 -0.00311)
+- V392 (Q→10, S→100)보다 Worse
+- **교훈**: V392의 C=10/100이 per-target meta C의 optimal. 더 extreme하면 student만 올라감
+
 ## Silent Replies
 When you have nothing to say, respond with ONLY: NO_REPLY
 ⚠️ Rules:

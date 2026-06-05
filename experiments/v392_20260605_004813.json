@@ -1,0 +1,67 @@
+{
+  "version": "V392",
+  "name": "Per-Target Meta C Optimization",
+  "avg_meta_oof": 0.61672,
+  "avg_equal_oof": 0.68374,
+  "v308_avg_oof": 0.62235,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_meta": -0.00563,
+  "predicted_lb_meta": 0.6333,
+  "meta_beats_v308": true,
+  "student_avg_oof": 0.69212,
+  "best_meta_Cs": {
+    "Q1": 10.0,
+    "Q2": 10.0,
+    "Q3": 10.0,
+    "S1": 100.0,
+    "S2": 100.0,
+    "S3": 100.0,
+    "S4": 100.0
+  },
+  "per_target": {
+    "Q1": {
+      "meta_oof": 0.67096,
+      "equal_avg_oof": 0.76786,
+      "student_avg": 0.78413,
+      "best_meta_C": 10.0
+    },
+    "Q2": {
+      "meta_oof": 0.62299,
+      "equal_avg_oof": 0.69114,
+      "student_avg": 0.70165,
+      "best_meta_C": 10.0
+    },
+    "Q3": {
+      "meta_oof": 0.61939,
+      "equal_avg_oof": 0.72579,
+      "student_avg": 0.74313,
+      "best_meta_C": 10.0
+    },
+    "S1": {
+      "meta_oof": 0.56932,
+      "equal_avg_oof": 0.59748,
+      "student_avg": 0.59927,
+      "best_meta_C": 100.0
+    },
+    "S2": {
+      "meta_oof": 0.61029,
+      "equal_avg_oof": 0.707,
+      "student_avg": 0.71311,
+      "best_meta_C": 100.0
+    },
+    "S3": {
+      "meta_oof": 0.59115,
+      "equal_avg_oof": 0.62594,
+      "student_avg": 0.62649,
+      "best_meta_C": 100.0
+    },
+    "S4": {
+      "meta_oof": 0.63295,
+      "equal_avg_oof": 0.67099,
+      "student_avg": 0.67703,
+      "best_meta_C": 100.0
+    }
+  },
+  "timestamp": "20260605_004813",
+  "total_time_s": 47.0
+}

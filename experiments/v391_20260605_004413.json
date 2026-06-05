@@ -1,0 +1,55 @@
+{
+  "version": "V391",
+  "name": "Hyperparameter Diversity Seeds (5 diverse configs)",
+  "avg_meta_oof": 0.62145,
+  "avg_equal_oof": 0.65147,
+  "v308_avg_oof": 0.62235,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_meta": -0.0009,
+  "delta_vs_v308_equal": 0.02912,
+  "predicted_lb_meta": 0.63803,
+  "predicted_lb_equal": 0.66805,
+  "meta_beats_v308": true,
+  "equal_beats_v308": false,
+  "student_avg_oof": 0.74465,
+  "n_seeds": 5,
+  "per_target": {
+    "Q1": {
+      "meta_oof": 0.67381,
+      "equal_avg_oof": 0.6978,
+      "student_avg": 0.76845
+    },
+    "Q2": {
+      "meta_oof": 0.61744,
+      "equal_avg_oof": 0.64432,
+      "student_avg": 0.74058
+    },
+    "Q3": {
+      "meta_oof": 0.62456,
+      "equal_avg_oof": 0.63537,
+      "student_avg": 0.72466
+    },
+    "S1": {
+      "meta_oof": 0.57277,
+      "equal_avg_oof": 0.60679,
+      "student_avg": 0.70031
+    },
+    "S2": {
+      "meta_oof": 0.63242,
+      "equal_avg_oof": 0.64934,
+      "student_avg": 0.70338
+    },
+    "S3": {
+      "meta_oof": 0.59594,
+      "equal_avg_oof": 0.66177,
+      "student_avg": 0.80412
+    },
+    "S4": {
+      "meta_oof": 0.63321,
+      "equal_avg_oof": 0.66491,
+      "student_avg": 0.77109
+    }
+  },
+  "timestamp": "20260605_004413",
+  "total_time_s": 16.0
+}
