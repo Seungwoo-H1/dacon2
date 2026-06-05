@@ -20,6 +20,16 @@
 
 ## ⭐ 현재 BEST (실제 제출 확인됨)
 
+### V411 — LGBM Seed Hyperparameter Tuning (2026-06-05) ⭐⭐ NEW BEST
+- **Q1: medium, Q2: medium, Q3: aggressive, S1: wide, S2: medium, S3: safety, S4: medium**
+- Meta OOF: **0.60622** | Δ vs V308: **-0.016**
+- **Student OOF: 0.65388** | Δ vs V308: **-0.038**
+- Gap: **0.048** (V308 0.070, 0.7배)
+- V339 패턴 LB: **0.62876** (V308 -0.010)
+- Predicted LB: **0.62280**
+- ✅ 제출 파일: `submission_v411_lgb_tuning_20260605_073002.csv`
+- **핵심**: per-target LGBM seed hyperparameter tuning이 Student OOF를 0.692→0.654로 개선
+
 ### V308 — Z-Score Enriched Stacking (제출 완료 — 2026-06-02) ⭐
 - OOF: 0.62235 | Δ vs V146: **-0.00934**
 - **Actual LB: 0.63893**
