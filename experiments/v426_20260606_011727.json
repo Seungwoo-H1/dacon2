@@ -1,0 +1,52 @@
+{
+  "version": "V426",
+  "name": "Per-Person Z-Score Features + Baseline Blend",
+  "train_shape": [
+    450,
+    294
+  ],
+  "test_shape": [
+    250,
+    287
+  ],
+  "base_features": 141,
+  "zscore_features": 141,
+  "avg_final_oof": 0.60312,
+  "avg_baseline_oof": 0.59363,
+  "delta": 0.00949,
+  "best_feature_set": "base_only",
+  "feature_comparison": {
+    "base_only": {
+      "avg_model": 0.67791,
+      "avg_baseline": 0.59363,
+      "delta": 0.08428
+    },
+    "zscore_only": {
+      "avg_model": 0.67791,
+      "avg_baseline": 0.59363,
+      "delta": 0.08428
+    },
+    "base+zscore": {
+      "avg_model": 0.67791,
+      "avg_baseline": 0.59363,
+      "delta": 0.08428
+    },
+    "all": {
+      "avg_model": 0.67791,
+      "avg_baseline": 0.59363,
+      "delta": 0.08428
+    }
+  },
+  "per_target_final_oof": {
+    "Q1": 0.64505,
+    "Q2": 0.64987,
+    "Q3": 0.64583,
+    "S1": 0.56169,
+    "S2": 0.56265,
+    "S3": 0.52833,
+    "S4": 0.62844
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v426_zscore_baseline_blend_20260606_011727.csv",
+  "timestamp": "20260606_011727",
+  "total_time_s": 2.0
+}

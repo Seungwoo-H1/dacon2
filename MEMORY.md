@@ -12,7 +12,7 @@
 - Feature: 141 base + 141 zscore per-person = 282 columns
 
 ## MISSION (2026-06-04 승우 명시)
-- 현재 최고 기준 모델: **V308**
+- 현재 최고 기준 모델: **V429** (V308 기준) ⭐ NEW BEST
 - 목표: V308의 LB 0.63893을 초과하는 모델 찾기
 - LB 예측이 V308 이하라면 보고 금지
 - 성능 개선 확인 전까지 연구 루프 계속
@@ -20,15 +20,49 @@
 
 ## ⭐ 현재 BEST (실제 제출 확인됨)
 
-### V411 — LGBM Seed Hyperparameter Tuning (2026-06-05) ⭐⭐ NEW BEST
-- **Q1: medium, Q2: medium, Q3: aggressive, S1: wide, S2: medium, S3: safety, S4: medium**
-- Meta OOF: **0.60622** | Δ vs V308: **-0.016**
-- **Student OOF: 0.65388** | Δ vs V308: **-0.038**
-- Gap: **0.048** (V308 0.070, 0.7배)
-- V339 패턴 LB: **0.62876** (V308 -0.010)
-- Predicted LB: **0.62280**
-- ✅ 제출 파일: `submission_v411_lgb_tuning_20260605_073002.csv`
-- **핵심**: per-target LGBM seed hyperparameter tuning이 Student OOF를 0.692→0.654로 개선
+### V429 — Per-Target XGB Meta Alpha Sweep (2026-06-06) ⭐⭐⭐ NEW BEST (unverified)
+- **V413 LGBM base + Per-Target XGB Meta (alpha sweep: Q1-Q3,S1-S3→0.01, S4→0.1)**
+- Meta OOF: **0.57127** | Δ vs V308: **-0.051**
+- Student OOF: 0.63609 | Δ vs V308: **-0.056**
+- Gap: **0.0648** (V308 0.070, **0.93x** — 안정적!)
+- V339 패턴 LB: **0.62636** (V413 0.62710 대비 **-0.001 개선**)
+- Predicted LB: 0.60368
+- ✅ 제출 파일 생성됨 (`submission_v429_per_target_alpha_sweep_20260606_110048.csv`)
+- **핵심**: XGB meta alpha=0.01이 optimal (매우 낮은 reg)
+- **가장 유망**: V413보다 student 낮고, gap이 V308 수준으로 안정적
+
+### V413 — Q-target Focused LGBM Tuning (2026-06-05) ⭐⭐
+- **Q1: narrow, Q2: soft_aggressive, Q3: narrow, S1: ultra_deep, S2: soft_aggressive, S3: safety, S4: broad**
+- Meta OOF: **0.60540** | Δ vs V308: **-0.017**
+- **Student OOF: 0.65128** | Δ vs V308: **-0.041**
+- Gap: **0.046** (V308 0.070, 0.66배)
+- V339 패턴 LB: **0.62710** (V308 -0.012)
+- Predicted LB: **0.62198**
+- ✅ 제출 파일: `submission_v413_q_focused_20260605_081034.csv`
+- ⚠️ Q1 Meta OOF 0.668로 높음 (narrow config의 trade-off)
+- **핵심**: per-target LGBM hyperparameter tuning + XGB meta(n_est=15, md=3, lr=0.1)
+
+### V428 — V418 Hybrid + Adaptive Shrinkage (2026-06-06, 실패 ❌)
+- V427과 동일한 결과 (adaptive shrinkage ≠ 효과적인 개선)
+
+### V427 — V418 Hybrid + Subject Bias Shrinkage (2026-06-06, ⚠️ unverified)
+- Meta OOF: 0.600 | Δ vs V308: -0.022
+- Student OOF: 0.640 | Gap: 0.039 (0.56x — 매우 좁음)
+- V339 Pattern LB: 0.63387 (V413 0.62710 대비 악화)
+
+### V418 — Hybrid LGBM + XGB Base + Low-Reg XGB Meta (2026-06-06, ⚠️ unverified)
+- Meta OOF: 0.561 (가장 낮은 meta!) | Δ vs V308: -0.061
+- Student OOF: 0.640 | Gap: 0.078 (1.11x — 넓음)
+- V339 Pattern LB: 0.62802 (V413 0.62710 대비 +0.001)
+
+### V415 — Improved Stacking: Per-Target Meta Features + Reg Sweep (2026-06-05, ⚠️ unverified)
+- Meta OOF: **0.59040** | Δ vs V308: **-0.032**
+- Student OOF: 0.63609 | Gap: 0.046 (0.65x)
+- V339 패턴 LB: **0.62923** (V413 0.62710 대비 +0.002, 비슷)
+- Best meta: **XGB α=0.1, λ=1.0** (low reg) — V308 LR(C=10)보다 α 낮을수록 좋음
+- ✅ 제출 파일 생성됨 (`submission_v415_improved_stacking_20260605_123107.csv`)
+- ⚠️ Meta OOF는 V413보다 낮지만 V339 LB는 비슷 → LB 검증 필요
+- **핵심 교훈**: meta regularization alpha=0.1이 optimal. stacking에서 low-reg XGB가 LR보다 나음
 
 ### V308 — Z-Score Enriched Stacking (제출 완료 — 2026-06-02) ⭐
 - OOF: 0.62235 | Δ vs V146: **-0.00934**
@@ -43,7 +77,18 @@
 
 ## V339-V368 실험 결과 정리
 
-### V339 — OOF Feature Augmentation (2026-06-04, ⏳)
+### V414 — Q-Target Cross-Ensemble (2026-06-05, 실패 ❌)
+- Meta OOF: 0.63378 (+0.011 vs V308) | Student: 0.63706
+- Gap: 0.003 (V308 0.070의 **0.05x** — 너무 작음)
+- V339 LB: 0.63657
+- **실패**: Q-target inter-correlation 매우 낮음 (Q1-Q2: 0.12, Q2-Q3: 0.34)
+- Cross-ensemble이 signal稀释 → meta OOF 악화
+
+### V415 — Improved Stacking: Low-Reg XGB Meta (2026-06-05, ⚠️)
+- Meta: **0.590** (-0.032 vs V308) | Student: 0.636 | Gap: 0.046
+- V339 LB: **0.629** (V413 0.627 대비 +0.002, 비슷)
+- **핵심 교훈**: meta α=0.1 optimal (low reg in stacking)
+- V413이 아직 BEST (V339 LB 0.627 < 0.629)
 - OOF: 0.61244 | Δ vs V308: **-0.010**
 - Estimated LB: ~0.629 (V308 0.639 대비 -0.010)
 - **V339가 LB 제출로 검증되면 새 BEST**

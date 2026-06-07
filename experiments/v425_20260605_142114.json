@@ -1,0 +1,40 @@
+{
+  "version": "V425",
+  "name": "Pure Baseline with Calibration",
+  "avg_baseline_oof": 0.59363,
+  "avg_scaled_oof": 0.59363,
+  "temperatures": {
+    "Q1": 1.0,
+    "Q2": 1.0,
+    "Q3": 1.0,
+    "S1": 1.0,
+    "S2": 1.0,
+    "S3": 1.0,
+    "S4": 1.0
+  },
+  "baseline_oofs": {
+    "Q1": 0.63725,
+    "Q2": 0.6445,
+    "Q3": 0.64174,
+    "S1": 0.55193,
+    "S2": 0.55052,
+    "S3": 0.50979,
+    "S4": 0.61969
+  },
+  "scaled_oofs": {
+    "Q1": 0.63725,
+    "Q2": 0.6445,
+    "Q3": 0.64174,
+    "S1": 0.55193,
+    "S2": 0.55052,
+    "S3": 0.50979,
+    "S4": 0.61969
+  },
+  "submission_files": [
+    "/home/mwoo423/.openclaw/workspace/submissions/submission_v425_baseline_20260605_142114.csv",
+    "/home/mwoo423/.openclaw/workspace/submissions/submission_v425_baseline_Tcal_20260605_142114.csv",
+    "/home/mwoo423/.openclaw/workspace/submissions/submission_v425_baseline_shrink_20260605_142114.csv"
+  ],
+  "timestamp": "20260605_142114",
+  "total_time_s": 0.0
+}

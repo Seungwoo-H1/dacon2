@@ -1,0 +1,51 @@
+{
+  "version": "V418",
+  "name": "Hybrid LGBM + XGB Base + Low-Reg XGB Meta",
+  "avg_meta_oof": 0.56132,
+  "avg_student_oof": 0.63979,
+  "v308_avg_oof": 0.62235,
+  "v308_avg_student": 0.69212,
+  "v413_avg_student": 0.65128,
+  "v415_avg_student": 0.63609,
+  "v417_avg_student": 0.63609,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_meta": -0.06103,
+  "delta_vs_v308_student": -0.05233,
+  "delta_vs_v413_student": -0.01149,
+  "predicted_lb": 0.60055,
+  "estimated_lb_v339_pattern": 0.62802,
+  "student_meta_gap": 0.07847,
+  "v308_gap": 0.07,
+  "n_seeds": 15,
+  "meta_type": "xgb_n15_md3_a0.1_l1.0_hybrid_30feat",
+  "best_lgb_cfg": {
+    "Q1": "narrow",
+    "Q2": "soft_aggressive",
+    "Q3": "narrow",
+    "S1": "ultra_deep",
+    "S2": "soft_aggressive",
+    "S3": "safety",
+    "S4": "broad"
+  },
+  "per_target_meta_oof": {
+    "Q1": 0.61267,
+    "Q2": 0.57867,
+    "Q3": 0.57405,
+    "S1": 0.5103,
+    "S2": 0.54559,
+    "S3": 0.52426,
+    "S4": 0.58367
+  },
+  "per_target_student_oof": {
+    "Q1": 0.68974,
+    "Q2": 0.65557,
+    "Q3": 0.64149,
+    "S1": 0.58272,
+    "S2": 0.6256,
+    "S3": 0.62584,
+    "S4": 0.65754
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v418_hybrid_lgbm_xgb_20260605_124247.csv",
+  "timestamp": "20260605_124247",
+  "total_time_s": 112.0
+}

@@ -1,0 +1,51 @@
+{
+  "version": "V414",
+  "name": "Q-Target Cross-Ensemble on V413 Pipeline",
+  "avg_meta_oof": 0.63378,
+  "avg_student_oof": 0.63706,
+  "v308_avg_oof": 0.62235,
+  "v308_avg_student": 0.69212,
+  "v411_avg_student": 0.65388,
+  "v413_avg_student": 0.65128,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_meta": 0.01143,
+  "delta_vs_v308_student": -0.05506,
+  "delta_vs_v411_student": -0.01682,
+  "delta_vs_v413_student": -0.01422,
+  "predicted_lb": 0.63542,
+  "estimated_lb_v339_pattern": 0.63657,
+  "student_meta_gap": 0.00328,
+  "v308_gap": 0.07,
+  "n_seeds": 15,
+  "meta_type": "xgb_15_md3_lr0.1",
+  "best_lgb_cfg": {
+    "Q1": "narrow",
+    "Q2": "soft_aggressive",
+    "Q3": "narrow",
+    "S1": "ultra_deep",
+    "S2": "soft_aggressive",
+    "S3": "safety",
+    "S4": "broad"
+  },
+  "per_target_meta_oof": {
+    "Q1": 0.67162,
+    "Q2": 0.66618,
+    "Q3": 0.66286,
+    "S1": 0.57565,
+    "S2": 0.62017,
+    "S3": 0.60376,
+    "S4": 0.6362
+  },
+  "per_target_student_oof": {
+    "Q1": 0.67859,
+    "Q2": 0.63262,
+    "Q3": 0.65284,
+    "S1": 0.58161,
+    "S2": 0.62802,
+    "S3": 0.63958,
+    "S4": 0.64614
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v414_q_cross_ensemble_20260605_122527.csv",
+  "timestamp": "20260605_122527",
+  "total_time_s": 8.0
+}

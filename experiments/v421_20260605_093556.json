@@ -1,0 +1,23 @@
+{
+  "version": "V421",
+  "name": "LOO-date-mean + Rolling Date Mean + V308 z-score",
+  "avg_oof": 0.51726,
+  "delta_vs_v420": -0.00259,
+  "delta_vs_v308": -0.10509,
+  "per_target_oof": {
+    "Q1": 0.54204,
+    "Q2": 0.50949,
+    "Q3": 0.56015,
+    "S1": 0.47482,
+    "S2": 0.50052,
+    "S3": 0.51737,
+    "S4": 0.51645
+  },
+  "n_features": 333,
+  "n_base": 163,
+  "use_loodate": true,
+  "use_rolling_date": true,
+  "n_seeds": 30,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v421_rolling_loodate_20260605_093556.csv",
+  "timestamp": "20260605_093556"
+}
