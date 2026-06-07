@@ -13,7 +13,7 @@
 
 ## MISSION (2026-06-07 승우 명시)
 - 현재 최고 모델: **V435** (V308 기준) ⭐ NEW BEST (unverified)
-- V308 LB 0.63893을 넘은 모델 찾기
+- 목표: V308의 LB 0.63893을 초과하는 모델 찾기
 - **0.5점대 진입**까지 무한 연구 루프 계속
 - LB 예측이 V308 이하라면 보고 금지
 - 동일 가설 반복 금지, 매 루프 새 가설 필수
@@ -34,7 +34,7 @@
 - **핵심**: subject별 baseline 차분이 student OOF를 0.633으로 낮춤 (V308 0.692 대비 -0.059)
 - Q1 subject_rate_range: [0.251, 0.743] — baseline 변동성이 큼 → 차분 효과 큼
 
-### V435 — Baseline Sub + Stats + Cross-Target (2026-06-07)
+### V435 — Baseline Sub + Stats + Cross-Target (2026-06-07) ⭐ BEST (unverified)
 - **25 features: 15 self + 4 stats + 6 cross-target**
 - Meta OOF: **0.54069** (역대 최저!) | Δ vs V308: **-0.082**
 - Student OOF: 0.63305 (V432와 동일, baseline sub 효과)
