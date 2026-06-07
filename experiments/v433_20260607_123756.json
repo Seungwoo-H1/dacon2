@@ -1,0 +1,38 @@
+{
+  "version": "V433",
+  "name": "Cross-Target Feature Sharing in Meta-Learner",
+  "avg_meta_oof": 0.54933,
+  "avg_student_oof": 0.63609,
+  "v308_avg_oof": 0.62235,
+  "v308_avg_student": 0.69212,
+  "v308_lb": 0.63893,
+  "delta_vs_v308_meta": -0.07302,
+  "delta_vs_v308_student": -0.05603,
+  "predicted_lb": 0.59271,
+  "estimated_lb_v339_pattern": 0.62307,
+  "student_meta_gap": 0.08676,
+  "n_seeds": 15,
+  "meta_type": "xgb_cross_target_21feat",
+  "meta_features": "15_self + 6_cross_target_mean",
+  "per_target_meta_oof": {
+    "Q1": 0.61001,
+    "Q2": 0.56608,
+    "Q3": 0.56869,
+    "S1": 0.49244,
+    "S2": 0.53137,
+    "S3": 0.5019,
+    "S4": 0.5748
+  },
+  "per_target_student_oof": {
+    "Q1": 0.6829,
+    "Q2": 0.63369,
+    "Q3": 0.6469,
+    "S1": 0.58065,
+    "S2": 0.62939,
+    "S3": 0.63365,
+    "S4": 0.6454
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v433_cross_target_20260607_123756.csv",
+  "timestamp": "20260607_123756",
+  "total_time_s": 65.0
+}

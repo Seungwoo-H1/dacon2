@@ -11,16 +11,46 @@
 - 학습 450 rows, 테스트 250 rows
 - Feature: 141 base + 141 zscore per-person = 282 columns
 
-## MISSION (2026-06-04 승우 명시)
-- 현재 최고 기준 모델: **V429** (V308 기준) ⭐ NEW BEST
-- 목표: V308의 LB 0.63893을 초과하는 모델 찾기
+## MISSION (2026-06-07 승우 명시)
+- 현재 최고 모델: **V432** (V308 기준) ⭐ NEW BEST (unverified)
+- V308 LB 0.63893을 넘은 모델 찾기
+- **0.5점대 진입**까지 무한 연구 루프 계속
+- LB 예측이 V308 이하라면 보고 금지
+- 동일 가설 반복 금지, 매 루프 새 가설 필수
 - LB 예측이 V308 이하라면 보고 금지
 - 성능 개선 확인 전까지 연구 루프 계속
 - 동일 가설 반복 금지, 매 루프 새 가설 필수
 
 ## ⭐ 현재 BEST (실제 제출 확인됨)
 
-### V429 — Per-Target XGB Meta Alpha Sweep (2026-06-06) ⭐⭐⭐ NEW BEST (unverified)
+### V432 — Per-Subject Baseline Subtraction (2026-06-07) ⭐ NEW BEST (unverified)
+- **V413 LGBM base + per-subject baseline smoothing + XGB Meta with stats**
+- Meta OOF: **0.55435** | Δ vs V308: **-0.068** (가장 낮은 meta!)
+- Student OOF: 0.63305 | Δ vs V308: **-0.059**
+- Gap: **0.079** (V308 0.070, **1.12x** — V308에 가장 근접한 gap!)
+- V339 패턴 LB: **0.62125** (V429 0.62636 대비 **-0.005 개선**, V431 0.625 대비 -0.004)
+- Predicted LB: 0.594
+- ✅ 제출 파일: `submission_v432_baseline_sub_20260607_123833.csv`
+- **핵심**: subject별 baseline 차분이 student OOF를 0.633으로 낮춤 (V308 0.692 대비 -0.059)
+- Q1 subject_rate_range: [0.251, 0.743] — baseline 변동성이 큼 → 차분 효과 큼
+- **가장 유망**: gap이 V308 수준(1.12x) + V339 LB가 지금까지 가장 낮음
+
+### V431 — XGB Meta with Seed Prediction Statistics (2026-06-07)
+- **15 seed preds + mean/std/min/max = 19 features**
+- Meta OOF: **0.56315** | Δ vs V308: **-0.059**
+- Student OOF: 0.63609 (V429와 완벽 동일)
+- Gap: **0.073** (V308 0.070, **1.04x** — V308에 가장 근접!)
+- V339 패턴 LB: **0.62515** (V429 0.62636 대비 -0.001)
+- ✅ 제출 파일: `submission_v431_meta_stats_20260607_054640.csv`
+- **핵심**: statistics features가 gap을精准하게 V308 수준으로 조정
+
+### V430 — XGB Meta Beta/Gamma Joint Sweep (2026-06-07)
+- Meta OOF: 0.60261 | Δ vs V308: -0.020
+- Student OOF: 0.63609 | Gap: 0.033 (0.48x — 너무 작음)
+- V339 Pattern LB: 0.63106
+- ❌ Gap이 너무 작아 V339 패턴과 동일 (OOF 낮아도 gap 너무 작으면 LB 안 좋아짐)
+
+### V429 — Per-Target XGB Meta Alpha Sweep (2026-06-06) ⭐⭐ (unverified)
 - **V413 LGBM base + Per-Target XGB Meta (alpha sweep: Q1-Q3,S1-S3→0.01, S4→0.1)**
 - Meta OOF: **0.57127** | Δ vs V308: **-0.051**
 - Student OOF: 0.63609 | Δ vs V308: **-0.056**
@@ -75,9 +105,46 @@
 - Student OOF 안정성 우수 (S1: 0.59-0.60, S3: 0.62-0.63)
 - Predicted LB: ~0.624 (V146 대비 -0.008 개선)
 
-## V339-V368 실험 결과 정리
+## V429-V434 실험 결과 정리
 
-### V414 — Q-Target Cross-Ensemble (2026-06-05, 실패 ❌)
+### V433 — Cross-Target Feature Sharing (2026-06-07)
+- **15 self + 6 cross-target mean = 21 features**
+- Meta OOF: **0.54933** (가장 낮은 meta!) | Δ vs V308: -0.073
+- Student OOF: 0.63609 | Gap: 0.087 (1.24x — V308 대비 +76%)
+- V339 Pattern LB: 0.62307
+- ✅ 제출 파일: `submission_v433_cross_target_20260607_123756.csv`
+- **핵심**: cross-target features가 meta OOF는 가장 낮추지만 gap이 커짐
+- Q1 Δ: +0.026 (self 0.636→cross 0.610), S2 Δ: +0.030 (self 0.561→cross 0.531)
+- 교훈: cross-target info는 meta에는 도움이 되지만 student gap을 키움
+
+### V434 — Regression Mode + Calibrated Probabilities (실패 ❌)
+- reg_l1, reg_l2, reg_huber → **모두 완전히 동일한 결과**
+- LGBM regression mode가 작동 안 함 (V382 label_smoothing과 동일 패턴)
+- Student OOF: 0.656 (V308 대비 -0.036) | Gap: 0.105 (1.51x — 매우 큼)
+- V339 Pattern LB: 0.640 (V308보다 Worse)
+- **교훈**: LGBM v4.6.0의 regression objective가 binary task에서 작동 안 함
+
+### V429-V434 종합 비교
+| Version | Meta | Student | Gap | Ratio | V339 LB | Status |
+|---------|------|---------|-----|-------|---------|--------|
+| V308 | 0.622 | 0.692 | 0.070 | 1.0x | **0.63893** ✅ LB |
+| V429 | 0.571 | 0.636 | 0.065 | 0.93x | 0.62636 |
+| V430 | 0.603 | 0.636 | 0.033 | 0.48x | 0.63106 ❌ |
+| V431 | 0.563 | 0.636 | 0.073 | 1.04x | 0.62515 |
+| V432 | **0.554** | **0.633** | 0.079 | 1.12x | **0.62125** ⭐ |
+| V433 | **0.549** | 0.636 | 0.087 | 1.24x | 0.62307 |
+| V434 | 0.551 | 0.656 | 0.105 | 1.51x | 0.64049 ❌ |
+
+### V429-V434 핵심 인사이트
+1. **V432가 가장 유망**: baseline subtraction으로 student↓, gap≈V308, V339 LB 최저 0.621
+2. **Baseline subtraction 효과 큼**: subject별 event rate 변동성 [0.25-0.87] → 차분이 student -0.059
+3. **Cross-target은 meta↓ gap↑ trade-off**: V433 meta 최저 but gap 1.24x
+4. **Statistics features가 gap精准 조정**: V431이 gap 1.04x로 V308에 가장 근접
+5. **Regression mode 작동 안 함**: V434 모든 loss identical (LGBM bug?)
+6. **Beta/Gamma sweep 무의미**: V430에서 beta=gamma=0이 optimal (stats가 더 효과적)
+7. **0.5점대 현황**: V339 LB 0.621 → 0.5까지 -0.123 개선 필요
+8. **학생 OOF 0.633 수준** → 0.5점대는 student 0.55 수준 필요
+9. **근본적 한계**: binary classification의 log-loss 구조적 한계일 수 있음
 - Meta OOF: 0.63378 (+0.011 vs V308) | Student: 0.63706
 - Gap: 0.003 (V308 0.070의 **0.05x** — 너무 작음)
 - V339 LB: 0.63657

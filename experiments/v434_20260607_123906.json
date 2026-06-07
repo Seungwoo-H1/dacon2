@@ -1,0 +1,29 @@
+{
+  "version": "V434",
+  "name": "Regression Mode (['reg_l1', 'reg_l2', 'reg_huber']) + Calibrated XGB Meta",
+  "best_loss": "reg_l1",
+  "results": {
+    "reg_l1": {
+      "avg_meta_oof": 0.55086,
+      "avg_student_oof": 0.6563,
+      "gap": 0.10544,
+      "v339_lb": 0.64049
+    },
+    "reg_l2": {
+      "avg_meta_oof": 0.55086,
+      "avg_student_oof": 0.6563,
+      "gap": 0.10544,
+      "v339_lb": 0.64049
+    },
+    "reg_huber": {
+      "avg_meta_oof": 0.55086,
+      "avg_student_oof": 0.6563,
+      "gap": 0.10544,
+      "v339_lb": 0.64049
+    }
+  },
+  "v308_lb": 0.63893,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v434_reg_reg_l1_20260607_123906.csv",
+  "timestamp": "20260607_123906",
+  "total_time_s": 126.0
+}
