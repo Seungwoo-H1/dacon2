@@ -1,0 +1,13 @@
+{
+  "version": "V443",
+  "name": "Z-Score + Baseline Poly + Per-Target Opt",
+  "avg_meta_oof": 0.52328,
+  "avg_student_oof": 0.60422,
+  "v308_lb": 0.63893,
+  "estimated_lb_v339_pattern": 0.59208,
+  "student_meta_gap": 0.08094,
+  "n_seeds": 15,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v443_zscore_poly_20260607_164047.csv",
+  "timestamp": "20260607_164047",
+  "total_time_s": 76.0
+}
