@@ -12,7 +12,7 @@
 - Feature: 141 base + 141 zscore per-person = 282 columns
 
 ## MISSION (2026-06-07 승우 명시)
-- 현재 최고 모델: **V435** (V308 기준) ⭐ NEW BEST (unverified)
+- 현재 최고 모델: **V439** (V308 기준) ⭐ NEW BEST (unverified)
 - 목표: V308의 LB 0.63893을 초과하는 모델 찾기
 - **0.5점대 진입**까지 무한 연구 루프 계속
 - LB 예측이 V308 이하라면 보고 금지
@@ -34,7 +34,7 @@
 - **핵심**: subject별 baseline 차분이 student OOF를 0.633으로 낮춤 (V308 0.692 대비 -0.059)
 - Q1 subject_rate_range: [0.251, 0.743] — baseline 변동성이 큼 → 차분 효과 큼
 
-### V435 — Baseline Sub + Stats + Cross-Target (2026-06-07) ⭐ BEST (unverified)
+### V435 — Baseline Sub + Stats + Cross-Target (2026-06-07) ⭐ (2nd place, unverified)
 - **25 features: 15 self + 4 stats + 6 cross-target**
 - Meta OOF: **0.54069** (역대 최저!) | Δ vs V308: **-0.082**
 - Student OOF: 0.63305 (V432와 동일, baseline sub 효과)
@@ -43,6 +43,17 @@
 - ✅ 제출 파일: `submission_v435_full_meta_20260607_124437.csv`
 - **핵심**: meta OOF 역대 최저 but gap↑ → V339 패턴 LB는 가장 낮음
 - Q1: self 0.637→full 0.608 (Δ -0.028, cross-target 효과 큼)
+
+### V439 — Baseline as Feature + Weighted Cross-Target (2026-06-07) ⭐ BEST (unverified)
+- **Baseline subtraction → baseline feature로 변경 + weighted cross-target**
+- Meta OOF: **0.54045** (역대 최저!) | Δ vs V308: **-0.082**
+- Student OOF: **0.62344** (V308 대비 **-0.069**, V435 0.633 대비 -0.010)
+- Gap: **0.083** (1.19x — V435 1.32x 대비 개선)
+- V339 Pattern LB: **0.61100** (V435 0.61920 대비 **-0.008 개선**) ⭐
+- ✅ 제출 파일: `submission_v439_baseline_feat_20260607_130413.csv`
+- **핵심 교훈**: baseline feature가 baseline subtraction보다 student OOF 더 낮춤
+- S2: 0.608 (baseline sub 0.628 대비 -0.020), S3: 0.598 (baseline sub 0.630 대비 -0.032)
+- 0.5점대 현황: V339 LB 0.611 → 0.5까지 -0.111 개선 필요
 
 ### V431 — XGB Meta with Seed Prediction Statistics (2026-06-07)
 - **15 seed preds + mean/std/min/max = 19 features**
@@ -133,7 +144,7 @@
 - V339 Pattern LB: 0.640 (V308보다 Worse)
 - **교훈**: LGBM v4.6.0의 regression objective가 binary task에서 작동 안 함
 
-### V429-V434 종합 비교
+### V429-V439 종합 비교
 | Version | Meta | Student | Gap | Ratio | V339 LB | Status |
 |---------|------|---------|-----|-------|---------|--------|
 | V308 | 0.622 | 0.692 | 0.070 | 1.0x | **0.63893** ✅ LB |
@@ -143,19 +154,24 @@
 | V432 | 0.554 | 0.633 | 0.079 | 1.12x | 0.62125 |
 | V433 | 0.549 | 0.636 | 0.087 | 1.24x | 0.62307 |
 | V434 | 0.551 | 0.656 | 0.105 | 1.51x | 0.64049 ❌ |
-| **V435** | **0.541** | **0.633** | 0.092 | 1.32x | **0.61920** ⭐ |
+| V435 | 0.541 | 0.633 | 0.092 | 1.32x | 0.61920 |
+| V436-B | 0.541 | 0.633 | 0.092 | 1.32x | 0.61920 |
+| V437 | 0.546 | 0.644 | 0.098 | 1.40x | 0.62909 ❌ |
+| V438 | 0.543 | 0.633 | 0.090 | 1.29x | 0.61953 |
+| **V439** | **0.540** | **0.623** | **0.083** | **1.19x** | **0.61100** ⭐ |
 
-### V429-V435 핵심 인사이트
-1. **V435가 가장 유망**: meta 0.541(역대 최저), V339 LB 0.619(역대 최저)
-2. **Baseline subtraction 효과 큼**: V432/V435 student OOF 0.633 (V308 0.692 대비 -0.059)
-3. **Cross-target은 meta↓ gap↑ trade-off**: V433/V435 meta↓ but gap↑
-4. **V432가 gap 더 좋음**: gap 0.079 (1.12x) vs V435 gap 0.092 (1.32x)
-5. **V431 statistics가 gap精准 조정**: V431 gap 0.073 (1.04x)
+### V429-V439 핵심 인사이트
+1. **V439가 가장 유망**: student 0.623, V339 LB 0.611 — baseline feature가 breakthrough
+2. **Baseline feature > Baseline subtraction**: student 0.623 vs 0.633 (V435 대비 -0.010)
+3. **Weighted cross-target 효과**: Q-S group 간 correlation 고려하여 weighting → gap 1.19x
+4. **Cross-target은 meta↓ gap↑ trade-off**: all-cross(V435)보다 weighted가 더 균형 좋음
+5. **V432가 gap 최적**: gap 0.079 (1.12x)로 V308에 가장 근접
 6. **Regression mode 작동 안 함**: V434 모든 loss identical (LGBM bug?)
-7. **Beta/Gamma sweep 무의미**: V430에서 beta=gamma=0이 optimal
-8. **0.5점대 현황**: V339 LB 0.619 → 0.5까지 -0.119 개선 필요
-9. **학생 OOF 0.633 수준** → 0.5점대는 student 0.55 수준 필요
-10. **근본적 한계**: binary classification의 log-loss 구조적 한계일 수 있음
+7. **V437 adaptive LR 실패**: baseline sub + deep training이 overfitting 유발
+8. **V438 per-target selection 무의미**: all-cross(V435)와 동일한 결과
+9. **0.5점대 현황**: V339 LB 0.611 → 0.5까지 -0.111 개선 필요
+10. **학생 OOF 0.623 수준** → 0.5점대는 student 0.55 수준 필요
+11. **근본적 한계**: binary classification의 log-loss 구조적 한계일 수 있음
 - Meta OOF: 0.63378 (+0.011 vs V308) | Student: 0.63706
 - Gap: 0.003 (V308 0.070의 **0.05x** — 너무 작음)
 - V339 LB: 0.63657
