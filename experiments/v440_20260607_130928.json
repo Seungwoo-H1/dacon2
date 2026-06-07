@@ -1,0 +1,32 @@
+{
+  "version": "V440",
+  "name": "Baseline Feature + Interaction Features",
+  "avg_meta_oof": 0.53525,
+  "avg_student_oof": 0.62048,
+  "v308_lb": 0.63893,
+  "estimated_lb_v339_pattern": 0.60769,
+  "student_meta_gap": 0.08523,
+  "n_seeds": 15,
+  "meta_type": "xgb_weighted_cross_interaction",
+  "per_target_meta_oof": {
+    "Q1": 0.58644,
+    "Q2": 0.55272,
+    "Q3": 0.56213,
+    "S1": 0.49843,
+    "S2": 0.50077,
+    "S3": 0.49589,
+    "S4": 0.55033
+  },
+  "per_target_student_oof": {
+    "Q1": 0.67993,
+    "Q2": 0.62884,
+    "Q3": 0.64991,
+    "S1": 0.56775,
+    "S2": 0.60221,
+    "S3": 0.59261,
+    "S4": 0.62211
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v440_interaction_20260607_130928.csv",
+  "timestamp": "20260607_130928",
+  "total_time_s": 48.0
+}

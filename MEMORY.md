@@ -12,7 +12,7 @@
 - Feature: 141 base + 141 zscore per-person = 282 columns
 
 ## MISSION (2026-06-07 승우 명시)
-- 현재 최고 모델: **V439** (V308 기준) ⭐ NEW BEST (unverified)
+- 현재 최고 모델: **V440** (V308 기준) ⭐ NEW BEST (unverified)
 - 목표: V308의 LB 0.63893을 초과하는 모델 찾기
 - **0.5점대 진입**까지 무한 연구 루프 계속
 - LB 예측이 V308 이하라면 보고 금지
@@ -44,7 +44,7 @@
 - **핵심**: meta OOF 역대 최저 but gap↑ → V339 패턴 LB는 가장 낮음
 - Q1: self 0.637→full 0.608 (Δ -0.028, cross-target 효과 큼)
 
-### V439 — Baseline as Feature + Weighted Cross-Target (2026-06-07) ⭐ BEST (unverified)
+### V439 — Baseline as Feature + Weighted Cross-Target (2026-06-07) ⭐ (2nd place, unverified)
 - **Baseline subtraction → baseline feature로 변경 + weighted cross-target**
 - Meta OOF: **0.54045** (역대 최저!) | Δ vs V308: **-0.082**
 - Student OOF: **0.62344** (V308 대비 **-0.069**, V435 0.633 대비 -0.010)
@@ -54,6 +54,18 @@
 - **핵심 교훈**: baseline feature가 baseline subtraction보다 student OOF 더 낮춤
 - S2: 0.608 (baseline sub 0.628 대비 -0.020), S3: 0.598 (baseline sub 0.630 대비 -0.032)
 - 0.5점대 현황: V339 LB 0.611 → 0.5까지 -0.111 개선 필요
+
+### V440 — Baseline Feature + Subject Interaction Features (2026-06-07) ⭐ BEST (unverified)
+- **V439 + subject*target interaction features (feat * subj_mean)**
+- Meta OOF: **0.53525** (역대 최저!) | Δ vs V308: **-0.087**
+- Student OOF: **0.62048** (V308 대비 **-0.072**, V439 0.623 대비 -0.003)
+- Gap: **0.085** (1.22x — V439 1.19x 대비 약간 악화)
+- V339 Pattern LB: **0.60769** (V439 0.61100 대비 **-0.00333 개선**) ⭐
+- ✅ 제출 파일: `submission_v440_interaction_20260607_130928.csv`
+- **핵심**: interaction features가 student OOF를 0.620까지 추가 낮춤
+- S1: 0.568, S2: 0.602, S3: 0.593 — S targets 모두 0.60 이하
+- 0.5점대 현황: V339 LB 0.608 → 0.5까지 -0.108 개선 필요
+- **Progress trend**: V435(0.619) → V439(0.611) → V440(0.608) → 개선 계속!
 
 ### V431 — XGB Meta with Seed Prediction Statistics (2026-06-07)
 - **15 seed preds + mean/std/min/max = 19 features**
@@ -158,20 +170,22 @@
 | V436-B | 0.541 | 0.633 | 0.092 | 1.32x | 0.61920 |
 | V437 | 0.546 | 0.644 | 0.098 | 1.40x | 0.62909 ❌ |
 | V438 | 0.543 | 0.633 | 0.090 | 1.29x | 0.61953 |
-| **V439** | **0.540** | **0.623** | **0.083** | **1.19x** | **0.61100** ⭐ |
+| V439 | 0.540 | 0.623 | 0.083 | 1.19x | 0.61100 |
+| **V440** | **0.535** | **0.620** | **0.085** | **1.22x** | **0.60769** ⭐ |
 
-### V429-V439 핵심 인사이트
-1. **V439가 가장 유망**: student 0.623, V339 LB 0.611 — baseline feature가 breakthrough
-2. **Baseline feature > Baseline subtraction**: student 0.623 vs 0.633 (V435 대비 -0.010)
-3. **Weighted cross-target 효과**: Q-S group 간 correlation 고려하여 weighting → gap 1.19x
-4. **Cross-target은 meta↓ gap↑ trade-off**: all-cross(V435)보다 weighted가 더 균형 좋음
-5. **V432가 gap 최적**: gap 0.079 (1.12x)로 V308에 가장 근접
-6. **Regression mode 작동 안 함**: V434 모든 loss identical (LGBM bug?)
-7. **V437 adaptive LR 실패**: baseline sub + deep training이 overfitting 유발
-8. **V438 per-target selection 무의미**: all-cross(V435)와 동일한 결과
-9. **0.5점대 현황**: V339 LB 0.611 → 0.5까지 -0.111 개선 필요
-10. **학생 OOF 0.623 수준** → 0.5점대는 student 0.55 수준 필요
-11. **근본적 한계**: binary classification의 log-loss 구조적 한계일 수 있음
+### V429-V440 핵심 인사이트
+1. **V440가 가장 유망**: student 0.620, V339 LB 0.608 — interaction features breakthrough
+2. **Improvement trend**: V435(0.619) → V439(0.611) → V440(0.608) — 0.011 개선
+3. **Baseline feature > Baseline subtraction**: student 0.620 vs 0.633 (V435 대비 -0.013)
+4. **Interaction features 효과**: feat*subj_mean이 student OOF를 0.003 추가 ↓
+5. **Weighted cross-target 효과**: Q-S group 간 correlation 고려 → gap 1.22x
+6. **V432가 gap 최적**: gap 0.079 (1.12x)로 V308에 가장 근접
+7. **Regression mode 작동 안 함**: V434 모든 loss identical (LGBM bug?)
+8. **V437 adaptive LR 실패**: baseline sub + deep training이 overfitting 유발
+9. **V438 per-target 선택 무의미**: all-cross(V435)와 동일한 결과
+10. **0.5점대 현황**: V339 LB 0.608 → 0.5까지 -0.108 개선 필요
+11. **학생 OOF 0.620 수준** → 0.5점대는 student 0.55 수준 필요
+12. **근본적 한계**: binary classification의 log-loss 구조적 한계일 수 있음
 - Meta OOF: 0.63378 (+0.011 vs V308) | Student: 0.63706
 - Gap: 0.003 (V308 0.070의 **0.05x** — 너무 작음)
 - V339 LB: 0.63657
