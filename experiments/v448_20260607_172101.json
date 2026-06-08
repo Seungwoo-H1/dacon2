@@ -1,0 +1,13 @@
+{
+  "version": "V448",
+  "name": "Double Ensembling + Stable Feature Ranking",
+  "avg_meta_oof": 0.51928,
+  "avg_student_oof": 0.59954,
+  "v308_lb": 0.63893,
+  "estimated_lb_v339_pattern": 0.5875,
+  "student_meta_gap": 0.08026,
+  "n_seeds": 30,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v448_double_ens_20260607_172101.csv",
+  "timestamp": "20260607_172101",
+  "total_time_s": 157.0
+}

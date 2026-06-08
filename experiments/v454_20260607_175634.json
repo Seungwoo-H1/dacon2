@@ -1,0 +1,14 @@
+{
+  "version": "V454",
+  "name": "Stacked Multi-Hyper Ensemble + Label Smoothing",
+  "avg_meta_oof": 0.66415,
+  "avg_student_oof": 2.75055,
+  "v308_lb": 0.63893,
+  "estimated_lb_v339_pattern": 2.43759,
+  "student_meta_gap": 2.0864,
+  "n_configs": 3,
+  "n_seeds_per_cfg": 15,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v454_stack_hyp_20260607_175634.csv",
+  "timestamp": "20260607_175634",
+  "total_time_s": 150.0
+}

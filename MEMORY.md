@@ -12,12 +12,11 @@
 - Feature: 141 base + 141 zscore per-person = 282 columns
 
 ## MISSION (2026-06-07 승우 명시)
-- 현재 최고 모델: **V440** (V308 기준) ⭐ NEW BEST (unverified)
+- 현재 최고 모델: **V452** (V308 기준) ⭐ NEW BEST (unverified)
 - 목표: V308의 LB 0.63893을 초과하는 모델 찾기
 - **0.5점대 진입**까지 무한 연구 루프 계속
 - LB 예측이 V308 이하라면 보고 금지
 - 동일 가설 반복 금지, 매 루프 새 가설 필수
-- LB 예측이 V308 이하라면 보고 금지
 - 성능 개선 확인 전까지 연구 루프 계속
 - 동일 가설 반복 금지, 매 루프 새 가설 필수
 
@@ -55,7 +54,32 @@
 - S2: 0.608 (baseline sub 0.628 대비 -0.020), S3: 0.598 (baseline sub 0.630 대비 -0.032)
 - 0.5점대 현황: V339 LB 0.611 → 0.5까지 -0.111 개선 필요
 
-### V440 — Baseline Feature + Subject Interaction Features (2026-06-07) ⭐ BEST (unverified)
+### V452 — 4-Way Interactions + Refined Ranking (2026-06-07) ⭐ BEST
+- **z³ + bz² interactions + 25 seeds + V446 meta**
+- Meta OOF: **0.50543** | Student OOF: **0.59339** | Gap: 0.088 (1.26x)
+- V339 Pattern LB: **0.58019** ⭐ NEW BEST
+- Code: `src/v452_4way_interactions.py`
+- **핵심**: z³, bl×z² higher-order interactions이 student OOF를 0.601→0.593으로 낮춤
+- V452가 plateau (0.580). V453-V456 모두 0.580±0.001 수준 → 새로운 접근 필요
+
+### V453 — 5-Way Interactions + Dist Stats + 30 Seeds (2026-06-07)
+- V339 LB: 0.58145 (V452 대비 -0.00126, 미미 개선)
+- 5-way interactions과 distribution stats가 큰 개선 없음
+
+### V454 — Stacked Multi-Hyper Ensemble + Label Smoothing (2026-06-07) ❌
+- Label smoothing이 binary classification에서 완전히 작동 안 함
+- Student OOF: 2.75 (폭망) — 모든 config 동일한 결과
+- **교훈**: label smoothing은 binary classification에서 적용 불가
+
+### V455 — Feature Importance Filtering (2026-06-07)
+- V339 LB: 0.58038 (V452 대비 -0.00019, 거의 동일)
+- Bottom 10% feature 제거가 효과 없음
+
+### V456 — Per-Target Adaptive Seed Count (2026-06-07)
+- V339 LB: 0.58035 (V452 대비 -0.00016, 거의 동일)
+- Target별 seed count 차별화가 효과 없음
+
+### V457 — Next: Cross-Subject Feature Engineering
 - **V439 + subject*target interaction features (feat * subj_mean)**
 - Meta OOF: **0.53525** (역대 최저!) | Δ vs V308: **-0.087**
 - Student OOF: **0.62048** (V308 대비 **-0.072**, V439 0.623 대비 -0.003)

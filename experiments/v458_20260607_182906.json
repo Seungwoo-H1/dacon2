@@ -1,0 +1,14 @@
+{
+  "version": "V458",
+  "name": "Heterogeneous Ensemble (LGBM+XGB+LGBM-deep)",
+  "avg_meta_oof": 0.51987,
+  "avg_student_oof": 0.58397,
+  "v308_lb": 0.63893,
+  "estimated_lb_v339_pattern": 0.57436,
+  "student_meta_gap": 0.0641,
+  "n_models": 3,
+  "n_seeds": 15,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v458_hetero_ens_20260607_182906.csv",
+  "timestamp": "20260607_182906",
+  "total_time_s": 1001.0
+}

@@ -1,0 +1,14 @@
+{
+  "version": "V459",
+  "name": "3-Model Stacking + V446 Meta",
+  "avg_meta_oof": 0.51744,
+  "avg_student_oof": 0.59253,
+  "v308_lb": 0.63893,
+  "estimated_lb_v339_pattern": 0.58126,
+  "student_meta_gap": 0.07509,
+  "n_models": 3,
+  "n_seeds": 15,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v459_3model_stack_20260607_183636.csv",
+  "timestamp": "20260607_183636",
+  "total_time_s": 321.0
+}

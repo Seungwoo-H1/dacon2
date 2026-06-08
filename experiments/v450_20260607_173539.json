@@ -1,0 +1,14 @@
+{
+  "version": "V450",
+  "name": "CatBoost + LGBM Hybrid Ensembling",
+  "avg_meta_oof": 0.49969,
+  "avg_student_oof": 0.60148,
+  "v308_lb": 0.63893,
+  "estimated_lb_v339_pattern": 0.58621,
+  "student_meta_gap": 0.10178,
+  "n_seeds_lgb": 20,
+  "n_seeds_cb": 15,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v450_catboost_lgbm_20260607_173539.csv",
+  "timestamp": "20260607_173539",
+  "total_time_s": 268.0
+}

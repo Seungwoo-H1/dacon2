@@ -1,0 +1,13 @@
+{
+  "version": "V446",
+  "name": "V443 Pipeline + 30 Seeds",
+  "avg_meta_oof": 0.51645,
+  "avg_student_oof": 0.60132,
+  "v308_lb": 0.63893,
+  "estimated_lb_v339_pattern": 0.58859,
+  "student_meta_gap": 0.08487,
+  "n_seeds": 30,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v446_30seeds_20260607_171059.csv",
+  "timestamp": "20260607_171059",
+  "total_time_s": 130.0
+}

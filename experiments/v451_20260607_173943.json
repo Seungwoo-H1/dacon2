@@ -1,0 +1,13 @@
+{
+  "version": "V451",
+  "name": "Gap-Controlled Stacking",
+  "avg_meta_oof": 0.62425,
+  "avg_student_oof": 0.60181,
+  "v308_lb": 0.63893,
+  "estimated_lb_v339_pattern": 0.60518,
+  "student_meta_gap": -0.02244,
+  "n_seeds": 25,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v451_gap_control_20260607_173943.csv",
+  "timestamp": "20260607_173943",
+  "total_time_s": 109.0
+}

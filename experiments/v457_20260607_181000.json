@@ -1,0 +1,13 @@
+{
+  "version": "V457",
+  "name": "Cross-Subject Aggregate Features",
+  "avg_meta_oof": 0.51237,
+  "avg_student_oof": 0.59596,
+  "v308_lb": 0.63893,
+  "estimated_lb_v339_pattern": 0.58343,
+  "student_meta_gap": 0.0836,
+  "n_seeds": 25,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v457_cross_subj_20260607_181000.csv",
+  "timestamp": "20260607_181000",
+  "total_time_s": 165.0
+}

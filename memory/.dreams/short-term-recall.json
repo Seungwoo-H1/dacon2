@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-06T10:53:14.189Z",
+  "updatedAt": "2026-06-08T00:21:35.073Z",
   "entries": {
     "memory:memory/2026-05-01.md:1:32": {
       "key": "memory:memory/2026-05-01.md:1:32",
@@ -195,25 +195,27 @@
       "endLine": 27,
       "source": "memory",
       "snippet": "# 2026-05-01 Daily Log ## FT-Transformer GPU 재훈련 완료 (RTX 4060 Laptop) ### V2 Results (Best DL Config) - Config: d_token=32, n_heads=2, dropout=0.4, feature_select=20, lr=8e-4 - AVG AUC: 0.5847 - LGBM V10: 0.6038 - Δ: -0.0191 (아직 못 넘음) - S1(+0.0655), Q3(+0.0143) 만 LGBM 상회 ### Ensemble - LGBM(50%) + FT-V2(50%) blend: AVG AUC 0.5943 - Δ vs V10: -0.0095 (거의 동급, 아쉽게도 미달) ### LGBM V13 확인 - Calibration 전략 개선했으나 overfit. 0.6385 (Worse than V10's 0.6038) - V10이 여전히 최고 ### 결정 - 현재까지 최고: **LGBM V10 (0.6038)** - FT-Transformer는 데이터 양이 너무 적음 (450 rows) - 다음 옵션: 피처 엔지니어링, 데이터 수집, 앙상블 다양화 ## miniconda LGBM 훈련 2개(03_v13, 04_v14) 메모리/CPU 오버로드 → kill 함 ## FT-Transformer 재실행 시 CPU와 충돌할 수 있음 주의",
-      "recallCount": 5,
+      "recallCount": 6,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 3.8958874577167895,
+      "totalScore": 4.895887457716789,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-01T11:32:41.554Z",
-      "lastRecalledAt": "2026-05-08T06:04:14.824Z",
+      "lastRecalledAt": "2026-06-08T00:21:35.073Z",
       "queryHashes": [
         "dfce10cd2804",
         "6dba41c440bc",
         "a543962d9353",
         "574e3a9e7dd2",
-        "f19e60ae999c"
+        "f19e60ae999c",
+        "223ea9ffc1eb"
       ],
       "recallDays": [
         "2026-05-01",
         "2026-05-04",
         "2026-05-07",
-        "2026-05-08"
+        "2026-05-08",
+        "2026-06-08"
       ],
       "conceptTags": [
         "ft-transformer",
@@ -537,20 +539,23 @@
       "endLine": 31,
       "source": "memory",
       "snippet": "# 2026-05-13 ## V251 External Merge — 결과 분석 ### Experiment - V251: features_clean_v60 + external_data.parquet (8 external features: holiday, month, school_term, exam_period, lunar_holiday, daylight_hours, daylight_ratio, season_index) - 100% coverage for all 450 train and 250 test dates - Feature ranking (50-iter LGBM) → top-N selection per target - 7 targets trained with V127 per-target configs ### Results - V251 avg OOF: 0.69288 - V251 Δ: +0.00516 (worse) - Improvement in Q1 (-0.00159), Q3 (-0.08346), S3 (-0.00619) - Worsening in S1 (+0.02261), S2 (+0.08878), S4 (+0.02304) - Selected external features: daylight_hours (Q1, S2, S3), season_index (S2, S3), daylight_ratio (S3) - External fe",
-      "recallCount": 2,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.998968341192366,
+      "totalScore": 3.998968341192366,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-14T04:15:34.421Z",
-      "lastRecalledAt": "2026-06-05T08:55:07.064Z",
+      "lastRecalledAt": "2026-06-08T00:21:35.073Z",
       "queryHashes": [
         "62efb5952dcc",
-        "74b0c52f9378"
+        "74b0c52f9378",
+        "67458b41477e",
+        "223ea9ffc1eb"
       ],
       "recallDays": [
         "2026-05-14",
-        "2026-06-05"
+        "2026-06-05",
+        "2026-06-08"
       ],
       "conceptTags": [
         "features-clean-v60",
@@ -857,18 +862,21 @@
       "endLine": 35,
       "source": "memory",
       "snippet": "# 2026-05-17 (Afternoon) ## V136 — V127 3-model Bayesian-weighted ensemble ### Experiment - 3 모델: pair_wide, pair_deep, trans_wide - 20 seeds × GroupKFold 5-fold × Isotonic calibration + mean matching - Per-target Bayesian weight optimization (30 restarts) - Comparison: Bayesian optimized vs V127 fixed (0.35/0.25/0.40) vs equal weight ### Results | Target | V127 LL | Opt LL | Equal LL | Δ(opt-v127) | |--------|---------|--------|----------|-------------| | Q1 | 0.55840 | 0.55112| 0.55235 | **+0.00729** | | Q2 | 0.54433 | 0.54665| 0.54169 | -0.00232 | | Q3 | 0.56039 | 0.56294| 0.56168 | -0.00255 | | S1 | 0.52171 | 0.52360| 0.51991 | -0.00189 | | S2 | 0.53014 | 0.53",
-      "recallCount": 1,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 3,
       "maxScore": 1,
       "firstRecalledAt": "2026-06-05T08:55:07.064Z",
-      "lastRecalledAt": "2026-06-05T08:55:07.064Z",
+      "lastRecalledAt": "2026-06-08T00:21:35.073Z",
       "queryHashes": [
-        "74b0c52f9378"
+        "74b0c52f9378",
+        "67458b41477e",
+        "223ea9ffc1eb"
       ],
       "recallDays": [
-        "2026-06-05"
+        "2026-06-05",
+        "2026-06-08"
       ],
       "conceptTags": [
         "3-model",
@@ -1003,6 +1011,68 @@
         "0.5",
         "점대는",
         "raw"
+      ]
+    },
+    "memory:memory/2026-05-13.md:27:37": {
+      "key": "memory:memory/2026-05-13.md:27:37",
+      "path": "memory/2026-05-13.md",
+      "startLine": 27,
+      "endLine": 37,
+      "source": "memory",
+      "snippet": "- **external_data.parquet features (holiday/month/daylight/season) provide NO improvement** to the current pipeline - These are static calendar/temporal features — too general for individualized sleep prediction - Contrasts with V09 external features (sleep_health_lifestyle.csv proxy features, ΔOOF=-0.023) - **Lesson**: Only PERSONALIZED external features (sleep patterns, activity levels) → useful. Calendar features → noise. ### Next Steps 1. V252: Re-implement V127 true 3-model ensemble + external features 2. Or pivot to V09 approach: use sleep_health_lifestyle.csv proxy features with proper personalization 3. External data from ETRI Lifelog (actual sleep metrics) > calendar features 4. Co",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-06-07T12:57:53.164Z",
+      "lastRecalledAt": "2026-06-07T12:57:53.164Z",
+      "queryHashes": [
+        "01341d81e1e0"
+      ],
+      "recallDays": [
+        "2026-06-07"
+      ],
+      "conceptTags": [
+        "external-data.parquet",
+        "holiday/month/daylight/season",
+        "calendar/temporal",
+        "sleep-health-lifestyle.csv",
+        "0.023",
+        "re-implement",
+        "3-model",
+        "features"
+      ]
+    },
+    "memory:memory/2026-06-06.md:1:37": {
+      "key": "memory:memory/2026-06-06.md:1:37",
+      "path": "memory/2026-06-06.md",
+      "startLine": 1,
+      "endLine": 37,
+      "source": "memory",
+      "snippet": "# 2026-06-06 DaCon2 Research Log ## 🔥 V424-V429 Summary ### Key Discovery: Per-subject mean baseline avg OOF = **0.59363** ### V424 — Baseline-First - Baseline avg OOF: 0.59363 - Adding features (K=1~20): max improvement -0.00054 (negligible) ### V425 — Calibration - Temperature scaling: no effect (baseline already calibrated) - Shrinkage: alpha=0.0 (pure baseline) is best ### V426 — Z-Score Features - ALL model OOF: 0.678 (baseline 0.594 대비 +0.084) - Feature importance ALL ZERO — z-score features meaningless ### V427 — V418 Hybrid + Uniform Shrinkage - Meta OOF: 0.600, Student OOF: 0.640, Gap: 0.039 (0.56x) - Subject shrinkage narrows gap but kills signal ### V428 — V418 Hybrid + Ad",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-06-08T00:20:46.087Z",
+      "lastRecalledAt": "2026-06-08T00:20:46.087Z",
+      "queryHashes": [
+        "67458b41477e"
+      ],
+      "recallDays": [
+        "2026-06-08"
+      ],
+      "conceptTags": [
+        "v424-v429",
+        "per-subject",
+        "0.59363",
+        "baseline-first",
+        "0.00054",
+        "0.0",
+        "z-score",
+        "0.678"
       ]
     }
   }
