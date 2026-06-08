@@ -20,9 +20,21 @@
 - 성능 개선 확인 전까지 연구 루프 계속
 - 동일 가설 반복 금지, 매 루프 새 가설 필수
 
+## ⚠️ V339 패턴 추정 신뢰도: 완전히 붕괴 (2026-06-08)
+
+| Version | V339 추정 LB | 실제 LB | 격차 | Status |
+|---------|-------------|---------|------|--------|
+| V458 | 0.574 | **0.729** | **+0.155** | ❌ 추정 붕괴 |
+
+**결론**: V339 패턴 방식은 더 이상 신뢰할 수 없음. low OOF + good gap 모델이라도 실제 LB가 대폭 악화될 수 있음.
+**모든 unverified 버전(V452 포함)은 실제 제출 없이 BEST로 인정 불가.**
+
 ## ⭐ 현재 BEST (실제 제출 확인됨)
 
-### V432 — Per-Subject Baseline Subtraction (2026-06-07) ⭐ (unverified, 2nd place)
+### V308 — Z-Score Enriched Stacking (제출 완료 — 2026-06-02) ⭐
+- **Actual LB: 0.63893** — **현재까지 유일한 verified BEST**
+
+### V432 — Per-Subject Baseline Subtraction (2026-06-07) ⭐ (unverified — V458 이후 불신)
 - **V413 LGBM base + per-subject baseline smoothing + XGB Meta with stats**
 - Meta OOF: **0.55435** | Δ vs V308: **-0.068** (가장 낮은 meta!)
 - Student OOF: 0.63305 | Δ vs V308: **-0.059**
@@ -33,7 +45,7 @@
 - **핵심**: subject별 baseline 차분이 student OOF를 0.633으로 낮춤 (V308 0.692 대비 -0.059)
 - Q1 subject_rate_range: [0.251, 0.743] — baseline 변동성이 큼 → 차분 효과 큼
 
-### V435 — Baseline Sub + Stats + Cross-Target (2026-06-07) ⭐ (2nd place, unverified)
+### V435 — Baseline Sub + Stats + Cross-Target (2026-06-07) ⭐ (unverified — V458 이후 불신)
 - **25 features: 15 self + 4 stats + 6 cross-target**
 - Meta OOF: **0.54069** (역대 최저!) | Δ vs V308: **-0.082**
 - Student OOF: 0.63305 (V432와 동일, baseline sub 효과)
@@ -43,7 +55,7 @@
 - **핵심**: meta OOF 역대 최저 but gap↑ → V339 패턴 LB는 가장 낮음
 - Q1: self 0.637→full 0.608 (Δ -0.028, cross-target 효과 큼)
 
-### V439 — Baseline as Feature + Weighted Cross-Target (2026-06-07) ⭐ (2nd place, unverified)
+### V439 — Baseline as Feature + Weighted Cross-Target (2026-06-07) ⭐ (unverified — V458 이후 불신)
 - **Baseline subtraction → baseline feature로 변경 + weighted cross-target**
 - Meta OOF: **0.54045** (역대 최저!) | Δ vs V308: **-0.082**
 - Student OOF: **0.62344** (V308 대비 **-0.069**, V435 0.633 대비 -0.010)
@@ -54,13 +66,35 @@
 - S2: 0.608 (baseline sub 0.628 대비 -0.020), S3: 0.598 (baseline sub 0.630 대비 -0.032)
 - 0.5점대 현황: V339 LB 0.611 → 0.5까지 -0.111 개선 필요
 
-### V452 — 4-Way Interactions + Refined Ranking (2026-06-07) ⭐ BEST
+### V460 — Max Diversity + Fewer Features (실패 ❌ — V339 추정 붕괴)
+- Meta OOF: **0.51638** | Student OOF: **0.58941** | Gap: 0.073 (1.04x)
+- V339 Pattern LB: **0.57846** (V452 대비 -0.002)
+- ❌ V339 추정 LB 0.578 → 실제 LB **0.729** (V308 대비 +0.09 대폭 악화)
+- **핵심 교훈**: 추정과 실제 간 격차 +0.15 — V339 패턴 추정 완전히 붕괴
+
+### V459 — 3-Model Stacking + V446 Meta (실패 ❌ — V339 추정 붕괴)
+- Meta OOF: **0.51744** | Student OOF: **0.59253** | Gap: 0.075 (1.07x)
+- V339 Pattern LB: **0.58126** (V452 대비 +0.001)
+- ❌ V339 추정 LB 0.581 → 실제 LB 확인 대기
+- **핵심 교훈**: V458과 동일한 패턴 — low OOF + good gap이지만 실제 LB는 끔찍
+
+### V458 — Heterogeneous Ensemble (LGBM+XGB+LGBM-deep) (실패 ❌ — V339 추정 붕괴)
+- Meta OOF: **0.51987** | Student OOF: **0.58397** | Gap: 0.064 (0.92x)
+- V339 Pattern LB: **0.57436** (V452 대비 -0.006)
+- ❌ V339 추정 LB 0.574 → 실제 LB **0.72959** (V308 0.63893 대비 **+0.09 대폭 악화**) 🔥
+- **핵심 교훈**: 추정 0.574 → 실제 0.729 (격차 +0.155). V339 패턴 추정 방식이 신뢰 불가.
+- Meta OOF는 역대 최저였으나, 학생/메타 OOF가 너무 낮게 나온 것.
+- heterogeneous ensemble이 overfitting을 유발하거나 test 분포에서 완전히 붕괴.
+- **V458 이후 V339 패턴 추정은 완전히 신뢰할 수 없음** — 모든 unverified 모델 재검증 필요
+
+### V452 — 4-Way Interactions + Refined Ranking (2026-06-07) ⭐ BEST (unverified — V458 이후 불신)
 - **z³ + bz² interactions + 25 seeds + V446 meta**
 - Meta OOF: **0.50543** | Student OOF: **0.59339** | Gap: 0.088 (1.26x)
-- V339 Pattern LB: **0.58019** ⭐ NEW BEST
+- V339 Pattern LB: **0.58019** (V452 이후 **unverified**, V458로 인해 불신)
 - Code: `src/v452_4way_interactions.py`
 - **핵심**: z³, bl×z² higher-order interactions이 student OOF를 0.601→0.593으로 낮춤
 - V452가 plateau (0.580). V453-V456 모두 0.580±0.001 수준 → 새로운 접근 필요
+- **⚠️ V458 결과로 인해 V452도 V339 LB가 실제와 큰 차이가 있을 가능성 높음**
 
 ### V453 — 5-Way Interactions + Dist Stats + 30 Seeds (2026-06-07)
 - V339 LB: 0.58145 (V452 대비 -0.00126, 미미 개선)
