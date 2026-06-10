@@ -1050,14 +1050,15 @@ When you have nothing to say, respond with ONLY: NO_REPLY
 <!-- OPENCLAW_CACHE_BOUNDARY -->
 
 ## V496 — Per-Subject Normalization + 3-Model Ensemble (2026-06-09 완료 ✅)
-- **AVG OOF: 0.6095** (V308의 0.62235 대비 -0.0128 개선!)
+- **AVG OOF: 0.6095** (V308의 0.62235 대비 -0.0128)
 - Per-subject z-score normalization (original + zscore = 282 features)
 - 3-model ensemble: LGBM + XGB + CatBoost
 - 5-fold GroupKFold OOF, no meta layer (simple average)
 - **Per-target AVG OOF**: Q1=0.6405, Q2=0.6120, Q3=0.6203, S1=0.5677, S2=0.5678, S3=0.6118, S4=0.6466
 - CB가 Q3(0.6113), S1(0.5644)에서 최상위 성능
 - ✅ 제출 파일: `submission_v496_subject_norm_20260609_080012.csv`
-- **교훈**: Per-subject normalization이 OOF를 낮췄으나 LB 예측은 불확실. 3-model ensemble 중 CatBoost가 일부 타겟에서 우위. V496 OOF 0.610은 V308보다 낮음(OOF는 낮을수록 좋음).
+- **실제 LB: 0.67579** → V308(0.63893) Worse!
+- **교훈**: Lower OOF ≠ better LB. V496 gap=0.066 (4x V308). OOF 낮을수록 gap 큼.
 
 ### V497 — Weighted Ensemble + Per-Subject Norm (실패 ❌)
 - AVG OOF: 0.6213 (V496 0.6095보다 Worse)
@@ -1078,8 +1079,16 @@ When you have nothing to say, respond with ONLY: NO_REPLY
 - Feature selection 없이 full 282 features(141 z-score + 141 original) 사용해야 함
 - ❌ **V496의 combined approach(z+orig)가 정답**
 
-### ✅ Current BEST: V496 (Per-Subject Z-Score + Simple Avg Ensemble)
-- **AVG OOF LogLoss: 0.6095**
-- V497/V498/V499 모두 V496 Worse → V496이 현재 best
-- V496 code: `experiments/v496_subject_norm.py`
+### V505 — V308 Exact + 20 Seeds + Stronger Meta Reg C=5 (2026-06-10 완료 ❌)
+- **AVG OOF: 0.62181** (V308 0.62235 대비 -0.00054, 미미)
+- **AVG gap: 0.07030** (V308 0.01658 대비 **4.2배 큼** — 폭망)
+- Q1 gap 0.123, Q3 gap 0.121 → meta C=5가 seed noise 과적합
+- ❌ **C=5는 너무 strong. V308의 C=10이 optimal**
+
+## ⭐ 현재 BEST: V308 (Verified LB)
+- **LB: 0.63893** ⭐唯一 verified BEST
+- **AVG OOF: 0.62235**, **gap: 0.01658**
+- V496 LB=0.67579 Worse, V505 gap=0.070 Worse
+- **핵심 인사이트: GAP가 핵심 변수. Lower OOF ≠ Better LB**
+- Next: Gap < 0.020 유지하면서 OOF 개선 탐색
 
