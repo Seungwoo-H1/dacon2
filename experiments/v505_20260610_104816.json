@@ -1,0 +1,27 @@
+{
+  "version": "V505",
+  "name": "V308 Exact + 20 seeds + meta C=5.0",
+  "avg_oof": 0.62181,
+  "n_features_total": 282,
+  "n_base_features": 141,
+  "n_zscore_features": 141,
+  "n_seeds": 20,
+  "meta_c": 5.0,
+  "v308_avg_oof": 0.62235,
+  "v308_lb": 0.63893,
+  "v308_gap": 0.01658,
+  "delta_vs_v308_oof": -0.00054,
+  "per_target_oof": {
+    "Q1": 0.66215,
+    "Q2": 0.61948,
+    "Q3": 0.6222,
+    "S1": 0.58239,
+    "S2": 0.61582,
+    "S3": 0.61289,
+    "S4": 0.63772
+  },
+  "avg_student_meta_gap": 0.0703,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v505_gap_constrained_20260610_104816.csv",
+  "timestamp": "20260610_104816",
+  "total_time_s": 142.0
+}
