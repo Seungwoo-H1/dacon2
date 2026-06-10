@@ -1,0 +1,45 @@
+{
+  "version": "V475",
+  "name": "Pseudo-labeling",
+  "results": {
+    "0.7": {
+      "meta": 0.78267,
+      "student": 0.78205,
+      "gap": -0.03206,
+      "n_pseudo": 439
+    },
+    "0.8": {
+      "meta": 0.78529,
+      "student": 0.77985,
+      "gap": -0.02887,
+      "n_pseudo": 420
+    },
+    "0.85": {
+      "meta": 0.7848,
+      "student": 0.7814,
+      "gap": -0.02261,
+      "n_pseudo": 398
+    },
+    "0.9": {
+      "meta": 0.79147,
+      "student": 0.78429,
+      "gap": -0.03024,
+      "n_pseudo": 336
+    },
+    "0.95": {
+      "meta": 0.79659,
+      "student": 0.78767,
+      "gap": -0.03175,
+      "n_pseudo": 248
+    },
+    "baseline": {
+      "meta": 0.79019,
+      "student": 0.48041,
+      "gap": 0.51372,
+      "n_pseudo": 0
+    }
+  },
+  "best_threshold": "baseline",
+  "timestamp": "20260608_044116",
+  "total_time_s": 57
+}

@@ -1,0 +1,50 @@
+{
+  "version": "V487",
+  "name": "Binary Classification as Regression",
+  "results": {
+    "21": {
+      "n_features": 21,
+      "classifier_15": 0.78493,
+      "regressor_binary_15": 0.78314,
+      "regressor_continuous_15": 0.78314,
+      "meta_oof": 0.79137
+    },
+    "25": {
+      "n_features": 25,
+      "classifier_15": 0.78384,
+      "regressor_binary_15": 0.78325,
+      "regressor_continuous_15": 0.78325,
+      "meta_oof": 0.79211
+    },
+    "30": {
+      "n_features": 30,
+      "classifier_15": 0.78595,
+      "regressor_binary_15": 0.78457,
+      "regressor_continuous_15": 0.78457,
+      "meta_oof": 0.79344
+    },
+    "40": {
+      "n_features": 40,
+      "classifier_15": 0.79747,
+      "regressor_binary_15": 0.79964,
+      "regressor_continuous_15": 0.79964,
+      "meta_oof": 0.79979
+    },
+    "54": {
+      "n_features": 54,
+      "classifier_15": 0.78925,
+      "regressor_binary_15": 0.79144,
+      "regressor_continuous_15": 0.79144,
+      "meta_oof": 0.7947
+    },
+    "68": {
+      "n_features": 68,
+      "classifier_15": 0.78588,
+      "regressor_binary_15": 0.79096,
+      "regressor_continuous_15": 0.79096,
+      "meta_oof": 0.79058
+    }
+  },
+  "timestamp": "20260608_065210",
+  "total_time_s": 1401
+}

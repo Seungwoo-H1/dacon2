@@ -1,0 +1,22 @@
+2026-06-09 09:12:20,082 [INFO] ======================================================================
+2026-06-09 09:12:20,082 [INFO] V501 — V496 Pattern, n_est=300, 5 seeds, CB no_best_model
+2026-06-09 09:12:20,082 [INFO] ======================================================================
+2026-06-09 09:12:20,082 [INFO] 
+--- 1. Load data ---
+2026-06-09 09:12:20,182 [INFO]   Train: (450, 149), Test: (250, 142), Features: 141
+2026-06-09 09:12:20,183 [INFO] 
+--- 2. Per-subject z-score normalization ---
+2026-06-09 09:12:26,893 [INFO]   Combined: 282 features
+2026-06-09 09:12:26,893 [INFO] 
+--- 3. Feature ranking ---
+2026-06-09 09:12:26,921 [INFO] 
+--- Q1 (rate=0.496) ---
+2026-06-09 09:12:26,922 [INFO]   Ranking...
+2026-06-09 09:13:04,248 [INFO]   Rank done
+Traceback (most recent call last):
+  File "/home/mwoo423/.openclaw/workspace/experiments/v501_nest300.py", line 229, in <module>
+    main()
+  File "/home/mwoo423/.openclaw/workspace/experiments/v501_nest300.py", line 158, in main
+    m_cb = cb.CatBoostClassifier(**cb_cfg)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CatBoostClassifier.__init__() got an unexpected keyword argument 'best_model_use_best_model'

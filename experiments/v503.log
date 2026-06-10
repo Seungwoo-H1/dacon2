@@ -1,0 +1,17 @@
+2026-06-09 10:11:52,882 [INFO] V503 — V496 + Target-Specific HP (XGB+CB only, NO LGBM)
+2026-06-09 10:11:52,883 [INFO] 
+--- 1. Load data ---
+2026-06-09 10:11:53,097 [INFO]   Train: (450, 149), Test: (250, 142), Features: 141
+2026-06-09 10:11:53,097 [INFO] 
+--- 2. Per-subject z-score ---
+2026-06-09 10:11:57,408 [INFO]   Combined: 282 features
+2026-06-09 10:11:57,408 [INFO] 
+--- 3. Feature ranking (XGB) ---
+2026-06-09 10:11:57,408 [INFO] 
+--- Q1 (rate=0.496) ---
+2026-06-09 10:11:57,408 [INFO]   Ranking (XGB 20 rounds)...
+2026-06-09 10:12:28,010 [INFO]   Rank done (30.6s)
+2026-06-09 10:12:28,010 [INFO]   K=40
+2026-06-09 10:12:28,010 [INFO]   OOF evaluation...
+2026-06-09 10:20:05,398 [INFO]   OOF: XGB=0.7156, CB=0.6899, AVG=0.7008
+2026-06-09 10:20:05,398 [INFO]   Final predictions...

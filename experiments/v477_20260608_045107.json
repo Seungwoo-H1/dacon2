@@ -1,0 +1,84 @@
+{
+  "version": "V477",
+  "name": "Aggressive Adversarial Feature Selection",
+  "results": {
+    "adv_thresh_0.0": {
+      "meta": 0.79686,
+      "student": 0.7987,
+      "gap": -0.00038,
+      "n_features": 3,
+      "improvement": -0.013
+    },
+    "adv_thresh_0.1": {
+      "meta": 0.79364,
+      "student": 0.78632,
+      "gap": -0.01031,
+      "n_features": 21,
+      "improvement": -0.00062
+    },
+    "adv_thresh_0.2": {
+      "meta": 0.79269,
+      "student": 0.78653,
+      "gap": -0.01089,
+      "n_features": 22,
+      "improvement": -0.00083
+    },
+    "adv_thresh_0.3": {
+      "meta": 0.79507,
+      "student": 0.78696,
+      "gap": -0.01364,
+      "n_features": 29,
+      "improvement": -0.00126
+    },
+    "adv_thresh_0.5": {
+      "meta": 0.79599,
+      "student": 0.79235,
+      "gap": -0.0286,
+      "n_features": 52,
+      "improvement": -0.00665
+    },
+    "adv_pctile_10": {
+      "meta": 0.79731,
+      "student": 0.7977,
+      "gap": -0.00034,
+      "n_features": 7,
+      "improvement": -0.012
+    },
+    "adv_pctile_20": {
+      "meta": 0.79231,
+      "student": 0.78401,
+      "gap": -0.00616,
+      "n_features": 14,
+      "improvement": 0.00169
+    },
+    "adv_pctile_30": {
+      "meta": 0.79364,
+      "student": 0.78632,
+      "gap": -0.01031,
+      "n_features": 21,
+      "improvement": -0.00062
+    },
+    "adv_pctile_40": {
+      "meta": 0.79503,
+      "student": 0.78701,
+      "gap": -0.01178,
+      "n_features": 27,
+      "improvement": -0.00131
+    },
+    "adv_pctile_50": {
+      "meta": 0.79405,
+      "student": 0.78737,
+      "gap": -0.01804,
+      "n_features": 34,
+      "improvement": -0.00167
+    }
+  },
+  "best_strategy": "adv_pctile_20",
+  "adversarial_stats": {
+    "mean": 0.3389,
+    "std": 0.2631,
+    "max": 1.0
+  },
+  "timestamp": "20260608_045107",
+  "total_time_s": 49
+}

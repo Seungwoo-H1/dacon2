@@ -1,0 +1,21 @@
+{
+  "version": "V468",
+  "name": "Aggressive Feature Reduction (K=30)",
+  "avg_meta_oof": 0.53215,
+  "avg_student_oof": 0.60182,
+  "v308_lb": 0.63893,
+  "estimated_lb_v339_pattern": 0.59137,
+  "student_meta_gap": 0.06968,
+  "n_models": 3,
+  "n_seeds": 15,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v468_k_sweep_20260608_015103.csv",
+  "timestamp": "20260608_015103",
+  "total_time_s": 796.0,
+  "optimal_k": 30,
+  "k_sweep": [
+    15,
+    20,
+    25,
+    30
+  ]
+}

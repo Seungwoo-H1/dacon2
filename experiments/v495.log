@@ -1,0 +1,48 @@
+2026-06-09 02:15:51,163 [INFO] ======================================================================
+2026-06-09 02:15:51,163 [INFO] V495 — V308 Stacking + Aggressive Leak + Z-Score + Multi-Seed
+2026-06-09 02:15:51,163 [INFO] ======================================================================
+2026-06-09 02:15:51,163 [INFO] 
+--- 1. Load data ---
+2026-06-09 02:15:51,217 [INFO]   Train: (450, 153), Test: (250, 146)
+2026-06-09 02:15:51,221 [INFO]   Feature columns: 141
+2026-06-09 02:15:51,221 [INFO] 
+--- 2. Generate z-score features ---
+2026-06-09 02:15:51,223 [INFO]   Z-score features: skipped (using base features only for speed)
+2026-06-09 02:15:51,223 [INFO] 
+============================================================
+2026-06-09 02:15:51,223 [INFO] --- Q1 (rate=0.496) ---
+2026-06-09 02:15:51,223 [INFO]   Target rate: 0.496
+2026-06-09 02:15:51,223 [INFO]   After leak removal: 101 features
+2026-06-09 02:15:51,223 [INFO]   Ranking features...
+2026-06-09 02:15:56,599 [INFO]     n_feat=15: cv_student=1.2116, best_meta_C=100.0, meta_cv=0.0010, models=75
+2026-06-09 02:16:02,035 [INFO]     n_feat=20: cv_student=1.2216, best_meta_C=100.0, meta_cv=0.0010, models=75
+2026-06-09 02:16:08,676 [INFO]     n_feat=25: cv_student=1.2321, best_meta_C=100.0, meta_cv=0.0010, models=75
+2026-06-09 02:16:15,347 [INFO]     n_feat=30: cv_student=1.2222, best_meta_C=100.0, meta_cv=0.0010, models=75
+2026-06-09 02:16:22,272 [INFO]     n_feat=40: cv_student=1.3235, best_meta_C=100.0, meta_cv=0.0010, models=75
+2026-06-09 02:16:30,043 [INFO]     n_feat=50: cv_student=1.3261, best_meta_C=100.0, meta_cv=0.0010, models=75
+2026-06-09 02:16:30,067 [INFO]   Best: n_feat=20, cv=0.0010, C=100.0, models=75
+2026-06-09 02:16:30,067 [INFO]   Training final stacking (n_feat=20, C=100.0) on all data...
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'subject_id'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/mwoo423/.openclaw/workspace/experiments/v495_stacking.py", line 393, in <module>
+    main()
+  File "/home/mwoo423/.openclaw/workspace/experiments/v495_stacking.py", line 283, in main
+    meta_feats_test[:, i] = test['subject_id'].map(subj_mean).fillna(0).values
+                            ~~~~^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pandas/core/frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'subject_id'

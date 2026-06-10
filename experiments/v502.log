@@ -1,0 +1,21 @@
+2026-06-09 09:14:55,687 [INFO] ======================================================================
+2026-06-09 09:14:55,687 [INFO] V502 — V496 Pattern + Stacking Meta-Layer
+2026-06-09 09:14:55,687 [INFO] ======================================================================
+2026-06-09 09:14:55,687 [INFO] 
+--- 1. Load data ---
+2026-06-09 09:14:56,143 [INFO]   Train: (450, 149), Test: (250, 142), Features: 141
+2026-06-09 09:14:56,144 [INFO] 
+--- 2. Per-subject z-score normalization ---
+2026-06-09 09:15:00,394 [INFO]   Combined: 282 features
+2026-06-09 09:15:00,394 [INFO] 
+--- 3. Feature ranking ---
+2026-06-09 09:15:00,394 [INFO] 
+--- Q1 (rate=0.496) ---
+2026-06-09 09:15:42,168 [INFO]   Using K=40, ranking done
+Traceback (most recent call last):
+  File "/home/mwoo423/.openclaw/workspace/experiments/v502_stacking.py", line 262, in <module>
+    main()
+  File "/home/mwoo423/.openclaw/workspace/experiments/v502_stacking.py", line 149, in main
+    m_cb = cb.CatBoostClassifier(**cb_cfg)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CatBoostClassifier.__init__() got an unexpected keyword argument 'best_model_use_best_model'

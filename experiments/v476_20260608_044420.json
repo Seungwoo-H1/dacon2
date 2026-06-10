@@ -1,0 +1,62 @@
+{
+  "version": "V476",
+  "name": "Per-Target Feature Selection",
+  "results": {
+    "5": {
+      "meta": 0.79244,
+      "student": 0.79153,
+      "gap": 0.00014,
+      "improvement": -0.00583
+    },
+    "10": {
+      "meta": 0.79155,
+      "student": 0.79041,
+      "gap": -0.00939,
+      "improvement": -0.00471
+    },
+    "15": {
+      "meta": 0.79126,
+      "student": 0.78851,
+      "gap": -0.018,
+      "improvement": -0.00281
+    },
+    "20": {
+      "meta": 0.79196,
+      "student": 0.78525,
+      "gap": -0.02144,
+      "improvement": 0.00045
+    },
+    "30": {
+      "meta": 0.79115,
+      "student": 0.78372,
+      "gap": -0.02538,
+      "improvement": 0.00198
+    },
+    "40": {
+      "meta": 0.78995,
+      "student": 0.78378,
+      "gap": -0.02931,
+      "improvement": 0.00192
+    },
+    "50": {
+      "meta": 0.78984,
+      "student": 0.78594,
+      "gap": -0.03262,
+      "improvement": -0.00024
+    },
+    "68": {
+      "meta": 0.79019,
+      "student": 0.78661,
+      "gap": -0.02951,
+      "improvement": -0.00091
+    },
+    "baseline": {
+      "meta": 0.79019,
+      "student": 0.7857,
+      "gap": -0.03121
+    }
+  },
+  "best_k": 30,
+  "timestamp": "20260608_044420",
+  "total_time_s": 62
+}

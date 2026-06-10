@@ -1,0 +1,9 @@
+{
+  "version": "V477",
+  "name": "Aggressive Adversarial Feature Selection",
+  "results": {
+    "adv_thresh_0.0": {
+      "meta": 0.79686,
+      "student": 0.7987,
+      "gap": -0.00038,
+      "n_features": 

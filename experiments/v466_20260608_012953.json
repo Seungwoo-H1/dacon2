@@ -1,0 +1,14 @@
+{
+  "version": "V466",
+  "name": "CV-Internal Adversarial + Consensus Selection",
+  "avg_meta_oof": 0.5318,
+  "avg_student_oof": 0.60176,
+  "v308_lb": 0.63893,
+  "estimated_lb_v339_pattern": 0.59127,
+  "student_meta_gap": 0.06996,
+  "n_models": 3,
+  "n_seeds": 15,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v466_cv_adversarial_consensus_20260608_012953.csv",
+  "timestamp": "20260608_012953",
+  "total_time_s": 201.0
+}

@@ -1,0 +1,15 @@
+{
+  "version": "V462",
+  "name": "Subject Embedding + PCA + Cross-Target Constraint",
+  "avg_meta_oof": 0.54902,
+  "avg_student_oof": 0.63327,
+  "v308_lb": 0.63893,
+  "estimated_lb_v339_pattern": 0.62063,
+  "student_meta_gap": 0.08425,
+  "n_models": 3,
+  "n_seeds": 15,
+  "n_pca_components": 100,
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v462_subject_embedding_20260608_010612.csv",
+  "timestamp": "20260608_010612",
+  "total_time_s": 267.0
+}

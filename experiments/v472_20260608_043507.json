@@ -1,0 +1,45 @@
+{
+  "version": "V472",
+  "name": "Data Augmentation (Bootstrap + Noise Injection)",
+  "results": {
+    "0.0": {
+      "meta": 0.79019,
+      "student": 0.6714,
+      "gap": 0.11362,
+      "improvement": 0.1143
+    },
+    "0.1": {
+      "meta": 0.79923,
+      "student": 0.68924,
+      "gap": 0.10244,
+      "improvement": 0.09646
+    },
+    "0.3": {
+      "meta": 0.79369,
+      "student": 0.6905,
+      "gap": 0.11767,
+      "improvement": 0.0952
+    },
+    "0.5": {
+      "meta": 0.79662,
+      "student": 0.69147,
+      "gap": 0.11522,
+      "improvement": 0.09423
+    },
+    "1.0": {
+      "meta": 0.78924,
+      "student": 0.69282,
+      "gap": 0.11059,
+      "improvement": 0.09288
+    },
+    "2.0": {
+      "meta": 0.79429,
+      "student": 0.68668,
+      "gap": 0.10973,
+      "improvement": 0.09902
+    }
+  },
+  "best_noise_level": 0.0,
+  "timestamp": "20260608_043507",
+  "total_time_s": 54
+}

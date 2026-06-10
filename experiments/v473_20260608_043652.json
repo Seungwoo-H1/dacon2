@@ -1,0 +1,28 @@
+{
+  "version": "V473",
+  "name": "Target Transformation: Binary \u2192 Ordinal",
+  "results": {
+    "ordinal_lgbm": {
+      "meta": 0.76163,
+      "student": 0.7857,
+      "gap": 0.04196
+    },
+    "ordinal_xgb": {
+      "meta": 0.76467,
+      "student": 0.7857,
+      "gap": 0.0484
+    },
+    "binary_baseline": {
+      "meta": 0.79019,
+      "student": 0.7857,
+      "gap": -0.03121
+    },
+    "ordinal_reg": {
+      "meta": 0.29912,
+      "student": 0.7857,
+      "gap": 0.65979
+    }
+  },
+  "best_approach": "ordinal_lgbm",
+  "ordinal_distribution": {
+    "0": 

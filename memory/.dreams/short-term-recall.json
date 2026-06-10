@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-08T00:21:35.073Z",
+  "updatedAt": "2026-06-09T08:21:47.450Z",
   "entries": {
     "memory:memory/2026-05-01.md:1:32": {
       "key": "memory:memory/2026-05-01.md:1:32",
@@ -347,20 +347,22 @@
       "endLine": 53,
       "source": "memory",
       "snippet": "2. **S1, S2는 stacking(meta-learner)이 가장 효과적** (0.009~0.014 개선) 3. **Q1, Q3, S4는 top-5 ensemble**이 단일 config/stacking보다 좋음 (diversity 중요) 4. **S3는 single-best**가 최고 (v53_wide_n8) — ensemble/stacking 역개선 5. **V53 config 추가(v53_deep, v53_wide)**가 diversity에 기여 6. **6 configs × 5 n_feats × 20 seeds = 600 모델** 평가 ### V81과의 비교 - V81은 rank fusion(LGBM+MI)과 15 seeds → OOF 0.6285 (V52보다 나쁨) - V82는 pure LGBM ranking, 20 seeds, multi-config → OOF 0.5654 - **LGBM importance ranking이 MI fusion보다 낫다는 재확인** ### 리더보드 제출 - `submissions/submission_v82_test_20260509.csv` (250 samples) - Git commit: `cf0e942` - **V53 리더보드 0.65358 → V82 리더보드 점수 확인 필요** ### V80 (참고) - LGBM+XGB 2-model stacking (3-fold, 15 seed",
-      "recallCount": 2,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 2,
+      "totalScore": 3,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-09T14:08:22.242Z",
-      "lastRecalledAt": "2026-06-02T02:54:09.746Z",
+      "lastRecalledAt": "2026-06-09T08:21:47.450Z",
       "queryHashes": [
         "be7beca81d35",
-        "bda78577b6c5"
+        "bda78577b6c5",
+        "4e74a6205d9a"
       ],
       "recallDays": [
         "2026-05-09",
-        "2026-06-02"
+        "2026-06-02",
+        "2026-06-09"
       ],
       "conceptTags": [
         "meta-learner",
@@ -606,22 +608,24 @@
       "endLine": 41,
       "source": "memory",
       "snippet": "# 2026-05-11 (금) — DaCon2 연구日志 ## DaCon2 핵심 결과 ### V106 (LB 1.057 실패) - OOF 0.5250 → LB 1.0571 (심각한 OOF-LB mismatch) - 원인: 예측값 train mean과 systematically misaligned (S3: 0.39 vs train 0.66) - **제출 완료, LB 분석용으로 기록** ### V114 (수동 제출 완료) - OOF 0.6544 - isotonic calibration 없음 → V115(0.5476)보다 떨어짐 - **제출 완료, LB 결과 대기 중** ### V115 (pipeline best before ensemble) - OOF **0.5476** (isotonic calibration + personalization) - 베이스라인: base 141 cols + zscore 141 cols + meta 12 cols = 294 cols ### V119 (base-only isotonic) - OOF 0.5706 (pairwise/transformed 없음) - pairwise/transformed가 핵심 발견 ### V121 (current best single model) - OOF **0.5482** (pairwise+transformed per-target × 50 seeds) - pairwise/",
-      "recallCount": 3,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 3,
+      "totalScore": 4,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-15T15:57:26.897Z",
-      "lastRecalledAt": "2026-05-24T02:06:10.550Z",
+      "lastRecalledAt": "2026-06-08T01:25:32.874Z",
       "queryHashes": [
         "704383919f44",
         "6c93796aff0d",
-        "6df512644bbc"
+        "6df512644bbc",
+        "007b0af5eb53"
       ],
       "recallDays": [
         "2026-05-15",
         "2026-05-19",
-        "2026-05-24"
+        "2026-05-24",
+        "2026-06-08"
       ],
       "conceptTags": [
         "1.057",
@@ -641,22 +645,24 @@
       "endLine": 37,
       "source": "memory",
       "snippet": "# 2026-05-08 Daily Log — 최종 요약 ## 세션 복원 (12:27) - 승우: OPENCLAW_HANDOFF_20260506.md 읽고 현황 파악, MEMORY.md 생성 요청 -MEMORY.md 생성 완료: `/home/mwoo423/projects/dacon2/MEMORY.md` - daily log 생성: `/home/mwoo423/projects/dacon2/memory/2026-05-08.md` ## 전체 타임라인 복원 ### 2026-05-01: 베이스라인 - LGBM V10: CV 0.6038 — 2주간 최고 기록 - V11~V14: 개인화 피처, calibration 시도 → V10 미달 - V25: LGBM rolling features, Cal 0.6462 - V30: XGB, Cal 0.6685 ### 2026-05-05: V35~V40 실패 - 메모리 부족 (SIGKILL), RAM 16GB+Swap 4GB 부족 - V37 완주: Avg 0.6144 (-0.0106 vs V10) - **결론: V10이 당시 최고** ### 2026-05-06: V53 Deep Feature Engineering - **V53 final**: 리더보드 **0.6535822621** (LGBM seed ensemble 50) - 타깃별 cfg/feature 선택: deep/wide/v48/safety -",
-      "recallCount": 3,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 3,
+      "totalScore": 4,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-15T15:57:26.897Z",
-      "lastRecalledAt": "2026-05-24T02:06:10.550Z",
+      "lastRecalledAt": "2026-06-08T01:25:32.874Z",
       "queryHashes": [
         "704383919f44",
         "6c93796aff0d",
-        "6df512644bbc"
+        "6df512644bbc",
+        "007b0af5eb53"
       ],
       "recallDays": [
         "2026-05-15",
         "2026-05-19",
-        "2026-05-24"
+        "2026-05-24",
+        "2026-06-08"
       ],
       "conceptTags": [
         "openclaw-handoff-20260506.md",
@@ -676,18 +682,20 @@
       "endLine": 23,
       "source": "memory",
       "snippet": "# 2026-05-19 ## Result Summary (V147-V150) | Version | Method | AVG OOF | Δ vs V140 | Δ vs V148 | |---------|--------|---------|-----------|-----------| | V147 | CV-ranking | 0.64649 | +0.00539 | +0.01520 | | V148 | Target enc + zgrp + inter | 0.63129 | -0.00981 | baseline | | V149 | Target enc + zgrp + inter (v2) | 0.63567 | -0.00543 | +0.00438 | | **V150** | **LGBM+XGB+CB 9-student stacking** | **0.62040** | **-0.02070** | **-0.01089** | ## Key Findings - V150이 현재 Best OOF (0.62040) - Model diversity (LGBM+XGB+CatBoost)가 가장 큰 개선 요인 - CatBoost가 개별 student로 6/7 타겟에서 최상 - S1 stacking OOF=0.542 (매우 좋음!) - feature engineering은 diminishing returns, model diversity가 핵심 ## Next: V151 - V150 str",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 2,
       "maxScore": 1,
       "firstRecalledAt": "2026-06-02T02:54:09.746Z",
-      "lastRecalledAt": "2026-06-02T02:54:09.746Z",
+      "lastRecalledAt": "2026-06-09T08:21:47.450Z",
       "queryHashes": [
-        "bda78577b6c5"
+        "bda78577b6c5",
+        "4e74a6205d9a"
       ],
       "recallDays": [
-        "2026-06-02"
+        "2026-06-02",
+        "2026-06-09"
       ],
       "conceptTags": [
         "v147-v150",
@@ -738,18 +746,20 @@
       "endLine": 30,
       "source": "memory",
       "snippet": "## 2026-05-14 (Afternoon) ### V265 Root-Cause Analysis - **Completed**: Comprehensive analysis of OOF/LB mismatch - **Key finding**: Gap ≈ 0.11 is STRUCTURAL (train-test drift), not validation error - **OOF verified as truly out-of-fold** (each row predicted exactly once) - **V127 undisputed best** (LB=0.648, OOF=0.537) — no hidden strong candidate - **V45/V46 confirmed leaked** (100%/99.6% accuracy) - **S1 target has highest fold variance** (std=0.111) - **Ensemble diversity LOW** (avg correlation 0.785) - **Best gap model**: OOF + 0.105 ### V266 Temperature Scaling - Created V127 with temperature scaling T=0.86 - OOF improvement: 0.53731 → 0.53517 (Δ=-0.00214) - Est LB improvement: 0.64",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 2,
       "maxScore": 1,
       "firstRecalledAt": "2026-06-04T07:24:06.571Z",
-      "lastRecalledAt": "2026-06-04T07:24:06.571Z",
+      "lastRecalledAt": "2026-06-09T08:21:47.450Z",
       "queryHashes": [
-        "c605e439a5da"
+        "c605e439a5da",
+        "4e74a6205d9a"
       ],
       "recallDays": [
-        "2026-06-04"
+        "2026-06-04",
+        "2026-06-09"
       ],
       "conceptTags": [
         "root-cause",

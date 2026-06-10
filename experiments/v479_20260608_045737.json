@@ -1,0 +1,20 @@
+{
+  "version": "V479",
+  "name": "Ensemble of Diverse Configs",
+  "config_oofs": {
+    "conservative": 0.7981837969196082,
+    "aggressive": 0.7730319500560556,
+    "balanced": 0.7856957778356886,
+    "deep": 0.7785388980116628,
+    "shallow": 0.8006717443104786,
+    "low_lr": 0.7999970868368209,
+    "high_sub": 0.7850986597706124
+  },
+  "ensemble_student_oof": 0.79191,
+  "meta_oof": 0.79019,
+  "gap": -0.02712,
+  "improvement": -0.00621,
+  "n_configs": 7,
+  "timestamp": "20260608_045737",
+  "total_time_s": 73
+}
