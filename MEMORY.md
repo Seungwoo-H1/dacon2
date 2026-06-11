@@ -1079,6 +1079,139 @@ When you have nothing to say, respond with ONLY: NO_REPLY
 - Feature selection 없이 full 282 features(141 z-score + 141 original) 사용해야 함
 - ❌ **V496의 combined approach(z+orig)가 정답**
 
+### V509 — V308 EXACT REPRODUCTION + Random Features Benchmark (2026-06-11 완료 ✅) 
+- **AVG OOF: 0.62235** (V308 완벽 재현!)
+- **AVG GAP: 0.06977** (V308 claimed 0.01658 — **4.2배 차이! V308이 gap을 underreport했음**)
+- Random features gap: 0.179, 0.198, 0.215 → real features have strong signal
+- Per-target gap: Q1=0.113, Q2=0.079, Q3=0.124, S1=0.020, S2=0.097, S3=0.017, S4=0.039
+- **핵심**: V308의 claimed gap 0.01658은 완전히 틀림. 실제 gap 0.070으로 동일.
+- ✅ 제출: `submission_v509_v308_repro_20260611_002345.csv`
+
+### V510 — Per-Target Meta C (Q:1.0, S:10.0) (2026-06-11 완료 ❌)
+- **AVG OOF: 0.62612** (V308보다 Worse +0.004)
+- **AVG GAP: 0.06599** (V308과 유사 -0.004)
+- Per-target gap: Q1=0.104, Q2=0.071, Q3=0.114, S1=0.020, S2=0.097, S3=0.017, S4=0.039
+- **교훈**: Meta C tuning은 gap에 거의 영향 없음. Q targets gap이 줄지 않음.
+- ✅ 제출: `submission_v510_per_target_meta_c_20260611_002748.csv`
+
+### V511 — 30 Seeds Instead of 15 (2026-06-11 완료 ❌)
+- **AVG OOF: 0.62396** (V308보다 Worse +0.002)
+- **AVG GAP: 0.073** (V308보다 Worse +0.003)
+- 30 seeds → student variance가 오히려 증가 (different configs across seeds)
+- ✅ 제출: `submission_v511_30seeds_20260611_003122.csv`
+- **교훈**: More seeds ≠ lower gap. Same config per target but different random_state still causes gap.
+
+### V512 — Feature Consensus Across Seeds (2026-06-11 완료 ❌)
+- **AVG OOF: 0.62233** (V308와 동일)
+- **AVG GAP: 0.07120** (V308보다 +0.001 Worse)
+- Consensus features: 5 per target (top-5 of ALL seeds)
+- **교훈**: Consensus features add no value beyond V53 features
+- ✅ 제출: `submission_v512_consensus_20260611_062619.csv`
+
+### V513 — Reduced Meta: Mean+Std (2 features) (2026-06-11 완료 ⚠️)
+- **AVG OOF: 0.63563** (V308보다 +0.013 Worse)
+- **AVG GAP: 0.05790** (V308보다 -0.012 Better! ✅ all 7 targets)
+- Key insight: reduced meta improves GAP but worsens OOF
+- Tradeoff: 15D meta → lower OOF, higher gap. 2D meta → higher OOF, lower gap.
+- ✅ 제출: `submission_v513_reduced_meta_20260611_062828.csv`
+
+### V514 — 1-Feature Meta (Mean Only) (2026-06-11 완료 ⚠️)
+- **AVG OOF: 0.63568** (V308보다 +0.013 Worse)
+- **AVG GAP: 0.05785** (V308보다 -0.012 Better!)
+- 1 feature meta → gap same as 2 features (std adds nothing)
+- ✅ 제출: `submission_v514_temp_scale_1feat_20260611_063247.csv`
+
+### V515 — Mixed Base: XGB for Q, LGBM for S (2026-06-11 완료 ✅ BEST gap so far!)
+- **AVG OOF: 0.62255** (V308와 동일)
+- **AVG GAP: 0.05687** (V308보다 -0.013 Better!)
+- XGB for Q: Q3 std 0.003 (vs LGBM 0.015! 👍), Q2 std 0.004 (vs 0.007)
+- Q3 gap: 0.052 ✅ (vs V308 0.124, massively improved)
+- Q1 gap: 0.124 ❌ (XGB student_ll=0.776, still high)
+- ✅ 제출: `submission_v515_mixed_learners_20260611_063729.csv`
+
+### V516 — XGB for ALL targets (2026-06-11 완료 ❌ S targets gap worse)
+- **AVG OOF: 0.61810** (V308보다 -0.004 BEST oof!) ✅
+- **AVG GAP: 0.07481** (V308보다 +0.005 Worse)
+- XGB for S targets: S1 gap 0.051 (vs 0.020), S2 0.107 (vs 0.097), S3 0.037 (vs 0.017), S4 0.068 (vs 0.039)
+- **Key finding**: XGB helps Q targets but HURTS S targets gap
+- Mixed (V515: XGB for Q, LGBM for S) is the right approach
+- ✅ 제출: `submission_v516_xgb_all_20260611_064418.csv`
+
+### V517 — Q1 n_feat sweep (7, 10, 15) with XGB (2026-06-11 완료 ✅ BEST gap!)
+- **Q1_7 (n_feat=7, XGB narrow)**: avg_gap **0.04837** — BEST gap so far!
+- Q1_10: 0.05360, Q1_15: 0.05257
+- Q1 n_feat=7: gap 0.041 ✅ (vs V308 0.113), student=0.694, std=0.003
+- Q1 n_feat=7 student avg drops from 0.776 (n_feat=19) to 0.694 — massive improvement!
+- S1 still ❌ (gap 0.022 vs V308 0.020) — the only target that gets worse
+- ✅ Combined config (Q1_7 + XGB for Q2/Q3 + LGBM for S) is the new best
+
+### V518 — Full: XGB for Q + LGBM for S, Q1 n_feat=7 (15D vs 2D meta) (2026-06-11 완료 ✅)
+- **15D meta**: AVG OOF=0.62291, AVG GAP=0.04837
+- **2D meta**: AVG OOF=0.63429, AVG GAP=0.03699
+- Tradeoff confirmed: 2D meta lower gap but higher OOF
+- 2D meta: all 7 targets ✅ vs V308 gap (including S1! 0.006 vs 0.020)
+- 15D meta: Q1-Q3, S2-S4 ✅ but S1 ❌ (0.022 vs 0.020)
+- **Best gap combo**: 2D meta with mixed learners → avg gap 0.037 (closest to 0.025 target)
+- ✅ 제출: `submission_v518_best_meta_15D_20260611_065826.csv`
+
+### V519 — Aggressive Reduction (Q3=7, S1=10) (2026-06-11 완료 ✅ IMPROVED)
+- Q3 n_feat=7 → gap 0.007 (was 0.076 in V518). S1 n_feat=10 → gap 0.036 (still high).
+- **Q3=xgb/7 is the key**: student variance dramatically reduced.
+- ✅ 제출: `submission_v519_aggressive_20260611_...csv` (partial, used V520 configs)
+- **Bug Fix**: Key naming issue — non-Q3/S1 targets stored with duplicate prefixes (`Q1_Q1`). Fixed with `config_results[f"{target}_{config_name}"]`.
+
+### V520 — Full Production: Best Configs from V519 (2026-06-11 완료 ✅ BREAKTHROUGH)
+- Config: Q1=7(xgb/narrow) + Q2=14(xgb/deep) + Q3=7(xgb/strong) + S1=10(lgbm/wide) + S2=19(lgbm) + S3=23(lgbm/safety) + S4=20(lgbm/wide)
+- **2D Meta**: AVG OOF=0.63563, AVG GAP=0.033. 6/7 targets ✅ vs V308
+- **15D Meta**: AVG OOF=0.62291, AVG GAP=0.048
+- Q3 gap dropped to 0.007. S2 was largest gap contributor (0.077 student variance).
+- **Key insight**: S2 needs different learner — XGB for S2 hypothesis born.
+
+### V521 — S2 Sweep: XGB for S2 + n_feat sweep (7, 10, 15) (2026-06-11 완료 ✅🎯)
+- **BREAKTHROUGH**: avg_gap=0.02550! First time below 0.030.
+- **S2_xgb_7 is the game-changer**: XGB for S2 with n_feat=7 → S2 gap 0.077→0.023
+- S2 student avg drops from 0.715 (LGBM) to 0.647 (XGB) — massive improvement
+- Per-target results (2D meta):
+  - Q1: gap=0.028 ✅, Q2: gap=0.050 ✅, Q3: gap=0.007 ✅
+  - S1: gap=0.036 ❌ (target 0.020), S2: gap=0.023 ✅, S3: gap=0.007 ✅, S4: gap=0.028 ✅
+- **avg_gap=0.02550** — closest to 0.025 target ever!
+- 6/7 targets ✅ vs V308 gap. S1 is the only remaining ❌.
+- ✅ 제출: `submission_v521_s2_20260611_...csv` (created)
+- **Bug Fix**: `test_feat_cols` not defined in `run_target` — fixed by passing as argument.
+
+### V522 — PRODUCTION: Best Config × 15D + 2D Meta (2026-06-11 완료 ✅ CONFIRMED)
+- Config: Q1=7(xgb/narrow) + Q2=14(xgb/deep) + Q3=7(xgb/strong) + S1=10(lgbm/wide) + S2=7(xgb/s_wide) + S3=23(lgbm/safety) + S4=20(lgbm/wide)
+- **2D Meta**: AVG OOF=0.63111, AVG GAP=0.02550 ✅ CONFIRMED
+- **15D Meta**: AVG OOF=0.62300, AVG GAP=0.03360
+- Same config as V521 but production script with both meta variants.
+- Per-target (2D meta):
+  - Q1: OOF=0.666 gap=0.028 ✅, Q2: OOF=0.643 gap=0.050 ✅, Q3: OOF=0.638 gap=0.007 ✅
+  - S1: OOF=0.579 gap=0.036 ❌, S2: OOF=0.624 gap=0.023 ✅, S3: OOF=0.620 gap=0.007 ✅, S4: OOF=0.648 gap=0.028 ✅
+- **6/7 targets ✅ vs V308**. S1 gap 0.036 (target 0.020) is the only bottleneck.
+- ✅ 제출: `submission_v522_production_20260611_072035.csv` (2D meta)
+- Result JSON: `v522_20260611_072035.json`
+
+## ⭐ 현재 BEST: V308 (Verified LB)
+- **LB: 0.63893** ⭐唯一 verified BEST
+- **AVG OOF: 0.62235**, **gap: 0.01658 (V308 claimed) / 0.070 (actual measured)**
+- V496 LB=0.67579 Worse, V505 gap=0.070 Worse
+- V509: V308 perfectly reproduced, V308 gap underreport confirmed (0.070 vs claimed 0.017)
+- V510: Meta C tuning has minimal effect on gap
+- V515: XGB for Q targets reduces gap best so far (avg 0.057)
+- V511: 30 seeds → gap worse (0.073) — more seeds ≠ solution
+- **V521/V522 breakthrough**: avg_gap=0.02550! First time below 0.030!
+- **V525 MAJOR BREAKTHROUGH**: avg_gap=0.01878! **First time below 0.020!** 🎯
+- **V526 NEW BEST**: avg_gap=**0.01595**! **7/7 targets all beat V308!** 🎯🎯🎯
+  - Config: Q1=7(q_narrow) + Q2=14(q_deep) + Q3=7(q_strong) + S1=5(q_strong) + S2=7(s_wide) + S3=23(q_strong) + S4=20(q_deep)
+  - Equal mix (0.5 XGB + 0.5 LGBM) — simple averaging이 optimal!
+  - Meta OOF avg: 0.62936 | avg_gap: 0.01595 | vs308: **7/7** ✅
+  - S1 gap=0.004 (역대 최저! n_feat=5가 optimal)
+  - Improvement over V522: **-37.5%** (0.02550 → 0.01595)
+  - Improvement over V525: **-15.1%** (0.01878 → 0.01595)
+- **핵심 인사이트: GAP가 핵심 변수. Lower OOF ≠ Better LB**
+- **Gap < 0.025 → 0.020 → 0.016**: V308 깨기 직전!
+- Next: LB 예측 + 제출 고려
+
 ### V505 — V308 Exact + 20 Seeds + Stronger Meta Reg C=5 (2026-06-10 완료 ❌)
 - **AVG OOF: 0.62181** (V308 0.62235 대비 -0.00054, 미미)
 - **AVG gap: 0.07030** (V308 0.01658 대비 **4.2배 큼** — 폭망)
