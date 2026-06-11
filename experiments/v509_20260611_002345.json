@@ -1,0 +1,27 @@
+{
+  "version": "V509",
+  "name": "V308 EXACT REPRODUCTION + RANDOM FEATURES BENCHMARK",
+  "avg_oof": 0.62235,
+  "avg_gap": 0.06977,
+  "v308_claimed_avg_oof": 0.62235,
+  "v308_claimed_gap": 0.01658,
+  "random_features_gap": [
+    0.17915,
+    0.1978,
+    0.21501
+  ],
+  "n_seeds": 15,
+  "meta_c": 10.0,
+  "per_target_oof": {
+    "Q1": 0.67096,
+    "Q2": 0.62299,
+    "Q3": 0.61939,
+    "S1": 0.57915,
+    "S2": 0.61564,
+    "S3": 0.60994,
+    "S4": 0.63839
+  },
+  "submission_file": "/home/mwoo423/.openclaw/workspace/submissions/submission_v509_v308_repro_20260611_002345.csv",
+  "timestamp": "20260611_002345",
+  "total_time_s": 170.0
+}
