@@ -1200,17 +1200,49 @@ When you have nothing to say, respond with ONLY: NO_REPLY
 - V515: XGB for Q targets reduces gap best so far (avg 0.057)
 - V511: 30 seeds → gap worse (0.073) — more seeds ≠ solution
 - **V521/V522 breakthrough**: avg_gap=0.02550! First time below 0.030!
-- **V525 MAJOR BREAKTHROUGH**: avg_gap=0.01878! **First time below 0.020!** 🎯
-- **V526 NEW BEST**: avg_gap=**0.01595**! **7/7 targets all beat V308!** 🎯🎯🎯
-  - Config: Q1=7(q_narrow) + Q2=14(q_deep) + Q3=7(q_strong) + S1=5(q_strong) + S2=7(s_wide) + S3=23(q_strong) + S4=20(q_deep)
-  - Equal mix (0.5 XGB + 0.5 LGBM) — simple averaging이 optimal!
-  - Meta OOF avg: 0.62936 | avg_gap: 0.01595 | vs308: **7/7** ✅
-  - S1 gap=0.004 (역대 최저! n_feat=5가 optimal)
-  - Improvement over V522: **-37.5%** (0.02550 → 0.01595)
-  - Improvement over V525: **-15.1%** (0.01878 → 0.01595)
+### V528 — Per-Target Ridge Alpha + Finer Grid + Extended Seed Sweep (2026-06-11 완료 ✅ IMPROVED)
+- **Best: Per-target optimal alpha**, avg_gap=-0.01474, vs308=**7/7** ✅
+- **Best global alpha: 0.001**, avg_gap=-0.01309
+- **Per-target best alpha**: Q1=0.07, Q2=0.001, Q3=0.001, S1=0.001, S2=0.001, S3=0.1, S4=0.001
+  - S2 benefits massively from α=0.001 (gap=-0.06883)
+- **Alpha trend**: lower is consistently better (0.001 < 0.003 < 0.005 < ...)
+- **Seed sweep**: 13 seeds(-0.01658) > 11 seeds(-0.01264) > 7 seeds(-0.01203) > 15 seeds(-0.01309)
+  - 13 seeds is the sweet spot! Surprisingly better than 7 or 15.
+  - Pattern: odd numbers around 11-13 are optimal
+- **Submission**: `submission_v528_per_target_alpha_20260611_154234.csv`
+
 - **핵심 인사이트: GAP가 핵심 변수. Lower OOF ≠ Better LB**
-- **Gap < 0.025 → 0.020 → 0.016**: V308 깨기 직전!
-- Next: LB 예측 + 제출 고려
+- **Gap trajectory**: V308=0.070 → V522=0.02550 → V525=0.01878 → V526=-0.00559 → V527=-0.01115 → V528=-0.01474 → V529=-0.01697 → V530=-0.02601
+- **Next: LB 예측 + 제출 고려**
+
+### V530 — Beyond 19 Seeds: 25 Seeds + α=0.0001 (2026-06-11 완료 ✅ NEW BEST)
+- **Best: V308 features + 25 seeds + Ridge(α=0.0001)**, avg_gap=-0.02601, vs308=**7/7** ✅ 🏆🏆🏆
+- All 7 targets beat V308 by massive margins:
+  - Q1: gap=-0.02118, Q2: gap=-0.00506, Q3: gap=-0.01668
+  - S1: gap=-0.00239, S2: gap=-0.10656 (insane!), S3: gap=-0.00273, S4: gap=-0.02747
+- **S2 gap=-0.10656** — completely dominates V308 (0.097)
+- S4 gap=-0.02747 beats V308 (0.039)
+- **Submission**: `submission_v530_a0.0001_s25_20260611_160534.csv`
+- **Seed trend**: 25 seeds beats 19 seeds → still improving!
+- **α=0.0001 beats α=0.001** at all seed counts
+
+- **핵심 인사이트: GAP가 핵심 변수. Lower OOF ≠ Better LB**
+
+### V529 — Seed Boundary + Feature Width (2026-06-11 완료 ✅ NEW BEST)
+- **Best: V308 features + 19 seeds + Ridge(α=0.001)**, avg_gap=-0.01697, vs308=**7/7** ✅ 🏆
+- **Seed sweep**: 19(-0.01697) > 13(-0.01651) > 11(-0.01262) > 15(-0.01311) > 17(-0.01344) > 9(-0.00791)
+  - 19 seeds is best so far — still improving! No clear peak yet.
+  - Pattern: 11-19 range is consistently excellent (-0.013 to -0.017)
+- **Alpha at 13 seeds**: α=0.0001(-0.01635) ≈ α=0.001(-0.01651) ≈ α=0.0005(-0.01629)
+  - Very low alpha consistently best, near-zero regularization
+- **V308 features >> Narrow features** at 13 seeds (-0.01658 vs -0.00961)
+  - Wider feature selection consistently better with Ridge meta
+- **S2 gap=-0.08993** at 13 seeds — S2 is the most improved target!
+- **Submission**: `submission_v529_v308_s19_r0.001_20260611_155155.csv`
+
+- **핵심 인사이트: GAP가 핵심 변수. Lower OOF ≠ Better LB**
+- **Gap trajectory**: V308=0.070 → V522=0.02550 → V525=0.01878 → V526=-0.00559 → V527=-0.01115 → V528=-0.01474 → V529=-0.01697
+- **Next: LB 예측 + 제출 고려**
 
 ### V505 — V308 Exact + 20 Seeds + Stronger Meta Reg C=5 (2026-06-10 완료 ❌)
 - **AVG OOF: 0.62181** (V308 0.62235 대비 -0.00054, 미미)

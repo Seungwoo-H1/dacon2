@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 """
-V527 — Ridge Meta + XGB+LGBM Blend: Alpha sweep + seed count sweep
+V530 — Extend Seeds Beyond 19, Test α=0.0001
 
-Hypothesis: V526 showed Ridge meta on XGB+LGBM blended predictions achieves
-avg_gap=-0.00559 (ridge2, alpha=0.5) — virtually zero overfitting.
-Now sweep: (1) more precise ridge alpha values, (2) higher seed counts.
-
-Also: try 1D Ridge (only mean, no std) since 1D LR (0.0249) was close to 2D LR (0.0250).
+Hypothesis: 19 seeds beats 13/15. Try 19,20,21,22,23,24,25 to find the peak.
+Also test α=0.0001 (slightly better than 0.001 at 13 seeds in V529).
 """
 import sys, gc, logging, json, re, time, warnings
 from pathlib import Path
 from datetime import datetime
 from sklearn.metrics import log_loss
 from sklearn.model_selection import GroupKFold
-from sklearn.linear_model import LogisticRegression, Ridge
+from sklearn.linear_model import Ridge
 import numpy as np
 import pandas as pd
 import lightgbm as lgb
@@ -53,8 +50,6 @@ LEAK_Q = {
 
 SEED = 42
 N_FOLDS = 5
-N_SEEDS = 15
-META_C = 10.0
 
 
 def sanitize_col(n):
@@ -111,20 +106,15 @@ def train_one(seed, X_tr, y_tr, X_va, X_test, feat_names, learner, n_est, **mp):
 
 
 def ridge_gap(oofs_arr, y, alpha):
-    """Compute gap using Ridge(meta) with given alpha.
-    oofs_arr: list of 1D arrays, one per seed, each of shape (n_samples,).
-    """
     avg_student = np.mean([log_loss(y, np.clip(so, 0.001, 0.999)) for so in oofs_arr])
-    oofs_arr_2d = np.column_stack(oofs_arr)  # shape (n_samples, n_seeds)
-    avg_pred = np.mean(oofs_arr_2d, axis=1)  # per-sample mean over seeds
-    std_pred = np.std(oofs_arr_2d, axis=1)   # per-sample std over seeds
-    
+    oofs_2d = np.column_stack(oofs_arr)
+    avg_pred = np.mean(oofs_2d, axis=1)
+    std_pred = np.std(oofs_2d, axis=1)
     X_meta = np.column_stack([avg_pred, std_pred])
     
     meta = Ridge(alpha=alpha)
     meta.fit(X_meta, y)
     train_pred = meta.predict(X_meta)
-    # Normalize to [0,1] range
     pmin, pmax = train_pred.min(), train_pred.max()
     if pmax - pmin < 1e-10:
         train_proba = np.ones_like(train_pred) * 0.5
@@ -140,7 +130,7 @@ def main():
     t_start = time.time()
     
     log.info("=" * 70)
-    log.info("V527 — Ridge Meta + Blend: Alpha sweep + seed sweep")
+    log.info("V530 — Beyond 19 Seeds + α=0.0001")
     log.info("=" * 70)
     
     train_df = pd.read_parquet(DATA / "features.parquet")
@@ -151,7 +141,7 @@ def main():
             if c in df.columns:
                 df[c] = pd.to_datetime(df[c]).dt.strftime('%Y-%m-%d')
     
-    # Z-score features
+    # Z-score
     train_base = [c for c in train_df.columns
                   if c not in META_COLS | set(TARGETS)
                   and not c.endswith('_zscore')
@@ -199,17 +189,17 @@ def main():
         'S1': 21, 'S2': 19, 'S3': 23, 'S4': 20
     }
     
-    # Pre-rank features (once)
+    # Pre-rank
     log.info("Pre-ranking features...")
     ranked_features = {}
     for target in TARGETS:
         feat_cols_clean = remove_leak(train_feat_cols, target)
         ranked_features[target] = rank_features(train_df, feat_cols_clean, target)
     
-    # STEP 1: Train base models (V308 feature counts, cv_weighted blend)
-    log.info("\nTraining base models...")
-    target_oofs = {}
-    target_tests = {}
+    # Train base models: 25 seeds to enable full seed sweep
+    log.info("\nTraining base models (25 seeds)...")
+    all_oofs = {}
+    all_tests = {}
     
     for target in TARGETS:
         n_feat = V308_FEATURES[target]
@@ -248,7 +238,7 @@ def main():
         xgb_tests = []
         lgbm_tests = []
         
-        for si in range(N_SEEDS):
+        for si in range(25):
             seed = SEED + si * 11
             xoof = np.zeros(n_train)
             loof = np.zeros(n_train)
@@ -278,7 +268,6 @@ def main():
             xgb_tests.append(xtest)
             lgbm_tests.append(ltest)
         
-        # CV-weighted blend
         ll_xgb = np.mean([log_loss(y, np.clip(xo, 0.001, 0.999)) for xo in xgb_seed_oofs])
         ll_lgbm = np.mean([log_loss(y, np.clip(lo, 0.001, 0.999)) for lo in lgbm_seed_oofs])
         inv_xgb = 1.0 / max(ll_xgb, 1e-10)
@@ -289,160 +278,73 @@ def main():
         blended_oofs = [wx * xoof + (1-wx) * loof for xoof, loof in zip(xgb_seed_oofs, lgbm_seed_oofs)]
         blended_tests = [wx * xt + (1-wx) * lt for xt, lt in zip(xgb_tests, lgbm_tests)]
         
-        target_oofs[target] = blended_oofs
-        target_tests[target] = blended_tests
-        log.info(f"  {target}: n_feat={n_feat}, wx={wx:.3f}")
+        all_oofs[target] = blended_oofs
+        all_tests[target] = blended_tests
+        log.info(f"  {target}: n_feat={n_feat}, wx={wx:.3f}, 25 seeds")
     
-    # STEP 2: Alpha sweep
+    # Seed sweep: 19-25 for both α=0.0001 and α=0.001
     log.info(f"\n{'='*60}")
-    log.info("RIDGE ALPHA SWEEP")
+    log.info("SEED SWEEP: 19-25 seeds, α=0.0001 and α=0.001")
     log.info(f"{'='*60}")
     
-    ALPHA_VALUES = [0.01, 0.05, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0, 2.0, 5.0, 10.0]
-    alpha_results = []
-    
-    for alpha in ALPHA_VALUES:
-        total_gap = 0
-        target_gaps = {}
-        for target in TARGETS:
-            _, _, gap = ridge_gap(target_oofs[target], train_df[target].values, alpha)
-            target_gaps[target] = gap
-            total_gap += gap
-        avg_gap = total_gap / 7
-        vs308 = sum(1 for t in TARGETS if target_gaps[t] < v308_gaps[t])
-        
-        marker = ""
-        if avg_gap < 0.0: marker = " 🎯"
-        elif avg_gap < 0.01: marker = " ⭐"
-        log.info(f"  alpha={alpha:5.2f}: avg_gap={avg_gap:+.5f}, vs308={vs308}/7{marker}")
-        
-        alpha_results.append({'alpha': alpha, 'avg_gap': avg_gap, 'target_gaps': target_gaps, 'vs308': vs308})
-    
-    # STEP 3: Best alpha with different seed counts
-    best_alpha = min(alpha_results, key=lambda x: x['avg_gap'])
-    best_alpha_val = best_alpha['alpha']
-    
-    log.info(f"\n{'='*60}")
-    log.info(f"Best alpha: {best_alpha_val}")
-    log.info(f"{'='*60}")
-    
-    # Use only 7 seeds (half) with best alpha
-    log.info("\nTesting with fewer seeds (7, 5, 3)...")
     seed_results = {}
+    for alpha in [0.0001, 0.001]:
+        for n_seeds in [19, 20, 21, 22, 23, 24, 25]:
+            total_gap = 0
+            target_gaps = {}
+            for target in TARGETS:
+                subset = all_oofs[target][:n_seeds]
+                _, _, gap = ridge_gap(subset, train_df[target].values, alpha)
+                target_gaps[target] = gap
+                total_gap += gap
+            avg_gap = total_gap / 7
+            vs308 = sum(1 for t in TARGETS if target_gaps[t] < v308_gaps[t])
+            
+            marker = ""
+            if avg_gap < -0.02: marker = " 🎯🎯🎯"
+            elif avg_gap < 0.0: marker = " 🎯"
+            log.info(f"  α={alpha:.4f} seeds={n_seeds}: avg_gap={avg_gap:+.5f}, vs308={vs308}/7{marker}")
+            
+            seed_results[f'a{alpha}_s{n_seeds}'] = {'avg_gap': avg_gap, 'target_gaps': target_gaps, 'vs308': vs308}
     
-    for n_seeds_try in [7, 5, 3]:
-        total_gap = 0
-        target_gaps = {}
-        for target in TARGETS:
-            subset_oofs = target_oofs[target][:n_seeds_try]
-            _, _, gap = ridge_gap(subset_oofs, train_df[target].values, best_alpha_val)
-            target_gaps[target] = gap
-            total_gap += gap
-        avg_gap = total_gap / 7
-        vs308 = sum(1 for t in TARGETS if target_gaps[t] < v308_gaps[t])
-        
-        marker = ""
-        if avg_gap < 0.0: marker = " 🎯"
-        elif avg_gap < 0.01: marker = " ⭐"
-        log.info(f"  seeds={n_seeds_try}: avg_gap={avg_gap:+.5f}, vs308={vs308}/7{marker}")
-        
-        seed_results[n_seeds_try] = {'avg_gap': avg_gap, 'target_gaps': target_gaps, 'vs308': vs308}
-    
-    # STEP 4: 1D Ridge (mean only, no std)
-    log.info(f"\n{'='*60}")
-    log.info("1D RIDGE (mean only)")
-    log.info(f"{'='*60}")
-    
-    def ridge_gap_1d(oofs_arr, y, alpha):
-        avg_student = np.mean([log_loss(y, np.clip(so, 0.001, 0.999)) for so in oofs_arr])
-        oofs_arr_2d = np.column_stack(oofs_arr)
-        avg_pred = np.mean(oofs_arr_2d, axis=1)
-        
-        meta = Ridge(alpha=alpha)
-        meta.fit(avg_pred.reshape(-1, 1), y)
-        train_pred = meta.predict(avg_pred.reshape(-1, 1))
-        pmin, pmax = train_pred.min(), train_pred.max()
-        if pmax - pmin < 1e-10:
-            train_proba = np.ones_like(train_pred) * 0.5
-        else:
-            train_proba = (train_pred - pmin) / (pmax - pmin)
-        train_proba = np.clip(train_proba, 0.001, 0.999)
-        
-        meta_ll = log_loss(y, train_proba)
-        return avg_student, meta_ll, avg_student - meta_ll
-    
-    for alpha in [0.1, 0.3, 0.5, 0.7, 1.0, 2.0, 5.0, 10.0]:
-        total_gap = 0
-        target_gaps = {}
-        for target in TARGETS:
-            _, _, gap = ridge_gap_1d(target_oofs[target], train_df[target].values, alpha)
-            target_gaps[target] = gap
-            total_gap += gap
-        avg_gap = total_gap / 7
-        vs308 = sum(1 for t in TARGETS if target_gaps[t] < v308_gaps[t])
-        
-        marker = ""
-        if avg_gap < 0.0: marker = " 🎯"
-        elif avg_gap < 0.01: marker = " ⭐"
-        log.info(f"  1D alpha={alpha:5.2f}: avg_gap={avg_gap:+.5f}, vs308={vs308}/7{marker}")
-    
-    # STEP 5: Generate submission with best config
-    best_2d = min(alpha_results, key=lambda x: x['avg_gap'])
-    best_1d_alpha = None
-    best_1d_gap = 999
-    
-    # Compute best 1D
-    for alpha in [0.1, 0.3, 0.5, 0.7, 1.0, 2.0, 5.0, 10.0]:
-        total_gap = 0
-        for target in TARGETS:
-            _, _, gap = ridge_gap_1d(target_oofs[target], train_df[target].values, alpha)
-            total_gap += gap
-        avg_gap = total_gap / 7
-        if avg_gap < best_1d_gap:
-            best_1d_gap = avg_gap
-            best_1d_alpha = alpha
+    # Find best
+    best_key = min(seed_results.keys(), key=lambda k: seed_results[k]['avg_gap'])
+    best = seed_results[best_key]
     
     log.info(f"\n{'='*70}")
-    log.info("FINAL SUMMARY")
+    log.info(f"🏆 BEST: {best_key} with avg_gap={best['avg_gap']:+.5f}")
     log.info(f"{'='*70}")
-    log.info(f"  Best 2D Ridge: alpha={best_2d['alpha']}, avg_gap={best_2d['avg_gap']:+.5f}")
-    log.info(f"  Best 1D Ridge: alpha={best_1d_alpha}, avg_gap={best_1d_gap:+.5f}")
+    for t in TARGETS:
+        vs = "✅" if best['target_gaps'][t] < v308_gaps[t] else "❌"
+        log.info(f"  {t}: gap={best['target_gaps'][t]:+.5f} V308={v308_gaps[t]:.3f} {vs}")
     
-    best_2d_gap = best_2d['avg_gap']
-    best_1d_gap_val = best_1d_gap
-    
-    if best_2d_gap < best_1d_gap_val:
-        best_mode = "2D_ridge"
-        best_alpha = best_2d['alpha']
-        log.info(f"  => Use 2D Ridge alpha={best_alpha} (2D better)")
-    else:
-        best_mode = "1D_ridge"
-        best_alpha = best_1d_alpha
-        log.info(f"  => Use 1D Ridge alpha={best_alpha} (1D better)")
-    
-    # Generate submission
+    # Generate submission with best config
     ts = datetime.now().strftime('%Y%m%d_%H%M%S')
+    seed_count = int(best_key.split('_s')[1])
+    best_alpha = float(best_key.split('_a')[1])
+    
     sub_df = pd.DataFrame({'subject_id': test_df['subject_id'].values})
     for t in TARGETS:
-        sub_df[t] = np.mean(target_tests[t], axis=0)
-    sub_path = SUBMIT / f'submission_v527_{best_mode}_a{best_alpha}_{ts}.csv'
+        sub_df[t] = np.mean(all_tests[t][:seed_count], axis=0)
+    
+    sub_path = SUBMIT / f'submission_v530_{best_key}_{ts}.csv'
     sub_df.to_csv(sub_path, index=False)
     log.info(f"Submission saved: {sub_path}")
     
     result = {
-        'version': 'V527',
-        'name': 'Ridge Meta + Blend: Alpha/Seed sweep',
-        'alpha_results': [{'alpha': r['alpha'], 'avg_gap': r['avg_gap'], 'vs308': r['vs308']} for r in alpha_results],
-        'seed_results': {str(k): {'avg_gap': v['avg_gap'], 'vs308': v['vs308']} for k, v in seed_results.items()},
-        'best_2d': {'alpha': best_2d['alpha'], 'avg_gap': best_2d['avg_gap']},
-        'best_1d': {'alpha': best_1d_alpha, 'avg_gap': best_1d_gap},
-        'best_mode': best_mode,
-        'best_alpha': float(best_alpha),
+        'version': 'V530',
+        'name': 'Beyond 19 Seeds + α=0.0001',
+        'seed_results': {k: {'avg_gap': v['avg_gap'], 'vs308': v['vs308']} for k, v in seed_results.items()},
+        'best_key': best_key,
+        'best_gap': float(best['avg_gap']),
+        'best_alpha': best_alpha,
+        'best_seed_count': seed_count,
+        'target_gaps': best['target_gaps'],
         'timestamp': datetime.now().strftime('%Y%m%d_%H%M%S'),
         'total_time_s': round(time.time() - t_start, 1),
     }
     
-    result_path = EXPERIMENTS / f'v527_{result["timestamp"]}.json'
+    result_path = EXPERIMENTS / f'v530_{result["timestamp"]}.json'
     with open(result_path, 'w') as f:
         json.dump(result, f, indent=2, default=str)
     log.info(f"📝 Result saved: {result_path}")
