@@ -247,15 +247,6 @@ def main():
                   and np.issubdtype(test_df[c].dtype, np.number)]
     common_base = set(train_base) & set(test_base)
     
-    for col in sorted(common_base):
-        tv = train_df[col].fillna(0).values.astype(np.float64)
-        ev = test_df[col].fillna(0).values.astype(np.float64)
-        m, s = np.mean(tv), np.std(tv, ddof=0)
-        if s < 1e-8: s = 1e-8
-        zc = f'{col}_zscore'
-        train_df[zc] = (tv - m) / s
-        test_df[zc] = (ev - m) / s
-    
     train_feat_cols = get_feature_cols(train_df)
     test_feat_cols = get_feature_cols(test_df)
     
