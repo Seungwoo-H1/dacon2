@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-09T08:21:47.450Z",
+  "updatedAt": "2026-06-11T23:31:40.655Z",
   "entries": {
     "memory:memory/2026-05-01.md:1:32": {
       "key": "memory:memory/2026-05-01.md:1:32",
@@ -541,23 +541,25 @@
       "endLine": 31,
       "source": "memory",
       "snippet": "# 2026-05-13 ## V251 External Merge — 결과 분석 ### Experiment - V251: features_clean_v60 + external_data.parquet (8 external features: holiday, month, school_term, exam_period, lunar_holiday, daylight_hours, daylight_ratio, season_index) - 100% coverage for all 450 train and 250 test dates - Feature ranking (50-iter LGBM) → top-N selection per target - 7 targets trained with V127 per-target configs ### Results - V251 avg OOF: 0.69288 - V251 Δ: +0.00516 (worse) - Improvement in Q1 (-0.00159), Q3 (-0.08346), S3 (-0.00619) - Worsening in S1 (+0.02261), S2 (+0.08878), S4 (+0.02304) - Selected external features: daylight_hours (Q1, S2, S3), season_index (S2, S3), daylight_ratio (S3) - External fe",
-      "recallCount": 4,
+      "recallCount": 5,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 3.998968341192366,
+      "totalScore": 4.998968341192366,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-14T04:15:34.421Z",
-      "lastRecalledAt": "2026-06-08T00:21:35.073Z",
+      "lastRecalledAt": "2026-06-11T23:31:40.655Z",
       "queryHashes": [
         "62efb5952dcc",
         "74b0c52f9378",
         "67458b41477e",
-        "223ea9ffc1eb"
+        "223ea9ffc1eb",
+        "0af52750de01"
       ],
       "recallDays": [
         "2026-05-14",
         "2026-06-05",
-        "2026-06-08"
+        "2026-06-08",
+        "2026-06-11"
       ],
       "conceptTags": [
         "features-clean-v60",
@@ -608,24 +610,26 @@
       "endLine": 41,
       "source": "memory",
       "snippet": "# 2026-05-11 (금) — DaCon2 연구日志 ## DaCon2 핵심 결과 ### V106 (LB 1.057 실패) - OOF 0.5250 → LB 1.0571 (심각한 OOF-LB mismatch) - 원인: 예측값 train mean과 systematically misaligned (S3: 0.39 vs train 0.66) - **제출 완료, LB 분석용으로 기록** ### V114 (수동 제출 완료) - OOF 0.6544 - isotonic calibration 없음 → V115(0.5476)보다 떨어짐 - **제출 완료, LB 결과 대기 중** ### V115 (pipeline best before ensemble) - OOF **0.5476** (isotonic calibration + personalization) - 베이스라인: base 141 cols + zscore 141 cols + meta 12 cols = 294 cols ### V119 (base-only isotonic) - OOF 0.5706 (pairwise/transformed 없음) - pairwise/transformed가 핵심 발견 ### V121 (current best single model) - OOF **0.5482** (pairwise+transformed per-target × 50 seeds) - pairwise/",
-      "recallCount": 4,
+      "recallCount": 5,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 4,
+      "totalScore": 5,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-15T15:57:26.897Z",
-      "lastRecalledAt": "2026-06-08T01:25:32.874Z",
+      "lastRecalledAt": "2026-06-11T23:31:40.655Z",
       "queryHashes": [
         "704383919f44",
         "6c93796aff0d",
         "6df512644bbc",
-        "007b0af5eb53"
+        "007b0af5eb53",
+        "0af52750de01"
       ],
       "recallDays": [
         "2026-05-15",
         "2026-05-19",
         "2026-05-24",
-        "2026-06-08"
+        "2026-06-08",
+        "2026-06-11"
       ],
       "conceptTags": [
         "1.057",
@@ -1030,18 +1034,20 @@
       "endLine": 37,
       "source": "memory",
       "snippet": "- **external_data.parquet features (holiday/month/daylight/season) provide NO improvement** to the current pipeline - These are static calendar/temporal features — too general for individualized sleep prediction - Contrasts with V09 external features (sleep_health_lifestyle.csv proxy features, ΔOOF=-0.023) - **Lesson**: Only PERSONALIZED external features (sleep patterns, activity levels) → useful. Calendar features → noise. ### Next Steps 1. V252: Re-implement V127 true 3-model ensemble + external features 2. Or pivot to V09 approach: use sleep_health_lifestyle.csv proxy features with proper personalization 3. External data from ETRI Lifelog (actual sleep metrics) > calendar features 4. Co",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 2,
       "maxScore": 1,
       "firstRecalledAt": "2026-06-07T12:57:53.164Z",
-      "lastRecalledAt": "2026-06-07T12:57:53.164Z",
+      "lastRecalledAt": "2026-06-11T23:31:40.655Z",
       "queryHashes": [
-        "01341d81e1e0"
+        "01341d81e1e0",
+        "0af52750de01"
       ],
       "recallDays": [
-        "2026-06-07"
+        "2026-06-07",
+        "2026-06-11"
       ],
       "conceptTags": [
         "external-data.parquet",
