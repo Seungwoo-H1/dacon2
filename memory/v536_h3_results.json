@@ -1,0 +1,9 @@
+{
+  "version": "V536_H3",
+  "hypothesis": "30_seeds_ensemble",
+  "avg_gap": -0.02559,
+  "vs308": 7,
+  "expected_lb": 0.64794,
+  "improvement_vs_v534": -0.00265,
+  "result": "Worse than V534 (-0.02824 → -0.02559). 30 seeds degraded avg_gap."
+}

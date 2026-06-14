@@ -1,0 +1,67 @@
+{
+  "version": "V536_H3",
+  "hypothesis": "30_seeds_ensemble",
+  "config": {
+    "Q1": {
+      "n_feat": 3,
+      "xgb_cfg": "q_narrow",
+      "lgbm_cfg": "wide",
+      "n_est": 600
+    },
+    "Q2": {
+      "n_feat": 10,
+      "xgb_cfg": "q_deep",
+      "lgbm_cfg": "wide",
+      "n_est": 800
+    },
+    "Q3": {
+      "n_feat": 7,
+      "xgb_cfg": "q_strong",
+      "lgbm_cfg": "safety",
+      "n_est": 500
+    },
+    "S1": {
+      "n_feat": 3,
+      "xgb_cfg": "q_strong",
+      "lgbm_cfg": "wide",
+      "n_est": 500
+    },
+    "S2": {
+      "n_feat": 7,
+      "xgb_cfg": "s_strong",
+      "lgbm_cfg": "wide_strong",
+      "n_est": 500
+    },
+    "S3": {
+      "n_feat": 23,
+      "xgb_cfg": "q_strong",
+      "lgbm_cfg": "safety",
+      "n_est": 1000
+    },
+    "S4": {
+      "n_feat": 20,
+      "xgb_cfg": "q_deep",
+      "lgbm_cfg": "wide",
+      "n_est": 300
+    }
+  },
+  "meta_type": "Ridge",
+  "meta_alpha": 0.01,
+  "n_seeds": 30,
+  "avg_gap": -0.02559247362271893,
+  "target_gaps": {
+    "Q1": -0.0015772540543772529,
+    "Q2": -0.008500871477931105,
+    "Q3": -0.013814832725685289,
+    "S1": -0.0755758026126303,
+    "S2": -0.07386111936461492,
+    "S3": -0.00315957795309596,
+    "S4": -0.002657857170697664
+  },
+  "vs308": 7,
+  "expected_lb": 0.6479424736227188,
+  "v308_avg_gap": -0.02824,
+  "improvement_vs_v308": -0.0026475263772810717,
+  "timestamp": "20260614_031736",
+  "total_time_s": 683.5
+}
