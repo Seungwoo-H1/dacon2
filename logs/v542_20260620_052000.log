@@ -1,0 +1,49 @@
+2026-06-20 05:16:04,879 [INFO] ======================================================================
+2026-06-20 05:16:04,879 [INFO] V542: V537 Fine Alpha + V540 Top Configs (Per-Target Alpha Sweep)
+2026-06-20 05:16:04,879 [INFO] ======================================================================
+2026-06-20 05:16:04,941 [INFO] 
+Q1: s_strong+heavy_lgb, n_feat=3, n_est=600
+2026-06-20 05:16:08,008 [INFO] 
+Q2: q_narrow+heavy_lgb, n_feat=10, n_est=800
+2026-06-20 05:16:22,871 [INFO] 
+Q3: heavy_reg+light_lgb, n_feat=7, n_est=500
+2026-06-20 05:16:29,109 [INFO] 
+S1: s_strong+heavy_lgb, n_feat=3, n_est=500
+2026-06-20 05:16:31,762 [INFO] 
+S2: light_reg+heavy_lgb, n_feat=7, n_est=500
+2026-06-20 05:16:44,698 [INFO] 
+S3: s_strong+heavy_lgb, n_feat=23, n_est=1000
+2026-06-20 05:16:56,452 [INFO] 
+S4: s_strong+heavy_lgb, n_feat=20, n_est=300
+2026-06-20 05:17:01,873 [INFO] 
+======================================================================
+2026-06-20 05:17:01,873 [INFO] V542: Per-Target Optimal Ridge Alpha
+2026-06-20 05:17:01,873 [INFO] ======================================================================
+2026-06-20 05:17:01,998 [INFO]   Q1: V542α=0.0001 (gap=-0.15577) vs V537α=0.001 (gap=-0.15131) 🎯 ✅
+2026-06-20 05:17:02,124 [INFO]   Q2: V542α=10.0 (gap=-0.01125) vs V537α=0.06 (gap=-0.00705) 🎯 ✅
+2026-06-20 05:17:02,247 [INFO]   Q3: V542α=0.0001 (gap=+0.09863) vs V537α=0.001 (gap=+0.09867) 🎯 ✅
+2026-06-20 05:17:02,368 [INFO]   S1: V542α=0.0001 (gap=-0.11249) vs V537α=0.01 (gap=-0.10935) 🎯 ✅
+2026-06-20 05:17:02,489 [INFO]   S2: V542α=0.03 (gap=-0.03252) vs V537α=0.03 (gap=-0.03252)  ✅
+2026-06-20 05:17:02,609 [INFO]   S3: V542α=10.0 (gap=-0.06658) vs V537α=10.0 (gap=-0.06658)  ✅
+2026-06-20 05:17:02,730 [INFO]   S4: V542α=0.0001 (gap=-0.13408) vs V537α=0.003 (gap=-0.12635) 🎯 ✅
+2026-06-20 05:17:03,595 [INFO] 
+  V537 alphas on V540 configs: avg_gap=-0.05636
+2026-06-20 05:17:03,595 [INFO]   V542 alphas on V540 configs: avg_gap=-0.05915
+2026-06-20 05:17:03,595 [INFO]   Improvement (V542 over V537): ++0.00279
+2026-06-20 05:17:03,595 [INFO]   V542 over V537 (OOF): ++0.02899
+2026-06-20 05:17:03,595 [INFO] 
+Generating submission with V542 optimal alphas...
+Traceback (most recent call last):
+  File "/home/mwoo423/.openclaw/workspace/experiments/v542_per_target_alpha_v540.py", line 375, in <module>
+    main()
+  File "/home/mwoo423/.openclaw/workspace/experiments/v542_per_target_alpha_v540.py", line 326, in main
+    test_pred = v542_models[target].predict(X_test_meta)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sklearn/linear_model/_base.py", line 306, in predict
+    return self._decision_function(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/sklearn/linear_model/_base.py", line 283, in _decision_function
+    check_is_fitted(self)
+  File "/usr/local/lib/python3.11/site-packages/sklearn/utils/validation.py", line 1661, in check_is_fitted
+    raise NotFittedError(msg % {"name": type(estimator).__name__})
+sklearn.exceptions.NotFittedError: This Ridge instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.

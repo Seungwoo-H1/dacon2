@@ -1,0 +1,9 @@
+{
+  "version": "V536_H4",
+  "hypothesis": "catboost_learner",
+  "avg_gap": -0.02131,
+  "vs308": 7,
+  "expected_lb": 0.64366,
+  "best_variant": "Variant_B_XGB-Q_CatBoost-S",
+  "result": "Worse than V534 (-0.02754 → -0.02131). CatBoost degraded S2 dramatically (gap -0.025 vs -0.070). S2 s_strong config designed for XGB/LGBM, not CatBoost."
+}

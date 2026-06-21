@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-11T23:31:40.655Z",
+  "updatedAt": "2026-06-20T04:28:09.078Z",
   "entries": {
     "memory:memory/2026-05-01.md:1:32": {
       "key": "memory:memory/2026-05-01.md:1:32",
@@ -235,24 +235,26 @@
       "endLine": 29,
       "source": "memory",
       "snippet": "# 2026-05-04 ## V25 + V30 Submission (15:52) - `gen_v25_v30.py` 실행 완료 - V25 (LGBM, 3 seeds): Cal OOF 0.6462 (V10 대비 +0.0424) - V30 (XGB Histogram, 3 seeds): Cal OOF 0.6685 (V10 대비 +0.0647) - 둘 다 V10(0.6038)보다 낮음 → V10이 여전히 최우선 - Submission push 완료: e3f6975 ## Git seungwoo-h 문제 해결 - 초기 commit(`fd6bac`)이 `seungwoo-h@users.noreply.github.com` 계정으로 올라감 - GitHub Desktop 또는 다른 환경에서 clone/commit한 것이 원인 - `git filter-branch`로 전 18개 커밋의 author를 `Seungwoo Hong <seungwoo@example.com>`으로 원본 - force push 완료: 8dcf09a ## OpenClaw 간헐적 응답 지연 분석 - 오늘/어제 세션 11e56304 + fdb7a80d 분석 - 11e56304: 11개 프롬프트 중 5개가 5~44분 지연, 1개 타임아웃 - fdb7a80d: 20개 프롬프트 중 9개가 3~198분 지연 - **원인: 모델 API 서버(gpurent.kogrobo.com:51089) 과부",
-      "recallCount": 4,
+      "recallCount": 5,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 3.563531011857258,
+      "totalScore": 4.563531011857258,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-04T12:25:19.279Z",
-      "lastRecalledAt": "2026-05-11T13:01:17.125Z",
+      "lastRecalledAt": "2026-06-20T04:28:09.078Z",
       "queryHashes": [
         "a543962d9353",
         "574e3a9e7dd2",
         "674513fd5c62",
-        "51ea32405f4e"
+        "51ea32405f4e",
+        "19d69b3ed081"
       ],
       "recallDays": [
         "2026-05-04",
         "2026-05-07",
         "2026-05-10",
-        "2026-05-11"
+        "2026-05-11",
+        "2026-06-20"
       ],
       "conceptTags": [
         "gen-v25-v30.py",
@@ -610,26 +612,28 @@
       "endLine": 41,
       "source": "memory",
       "snippet": "# 2026-05-11 (금) — DaCon2 연구日志 ## DaCon2 핵심 결과 ### V106 (LB 1.057 실패) - OOF 0.5250 → LB 1.0571 (심각한 OOF-LB mismatch) - 원인: 예측값 train mean과 systematically misaligned (S3: 0.39 vs train 0.66) - **제출 완료, LB 분석용으로 기록** ### V114 (수동 제출 완료) - OOF 0.6544 - isotonic calibration 없음 → V115(0.5476)보다 떨어짐 - **제출 완료, LB 결과 대기 중** ### V115 (pipeline best before ensemble) - OOF **0.5476** (isotonic calibration + personalization) - 베이스라인: base 141 cols + zscore 141 cols + meta 12 cols = 294 cols ### V119 (base-only isotonic) - OOF 0.5706 (pairwise/transformed 없음) - pairwise/transformed가 핵심 발견 ### V121 (current best single model) - OOF **0.5482** (pairwise+transformed per-target × 50 seeds) - pairwise/",
-      "recallCount": 5,
+      "recallCount": 6,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 5,
+      "totalScore": 6,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-15T15:57:26.897Z",
-      "lastRecalledAt": "2026-06-11T23:31:40.655Z",
+      "lastRecalledAt": "2026-06-20T04:28:09.078Z",
       "queryHashes": [
         "704383919f44",
         "6c93796aff0d",
         "6df512644bbc",
         "007b0af5eb53",
-        "0af52750de01"
+        "0af52750de01",
+        "19d69b3ed081"
       ],
       "recallDays": [
         "2026-05-15",
         "2026-05-19",
         "2026-05-24",
         "2026-06-08",
-        "2026-06-11"
+        "2026-06-11",
+        "2026-06-20"
       ],
       "conceptTags": [
         "1.057",
@@ -649,24 +653,26 @@
       "endLine": 37,
       "source": "memory",
       "snippet": "# 2026-05-08 Daily Log — 최종 요약 ## 세션 복원 (12:27) - 승우: OPENCLAW_HANDOFF_20260506.md 읽고 현황 파악, MEMORY.md 생성 요청 -MEMORY.md 생성 완료: `/home/mwoo423/projects/dacon2/MEMORY.md` - daily log 생성: `/home/mwoo423/projects/dacon2/memory/2026-05-08.md` ## 전체 타임라인 복원 ### 2026-05-01: 베이스라인 - LGBM V10: CV 0.6038 — 2주간 최고 기록 - V11~V14: 개인화 피처, calibration 시도 → V10 미달 - V25: LGBM rolling features, Cal 0.6462 - V30: XGB, Cal 0.6685 ### 2026-05-05: V35~V40 실패 - 메모리 부족 (SIGKILL), RAM 16GB+Swap 4GB 부족 - V37 완주: Avg 0.6144 (-0.0106 vs V10) - **결론: V10이 당시 최고** ### 2026-05-06: V53 Deep Feature Engineering - **V53 final**: 리더보드 **0.6535822621** (LGBM seed ensemble 50) - 타깃별 cfg/feature 선택: deep/wide/v48/safety -",
-      "recallCount": 4,
+      "recallCount": 5,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 4,
+      "totalScore": 5,
       "maxScore": 1,
       "firstRecalledAt": "2026-05-15T15:57:26.897Z",
-      "lastRecalledAt": "2026-06-08T01:25:32.874Z",
+      "lastRecalledAt": "2026-06-20T04:28:09.078Z",
       "queryHashes": [
         "704383919f44",
         "6c93796aff0d",
         "6df512644bbc",
-        "007b0af5eb53"
+        "007b0af5eb53",
+        "19d69b3ed081"
       ],
       "recallDays": [
         "2026-05-15",
         "2026-05-19",
         "2026-05-24",
-        "2026-06-08"
+        "2026-06-08",
+        "2026-06-20"
       ],
       "conceptTags": [
         "openclaw-handoff-20260506.md",
@@ -1089,6 +1095,68 @@
         "0.0",
         "z-score",
         "0.678"
+      ]
+    },
+    "memory:memory/2026-06-15.md:1:23": {
+      "key": "memory:memory/2026-06-15.md:1:23",
+      "path": "memory/2026-06-15.md",
+      "startLine": 1,
+      "endLine": 23,
+      "source": "memory",
+      "snippet": "## 2026-06-15 Monoparty P2P → WebSocket 아키텍처 전환 완료 ### Goal 상용 서비스 수준의 실시간 멀티플레이 오목앱 (monoparty) 완성. P2P(PeerJS) → 서버 권위 WebSocket 전환. ### 완료한 작업 (2026-06-15) **Game Server (`projects/gomoku/game-server/`) 신규:** - `room.ts` — Room 클래스: WAITING/PLAYING/FINISHED/CLOSED 상태 머신, 30초 재연결 타이머, 자동 cleanup - `room-manager.ts` — 서버 권위: 사용자당 1개 방만, 방 생성/참가/퇴장/이동검증/게임종료 관리 - `engine.ts` — pure TS 게임 엔진: 15x15 보드, 5목 체크, 이동 유효성 검증 - `index.ts` — WebSocket 서버: auth → create/join/leave_room → game_move/game_restart → heartbeat **Frontend P2P → WebSocket 마이그레이션:** - `ws-client.ts` — WebSocket 클라이언트: 자동 재연결 (최대 10회, 지수 백오프) - `LobbyPage.tsx` — WS 기반 실시간 로비 (discord 스타일) - `GamePage.tsx` — WS 기반 게임 (서버 검증",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-06-15T17:39:55.857Z",
+      "lastRecalledAt": "2026-06-15T17:39:55.857Z",
+      "queryHashes": [
+        "28f11ec73afe"
+      ],
+      "recallDays": [
+        "2026-06-15"
+      ],
+      "conceptTags": [
+        "projects/gomoku/game-server",
+        "room.ts",
+        "waiting/playing/finished/closed",
+        "room-manager.ts",
+        "생성/참가/퇴장/이동검증/게임종료",
+        "engine.ts",
+        "index.ts",
+        "create/join/leave-room"
+      ]
+    },
+    "memory:memory/2026-06-15.md:18:41": {
+      "key": "memory:memory/2026-06-15.md:18:41",
+      "path": "memory/2026-06-15.md",
+      "startLine": 18,
+      "endLine": 41,
+      "source": "memory",
+      "snippet": "- `ChatBox.tsx` — WS 기반 채팅 - `AuthContext.tsx` — WS 연결 자동 관리 (로그인 시 connect, 로그아웃 시 disconnect) - `App.tsx` — 라우트 간소화 (`/` → LobbyPage, `/game/:roomId` → GamePage) - `types/lobby.ts` — WebSocket 기반 타입으로 재정의 **제거된 파일들:** - `lib/peer.ts`, `lib/lobby.ts`, `lib/supabase-lobby.ts` (서버가 모든 상태 관리) **빌드 검증:** - 서버: `tsc --noEmit` ✅ (에러 없음) - 프론트엔드: `vite build` ✅ (에러 없음) ### 기술적 이슈/해결책 1. **`import.meta.env` 타입 에러:** `vite-env.d.ts`에 `/// <reference types=\"vite/client\" />` 추가 2. **모듈 시스템:** `rolldown`은 `.ts` import에 확장자 명시 필요 3. **Relative imports:** ChatBox(`components/chat/`)가 ws-client를 import할 때 `../lib/` 필요 ### Next Steps 1. 게임 서버 배포 (Railway/Render/Fly.io/VPS) 2. 프론트엔드 `.env`에 `VITE_GAME_S",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-06-15T17:39:55.857Z",
+      "lastRecalledAt": "2026-06-15T17:39:55.857Z",
+      "queryHashes": [
+        "28f11ec73afe"
+      ],
+      "recallDays": [
+        "2026-06-15"
+      ],
+      "conceptTags": [
+        "chatbox.tsx",
+        "authcontext.tsx",
+        "app.tsx",
+        "types/lobby.ts",
+        "lib/peer.ts",
+        "lib/lobby.ts",
+        "lib/supabase-lobby.ts",
+        "이슈/해결책"
       ]
     }
   }

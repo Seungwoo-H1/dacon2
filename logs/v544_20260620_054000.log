@@ -1,0 +1,4 @@
+  File "/home/mwoo423/.openclaw/workspace/experiments/v544_calibration_methods.py", line 145
+    if c in df.columns: df[c] = pd.to_datetime(df[c)].dt.strftime('%Y-%m-%d')
+                                                   ^
+SyntaxError: closing parenthesis ')' does not match opening parenthesis '['
