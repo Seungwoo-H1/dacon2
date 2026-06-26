@@ -1,16 +1,23 @@
+# Python
 __pycache__/
 *.pyc
+.venv/
+venv/
 node_modules/
-models/
-data_processed/
-catboost_info/
-run_*.log
-run_*.sh
-src/catboost_info/
-src/pipeline.log
-src/run_v10.log
-data.zip
 
-# Meta JSON only — keep CSV submissions
-submissions/meta_*.json
-submissions/v53_sweep_*.json
+# Generated intermediates (regenerable via scripts/build_sleep_features.py)
+data_processed/
+models/
+catboost_info/
+
+# Transient run artifacts
+*.log
+data.zip
+submissions/submission_reproduced.csv
+
+# Local-only: research history and auxiliary data (kept on disk, not published)
+archive/
+external_data/
+.openclaw/
+data_raw/
+submissions/

@@ -1,9 +1,0 @@
-{
-  "version": "V328",
-  "name": "CatBoost + LGBM Ensemble (XGBoost skipped - poor performance)",
-  "avg_oof": -1,
-  "status": "failed",
-  "notes": "XGBoost gave OOF 1.21 on all features (predicts ~0.5 always). CatBoost also gave OOF 1.2+ on mixed raw+zscore features due to scale sensitivity. Standardizing all features to N(0,1) made LGBM drop from 0.62 to 0.91. CatBoost with standardized features: 0.78. Conclusion: LGBM is uniquely well-suited for this dataset. XGB/CatBoost cannot compete.",
-  "key_finding": "LGBM is the superior model for this dataset. XGBoost and CatBoost both fail on the mixed raw+z-score feature space. Feature standardization destroys the signal that LGBM was exploiting.",
-  "timestamp": "20260602_075900"
-}

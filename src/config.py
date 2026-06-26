@@ -1,91 +1,78 @@
-"""
-config.py — Dacon2 베이스라인 설정
+"""Central configuration for the ETRI Lifelog 2024 (DACON ch2026) pipeline.
 
-대회: 제 5회 ETRI 휴먼이해 인공지능 논문경진대회 (dacon2)
+All tunables live here so the rest of the code stays declarative. Values are the
+ones that produced the best verified leaderboard submission (avg log-loss 0.5988).
 """
+from __future__ import annotations
 
-import os
 from pathlib import Path
 
-# ── 경로 설정 ─────────────────────────────────────────────
-PROJECT_ROOT = Path('/root/.openclaw/workspace')
-DATA_RAW = PROJECT_ROOT / "data_raw"
-DATA_DIR = DATA_RAW / "ch2025_data_items"
-DATA_PROCESSED = PROJECT_ROOT / "data_processed"
-MODEL_DIR = PROJECT_ROOT / "models"
-SUBMIT_DIR = PROJECT_ROOT / "submissions"
+# ---------------------------------------------------------------- paths
+ROOT = Path(__file__).resolve().parent.parent
+DATA_RAW = ROOT / "data_raw"
+DATA_PROCESSED = ROOT / "data_processed"
+SUBMISSIONS = ROOT / "submissions"
+SENSOR_DIR = DATA_RAW / "ch2025_data_items"
 
-# 자동 생성
-DATA_PROCESSED.mkdir(exist_ok=True)
-MODEL_DIR.mkdir(exist_ok=True)
-SUBMIT_DIR.mkdir(exist_ok=True)
+TRAIN_LABELS = DATA_RAW / "ch2026_metrics_train.csv"
+SUBMISSION_TEMPLATE = DATA_RAW / "ch2026_submission_sample.csv"
+SLEEP_FEATURES = DATA_PROCESSED / "sleep_v3.parquet"
 
-# ── 파일 이름 매핑 ────────────────────────────────────────
-PARQUET_FILES = {
-    "mACStatus":    "ch2025_mACStatus.parquet",
-    "mActivity":    "ch2025_mActivity.parquet",
-    "mAmbience":    "ch2025_mAmbience.parquet",
-    "mBle":         "ch2025_mBle.parquet",
-    "mGps":         "ch2025_mGps.parquet",
-    "mLight":       "ch2025_mLight.parquet",
-    "mScreenStatus": "ch2025_mScreenStatus.parquet",
-    "mUsageStats":  "ch2025_mUsageStats.parquet",
-    "mWifi":        "ch2025_mWifi.parquet",
-    "wHr":          "ch2025_wHr.parquet",
-    "wLight":       "ch2025_wLight.parquet",
-    "wPedo":        "ch2025_wPedo.parquet",
-}
-
-LABEL_CSV = DATA_RAW / "ch2026_metrics_train.csv"
-SAMPLE_CSV = DATA_RAW / "ch2026_submission_sample.csv"
-
-# ── 타겟 변수 ─────────────────────────────────────────────
+# ---------------------------------------------------------------- task
+# 7 binary targets: Q1-Q3 self-reported (fatigue / stress / sleep-quality
+# deviation from the subject's own average); S1-S4 objective sleep-guideline
+# adherence (measured by an under-mattress sensor in the original study).
 TARGETS = ["Q1", "Q2", "Q3", "S1", "S2", "S3", "S4"]
+SEED = 42
 
-# ── 시드 ──────────────────────────────────────────────────
-RANDOM_SEED = 42
+# Daytime window (hours) for phone/watch sensor aggregation. Night is excluded
+# because the sleep signal is captured separately by the TST features.
+DAY_START_HOUR = 6
+DAY_END_HOUR = 22
 
-# ── LightGBM 기본 하이퍼파라미터 ──────────────────────────
-LGBM_DEFAULTS = {
-    "objective": "binary",
-    "metric": "binary_logloss",
-    "verbose": -1,
-    "n_jobs": -1,
-    "random_state": RANDOM_SEED,
-    "force_row_wise": True,
+# Sensors aggregated into daytime mean/std/count features. (parquet stem, column, prefix)
+SENSOR_AGGS = [
+    ("mScreenStatus", "m_screen_use", "screen"),
+    ("mActivity", "m_activity", "act"),
+    ("wHr", "heart_rate", "hr"),
+    ("wPedo", "step", "step"),
+    ("wLight", "w_light", "wl"),
+    ("mACStatus", "m_charging", "chg"),
+]
+
+# ---------------------------------------------------------------- model
+# Recency personalization: pred = (Σ 0.5^(gap/halflife)·y_neighbor + alpha·mean) / (Σw + alpha)
+# Long halflife ≈ subject mean (stable baseline used by the LGBM blend and S targets).
+RECENCY_HALFLIFE = 21.0
+RECENCY_ALPHA = 3.0
+
+# R53 improvement: Q targets use a SHORT halflife to exploit day-to-day
+# autocorrelation on the time-interleaved test days. (halflife, alpha) per Q target.
+Q_RECENCY_CFG = {"Q1": (1.0, 1.0), "Q2": (2.0, 1.0), "Q3": (1.0, 1.0)}
+
+# Regularized LightGBM (the "G" component): deliberately small + heavily
+# regularized because the day-level feature signal is weak and overfits easily.
+LGBM_PARAMS = dict(
+    n_estimators=250,
+    num_leaves=8,
+    learning_rate=0.02,
+    subsample=0.8,
+    colsample_bytree=0.6,
+    min_child_samples=25,
+    reg_lambda=5.0,
+    reg_alpha=1.0,
+    random_state=SEED,
+    verbose=-1,
+)
+
+# Anti-overfit blend search grid: weight on recency P, and shrink toward 0.5.
+BLEND_WEIGHTS = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5]
+SHRINK_FACTORS = [1.0, 0.95, 0.9, 0.85, 0.8]
+
+# Sleep (TST) features added surgically only to the targets where they validated.
+SLEEP_FEATURE_TARGETS = {
+    "Q1": ["tst", "tst_z", "se", "waso_z", "sleep_light"],
+    "S1": ["tst", "tst_z", "waso", "n_arousal", "sol"],
 }
 
-# 기본 학습 파라미터 (각 타겟별 최적화 가능)
-LGBM_PARAMS = {
-    "num_leaves": 63,
-    "max_depth": -1,
-    "learning_rate": 0.05,
-    "n_estimators": 1000,
-    "subsample": 0.8,
-    "colsample_bytree": 0.8,
-    "min_child_samples": 20,
-    "reg_alpha": 0.1,
-    "reg_lambda": 1.0,
-    "scale_pos_weight": 1.0,  # 타겟별 동적 조정
-    "early_stopping_round": 50,
-}
-
-# ── 교차 검증 설정 ────────────────────────────────────────
-# 시간 기반 split: 각 subject의 마지막 N일을 validation으로
-CV_CONFIG = {
-    "n_splits": 5,       # GroupKFold 스타일 (subject 기반)
-    "test_subjects": 0,   # 모든 subject 포함 (내부 validation만)
-    "val_days": 7,       # 각 subject의 마지막 7일을 validation
-}
-
-# ── 특징 공학 ─────────────────────────────────────────────
-# aggregation window (시간 단위)
-AGG_WINDOWS = [1, 3, 6, 12, 24]  # 시간 단위
-
-# 시간대 binning
-HOUR_BINS = {
-    "morning": (6, 12),
-    "afternoon": (12, 18),
-    "evening": (18, 24),
-    "night": (0, 6),
-}
+CLIP_EPS = 1e-6

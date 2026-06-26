@@ -1,0 +1,12 @@
+# Core pipeline (reproduces submission_best.csv). Versions verified on Python 3.13.
+numpy==2.2.1
+pandas==2.3.3
+pyarrow==24.0.0
+scikit-learn==1.6.1
+lightgbm==4.6.0
+
+# Optional — only for the exploratory experiments archived under archive/exp_scripts/
+# (TabPFN, CatBoost, XGBoost). Not needed to reproduce the final submission.
+# tabpfn
+# catboost
+# xgboost
