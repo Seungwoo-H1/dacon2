@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌙 ETRI 라이프로그 2024 — 수면·웰빙 예측
+# ETRI 라이프로그 2024 — 수면·웰빙 예측
 
 **스마트폰·스마트워치 패시브 센서로 하루 단위 수면·컨디션 7개 지표를 예측하는 머신러닝 파이프라인**
 
@@ -16,7 +16,7 @@
 
 ---
 
-## 📌 개요
+## 개요
 
 10명의 참가자로부터 2024년 5–12월 수집된 700일치 라이프로그를 사용해, **하루 단위 7개 이진 지표**를 예측한다.
 
@@ -30,7 +30,7 @@
 
 ---
 
-## 🎯 핵심 접근
+## 핵심 접근
 
 > 타깃은 *개인 평균 대비 편차*다. 전역 모델은 무의미하고, 일반화되는 신호는 **같은 사람의 하루 단위 자기상관**이다.
 
@@ -48,42 +48,38 @@
 
 ---
 
-## 🔧 전체 파이프라인
+## 전체 파이프라인
 
 ```mermaid
 flowchart LR
     RAW["원시 센서<br/>폰·워치 12종 + 라벨"] --> SLEEP["수면 검출<br/>build_sleep_features.py"]
     RAW --> FEAT["피처<br/>계절성·센서집계·subject_rate"]
     RAW --> REC["recency<br/>시간가중 개인화"]
-    SLEEP --> SV["sleep_v3.parquet<br/>TST·효율·WASO"]
+    SLEEP --> SV["sleep_v3.parquet"]
     FEAT --> PIPE["pipeline.py<br/>블렌드 + 과적합 게이트"]
     REC --> PIPE
     SV --> PIPE
-    PIPE --> SUB["제출 CSV<br/>평균 log-loss ~0.599"]
+    PIPE --> SUB["제출 CSV<br/>~0.599"]
 ```
 
 ---
 
-## 🧠 모델 & 학습
+## 모델 & 학습
 
 7개 타깃 각각에 대해 아래 흐름을 독립적으로 수행한다.
 
 ```mermaid
-flowchart TD
-    Y["타깃 라벨 y"] --> P["recency P<br/>시간가중 개인화"]
-    Y --> G["LightGBM G<br/>강한 정규화"]
-    P --> CV["전방 시간블록 CV<br/>3분할 · 5분할"]
+flowchart LR
+    Y["타깃 라벨"] --> P["recency P"]
+    Y --> G["LightGBM G"]
+    P --> CV["전방 시간블록 CV<br/>3·5분할"]
     G --> CV
-    CV --> GATE{"블렌드가 두 분할<br/>모두에서 recency를 이기나?"}
-    GATE -->|예| ADOPT["w·P + 1−w·G 채택 후 shrink"]
-    GATE -->|아니오| PURE["w = 1 · 순수 recency"]
-    ADOPT --> REFIT["train 전체 재학습 → test 예측"]
-    PURE --> REFIT
-    REFIT --> QCHK{"Q1/Q2/Q3 인가?"}
-    QCHK -->|예| OVR["짧은 halflife recency로 덮어쓰기"]
-    QCHK -->|아니오| KEEP["블렌드 예측 유지"]
-    OVR --> COL["제출 컬럼"]
-    KEEP --> COL
+    CV --> GATE{"블렌드가 두 분할 모두<br/>recency를 이기나?"}
+    GATE -->|"예 · w·P+(1−w)·G"| REFIT["전체 재학습<br/>→ test 예측"]
+    GATE -->|"아니오 · 순수 recency"| REFIT
+    REFIT --> QCHK{"Q 타깃?"}
+    QCHK -->|예| OVR["단기 halflife<br/>recency로 덮어쓰기"]
+    QCHK -->|아니오| KEEP["블렌드 유지"]
 ```
 
 **LightGBM 설정** — `num_leaves=8 · lr=0.02 · n_estimators=250 · reg_lambda=5 · reg_alpha=1 · subsample=0.8 · colsample=0.6`
@@ -91,7 +87,7 @@ flowchart TD
 
 ---
 
-## 📊 결과
+## 결과
 
 | 단계 | 접근 | 평균 log-loss |
 |---|---|---|
@@ -104,7 +100,7 @@ flowchart TD
 
 ---
 
-## 📁 저장소 구조
+## 저장소 구조
 
 ```
 run.py                  진입점 — 최적 제출 재현
@@ -125,7 +121,7 @@ docs/                   architecture · research_summary · future_work · exter
 
 ---
 
-## ⚙️ 실행
+## 실행
 
 ```bash
 pip install -r requirements.txt
@@ -138,14 +134,14 @@ python scripts/test_pipeline.py          # (선택) 최적 제출과 일치 검�
 
 ---
 
-## 🧪 검증 전략
+## 검증 전략
 
 - 데이터의 시간 구조상 **랜덤 K-fold는 ~0.02 낙관 편향** → test의 미래 연장 구간을 모사하는 **전방 시간블록 CV**를 기준 검증기로 사용
 - **날짜 단위 피처는 시간으로, 피험자 단위 피처는 피험자로** 분할 — 검증 누수 차단의 핵심 원칙
-- 모든 채택 결정은 두 개의 독립 분할 + 리더보드 앵커로 이중 확인
+- 모든 채택 결정은 두 개의 독립 분할 + 리더보드 점수로 이중 확인
 
 ---
 
-## 🛠 기술 스택
+## 기술 스택
 
 `Python` · `pandas` · `numpy` · `pyarrow` · `scikit-learn` · `LightGBM`
