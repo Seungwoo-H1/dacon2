@@ -15,8 +15,15 @@ changes the score only at the 4th decimal.
 """
 from __future__ import annotations
 
+import warnings
+
 import numpy as np
 import pandas as pd
+
+# LightGBM 4.x sets feature_names_in_ = ['Column_0', ...] even when fitted on a
+# plain ndarray, so every ndarray predict trips sklearn's name-mismatch warning.
+# False positive — silence just that message.
+warnings.filterwarnings("ignore", message="X does not have valid feature names")
 
 from . import config as C
 from . import data, features, model, sleep

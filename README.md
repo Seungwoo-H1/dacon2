@@ -11,6 +11,8 @@
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.6-F7931E?logo=scikitlearn&logoColor=white)
 ![Score](https://img.shields.io/badge/평균%20log--loss-0.5988-success)
 ![Reproducible](https://img.shields.io/badge/재현-결정론적-brightgreen)
+[![CI](https://github.com/Seungwoo-H1/dacon2/actions/workflows/ci.yml/badge.svg)](https://github.com/Seungwoo-H1/dacon2/actions/workflows/ci.yml)
+![License](https://img.shields.io/badge/License-MIT-blue)
 
 </div>
 
@@ -115,6 +117,7 @@ src/
   pipeline.py           전체 오케스트레이션 → 제출
 scripts/
   build_sleep_features.py   분 단위 수면 검출 → sleep_v3.parquet
+  test_units.py             데이터 없이 도는 핵심 로직 단위 테스트 (CI)
   test_pipeline.py          재현 결과 검증 스모크 테스트
 docs/                   architecture · research_summary · future_work · external_data_analysis
 ```
@@ -125,6 +128,7 @@ docs/                   architecture · research_summary · future_work · exter
 
 ```bash
 pip install -r requirements.txt
+python scripts/test_units.py             # 데이터 불필요 — 핵심 로직 단위 테스트 (CI에서 자동 실행)
 python scripts/build_sleep_features.py   # 1회: data_processed/sleep_v3.parquet 생성
 python run.py                            # submissions/submission_reproduced.csv 생성
 python scripts/test_pipeline.py          # (선택) 최적 제출과 일치 검증
